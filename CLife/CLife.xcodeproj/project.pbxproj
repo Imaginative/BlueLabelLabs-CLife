@@ -1,0 +1,480 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C53DC69C15D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
+		C53DC69E15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
+		C53DC6A015D4378300CC7D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */; };
+		C53DC6A615D4378300CC7D14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6A415D4378300CC7D14 /* InfoPlist.strings */; };
+		C53DC6A815D4378300CC7D14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6A715D4378300CC7D14 /* main.m */; };
+		C53DC6AC15D4378300CC7D14 /* ClifeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6AB15D4378300CC7D14 /* ClifeAppDelegate.m */; };
+		C53DC6AF15D4378300CC7D14 /* ClifeFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6AE15D4378300CC7D14 /* ClifeFirstViewController.m */; };
+		C53DC6B115D4378300CC7D14 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6B015D4378300CC7D14 /* first.png */; };
+		C53DC6B315D4378300CC7D14 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6B215D4378300CC7D14 /* first@2x.png */; };
+		C53DC6B615D4378300CC7D14 /* ClifeSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6B515D4378300CC7D14 /* ClifeSecondViewController.m */; };
+		C53DC6B815D4378300CC7D14 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6B715D4378300CC7D14 /* second.png */; };
+		C53DC6BA15D4378300CC7D14 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6B915D4378300CC7D14 /* second@2x.png */; };
+		C53DC6BD15D4378300CC7D14 /* ClifeFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6BB15D4378300CC7D14 /* ClifeFirstViewController.xib */; };
+		C53DC6C015D4378300CC7D14 /* ClifeSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6BE15D4378300CC7D14 /* ClifeSecondViewController.xib */; };
+		C53DC6C815D4378300CC7D14 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC6C715D4378300CC7D14 /* SenTestingKit.framework */; };
+		C53DC6C915D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
+		C53DC6CA15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
+		C53DC6D215D4378300CC7D14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6D015D4378300CC7D14 /* InfoPlist.strings */; };
+		C53DC6D515D4378300CC7D14 /* CLifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6D415D4378300CC7D14 /* CLifeTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C53DC6CB15D4378300CC7D14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C53DC68E15D4378300CC7D14 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C53DC69615D4378300CC7D14;
+			remoteInfo = CLife;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		C53DC69715D4378300CC7D14 /* CLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C53DC69B15D4378300CC7D14 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C53DC69D15D4378300CC7D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		C53DC6A315D4378300CC7D14 /* CLife-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CLife-Info.plist"; sourceTree = "<group>"; };
+		C53DC6A515D4378300CC7D14 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C53DC6A715D4378300CC7D14 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C53DC6A915D4378300CC7D14 /* CLife-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CLife-Prefix.pch"; sourceTree = "<group>"; };
+		C53DC6AA15D4378300CC7D14 /* ClifeAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClifeAppDelegate.h; sourceTree = "<group>"; };
+		C53DC6AB15D4378300CC7D14 /* ClifeAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClifeAppDelegate.m; sourceTree = "<group>"; };
+		C53DC6AD15D4378300CC7D14 /* ClifeFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClifeFirstViewController.h; sourceTree = "<group>"; };
+		C53DC6AE15D4378300CC7D14 /* ClifeFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClifeFirstViewController.m; sourceTree = "<group>"; };
+		C53DC6B015D4378300CC7D14 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		C53DC6B215D4378300CC7D14 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		C53DC6B415D4378300CC7D14 /* ClifeSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClifeSecondViewController.h; sourceTree = "<group>"; };
+		C53DC6B515D4378300CC7D14 /* ClifeSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClifeSecondViewController.m; sourceTree = "<group>"; };
+		C53DC6B715D4378300CC7D14 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		C53DC6B915D4378300CC7D14 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		C53DC6BC15D4378300CC7D14 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClifeFirstViewController.xib; sourceTree = "<group>"; };
+		C53DC6BF15D4378300CC7D14 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClifeSecondViewController.xib; sourceTree = "<group>"; };
+		C53DC6C615D4378300CC7D14 /* CLifeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CLifeTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C53DC6C715D4378300CC7D14 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		C53DC6CF15D4378300CC7D14 /* CLifeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CLifeTests-Info.plist"; sourceTree = "<group>"; };
+		C53DC6D115D4378300CC7D14 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C53DC6D315D4378300CC7D14 /* CLifeTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLifeTests.h; sourceTree = "<group>"; };
+		C53DC6D415D4378300CC7D14 /* CLifeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLifeTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C53DC69415D4378300CC7D14 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C53DC69C15D4378300CC7D14 /* UIKit.framework in Frameworks */,
+				C53DC69E15D4378300CC7D14 /* Foundation.framework in Frameworks */,
+				C53DC6A015D4378300CC7D14 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C53DC6C215D4378300CC7D14 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C53DC6C815D4378300CC7D14 /* SenTestingKit.framework in Frameworks */,
+				C53DC6C915D4378300CC7D14 /* UIKit.framework in Frameworks */,
+				C53DC6CA15D4378300CC7D14 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C53DC68C15D4378300CC7D14 = {
+			isa = PBXGroup;
+			children = (
+				C53DC6A115D4378300CC7D14 /* CLife */,
+				C53DC6CD15D4378300CC7D14 /* CLifeTests */,
+				C53DC69A15D4378300CC7D14 /* Frameworks */,
+				C53DC69815D4378300CC7D14 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C53DC69815D4378300CC7D14 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C53DC69715D4378300CC7D14 /* CLife.app */,
+				C53DC6C615D4378300CC7D14 /* CLifeTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C53DC69A15D4378300CC7D14 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C53DC69B15D4378300CC7D14 /* UIKit.framework */,
+				C53DC69D15D4378300CC7D14 /* Foundation.framework */,
+				C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */,
+				C53DC6C715D4378300CC7D14 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C53DC6A115D4378300CC7D14 /* CLife */ = {
+			isa = PBXGroup;
+			children = (
+				C53DC6AA15D4378300CC7D14 /* ClifeAppDelegate.h */,
+				C53DC6AB15D4378300CC7D14 /* ClifeAppDelegate.m */,
+				C53DC6AD15D4378300CC7D14 /* ClifeFirstViewController.h */,
+				C53DC6AE15D4378300CC7D14 /* ClifeFirstViewController.m */,
+				C53DC6B015D4378300CC7D14 /* first.png */,
+				C53DC6B215D4378300CC7D14 /* first@2x.png */,
+				C53DC6B415D4378300CC7D14 /* ClifeSecondViewController.h */,
+				C53DC6B515D4378300CC7D14 /* ClifeSecondViewController.m */,
+				C53DC6B715D4378300CC7D14 /* second.png */,
+				C53DC6B915D4378300CC7D14 /* second@2x.png */,
+				C53DC6BB15D4378300CC7D14 /* ClifeFirstViewController.xib */,
+				C53DC6BE15D4378300CC7D14 /* ClifeSecondViewController.xib */,
+				C53DC6A215D4378300CC7D14 /* Supporting Files */,
+			);
+			path = CLife;
+			sourceTree = "<group>";
+		};
+		C53DC6A215D4378300CC7D14 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C53DC6A315D4378300CC7D14 /* CLife-Info.plist */,
+				C53DC6A415D4378300CC7D14 /* InfoPlist.strings */,
+				C53DC6A715D4378300CC7D14 /* main.m */,
+				C53DC6A915D4378300CC7D14 /* CLife-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C53DC6CD15D4378300CC7D14 /* CLifeTests */ = {
+			isa = PBXGroup;
+			children = (
+				C53DC6D315D4378300CC7D14 /* CLifeTests.h */,
+				C53DC6D415D4378300CC7D14 /* CLifeTests.m */,
+				C53DC6CE15D4378300CC7D14 /* Supporting Files */,
+			);
+			path = CLifeTests;
+			sourceTree = "<group>";
+		};
+		C53DC6CE15D4378300CC7D14 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C53DC6CF15D4378300CC7D14 /* CLifeTests-Info.plist */,
+				C53DC6D015D4378300CC7D14 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C53DC69615D4378300CC7D14 /* CLife */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C53DC6D815D4378300CC7D14 /* Build configuration list for PBXNativeTarget "CLife" */;
+			buildPhases = (
+				C53DC69315D4378300CC7D14 /* Sources */,
+				C53DC69415D4378300CC7D14 /* Frameworks */,
+				C53DC69515D4378300CC7D14 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CLife;
+			productName = CLife;
+			productReference = C53DC69715D4378300CC7D14 /* CLife.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C53DC6C515D4378300CC7D14 /* CLifeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C53DC6DB15D4378300CC7D14 /* Build configuration list for PBXNativeTarget "CLifeTests" */;
+			buildPhases = (
+				C53DC6C115D4378300CC7D14 /* Sources */,
+				C53DC6C215D4378300CC7D14 /* Frameworks */,
+				C53DC6C315D4378300CC7D14 /* Resources */,
+				C53DC6C415D4378300CC7D14 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C53DC6CC15D4378300CC7D14 /* PBXTargetDependency */,
+			);
+			name = CLifeTests;
+			productName = CLifeTests;
+			productReference = C53DC6C615D4378300CC7D14 /* CLifeTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C53DC68E15D4378300CC7D14 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Clife;
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Blue Label Solutions LLC";
+			};
+			buildConfigurationList = C53DC69115D4378300CC7D14 /* Build configuration list for PBXProject "CLife" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C53DC68C15D4378300CC7D14;
+			productRefGroup = C53DC69815D4378300CC7D14 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C53DC69615D4378300CC7D14 /* CLife */,
+				C53DC6C515D4378300CC7D14 /* CLifeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C53DC69515D4378300CC7D14 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C53DC6A615D4378300CC7D14 /* InfoPlist.strings in Resources */,
+				C53DC6B115D4378300CC7D14 /* first.png in Resources */,
+				C53DC6B315D4378300CC7D14 /* first@2x.png in Resources */,
+				C53DC6B815D4378300CC7D14 /* second.png in Resources */,
+				C53DC6BA15D4378300CC7D14 /* second@2x.png in Resources */,
+				C53DC6BD15D4378300CC7D14 /* ClifeFirstViewController.xib in Resources */,
+				C53DC6C015D4378300CC7D14 /* ClifeSecondViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C53DC6C315D4378300CC7D14 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C53DC6D215D4378300CC7D14 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C53DC6C415D4378300CC7D14 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C53DC69315D4378300CC7D14 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C53DC6A815D4378300CC7D14 /* main.m in Sources */,
+				C53DC6AC15D4378300CC7D14 /* ClifeAppDelegate.m in Sources */,
+				C53DC6AF15D4378300CC7D14 /* ClifeFirstViewController.m in Sources */,
+				C53DC6B615D4378300CC7D14 /* ClifeSecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C53DC6C115D4378300CC7D14 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C53DC6D515D4378300CC7D14 /* CLifeTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C53DC6CC15D4378300CC7D14 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C53DC69615D4378300CC7D14 /* CLife */;
+			targetProxy = C53DC6CB15D4378300CC7D14 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C53DC6A415D4378300CC7D14 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C53DC6A515D4378300CC7D14 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		C53DC6BB15D4378300CC7D14 /* ClifeFirstViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C53DC6BC15D4378300CC7D14 /* en */,
+			);
+			name = ClifeFirstViewController.xib;
+			sourceTree = "<group>";
+		};
+		C53DC6BE15D4378300CC7D14 /* ClifeSecondViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C53DC6BF15D4378300CC7D14 /* en */,
+			);
+			name = ClifeSecondViewController.xib;
+			sourceTree = "<group>";
+		};
+		C53DC6D015D4378300CC7D14 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C53DC6D115D4378300CC7D14 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C53DC6D615D4378300CC7D14 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C53DC6D715D4378300CC7D14 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C53DC6D915D4378300CC7D14 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CLife/CLife-Prefix.pch";
+				INFOPLIST_FILE = "CLife/CLife-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C53DC6DA15D4378300CC7D14 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CLife/CLife-Prefix.pch";
+				INFOPLIST_FILE = "CLife/CLife-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C53DC6DC15D4378300CC7D14 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CLife.app/CLife";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CLife/CLife-Prefix.pch";
+				INFOPLIST_FILE = "CLifeTests/CLifeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		C53DC6DD15D4378300CC7D14 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CLife.app/CLife";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CLife/CLife-Prefix.pch";
+				INFOPLIST_FILE = "CLifeTests/CLifeTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C53DC69115D4378300CC7D14 /* Build configuration list for PBXProject "CLife" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C53DC6D615D4378300CC7D14 /* Debug */,
+				C53DC6D715D4378300CC7D14 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C53DC6D815D4378300CC7D14 /* Build configuration list for PBXNativeTarget "CLife" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C53DC6D915D4378300CC7D14 /* Debug */,
+				C53DC6DA15D4378300CC7D14 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		C53DC6DB15D4378300CC7D14 /* Build configuration list for PBXNativeTarget "CLifeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C53DC6DC15D4378300CC7D14 /* Debug */,
+				C53DC6DD15D4378300CC7D14 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C53DC68E15D4378300CC7D14 /* Project object */;
+}
