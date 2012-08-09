@@ -1454,6 +1454,7 @@
 				C53DC6DA15D4378300CC7D14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C53DC6DB15D4378300CC7D14 /* Build configuration list for PBXNativeTarget "CLifeTests" */ = {
 			isa = XCConfigurationList;
@@ -1462,6 +1463,7 @@
 				C53DC6DD15D4378300CC7D14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
