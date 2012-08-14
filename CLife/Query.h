@@ -28,27 +28,27 @@
 - (id) initFromJSON:(NSString*)json;
 
 //static initializers
-+ (id) queryPhotosWithTheme:(NSNumber*)themeID;
+//+ (id) queryPhotosWithTheme:(NSNumber*)themeID;
 + (id) queryFeedsForUser:(NSNumber*)userID;
-+ (id) queryCaptionsForPhoto:(NSNumber*)photoID;
-+ (id) queryPages:(NSNumber*)afterDate;
-+ (id) queryPages;
-+ (id) queryDrafts;
+//+ (id) queryCaptionsForPhoto:(NSNumber*)photoID;
+//+ (id) queryPages:(NSNumber*)afterDate;
+//+ (id) queryPages;
+//+ (id) queryDrafts;
 + (id) queryUser:(NSNumber*)userID;
 + (id) queryForIDs:(NSArray*)objectIDs withTypes:(NSArray*)types;
 + (id) queryApplicationSettings:(NSNumber*)userid;
-+ (id) queryForFollowers:(NSNumber*)userid;
-+ (id) queryForFollowing:(NSNumber*)userid;
+//+ (id) queryForFollowers:(NSNumber*)userid;
+//+ (id) queryForFollowing:(NSNumber*)userid;
 
 //mimeme static initializers
-+ (id) queryForFriends:(NSNumber*)userID;
-+ (id) queryForWords;
-+ (id) queryForSingleWorld:(NSString*)word;
-+ (id) queryForMimeAnswersWithTarget:(NSNumber*)userid withState:(NSNumber*)state;
-+ (id) queryForStaffPickedMimes; 
-+ (id) queryForPublicMimes;
-+ (id) queryForFavoriteMimes:(NSNumber*)userid;
-+ (id) queryForMostRecentMimes;
-+ (id) queryForSentMimeAnswers:(NSNumber*)creatorid;
-+ (id) queryForSentMimes:(NSNumber*)creatorid;
+//+ (id) queryForFriends:(NSNumber*)userID;
+//+ (id) queryForWords;
+//+ (id) queryForSingleWorld:(NSString*)word;
+//+ (id) queryForMimeAnswersWithTarget:(NSNumber*)userid withState:(NSNumber*)state;
+//+ (id) queryForStaffPickedMimes; 
+//+ (id) queryForPublicMimes;
+//+ (id) queryForFavoriteMimes:(NSNumber*)userid;
+//+ (id) queryForMostRecentMimes;
+//+ (id) queryForSentMimeAnswers:(NSNumber*)creatorid;
+//+ (id) queryForSentMimes:(NSNumber*)creatorid;
 @end

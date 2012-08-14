@@ -68,20 +68,20 @@
 }
 
 #pragma mark - Static Initializers
-+(QueryOptions*)queryForPhotos {
-   // ApplicationSettings* settingsObjects = [[ApplicationSettingsManager instance]settings];
-    QueryOptions *newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.referencingattribute=PHOTOID;
-    newQuery.referencingobjecttype =CAPTION;
-    newQuery.includelinkedobjects = YES;
-   // newQuery.maxlinksreturnedperobject = [settingsObjects.numberoflinkedobjectstoreturn intValue];
-    newQuery.linked_results_sortAscending = NO;
-    newQuery.linked_results_sortattribute=NUMBEROFVOTES;
-    newQuery.primary_results_sortascending = YES;
-    newQuery.primary_results_sortattribute = DATECREATED;
-    return newQuery;
-    
-}
+//+(QueryOptions*)queryForPhotos {
+//   // ApplicationSettings* settingsObjects = [[ApplicationSettingsManager instance]settings];
+//    QueryOptions *newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.referencingattribute=PHOTOID;
+//    newQuery.referencingobjecttype =CAPTION;
+//    newQuery.includelinkedobjects = YES;
+//   // newQuery.maxlinksreturnedperobject = [settingsObjects.numberoflinkedobjectstoreturn intValue];
+//    newQuery.linked_results_sortAscending = NO;
+//    newQuery.linked_results_sortattribute=NUMBEROFVOTES;
+//    newQuery.primary_results_sortascending = YES;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//    return newQuery;
+//    
+//}
 
 + (QueryOptions*)queryForApplicationSettings:(NSNumber *)userid {
     QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
@@ -90,48 +90,48 @@
     newQuery.primary_results_sortattribute = VERSION;  
     return newQuery;
 }
+//
+//+ (QueryOptions*)queryForDrafts {
+//  //  ApplicationSettings* settingsObjects = [[ApplicationSettingsManager instance]settings];
+//    QueryOptions *newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.referencingattribute=THEMEID;
+//    newQuery.referencingobjecttype =PHOTO;
+//    newQuery.includelinkedobjects = YES;
+//    //newQuery.maxlinksreturnedperobject = [settingsObjects.numberoflinkedobjectstoreturn intValue];
+//    newQuery.linked_results_sortAscending = NO;
+//    newQuery.linked_results_sortattribute=NUMBEROFVOTES;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//    return newQuery;
+//}
+//
+//+(QueryOptions*)queryForPhotosInTheme {
+//    QueryOptions *newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = YES;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = NUMBEROFVOTES;
+//    newQuery.linked_results_sortAscending = NO;
+//    newQuery.linked_results_sortattribute = NUMBEROFVOTES;
+//    newQuery.referencingattribute=PHOTOID;
+//    newQuery.referencingobjecttype=CAPTION;
+//    newQuery.maxlinksreturnedperobject=1;
+//    return newQuery;
+//    
+//}
 
-+ (QueryOptions*)queryForDrafts {
-  //  ApplicationSettings* settingsObjects = [[ApplicationSettingsManager instance]settings];
-    QueryOptions *newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.referencingattribute=THEMEID;
-    newQuery.referencingobjecttype =PHOTO;
-    newQuery.includelinkedobjects = YES;
-    //newQuery.maxlinksreturnedperobject = [settingsObjects.numberoflinkedobjectstoreturn intValue];
-    newQuery.linked_results_sortAscending = NO;
-    newQuery.linked_results_sortattribute=NUMBEROFVOTES;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;
-    return newQuery;
-}
-
-+(QueryOptions*)queryForPhotosInTheme {
-    QueryOptions *newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = YES;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = NUMBEROFVOTES;
-    newQuery.linked_results_sortAscending = NO;
-    newQuery.linked_results_sortattribute = NUMBEROFVOTES;
-    newQuery.referencingattribute=PHOTOID;
-    newQuery.referencingobjecttype=CAPTION;
-    newQuery.maxlinksreturnedperobject=1;
-    return newQuery;
-    
-}
-
-+(QueryOptions*)queryForPages {
-     //ApplicationSettings* settingsObjects = [[ApplicationSettingsManager instance]settings];
-    QueryOptions *newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.referencingattribute=THEMEID;
-    newQuery.referencingobjecttype = PHOTO;
-    newQuery.includelinkedobjects = YES;
-   // newQuery.maxlinksreturnedperobject = [settingsObjects.numberoflinkedobjectstoreturn intValue];
-    newQuery.linked_results_sortAscending = NO;
-    newQuery.linked_results_sortattribute = NUMBEROFVOTES;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATEPUBLISHED;
-    return newQuery;
-}
+//+(QueryOptions*)queryForPages {
+//     //ApplicationSettings* settingsObjects = [[ApplicationSettingsManager instance]settings];
+//    QueryOptions *newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.referencingattribute=THEMEID;
+//    newQuery.referencingobjecttype = PHOTO;
+//    newQuery.includelinkedobjects = YES;
+//   // newQuery.maxlinksreturnedperobject = [settingsObjects.numberoflinkedobjectstoreturn intValue];
+//    newQuery.linked_results_sortAscending = NO;
+//    newQuery.linked_results_sortattribute = NUMBEROFVOTES;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATEPUBLISHED;
+//    return newQuery;
+//}
 
 +(QueryOptions*)queryForFeedsForUser:(NSNumber *)userID {
     QueryOptions *newQuery = [[QueryOptions alloc]autorelease];
@@ -142,19 +142,19 @@
     return newQuery;
 }
 
-+(QueryOptions*)queryForCaptions:(NSNumber*)photoID{
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.referencingattribute=nil;
-    newQuery.referencingobjecttype = nil;
-    newQuery.includelinkedobjects = NO;
-    newQuery.maxlinksreturnedperobject = 0;
-    newQuery.linked_results_sortAscending = NO;
-    newQuery.linked_results_sortattribute = DATECREATED;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;
-
-    return newQuery;
-}
+//+(QueryOptions*)queryForCaptions:(NSNumber*)photoID{
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.referencingattribute=nil;
+//    newQuery.referencingobjecttype = nil;
+//    newQuery.includelinkedobjects = NO;
+//    newQuery.maxlinksreturnedperobject = 0;
+//    newQuery.linked_results_sortAscending = NO;
+//    newQuery.linked_results_sortattribute = DATECREATED;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//
+//    return newQuery;
+//}
 
 + (QueryOptions*)queryForUser:(NSNumber *)userID {
     QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
@@ -164,23 +164,23 @@
     return newQuery;
 
 }
-
-+ (QueryOptions*)queryForFollowers {
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = NO;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;  
-    return newQuery;
-}
-
-
-+ (QueryOptions*)queryForFollowing {
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = NO;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;  
-    return newQuery;
-}
+//
+//+ (QueryOptions*)queryForFollowers {
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = NO;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;  
+//    return newQuery;
+//}
+//
+//
+//+ (QueryOptions*)queryForFollowing {
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = NO;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;  
+//    return newQuery;
+//}
 
 +(QueryOptions*)queryForObjectIDs:(NSArray*)objectIDs 
                         withTypes:(NSArray*)objectTypes 
@@ -192,127 +192,127 @@
     return newQuery;
 }
 
-#pragma mark - Mime-me Initializers
-+(QueryOptions*) queryForFriends:(NSNumber *)userID
-{
-    QueryOptions* queryForFriends = [[QueryOptions alloc]autorelease];
-    queryForFriends.includelinkedobjects = NO;
-    queryForFriends.primary_results_sortascending = NO;
-    queryForFriends.primary_results_sortattribute = DATECREATED;
-    queryForFriends.clause_operator = opcode_CLAUSEOR;
-    return queryForFriends;
-}
+//#pragma mark - Mime-me Initializers
+//+(QueryOptions*) queryForFriends:(NSNumber *)userID
+//{
+//    QueryOptions* queryForFriends = [[QueryOptions alloc]autorelease];
+//    queryForFriends.includelinkedobjects = NO;
+//    queryForFriends.primary_results_sortascending = NO;
+//    queryForFriends.primary_results_sortattribute = DATECREATED;
+//    queryForFriends.clause_operator = opcode_CLAUSEOR;
+//    return queryForFriends;
+//}
+//
+//
+//+(QueryOptions*) queryForWords
+//{
+//    QueryOptions* queryForWords = [[QueryOptions alloc]autorelease];
+//    queryForWords.includelinkedobjects = NO;
+//    queryForWords.primary_results_sortascending = NO;
+//    queryForWords.primary_results_sortattribute = DATECREATED;
+//   
+//    return queryForWords;
+//}
+//
+//+ (QueryOptions*) queryForSingleWord:(NSString *)word
+//{
+//    QueryOptions* queryForWords = [[QueryOptions alloc]autorelease];
+//    queryForWords.includelinkedobjects = NO;
+//    queryForWords.primary_results_sortascending = NO;
+//    queryForWords.primary_results_sortattribute = DATECREATED;
+//    
+//    return queryForWords;
+//}
 
-
-+(QueryOptions*) queryForWords
-{
-    QueryOptions* queryForWords = [[QueryOptions alloc]autorelease];
-    queryForWords.includelinkedobjects = NO;
-    queryForWords.primary_results_sortascending = NO;
-    queryForWords.primary_results_sortattribute = DATECREATED;
-   
-    return queryForWords;
-}
-
-+ (QueryOptions*) queryForSingleWord:(NSString *)word
-{
-    QueryOptions* queryForWords = [[QueryOptions alloc]autorelease];
-    queryForWords.includelinkedobjects = NO;
-    queryForWords.primary_results_sortascending = NO;
-    queryForWords.primary_results_sortattribute = DATECREATED;
-    
-    return queryForWords;
-}
-
-+ (QueryOptions*) queryForMimeAnswersWithTarget:(NSNumber *)userid withState:(NSNumber *)state
-{
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = YES;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;
-    
-    newQuery.linked_results_sortAscending = NO;
-    newQuery.linked_results_sortattribute = DATECREATED;
-    newQuery.referencingattribute=MIMEANSWERID;
-    newQuery.referencingobjecttype=COMMENT;
-    newQuery.maxlinksreturnedperobject=10;
-
-    return newQuery;
-}
-
-+ (QueryOptions*)queryForStaffPickMimes
-{
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = NO;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;
-    
-    return newQuery;
-    
-}
-
-+ (QueryOptions*)queryForPublicMimes
-{
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = NO;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;
-    
-    return newQuery;
-}
-
-+ (QueryOptions*)queryForFavoriteMimes:(NSNumber *)userid
-{
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = NO;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;
-    
-    return newQuery;
-}
-
-+ (QueryOptions*) queryForMostRecentMimes
-{
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = NO;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;
-    
-    return newQuery;
-}
-
-+ (QueryOptions*) queryForSentMimes:(NSNumber *)creatorid
-{
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = YES;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;
-    
-    newQuery.linked_results_sortAscending = NO;
-    newQuery.linked_results_sortattribute = DATECREATED;
-    newQuery.referencingattribute=MIMEID;
-    newQuery.referencingobjecttype=COMMENT;
-    newQuery.maxlinksreturnedperobject=10;
-    
-    return newQuery;
-
-}
-
-+ (QueryOptions*) queryForSentMimeAnswers:(NSNumber *)creatorid
-{
-    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
-    newQuery.includelinkedobjects = YES;
-    newQuery.primary_results_sortascending = NO;
-    newQuery.primary_results_sortattribute = DATECREATED;
-    
-    newQuery.linked_results_sortAscending = NO;
-    newQuery.linked_results_sortattribute = DATECREATED;
-    newQuery.referencingattribute=MIMEANSWERID;
-    newQuery.referencingobjecttype=COMMENT;
-    newQuery.maxlinksreturnedperobject=10;
-    
-    return newQuery;
-
-}
+//+ (QueryOptions*) queryForMimeAnswersWithTarget:(NSNumber *)userid withState:(NSNumber *)state
+//{
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = YES;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//    
+//    newQuery.linked_results_sortAscending = NO;
+//    newQuery.linked_results_sortattribute = DATECREATED;
+//    newQuery.referencingattribute=MIMEANSWERID;
+//    newQuery.referencingobjecttype=COMMENT;
+//    newQuery.maxlinksreturnedperobject=10;
+//
+//    return newQuery;
+//}
+//
+//+ (QueryOptions*)queryForStaffPickMimes
+//{
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = NO;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//    
+//    return newQuery;
+//    
+//}
+//
+//+ (QueryOptions*)queryForPublicMimes
+//{
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = NO;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//    
+//    return newQuery;
+//}
+//
+//+ (QueryOptions*)queryForFavoriteMimes:(NSNumber *)userid
+//{
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = NO;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//    
+//    return newQuery;
+//}
+//
+//+ (QueryOptions*) queryForMostRecentMimes
+//{
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = NO;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//    
+//    return newQuery;
+//}
+//
+//+ (QueryOptions*) queryForSentMimes:(NSNumber *)creatorid
+//{
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = YES;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//    
+//    newQuery.linked_results_sortAscending = NO;
+//    newQuery.linked_results_sortattribute = DATECREATED;
+//    newQuery.referencingattribute=MIMEID;
+//    newQuery.referencingobjecttype=COMMENT;
+//    newQuery.maxlinksreturnedperobject=10;
+//    
+//    return newQuery;
+//
+//}
+//
+//+ (QueryOptions*) queryForSentMimeAnswers:(NSNumber *)creatorid
+//{
+//    QueryOptions* newQuery = [[QueryOptions alloc]autorelease];
+//    newQuery.includelinkedobjects = YES;
+//    newQuery.primary_results_sortascending = NO;
+//    newQuery.primary_results_sortattribute = DATECREATED;
+//    
+//    newQuery.linked_results_sortAscending = NO;
+//    newQuery.linked_results_sortattribute = DATECREATED;
+//    newQuery.referencingattribute=MIMEANSWERID;
+//    newQuery.referencingobjecttype=COMMENT;
+//    newQuery.maxlinksreturnedperobject=10;
+//    
+//    return newQuery;
+//
+//}
 
 @end

@@ -142,7 +142,6 @@
 		C53DC86715D43EF100CC7D14 /* ApplicationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC86615D43EF100CC7D14 /* ApplicationSettings.m */; };
 		C53DC86C15D43F0D00CC7D14 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC86915D43F0D00CC7D14 /* Feed.m */; };
 		C53DC86D15D43F0D00CC7D14 /* FeedData.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC86B15D43F0D00CC7D14 /* FeedData.m */; };
-		C53DC87015D43F2F00CC7D14 /* CloudEnumeratorFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC86F15D43F2F00CC7D14 /* CloudEnumeratorFactory.m */; };
 		C53DC87315D43FCF00CC7D14 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC87215D43FCF00CC7D14 /* User.m */; };
 		C53DC87915D4416A00CC7D14 /* UIProgressHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC87715D4416A00CC7D14 /* UIProgressHUDView.m */; };
 		C53DC87A15D4416A00CC7D14 /* UIProgressHUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53DC87815D4416A00CC7D14 /* UIProgressHUDView.xib */; };
@@ -447,8 +446,6 @@
 		C53DC86915D43F0D00CC7D14 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		C53DC86A15D43F0D00CC7D14 /* FeedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedData.h; sourceTree = "<group>"; };
 		C53DC86B15D43F0D00CC7D14 /* FeedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedData.m; sourceTree = "<group>"; };
-		C53DC86E15D43F2F00CC7D14 /* CloudEnumeratorFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudEnumeratorFactory.h; sourceTree = "<group>"; };
-		C53DC86F15D43F2F00CC7D14 /* CloudEnumeratorFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudEnumeratorFactory.m; sourceTree = "<group>"; };
 		C53DC87115D43FCF00CC7D14 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		C53DC87215D43FCF00CC7D14 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		C53DC87615D4416A00CC7D14 /* UIProgressHUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIProgressHUDView.h; sourceTree = "<group>"; };
@@ -947,8 +944,6 @@
 		C53DC7FE15D43DA600CC7D14 /* Enumeration */ = {
 			isa = PBXGroup;
 			children = (
-				C53DC86E15D43F2F00CC7D14 /* CloudEnumeratorFactory.h */,
-				C53DC86F15D43F2F00CC7D14 /* CloudEnumeratorFactory.m */,
 				C53DC81715D43E2700CC7D14 /* CloudEnumerator.h */,
 				C53DC81815D43E2700CC7D14 /* CloudEnumerator.m */,
 				C53DC81915D43E2700CC7D14 /* Query.h */,
@@ -1274,7 +1269,6 @@
 				C53DC86715D43EF100CC7D14 /* ApplicationSettings.m in Sources */,
 				C53DC86C15D43F0D00CC7D14 /* Feed.m in Sources */,
 				C53DC86D15D43F0D00CC7D14 /* FeedData.m in Sources */,
-				C53DC87015D43F2F00CC7D14 /* CloudEnumeratorFactory.m in Sources */,
 				C53DC87315D43FCF00CC7D14 /* User.m in Sources */,
 				C53DC87915D4416A00CC7D14 /* UIProgressHUDView.m in Sources */,
 				C5A4887015DAA9C50023180C /* PlatformDataModel.xcdatamodel in Sources */,

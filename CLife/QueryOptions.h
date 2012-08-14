@@ -38,27 +38,27 @@
 - (NSDictionary*)   toDictionary;
 
 //static initializers
-+(QueryOptions*)queryForPhotos;
-+(QueryOptions*)queryForPhotosInTheme;
+//+(QueryOptions*)queryForPhotos;
+//+(QueryOptions*)queryForPhotosInTheme;
 +(QueryOptions*)queryForFeedsForUser:(NSNumber*)userID;
-+(QueryOptions*)queryForCaptions:(NSNumber*)photoID;
-+(QueryOptions*)queryForPages;
+//+(QueryOptions*)queryForCaptions:(NSNumber*)photoID;
+//+(QueryOptions*)queryForPages;
 +(QueryOptions*)queryForUser:(NSNumber*)userID;
-+(QueryOptions*)queryForDrafts;
+//+(QueryOptions*)queryForDrafts;
 +(QueryOptions*)queryForObjectIDs:(NSArray*)objectIDs withTypes:(NSArray*)objectTypes;
 +(QueryOptions*)queryForApplicationSettings:(NSNumber*)userid;
-+(QueryOptions*)queryForFollowers;
-+(QueryOptions*)queryForFollowing;
+//+(QueryOptions*)queryForFollowers;
+//+(QueryOptions*)queryForFollowing;
 
 //static initializers for mime-me
-+(QueryOptions*)queryForFriends:(NSNumber*)userID;
-+(QueryOptions*)queryForWords;
-+(QueryOptions*)queryForSingleWord:(NSString*)word;
-+(QueryOptions*)queryForMimeAnswersWithTarget:(NSNumber*)userid withState:(NSNumber*)state;
-+(QueryOptions*)queryForStaffPickMimes;
-+(QueryOptions*)queryForPublicMimes;
-+(QueryOptions*)queryForFavoriteMimes:(NSNumber*)userid;
-+(QueryOptions*) queryForMostRecentMimes;
-+(QueryOptions*)queryForSentMimeAnswers:(NSNumber*)creatorid;
-+(QueryOptions*)queryForSentMimes:(NSNumber*)creatorid;
+//+(QueryOptions*)queryForFriends:(NSNumber*)userID;
+//+(QueryOptions*)queryForWords;
+//+(QueryOptions*)queryForSingleWord:(NSString*)word;
+//+(QueryOptions*)queryForMimeAnswersWithTarget:(NSNumber*)userid withState:(NSNumber*)state;
+//+(QueryOptions*)queryForStaffPickMimes;
+//+(QueryOptions*)queryForPublicMimes;
+//+(QueryOptions*)queryForFavoriteMimes:(NSNumber*)userid;
+//+(QueryOptions*) queryForMostRecentMimes;
+//+(QueryOptions*)queryForSentMimeAnswers:(NSNumber*)creatorid;
+//+(QueryOptions*)queryForSentMimes:(NSNumber*)creatorid;
 @end
