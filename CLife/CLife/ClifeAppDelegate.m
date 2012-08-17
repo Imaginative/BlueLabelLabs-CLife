@@ -8,9 +8,9 @@
 
 #import "ClifeAppDelegate.h"
 
-#import "ClifeFirstViewController.h"
-
-#import "ClifeSecondViewController.h"
+#import "ClifeProfileViewController.h"
+#import "ClifePrescriptionsViewController.h"
+#import "ClifeHistoryViewController.h"
 
 @implementation ClifeAppDelegate
 
@@ -78,11 +78,21 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    
     // Override point for customization after application launch.
-    UIViewController *viewController1 = [[[ClifeFirstViewController alloc] initWithNibName:@"ClifeFirstViewController" bundle:nil] autorelease];
-    UIViewController *viewController2 = [[[ClifeSecondViewController alloc] initWithNibName:@"ClifeSecondViewController" bundle:nil] autorelease];
+    
+    UIViewController *viewController1 = [ClifeProfileViewController createInstance];
+    UINavigationController *navigationcontroller1 = [[[UINavigationController alloc] initWithRootViewController:viewController1] autorelease];
+    
+    UIViewController *viewController2 = [ClifePrescriptionsViewController createInstance];
+    UINavigationController *navigationcontroller2 = [[[UINavigationController alloc] initWithRootViewController:viewController2] autorelease];
+    
+    UIViewController *viewController3 = [ClifeHistoryViewController createInstance];
+    UINavigationController *navigationcontroller3 = [[[UINavigationController alloc] initWithRootViewController:viewController3] autorelease];
+    
     self.tabBarController = [[[UITabBarController alloc] init] autorelease];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:viewController1, viewController2, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:navigationcontroller1, navigationcontroller2, navigationcontroller3, nil];
+    
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;

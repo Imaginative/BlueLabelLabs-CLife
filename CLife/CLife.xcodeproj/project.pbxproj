@@ -7,20 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5277E7DE15DD4D48003A1DCF /* icon-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DC15DD4D48003A1DCF /* icon-profile.png */; };
+		5277E7DF15DD4D48003A1DCF /* icon-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */; };
+		5277E7E215DD4F7E003A1DCF /* icon-medical.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7E015DD4F7E003A1DCF /* icon-medical.png */; };
+		5277E7E315DD4F7E003A1DCF /* icon-medical@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7E115DD4F7E003A1DCF /* icon-medical@2x.png */; };
+		5277E7E715DD5209003A1DCF /* ClifeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E7E515DD5209003A1DCF /* ClifeTableViewController.m */; };
+		5277E7E815DD5209003A1DCF /* ClifeTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7E615DD5209003A1DCF /* ClifeTableViewController.xib */; };
+		5277E7EC15DD5226003A1DCF /* ClifeHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E7EA15DD5226003A1DCF /* ClifeHistoryViewController.m */; };
+		5277E7ED15DD5226003A1DCF /* ClifeHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7EB15DD5226003A1DCF /* ClifeHistoryViewController.xib */; };
+		5277E7F615DD62F1003A1DCF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7F815DD62F1003A1DCF /* Localizable.strings */; };
+		5277E7FC15DD6B67003A1DCF /* icon-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7FA15DD6B67003A1DCF /* icon-clock.png */; };
+		5277E7FD15DD6B67003A1DCF /* icon-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7FB15DD6B67003A1DCF /* icon-clock@2x.png */; };
+		5277E80515DD6DE6003A1DCF /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E80415DD6DE6003A1DCF /* BaseViewController.m */; };
+		5277E80815DD6EB4003A1DCF /* UILoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E80715DD6EB4003A1DCF /* UILoginView.m */; };
+		5277E80B15DD6EF0003A1DCF /* UICustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E80A15DD6EF0003A1DCF /* UICustomAlertView.m */; };
+		5277E81E15DEBF6B003A1DCF /* delete_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E81C15DEBF6B003A1DCF /* delete_red.png */; };
+		5277E81F15DEBF6B003A1DCF /* delete_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E81D15DEBF6B003A1DCF /* delete_red@2x.png */; };
+		5277E82915DEE03F003A1DCF /* ClifePrescriptionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E82715DEE026003A1DCF /* ClifePrescriptionDetailsViewController.m */; };
+		5277E82A15DEE03F003A1DCF /* ClifePrescriptionDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5277E82815DEE031003A1DCF /* ClifePrescriptionDetailsViewController.xib */; };
 		C53DC69C15D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
 		C53DC69E15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
 		C53DC6A015D4378300CC7D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */; };
 		C53DC6A615D4378300CC7D14 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6A415D4378300CC7D14 /* InfoPlist.strings */; };
 		C53DC6A815D4378300CC7D14 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6A715D4378300CC7D14 /* main.m */; };
 		C53DC6AC15D4378300CC7D14 /* ClifeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6AB15D4378300CC7D14 /* ClifeAppDelegate.m */; };
-		C53DC6AF15D4378300CC7D14 /* ClifeFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6AE15D4378300CC7D14 /* ClifeFirstViewController.m */; };
-		C53DC6B115D4378300CC7D14 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6B015D4378300CC7D14 /* first.png */; };
-		C53DC6B315D4378300CC7D14 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6B215D4378300CC7D14 /* first@2x.png */; };
-		C53DC6B615D4378300CC7D14 /* ClifeSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6B515D4378300CC7D14 /* ClifeSecondViewController.m */; };
-		C53DC6B815D4378300CC7D14 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6B715D4378300CC7D14 /* second.png */; };
-		C53DC6BA15D4378300CC7D14 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6B915D4378300CC7D14 /* second@2x.png */; };
-		C53DC6BD15D4378300CC7D14 /* ClifeFirstViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6BB15D4378300CC7D14 /* ClifeFirstViewController.xib */; };
-		C53DC6C015D4378300CC7D14 /* ClifeSecondViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6BE15D4378300CC7D14 /* ClifeSecondViewController.xib */; };
+		C53DC6AF15D4378300CC7D14 /* ClifeProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6AE15D4378300CC7D14 /* ClifeProfileViewController.m */; };
+		C53DC6B615D4378300CC7D14 /* ClifePrescriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC6B515D4378300CC7D14 /* ClifePrescriptionsViewController.m */; };
+		C53DC6BD15D4378300CC7D14 /* ClifeProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6BB15D4378300CC7D14 /* ClifeProfileViewController.xib */; };
+		C53DC6C015D4378300CC7D14 /* ClifePrescriptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53DC6BE15D4378300CC7D14 /* ClifePrescriptionsViewController.xib */; };
 		C53DC6C815D4378300CC7D14 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC6C715D4378300CC7D14 /* SenTestingKit.framework */; };
 		C53DC6C915D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
 		C53DC6CA15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
@@ -161,6 +175,31 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5277E7DC15DD4D48003A1DCF /* icon-profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile.png"; sourceTree = "<group>"; };
+		5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile@2x.png"; sourceTree = "<group>"; };
+		5277E7E015DD4F7E003A1DCF /* icon-medical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-medical.png"; sourceTree = "<group>"; };
+		5277E7E115DD4F7E003A1DCF /* icon-medical@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-medical@2x.png"; sourceTree = "<group>"; };
+		5277E7E415DD5209003A1DCF /* ClifeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeTableViewController.h; sourceTree = "<group>"; };
+		5277E7E515DD5209003A1DCF /* ClifeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeTableViewController.m; sourceTree = "<group>"; };
+		5277E7E615DD5209003A1DCF /* ClifeTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeTableViewController.xib; sourceTree = "<group>"; };
+		5277E7E915DD5226003A1DCF /* ClifeHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeHistoryViewController.h; sourceTree = "<group>"; };
+		5277E7EA15DD5226003A1DCF /* ClifeHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeHistoryViewController.m; sourceTree = "<group>"; };
+		5277E7EB15DD5226003A1DCF /* ClifeHistoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeHistoryViewController.xib; sourceTree = "<group>"; };
+		5277E7F715DD62F1003A1DCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5277E7F915DD6304003A1DCF /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5277E7FA15DD6B67003A1DCF /* icon-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-clock.png"; sourceTree = "<group>"; };
+		5277E7FB15DD6B67003A1DCF /* icon-clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-clock@2x.png"; sourceTree = "<group>"; };
+		5277E80315DD6DE6003A1DCF /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		5277E80415DD6DE6003A1DCF /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		5277E80615DD6EB4003A1DCF /* UILoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoginView.h; sourceTree = "<group>"; };
+		5277E80715DD6EB4003A1DCF /* UILoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILoginView.m; sourceTree = "<group>"; };
+		5277E80915DD6EF0003A1DCF /* UICustomAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICustomAlertView.h; sourceTree = "<group>"; };
+		5277E80A15DD6EF0003A1DCF /* UICustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICustomAlertView.m; sourceTree = "<group>"; };
+		5277E81C15DEBF6B003A1DCF /* delete_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_red.png; sourceTree = "<group>"; };
+		5277E81D15DEBF6B003A1DCF /* delete_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete_red@2x.png"; sourceTree = "<group>"; };
+		5277E82615DEE023003A1DCF /* ClifePrescriptionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifePrescriptionDetailsViewController.h; sourceTree = "<group>"; };
+		5277E82715DEE026003A1DCF /* ClifePrescriptionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifePrescriptionDetailsViewController.m; sourceTree = "<group>"; };
+		5277E82815DEE031003A1DCF /* ClifePrescriptionDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifePrescriptionDetailsViewController.xib; sourceTree = "<group>"; };
 		C53DC69715D4378300CC7D14 /* CLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53DC69B15D4378300CC7D14 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C53DC69D15D4378300CC7D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -171,16 +210,12 @@
 		C53DC6A915D4378300CC7D14 /* CLife-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CLife-Prefix.pch"; sourceTree = "<group>"; };
 		C53DC6AA15D4378300CC7D14 /* ClifeAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClifeAppDelegate.h; sourceTree = "<group>"; };
 		C53DC6AB15D4378300CC7D14 /* ClifeAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClifeAppDelegate.m; sourceTree = "<group>"; };
-		C53DC6AD15D4378300CC7D14 /* ClifeFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClifeFirstViewController.h; sourceTree = "<group>"; };
-		C53DC6AE15D4378300CC7D14 /* ClifeFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClifeFirstViewController.m; sourceTree = "<group>"; };
-		C53DC6B015D4378300CC7D14 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
-		C53DC6B215D4378300CC7D14 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		C53DC6B415D4378300CC7D14 /* ClifeSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClifeSecondViewController.h; sourceTree = "<group>"; };
-		C53DC6B515D4378300CC7D14 /* ClifeSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClifeSecondViewController.m; sourceTree = "<group>"; };
-		C53DC6B715D4378300CC7D14 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
-		C53DC6B915D4378300CC7D14 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
-		C53DC6BC15D4378300CC7D14 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClifeFirstViewController.xib; sourceTree = "<group>"; };
-		C53DC6BF15D4378300CC7D14 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClifeSecondViewController.xib; sourceTree = "<group>"; };
+		C53DC6AD15D4378300CC7D14 /* ClifeProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClifeProfileViewController.h; sourceTree = "<group>"; };
+		C53DC6AE15D4378300CC7D14 /* ClifeProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClifeProfileViewController.m; sourceTree = "<group>"; };
+		C53DC6B415D4378300CC7D14 /* ClifePrescriptionsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClifePrescriptionsViewController.h; sourceTree = "<group>"; };
+		C53DC6B515D4378300CC7D14 /* ClifePrescriptionsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClifePrescriptionsViewController.m; sourceTree = "<group>"; };
+		C53DC6BC15D4378300CC7D14 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClifeProfileViewController.xib; sourceTree = "<group>"; };
+		C53DC6BF15D4378300CC7D14 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ClifePrescriptionsViewController.xib; sourceTree = "<group>"; };
 		C53DC6C615D4378300CC7D14 /* CLifeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CLifeTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53DC6C715D4378300CC7D14 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		C53DC6CF15D4378300CC7D14 /* CLifeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CLifeTests-Info.plist"; sourceTree = "<group>"; };
@@ -491,6 +526,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5277E7D915DD4BD6003A1DCF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5277E80215DD6DC8003A1DCF /* Abstract */,
+				C53DC6AD15D4378300CC7D14 /* ClifeProfileViewController.h */,
+				C53DC6AE15D4378300CC7D14 /* ClifeProfileViewController.m */,
+				C53DC6BB15D4378300CC7D14 /* ClifeProfileViewController.xib */,
+				C53DC6B415D4378300CC7D14 /* ClifePrescriptionsViewController.h */,
+				C53DC6B515D4378300CC7D14 /* ClifePrescriptionsViewController.m */,
+				C53DC6BE15D4378300CC7D14 /* ClifePrescriptionsViewController.xib */,
+				5277E82615DEE023003A1DCF /* ClifePrescriptionDetailsViewController.h */,
+				5277E82715DEE026003A1DCF /* ClifePrescriptionDetailsViewController.m */,
+				5277E82815DEE031003A1DCF /* ClifePrescriptionDetailsViewController.xib */,
+				5277E7E915DD5226003A1DCF /* ClifeHistoryViewController.h */,
+				5277E7EA15DD5226003A1DCF /* ClifeHistoryViewController.m */,
+				5277E7EB15DD5226003A1DCF /* ClifeHistoryViewController.xib */,
+				5277E7E415DD5209003A1DCF /* ClifeTableViewController.h */,
+				5277E7E515DD5209003A1DCF /* ClifeTableViewController.m */,
+				5277E7E615DD5209003A1DCF /* ClifeTableViewController.xib */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		5277E7DA15DD4C0F003A1DCF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5277E81C15DEBF6B003A1DCF /* delete_red.png */,
+				5277E81D15DEBF6B003A1DCF /* delete_red@2x.png */,
+				5277E7DC15DD4D48003A1DCF /* icon-profile.png */,
+				5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */,
+				5277E7E015DD4F7E003A1DCF /* icon-medical.png */,
+				5277E7E115DD4F7E003A1DCF /* icon-medical@2x.png */,
+				5277E7FA15DD6B67003A1DCF /* icon-clock.png */,
+				5277E7FB15DD6B67003A1DCF /* icon-clock@2x.png */,
+				5277E7F815DD62F1003A1DCF /* Localizable.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		5277E80215DD6DC8003A1DCF /* Abstract */ = {
+			isa = PBXGroup;
+			children = (
+				5277E80315DD6DE6003A1DCF /* BaseViewController.h */,
+				5277E80415DD6DE6003A1DCF /* BaseViewController.m */,
+			);
+			name = Abstract;
+			sourceTree = "<group>";
+		};
 		C53DC68C15D4378300CC7D14 = {
 			isa = PBXGroup;
 			children = (
@@ -506,6 +589,7 @@
 				C53DC71615D4398300CC7D14 /* libz.1.2.5.dylib */,
 				C53DC71715D4398300CC7D14 /* libz.dylib */,
 				C53DC6E215D437FE00CC7D14 /* Platform */,
+				5277E7DA15DD4C0F003A1DCF /* Resources */,
 				C53DC6A115D4378300CC7D14 /* CLife */,
 				C53DC6CD15D4378300CC7D14 /* CLifeTests */,
 				C53DC69A15D4378300CC7D14 /* Frameworks */,
@@ -537,19 +621,10 @@
 			isa = PBXGroup;
 			children = (
 				C53DC87415D4415300CC7D14 /* Views */,
+				5277E7D915DD4BD6003A1DCF /* Controllers */,
 				C53DC86415D43EBE00CC7D14 /* Macros.h */,
 				C53DC6AA15D4378300CC7D14 /* ClifeAppDelegate.h */,
 				C53DC6AB15D4378300CC7D14 /* ClifeAppDelegate.m */,
-				C53DC6AD15D4378300CC7D14 /* ClifeFirstViewController.h */,
-				C53DC6AE15D4378300CC7D14 /* ClifeFirstViewController.m */,
-				C53DC6B015D4378300CC7D14 /* first.png */,
-				C53DC6B215D4378300CC7D14 /* first@2x.png */,
-				C53DC6B415D4378300CC7D14 /* ClifeSecondViewController.h */,
-				C53DC6B515D4378300CC7D14 /* ClifeSecondViewController.m */,
-				C53DC6B715D4378300CC7D14 /* second.png */,
-				C53DC6B915D4378300CC7D14 /* second@2x.png */,
-				C53DC6BB15D4378300CC7D14 /* ClifeFirstViewController.xib */,
-				C53DC6BE15D4378300CC7D14 /* ClifeSecondViewController.xib */,
 				C53DC6A215D4378300CC7D14 /* Supporting Files */,
 			);
 			path = CLife;
@@ -1030,6 +1105,10 @@
 		C53DC87515D4415900CC7D14 /* Generic */ = {
 			isa = PBXGroup;
 			children = (
+				5277E80615DD6EB4003A1DCF /* UILoginView.h */,
+				5277E80715DD6EB4003A1DCF /* UILoginView.m */,
+				5277E80915DD6EF0003A1DCF /* UICustomAlertView.h */,
+				5277E80A15DD6EF0003A1DCF /* UICustomAlertView.m */,
 				C53DC87615D4416A00CC7D14 /* UIProgressHUDView.h */,
 				C53DC87715D4416A00CC7D14 /* UIProgressHUDView.m */,
 				C53DC87815D4416A00CC7D14 /* UIProgressHUDView.xib */,
@@ -1092,6 +1171,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				pt,
 			);
 			mainGroup = C53DC68C15D4378300CC7D14;
 			productRefGroup = C53DC69815D4378300CC7D14 /* Products */;
@@ -1110,16 +1190,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				C53DC6A615D4378300CC7D14 /* InfoPlist.strings in Resources */,
-				C53DC6B115D4378300CC7D14 /* first.png in Resources */,
-				C53DC6B315D4378300CC7D14 /* first@2x.png in Resources */,
-				C53DC6B815D4378300CC7D14 /* second.png in Resources */,
-				C53DC6BA15D4378300CC7D14 /* second@2x.png in Resources */,
-				C53DC6BD15D4378300CC7D14 /* ClifeFirstViewController.xib in Resources */,
-				C53DC6C015D4378300CC7D14 /* ClifeSecondViewController.xib in Resources */,
+				C53DC6BD15D4378300CC7D14 /* ClifeProfileViewController.xib in Resources */,
+				C53DC6C015D4378300CC7D14 /* ClifePrescriptionsViewController.xib in Resources */,
 				C53DC71115D4394400CC7D14 /* HTNotifier.strings in Resources */,
 				C53DC77015D43C3800CC7D14 /* FBDialog.bundle in Resources */,
 				C53DC7B915D43C9400CC7D14 /* twitter_load.png in Resources */,
 				C53DC87A15D4416A00CC7D14 /* UIProgressHUDView.xib in Resources */,
+				5277E7DE15DD4D48003A1DCF /* icon-profile.png in Resources */,
+				5277E7DF15DD4D48003A1DCF /* icon-profile@2x.png in Resources */,
+				5277E7E215DD4F7E003A1DCF /* icon-medical.png in Resources */,
+				5277E7E315DD4F7E003A1DCF /* icon-medical@2x.png in Resources */,
+				5277E7E815DD5209003A1DCF /* ClifeTableViewController.xib in Resources */,
+				5277E7ED15DD5226003A1DCF /* ClifeHistoryViewController.xib in Resources */,
+				5277E7F615DD62F1003A1DCF /* Localizable.strings in Resources */,
+				5277E7FC15DD6B67003A1DCF /* icon-clock.png in Resources */,
+				5277E7FD15DD6B67003A1DCF /* icon-clock@2x.png in Resources */,
+				5277E81E15DEBF6B003A1DCF /* delete_red.png in Resources */,
+				5277E81F15DEBF6B003A1DCF /* delete_red@2x.png in Resources */,
+				5277E82A15DEE03F003A1DCF /* ClifePrescriptionDetailsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1156,8 +1244,8 @@
 			files = (
 				C53DC6A815D4378300CC7D14 /* main.m in Sources */,
 				C53DC6AC15D4378300CC7D14 /* ClifeAppDelegate.m in Sources */,
-				C53DC6AF15D4378300CC7D14 /* ClifeFirstViewController.m in Sources */,
-				C53DC6B615D4378300CC7D14 /* ClifeSecondViewController.m in Sources */,
+				C53DC6AF15D4378300CC7D14 /* ClifeProfileViewController.m in Sources */,
+				C53DC6B615D4378300CC7D14 /* ClifePrescriptionsViewController.m in Sources */,
 				C53DC70915D4394400CC7D14 /* NSString+DDXML.m in Sources */,
 				C53DC70A15D4394400CC7D14 /* DDXMLElementAdditions.m in Sources */,
 				C53DC70B15D4394400CC7D14 /* DDXMLDocument.m in Sources */,
@@ -1264,6 +1352,12 @@
 				C53DC87015D43F2F00CC7D14 /* CloudEnumeratorFactory.m in Sources */,
 				C53DC87315D43FCF00CC7D14 /* User.m in Sources */,
 				C53DC87915D4416A00CC7D14 /* UIProgressHUDView.m in Sources */,
+				5277E7E715DD5209003A1DCF /* ClifeTableViewController.m in Sources */,
+				5277E7EC15DD5226003A1DCF /* ClifeHistoryViewController.m in Sources */,
+				5277E80515DD6DE6003A1DCF /* BaseViewController.m in Sources */,
+				5277E80815DD6EB4003A1DCF /* UILoginView.m in Sources */,
+				5277E80B15DD6EF0003A1DCF /* UICustomAlertView.m in Sources */,
+				5277E82915DEE03F003A1DCF /* ClifePrescriptionDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1286,6 +1380,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		5277E7F815DD62F1003A1DCF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5277E7F715DD62F1003A1DCF /* en */,
+				5277E7F915DD6304003A1DCF /* pt */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		C53DC6A415D4378300CC7D14 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1294,20 +1397,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		C53DC6BB15D4378300CC7D14 /* ClifeFirstViewController.xib */ = {
+		C53DC6BB15D4378300CC7D14 /* ClifeProfileViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C53DC6BC15D4378300CC7D14 /* en */,
 			);
-			name = ClifeFirstViewController.xib;
+			name = ClifeProfileViewController.xib;
 			sourceTree = "<group>";
 		};
-		C53DC6BE15D4378300CC7D14 /* ClifeSecondViewController.xib */ = {
+		C53DC6BE15D4378300CC7D14 /* ClifePrescriptionsViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C53DC6BF15D4378300CC7D14 /* en */,
 			);
-			name = ClifeSecondViewController.xib;
+			name = ClifePrescriptionsViewController.xib;
 			sourceTree = "<group>";
 		};
 		C53DC6D015D4378300CC7D14 /* InfoPlist.strings */ = {
