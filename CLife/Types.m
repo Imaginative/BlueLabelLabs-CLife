@@ -12,26 +12,29 @@
 NSString* const USER                        = @"user";
 NSString* const QUERY                       = @"query";
 NSString* const ATTRIBUTEINSTANCEDATA       = @"AttributeInstanceData";
-NSString* const CAPTION                     = @"caption";
+//NSString* const CAPTION                     = @"caption";
 NSString* const APPLICATIONSETTINGS         = @"applicationsettings";
-NSString* const PHOTO                       = @"photo";
+//NSString* const PHOTO                       = @"photo";
 NSString* const TYPEINSTANCEDATA            = @"TypeInstanceData";
 NSString* const REQUEST                     = @"request";
 NSString* const AUTHENTICATIONCONTEXT       =@"authenticationcontext";
-NSString* const PAGE                        =@"page";
+//NSString* const PAGE                        =@"page";
 NSString* const FEED                        =@"feed";
-NSString* const POLL                        =@"poll";
-NSString* const VOTE                        =@"vote";
-NSString* const FOLLOW                      =@"follow";
+//NSString* const POLL                        =@"poll";
+//NSString* const VOTE                        =@"vote";
+//NSString* const FOLLOW                      =@"follow";
 NSString* const ATTRIBUTECHANGE             =@"attributechange";
-NSString* const MEDITATION                  =@"meditation";
-NSString* const MEDITATIONINSTANCE          =@"meditationinstance";
+//NSString* const MEDITATION                  =@"meditation";
+//NSString* const MEDITATIONINSTANCE          =@"meditationinstance";
 
 
-NSString* const FRIEND                      =@"Friend";
-NSString* const WORD                        =@"Word";
-NSString* const MIME                        =@"Mime";
-NSString* const MIMEANSWER                  =@"MimeAnswer";
-NSString* const COMMENT                     =@"Comment";
-NSString* const FAVORITE                    =@"Favorite";
-NSString* const CONTACT                     =@"Contact";
+//NSString* const FRIEND                      =@"Friend";
+//NSString* const WORD                        =@"Word";
+//NSString* const MIME                        =@"Mime";
+//NSString* const MIMEANSWER                  =@"MimeAnswer";
+//NSString* const COMMENT                     =@"Comment";
+//NSString* const FAVORITE                    =@"Favorite";
+//NSString* const CONTACT                     =@"Contact";
+
+NSString* const PRESCRIPTION                  =@"Prescription";
+NSString* const PRESCRIPTIONINSTANCE        =@"PrescriptionInstance";

@@ -156,12 +156,14 @@
 		C53DC86715D43EF100CC7D14 /* ApplicationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC86615D43EF100CC7D14 /* ApplicationSettings.m */; };
 		C53DC86C15D43F0D00CC7D14 /* Feed.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC86915D43F0D00CC7D14 /* Feed.m */; };
 		C53DC86D15D43F0D00CC7D14 /* FeedData.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC86B15D43F0D00CC7D14 /* FeedData.m */; };
-		C53DC87015D43F2F00CC7D14 /* CloudEnumeratorFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC86F15D43F2F00CC7D14 /* CloudEnumeratorFactory.m */; };
 		C53DC87315D43FCF00CC7D14 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC87215D43FCF00CC7D14 /* User.m */; };
 		C53DC87915D4416A00CC7D14 /* UIProgressHUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = C53DC87715D4416A00CC7D14 /* UIProgressHUDView.m */; };
 		C53DC87A15D4416A00CC7D14 /* UIProgressHUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53DC87815D4416A00CC7D14 /* UIProgressHUDView.xib */; };
 		C53DC87C15D4417D00CC7D14 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC87B15D4417D00CC7D14 /* CoreData.framework */; };
 		C53DC87E15D441AE00CC7D14 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC87D15D441AE00CC7D14 /* QuartzCore.framework */; };
+		C5A4887015DAA9C50023180C /* PlatformDataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = C5A4886F15DAA9C50023180C /* PlatformDataModel.xcdatamodel */; };
+		C5A4887315DAB1C10023180C /* Prescription.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4887215DAB1C10023180C /* Prescription.m */; };
+		C5A4887615DABFFE0023180C /* PrescriptionInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4887515DABFFE0023180C /* PrescriptionInstance.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -479,8 +481,6 @@
 		C53DC86915D43F0D00CC7D14 /* Feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Feed.m; sourceTree = "<group>"; };
 		C53DC86A15D43F0D00CC7D14 /* FeedData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedData.h; sourceTree = "<group>"; };
 		C53DC86B15D43F0D00CC7D14 /* FeedData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedData.m; sourceTree = "<group>"; };
-		C53DC86E15D43F2F00CC7D14 /* CloudEnumeratorFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudEnumeratorFactory.h; sourceTree = "<group>"; };
-		C53DC86F15D43F2F00CC7D14 /* CloudEnumeratorFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudEnumeratorFactory.m; sourceTree = "<group>"; };
 		C53DC87115D43FCF00CC7D14 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		C53DC87215D43FCF00CC7D14 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		C53DC87615D4416A00CC7D14 /* UIProgressHUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIProgressHUDView.h; sourceTree = "<group>"; };
@@ -488,6 +488,11 @@
 		C53DC87815D4416A00CC7D14 /* UIProgressHUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIProgressHUDView.xib; sourceTree = "<group>"; };
 		C53DC87B15D4417D00CC7D14 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C53DC87D15D441AE00CC7D14 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C5A4886F15DAA9C50023180C /* PlatformDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatformDataModel.xcdatamodel; sourceTree = "<group>"; };
+		C5A4887115DAB1C10023180C /* Prescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prescription.h; sourceTree = "<group>"; };
+		C5A4887215DAB1C10023180C /* Prescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Prescription.m; sourceTree = "<group>"; };
+		C5A4887415DABFFE0023180C /* PrescriptionInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrescriptionInstance.h; sourceTree = "<group>"; };
+		C5A4887515DABFFE0023180C /* PrescriptionInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrescriptionInstance.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1014,8 +1019,6 @@
 		C53DC7FE15D43DA600CC7D14 /* Enumeration */ = {
 			isa = PBXGroup;
 			children = (
-				C53DC86E15D43F2F00CC7D14 /* CloudEnumeratorFactory.h */,
-				C53DC86F15D43F2F00CC7D14 /* CloudEnumeratorFactory.m */,
 				C53DC81715D43E2700CC7D14 /* CloudEnumerator.h */,
 				C53DC81815D43E2700CC7D14 /* CloudEnumerator.m */,
 				C53DC81915D43E2700CC7D14 /* Query.h */,
@@ -1067,6 +1070,7 @@
 		C53DC80015D43DB800CC7D14 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				C5A4886F15DAA9C50023180C /* PlatformDataModel.xcdatamodel */,
 				C53DC87115D43FCF00CC7D14 /* User.h */,
 				C53DC87215D43FCF00CC7D14 /* User.m */,
 				C53DC86815D43F0D00CC7D14 /* Feed.h */,
@@ -1075,6 +1079,10 @@
 				C53DC86B15D43F0D00CC7D14 /* FeedData.m */,
 				C53DC86515D43EF100CC7D14 /* ApplicationSettings.h */,
 				C53DC86615D43EF100CC7D14 /* ApplicationSettings.m */,
+				C5A4887115DAB1C10023180C /* Prescription.h */,
+				C5A4887215DAB1C10023180C /* Prescription.m */,
+				C5A4887415DABFFE0023180C /* PrescriptionInstance.h */,
+				C5A4887515DABFFE0023180C /* PrescriptionInstance.m */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -1349,7 +1357,6 @@
 				C53DC86715D43EF100CC7D14 /* ApplicationSettings.m in Sources */,
 				C53DC86C15D43F0D00CC7D14 /* Feed.m in Sources */,
 				C53DC86D15D43F0D00CC7D14 /* FeedData.m in Sources */,
-				C53DC87015D43F2F00CC7D14 /* CloudEnumeratorFactory.m in Sources */,
 				C53DC87315D43FCF00CC7D14 /* User.m in Sources */,
 				C53DC87915D4416A00CC7D14 /* UIProgressHUDView.m in Sources */,
 				5277E7E715DD5209003A1DCF /* ClifeTableViewController.m in Sources */,

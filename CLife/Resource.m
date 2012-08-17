@@ -177,11 +177,11 @@
     BOOL retVal = YES;
     
     //hack to ensure follows are always uploaded to the cloud
-    if ([self.objecttype isEqualToString:FOLLOW])
-    {
-        retVal = YES;
-        return retVal;
-    }
+//    if ([self.objecttype isEqualToString:FOLLOW])
+//    {
+//        retVal = YES;
+//        return retVal;
+//    }
     
     
     if (self.typeinstancedata == nil ||

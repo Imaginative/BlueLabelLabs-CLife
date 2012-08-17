@@ -79,7 +79,7 @@ insertIntoResourceContext:(ResourceContext *)context
     retVal.isdirty = [NSNumber numberWithBool:NO];
     retVal.islocked = [NSNumber numberWithBool:NO];
     retVal.isurlattachment = [NSNumber numberWithBool:NO];
-    retVal.islocal = [NSNumber numberWithBool:NO];
+    retVal.islocal = [NSNumber numberWithBool:YES];
     
     //if this attribute is a datemodified or datecreated, we lock it so its not overwritten by the service
     NSString* lowerCaseName = [attribute lowercaseString];
@@ -98,25 +98,7 @@ insertIntoResourceContext:(ResourceContext *)context
         retVal.isurlattachment = [NSNumber numberWithBool:YES];
     }
     
-    //we mark topcaptionid as being a local variable
-    if ([lowerCaseName isEqualToString:TOPVOTEDCAPTIONID] ||
-        [lowerCaseName isEqualToString:NUMBEROFUNREADCAPTIONS])
-    {
-        retVal.islocal = [NSNumber numberWithBool:YES];
-    }
-    
-    //we mark hasopened, hasvoted,as local only attributes
-    if (
-        [lowerCaseName isEqualToString:HASVOTED] ||
-        [lowerCaseName isEqualToString:ISFAVORITE] ||
-        [lowerCaseName isEqualToString:HASANSWERED]) {
-        retVal.islocal = [NSNumber numberWithBool:YES];
-        retVal.islocked = [NSNumber numberWithBool:YES];
-    }
-    
-
-    
-    
+       
     
     //we mark has seen as being a locked value, so it doesnt get overwritten by the server
     if ([lowerCaseName isEqualToString:HASSEEN]) {
@@ -124,51 +106,9 @@ insertIntoResourceContext:(ResourceContext *)context
         retVal.islocal = [NSNumber numberWithBool:YES];
     }
     
-    //we mark numberofvotes attributes on Page and Photo objects local
-    if ([type isEqualToString:PAGE] ||
-        [type isEqualToString:PHOTO] ||
-        [type isEqualToString:WORD] ||
-        [type isEqualToString:MIME]) {
-        
-        if ([lowerCaseName isEqualToString:NUMBEROFVOTES] ||
-            [lowerCaseName isEqualToString:NUMBEROFPHOTOS] ||
-            [lowerCaseName isEqualToString:NUMBEROFCAPTIONS] ||
-            [lowerCaseName isEqualToString:NUMBEROFPUBLISHVOTES] ||
-            [lowerCaseName isEqualToString:NUMBEROFFLAGS] ||
-            [lowerCaseName isEqualToString:NUMBEROFTIMESUSED] ||
-            [lowerCaseName isEqualToString:NUMBERTIMESANSWERED]) {
-            retVal.islocal = [NSNumber numberWithBool:YES];
-        }
-    }
+
     
-    //we mark the thumbnail, numberoffollowers, numberffollowing attribute on the user local
-    if ([type isEqualToString:USER]) {
-        if (
-            [lowerCaseName isEqualToString:NUMBEROFFOLLOWERS] ||
-            [lowerCaseName isEqualToString:NUMBERFOLLOWING] ||
-            [lowerCaseName isEqualToString:NUMBEROFPOINTS]) {
-            retVal.islocal = [NSNumber numberWithBool:YES];
-        }
-    }
-    
-    if ([lowerCaseName isEqualToString:NUMBEROFVOTES] ||
-        [lowerCaseName isEqualToString:NUMBEROFCAPTIONS] ||
-        [lowerCaseName isEqualToString:NUMBEROFPHOTOS] ||
-        [lowerCaseName isEqualToString:NUMBEROFPUBLISHVOTES]||
-        [lowerCaseName isEqualToString:NUMBEROFFLAGS] ||
-        [lowerCaseName isEqualToString:NUMBEROFFOLLOWERS] ||
-        [lowerCaseName isEqualToString:NUMBERFOLLOWING] ||
-        [lowerCaseName isEqualToString:NUMLIKES] ||
-        [lowerCaseName isEqualToString:NUMPEOPLE] ||
-        [lowerCaseName isEqualToString:NUMTIMESCOMPLETED] ||
-        [lowerCaseName isEqualToString:NUMTIMESSTARTED] ||
-        [lowerCaseName isEqualToString:NUMBEROFTIMESUSED] ||
-        [lowerCaseName isEqualToString:NUMBEROFATTEMPTS] ||
-        [lowerCaseName isEqualToString:NUMBEROFTIMESVIEWED]) {
-        //these are all counter variables
-        retVal.iscounter = [NSNumber numberWithBool:YES];
-    }
-    
+       
     
     //we mark the baseURL property of the application settings object type
     //as being a locked attribute
