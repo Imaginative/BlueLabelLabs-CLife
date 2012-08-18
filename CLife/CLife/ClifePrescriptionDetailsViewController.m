@@ -244,7 +244,7 @@
                 
                 self.tf_dosageAmount = [[UITextField alloc] initWithFrame:CGRectMake(110, 0, 170, 21)];
                 self.tf_dosageAmount.adjustsFontSizeToFitWidth = YES;
-                self.tf_dosageAmount.textColor = [UIColor blackColor];
+                self.tf_dosageAmount.textColor = [UIColor darkGrayColor];
                 self.tf_dosageAmount.placeholder = NSLocalizedString(@"ENTER AMOUNT", nil);
                 self.tf_dosageAmount.keyboardType = UIKeyboardTypeNumberPad;
                 self.tf_dosageAmount.returnKeyType = UIReturnKeyDone;
@@ -409,8 +409,6 @@
     if (indexPath.section == 0) {
         // Medication Name selected
         
-//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
         // Scroll tableview to this row
         [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 0) animated:YES];
         
@@ -474,14 +472,19 @@
                 self.pv_dosageUnit.showsSelectionIndicator = YES;
             }
             
-            if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT UNIT", nil)] == NO) {
+            if ([targetCell.detailTextLabel.text isEqualToString:NSLocalizedString(@"SELECT UNIT", nil)] == NO) {
                 int row = [self.dosageUnitArray indexOfObject:targetCell.textLabel.text];
                 [self.pv_dosageUnit selectRow:row inComponent:0 animated:YES];
             }
             else {
                 targetCell.detailTextLabel.text = [self.dosageUnitArray objectAtIndex:0];
 //                targetCell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
-                targetCell.detailTextLabel.textColor = [UIColor blackColor];
+                targetCell.detailTextLabel.textColor = [UIColor darkGrayColor];
+            }
+            
+            if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT METHOD", nil)] == NO) {
+                int row = [self.methodArray indexOfObject:targetCell.textLabel.text];
+                [self.pv_method selectRow:row inComponent:0 animated:YES];
             }
             
             [self showPicker:self.pv_dosageUnit];
@@ -489,8 +492,6 @@
     }
     else if (indexPath.section == 3) {
         // Reason selected
-        
-//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         [self.tv_reason becomeFirstResponder];
         
@@ -694,14 +695,16 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSIndexPath *indexPath = [self.tbl_prescriptionDetails indexPathForSelectedRow];
     UITableViewCell *cell = [self.tbl_prescriptionDetails cellForRowAtIndexPath:indexPath];
-    cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-    cell.textLabel.textColor = [UIColor blackColor];
     
     if (pickerView == self.pv_method) {
         cell.textLabel.text = [self.methodArray objectAtIndex:row];
+        cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+        cell.textLabel.textColor = [UIColor blackColor];
     }
     else if (pickerView == self.pv_dosageUnit) {
         cell.detailTextLabel.text = [self.dosageUnitArray objectAtIndex:row];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+        cell.detailTextLabel.textColor = [UIColor darkGrayColor];
     }
 }
 
@@ -713,6 +716,10 @@
     
     // Scroll tableview to this row
     [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 335) animated:YES];
+    
+    // Mark this row selected
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+    [self.tbl_prescriptionDetails selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     
     // disable nav bar buttons until text entry complete
     if (self.prescriptionID == nil) {
@@ -740,9 +747,12 @@
     // reason textview editing has ended
     self.tv_reason = textView;
     
-    // Scroll tableview back to this row
-    NSIndexPath *indexPath = [self.tbl_prescriptionDetails indexPathForSelectedRow];
-    [self.tbl_prescriptionDetails scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    // Scroll tableview to this row
+    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 85) animated:YES];
+    
+    // Deselect this row
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+    [self.tbl_prescriptionDetails deselectRowAtIndexPath:indexPath animated:NO];
     
     // Add default text back if reason was left empty
     if ([self.tv_reason.text isEqualToString:@""] || [self.tv_reason.text isEqualToString:NSLocalizedString(@"ENTER REASON", nil)]) {
@@ -777,6 +787,18 @@
 {
     // textfield editing has begun
     
+    // Mark this row selected
+    NSIndexPath *indexPath;
+    if (textField == self.tf_medicationName) {
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
+    else if (textField == self.tf_dosageAmount) {
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 85) animated:YES];
+    }
+    [self.tbl_prescriptionDetails selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    
     // disable nav bar buttons until text entry complete
     if (self.prescriptionID == nil) {
         // New prescription
@@ -796,6 +818,16 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     // textfield editing has ended
+    
+    // Deselect this row
+    NSIndexPath *indexPath;
+    if (textField == self.tf_medicationName) {
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    }
+    else if (textField == self.tf_dosageAmount) {
+        indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
+    }
+    [self.tbl_prescriptionDetails deselectRowAtIndexPath:indexPath animated:NO];
     
     // Re-enable nav bar buttons until text entry complete
     if (self.prescriptionID == nil) {
