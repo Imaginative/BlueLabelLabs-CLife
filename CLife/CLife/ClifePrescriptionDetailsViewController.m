@@ -139,6 +139,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
+    
     return [self.sectionsArray count];
 }
 
@@ -174,8 +175,8 @@
             
             [cell setSelectionStyle:UITableViewCellEditingStyleNone];
             
-            self.tf_medicationName = [[UITextField alloc] initWithFrame:CGRectMake(10, 12, 280, 21)];
-            self.tf_medicationName.font = [UIFont systemFontOfSize:16.0];
+            self.tf_medicationName = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+            self.tf_medicationName.font = [UIFont systemFontOfSize:17.0];
             self.tf_medicationName.adjustsFontSizeToFitWidth = YES;
             self.tf_medicationName.textColor = [UIColor blackColor];
             self.tf_medicationName.placeholder = NSLocalizedString(@"ENTER MEDICATION NAME", nil);
@@ -278,6 +279,7 @@
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
                 
                 cell.textLabel.text = NSLocalizedString(@"UNIT", nil);
+                cell.detailTextLabel.textColor = [UIColor lightGrayColor];
                 cell.detailTextLabel.text = NSLocalizedString(@"SELECT UNIT", nil);
             }
             
@@ -304,12 +306,12 @@
             cell.textLabel.text = nil;
             [cell setSelectionStyle:UITableViewCellEditingStyleNone];
             
-            self.tv_reason = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 280, 100)];
+            self.tv_reason = [[UITextView alloc] initWithFrame:CGRectMake(5, 0, 290, 120)];
             self.tv_reason.font = [UIFont systemFontOfSize:16.0f];
             self.tv_reason.textColor = [UIColor lightGrayColor];
             self.tv_reason.text = NSLocalizedString(@"ENTER REASON", nil);
             self.tv_reason.keyboardType = UIKeyboardTypeDefault;
-            self.tv_reason.returnKeyType = UIReturnKeyDone;
+            self.tv_reason.returnKeyType = UIReturnKeyDefault;
             self.tv_reason.backgroundColor = [UIColor clearColor];
             self.tv_reason.autocorrectionType = UITextAutocorrectionTypeNo;
             self.tv_reason.autocapitalizationType = UITextAutocapitalizationTypeSentences;
@@ -402,14 +404,305 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    UITableViewCell *targetCell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    if (indexPath.section == 0) {
+        // Medication Name selected
+        
+//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        // Scroll tableview to this row
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 0) animated:YES];
+        
+        // Set the medication name text field as active
+        [self.tf_medicationName becomeFirstResponder];
+        
+    }
+    else if (indexPath.section == 1) {
+        // Method selected
+        
+        // Scroll tableview to this row
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 0) animated:YES];
+        
+        // Show the method picker
+        if (self.pv_method == nil) {
+            self.pv_method = [[UIPickerView alloc] init];
+            self.pv_method.dataSource = self;
+            self.pv_method.delegate = self;
+            
+            self.pv_method.showsSelectionIndicator = YES;
+        }
+        
+        if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT METHOD", nil)] == NO) {
+            int row = [self.methodArray indexOfObject:targetCell.textLabel.text];
+            [self.pv_method selectRow:row inComponent:0 animated:YES];
+        }
+        else {
+            targetCell.textLabel.text = [self.methodArray objectAtIndex:0];
+            targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
+            targetCell.textLabel.textColor = [UIColor blackColor];
+        }
+        
+        [self showPicker:self.pv_method];
+        
+    }
+    else if (indexPath.section == 2) {
+        // Dosage section
+        
+        if (indexPath.row == 0) {
+            // Dosage Amount row
+            
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            
+            // Scroll tableview to this row
+            [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 85) animated:YES];
+            
+            // Set the dosage amount text field as active
+            [self.tf_dosageAmount becomeFirstResponder];
+            
+        }
+        else if (indexPath.row == 1) {
+            // Dosage Unit row
+            
+            // Scroll tableview to this row
+            [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 130) animated:YES];
+            
+            if (self.pv_dosageUnit == nil) {
+                self.pv_dosageUnit = [[UIPickerView alloc] init];
+                self.pv_dosageUnit.dataSource = self;
+                self.pv_dosageUnit.delegate = self;
+                self.pv_dosageUnit.showsSelectionIndicator = YES;
+            }
+            
+            if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT UNIT", nil)] == NO) {
+                int row = [self.dosageUnitArray indexOfObject:targetCell.textLabel.text];
+                [self.pv_dosageUnit selectRow:row inComponent:0 animated:YES];
+            }
+            else {
+                targetCell.detailTextLabel.text = [self.dosageUnitArray objectAtIndex:0];
+//                targetCell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+                targetCell.detailTextLabel.textColor = [UIColor blackColor];
+            }
+            
+            [self showPicker:self.pv_dosageUnit];
+        }
+    }
+    else if (indexPath.section == 3) {
+        // Reason selected
+        
+//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        [self.tv_reason becomeFirstResponder];
+        
+    }
+}
+
+#pragma mark - UIPickerView Methods
+- (void)showPicker:(UIPickerView *)pickerView {
+    if (pickerView.superview == nil)
+    {
+        // Show the disabled background so user cannot touch into the tableview while picker is shown
+        [self.v_disabledBackground setAlpha:0.0];
+        [self.view bringSubviewToFront:self.v_disabledBackground];
+        
+        [self.view.window addSubview:pickerView];
+        
+        // size up the picker view to our screen and compute the start/end frame origin for our slide up animation
+        //
+        // compute the start frame
+        CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+        CGSize pickerSize = [pickerView sizeThatFits:CGSizeZero];
+        CGRect startRect = CGRectMake(0.0,
+                                      screenRect.origin.y + screenRect.size.height,
+                                      pickerSize.width, pickerSize.height);
+        pickerView.frame = startRect;
+        
+        // compute the end frame
+        CGRect pickerRect = CGRectMake(0.0,
+                                       screenRect.origin.y + screenRect.size.height - pickerSize.height,
+                                       pickerSize.width,
+                                       pickerSize.height);
+        // start the slide up animation
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3];
+        
+        // we need to perform some post operations after the animation is complete
+        [UIView setAnimationDelegate:self];
+        
+        pickerView.frame = pickerRect;
+        
+        // animate the showing of the disabled background so user cannot touch into the tableview while picker is shown
+        [self.v_disabledBackground setAlpha:0.4];
+        
+        [UIView commitAnimations];
+        
+        // add the "Done" button to the nav bar
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                        target:self
+                                        action:@selector(pickerDoneAction:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
+        
+        // disable the "Cancel" button if it is shown
+        if (self.prescriptionID == nil) {
+            // New prescription
+            self.navigationItem.leftBarButtonItem.enabled = NO;
+        }
+    }
+}
+
+- (void)pickerDoneAction:(id)sender
+{
+    // Determine which picker to hide
+    BOOL pickerInSuperView = NO;
+    UIPickerView *pickerView;
+    if (self.pv_startDate.superview != nil) {
+        pickerInSuperView = YES;
+        pickerView = (UIPickerView *)self.pv_startDate;
+    }
+    else if (self.pv_method.superview != nil) {
+        pickerInSuperView = YES;
+        pickerView = self.pv_method;
+    }
+    else if (self.pv_dosageUnit.superview != nil) {
+        pickerInSuperView = YES;
+        pickerView = self.pv_dosageUnit;
+    }
+    
+    if (pickerInSuperView == YES) {
+        CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+        CGRect endFrame = pickerView.frame;
+        endFrame.origin.y = screenRect.origin.y + screenRect.size.height;
+        
+        // start the slide down animation
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3];
+        
+        // we need to perform some post operations after the animation is complete
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(slideDownDidStop)];
+        
+        pickerView.frame = endFrame;
+        
+        // Hide the disabled background
+        [self.v_disabledBackground setAlpha:0.0];
+        
+        [UIView commitAnimations];
+        
+        // remove the "Done" button in the nav bar
+        self.navigationItem.rightBarButtonItem = nil;
+        
+        // deselect the current table row
+        NSIndexPath *indexPath = [self.tbl_prescriptionDetails indexPathForSelectedRow];
+        [self.tbl_prescriptionDetails deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+- (void)slideDownDidStop
+{
+    // the picker has finished sliding downwards, so remove it
+    
+    [self.view sendSubviewToBack:self.v_disabledBackground];
+    
+    // Determine which picker to remove
+    BOOL pickerInSuperView = NO;
+    UIPickerView *pickerView;
+    if (self.pv_startDate.superview != nil) {
+        pickerInSuperView = YES;
+        pickerView = (UIPickerView *)self.pv_startDate;
+    }
+    else if (self.pv_method.superview != nil) {
+        pickerInSuperView = YES;
+        pickerView = self.pv_method;
+    }
+    else if (self.pv_dosageUnit.superview != nil) {
+        pickerInSuperView = YES;
+        pickerView = self.pv_dosageUnit;
+    }
+    
+    if (pickerInSuperView == YES) {
+        [pickerView removeFromSuperview];
+    }
+    
+    
+    if (self.prescriptionID == nil) {
+        // New prescription
+        self.navigationItem.leftBarButtonItem.enabled = YES;
+        
+        // add the "Done" button back to the nav bar
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                        target:self
+                                        action:@selector(onDoneAddingPrescriptionButtonPressed:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
+    }
+    else {
+        // editing existing prescription
+        
+        // add the "Done" button to the nav bar
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                        target:self
+                                        action:@selector(doneEditingProfile:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
+    }
+}
+
+#pragma mark UIDatePickerView Methods
+- (void)dateChanged:(id)sender
+{
+    NSIndexPath *indexPath = [self.tbl_prescriptionDetails indexPathForSelectedRow];
+    UITableViewCell *cell = [self.tbl_prescriptionDetails cellForRowAtIndexPath:indexPath];
+    cell.textLabel.text = [self.dateFormatter stringFromDate:self.pv_startDate.date];
+    cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+    cell.textLabel.textColor = [UIColor blackColor];
+}
+
+#pragma mark UIPickerView Data Source
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    if (pickerView == self.pv_method) {
+        return [self.methodArray count];
+    }
+    else if (pickerView == self.pv_dosageUnit) {
+        return [self.dosageUnitArray count];
+    }
+    else {
+        return 0;
+    }
+}
+
+#pragma mark UIPickerView Delegate
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if (pickerView == self.pv_method) {
+        return [self.methodArray objectAtIndex:row];
+    }
+    else if (pickerView == self.pv_dosageUnit) {
+        return [self.dosageUnitArray objectAtIndex:row];
+    }
+    else {
+        return nil;
+    }
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    NSIndexPath *indexPath = [self.tbl_prescriptionDetails indexPathForSelectedRow];
+    UITableViewCell *cell = [self.tbl_prescriptionDetails cellForRowAtIndexPath:indexPath];
+    cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+    cell.textLabel.textColor = [UIColor blackColor];
+    
+    if (pickerView == self.pv_method) {
+        cell.textLabel.text = [self.methodArray objectAtIndex:row];
+    }
+    else if (pickerView == self.pv_dosageUnit) {
+        cell.detailTextLabel.text = [self.dosageUnitArray objectAtIndex:row];
+    }
 }
 
 #pragma mark - UITextview and TextField Delegate Methods
@@ -418,21 +711,38 @@
     // reason textview editing has begun
     self.tv_reason = textView;
     
-    // disable "Done" and "Cancel" buttons until text entry complete
-    self.navigationItem.rightBarButtonItem.enabled = NO;
-    self.navigationItem.leftBarButtonItem.enabled = NO;
+    // Scroll tableview to this row
+    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 335) animated:YES];
+    
+    // disable nav bar buttons until text entry complete
+    if (self.prescriptionID == nil) {
+        // New prescription
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+    }
+    else {
+        // Editing existing prescription
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
     
     // Clear the default text of the caption textview upon startin to edit
     if ([self.tv_reason.text isEqualToString:NSLocalizedString(@"ENTER REASON", nil)]) {
         [self.tv_reason setText:@""];
         self.tv_reason.textColor = [UIColor blackColor];
     }
+    
+    // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+    [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     // reason textview editing has ended
     self.tv_reason = textView;
+    
+    // Scroll tableview back to this row
+    NSIndexPath *indexPath = [self.tbl_prescriptionDetails indexPathForSelectedRow];
+    [self.tbl_prescriptionDetails scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     
     // Add default text back if reason was left empty
     if ([self.tv_reason.text isEqualToString:@""] || [self.tv_reason.text isEqualToString:NSLocalizedString(@"ENTER REASON", nil)]) {
@@ -446,9 +756,19 @@
         
     }
     
-    // Re-enable "Done" and "Cancel" buttons
-    self.navigationItem.rightBarButtonItem.enabled = YES;
-    self.navigationItem.leftBarButtonItem.enabled = YES;
+    // Re-enable nav bar buttons until text entry complete
+    if (self.prescriptionID == nil) {
+        // New prescription
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
+    }
+    else {
+        // Editing existing prescription
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+    
+    // remove the tap gesture recognizer so it does not interfere with other table view touches
+    [self.tbl_prescriptionDetails removeGestureRecognizer:self.gestureRecognizer];
     
 }
 
@@ -457,9 +777,16 @@
 {
     // textfield editing has begun
     
-    // disable "Done" and "Delete" buttons until text entry complete
-    self.navigationItem.rightBarButtonItem.enabled = NO;
-    self.navigationItem.leftBarButtonItem.enabled = NO;
+    // disable nav bar buttons until text entry complete
+    if (self.prescriptionID == nil) {
+        // New prescription
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+    }
+    else {
+        // Editing existing prescription
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+    }
     
     // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
     [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
@@ -470,9 +797,16 @@
 {
     // textfield editing has ended
     
-    // Re-enable "Done" and "Delete" buttons
-    self.navigationItem.rightBarButtonItem.enabled = YES;
-    self.navigationItem.leftBarButtonItem.enabled = YES;
+    // Re-enable nav bar buttons until text entry complete
+    if (self.prescriptionID == nil) {
+        // New prescription
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        self.navigationItem.leftBarButtonItem.enabled = YES;
+    }
+    else {
+        // Editing existing prescription
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
     
     // remove the tap gesture recognizer so it does not interfere with other table view touches
     [self.tbl_prescriptionDetails removeGestureRecognizer:self.gestureRecognizer];
@@ -509,28 +843,49 @@
 }
 
 #pragma mark - UI Action Methods
-- (void)showDeleteNavBarButton {
-    
-    
-    // add the "Delete" button to the nav bar
+//- (void)showDeleteNavBarButton {
+//    // add the "Delete" button to the nav bar
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [button setBackgroundImage:[UIImage imageNamed:@"delete_red.png"] forState:UIControlStateNormal];
+//    [button setTitle:NSLocalizedString(@"DELETE", nil) forState:UIControlStateNormal];
+//    button.titleLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+//    button.titleLabel.shadowColor = [UIColor lightGrayColor];
+//    button.titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
+//    [button.layer setCornerRadius:5.0f];
+//    [button.layer setMasksToBounds:YES];
+//    [button.layer setBorderWidth:1.0f];
+//    [button.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
+//    button.frame=CGRectMake(0.0, 100.0, 60.0, 30.0);
+//    
+//    [button addTarget:self action:@selector(onDeletePrescriptionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem* leftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    
+//    self.navigationItem.leftBarButtonItem = leftButton;
+//    [leftButton release];
+//}
+
+- (void)showDeleteButton {
+    // add the "Delete" button to the footer of the tableview
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:[UIImage imageNamed:@"delete_red.png"] forState:UIControlStateNormal];
-    [button setTitle:NSLocalizedString(@"DELETE", nil) forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+    [button setTitle:NSLocalizedString(@"DELETE PROFILE", nil) forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:17.0f];
     button.titleLabel.shadowColor = [UIColor lightGrayColor];
     button.titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
-    [button.layer setCornerRadius:5.0f];
+    [button.layer setCornerRadius:10.0f];
     [button.layer setMasksToBounds:YES];
-    [button.layer setBorderWidth:1.0f];
+    [button.layer setBorderWidth:2.0f];
     [button.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
-    button.frame=CGRectMake(0.0, 100.0, 60.0, 30.0);
+    button.frame = CGRectMake(10.0f, 15.0f, 300.0f, 44.0f);
     
-    [button addTarget:self action:@selector(onDeletePrescriptionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(onDeletePprescriptionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem* leftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 80.0f)];
+    [footer addSubview:button];
     
-    self.navigationItem.leftBarButtonItem = leftButton;
-    [leftButton release];
+    self.tbl_prescriptionDetails.tableFooterView = footer;
+    [footer release];
 }
 
 - (void)hideKeyboard {
@@ -539,6 +894,9 @@
     }
     else if ([self.tf_dosageAmount isFirstResponder] == YES) {
         [self.tf_dosageAmount resignFirstResponder];
+    }
+    else if ([self.tv_reason isFirstResponder] == YES) {
+        [self.tv_reason resignFirstResponder];
     }
 }
 
@@ -557,8 +915,9 @@
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
     
-    // add the "Delete" button to the nav bar
-    [self showDeleteNavBarButton];
+    // add the "Delete" button to the table view's footer
+//    [self showDeleteNavBarButton];
+    [self showDeleteButton];
     
 }
 
@@ -580,7 +939,8 @@
     [rightButton release];
     
     // remove the "Delete" button
-    self.navigationItem.leftBarButtonItem = nil;
+//    self.navigationItem.leftBarButtonItem = nil;
+    self.tbl_prescriptionDetails.tableFooterView = nil;
 }
 
 - (void)deletePrescription {
@@ -588,17 +948,15 @@
 }
 
 - (void)onEditPrescriptionButtonPressed:(id)sender {
-    //    // Promt user to backup data before editing profile information
-    //    UIAlertView* alert = [[UIAlertView alloc]
-    //                          initWithTitle:NSLocalizedString(@"EDIT PROFILE", nil)
-    //                          message:NSLocalizedString(@"EDIT PROFILE MESSAGE", nil)
-    //                          delegate:self
-    //                          cancelButtonTitle:NSLocalizedString(@"YES", nil)
-    //                          otherButtonTitles:NSLocalizedString(@"NO", nil), nil];
-    //    [alert show];
-    //    [alert release];
-    
-    [self editPrescription];
+    // Promt user to backup data before editing profile information
+    UIAlertView* alert = [[UIAlertView alloc]
+                          initWithTitle:NSLocalizedString(@"EDIT PRESCRIPTION", nil)
+                          message:NSLocalizedString(@"EDIT PRESCRIPTION MESSAGE", nil)
+                          delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"YES", nil)
+                          otherButtonTitles:NSLocalizedString(@"NO", nil), nil];
+    [alert show];
+    [alert release];
 }
 
 - (void)onDeletePrescriptionButtonPressed:(id)sender {
@@ -621,16 +979,16 @@
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
-//#pragma mark - UIAlertView Delegate
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-//    if (buttonIndex == 0) {
-//        // Backup data
-//        NSLog(@"Backup data");
-//    }
-//    else {
-//        [self editPrescription];
-//    }
-//}
+#pragma mark - UIAlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        // Backup data
+        NSLog(@"Backup data");
+    }
+    else {
+        [self editPrescription];
+    }
+}
 
 #pragma mark - Static Initializers
 + (ClifePrescriptionDetailsViewController *)createInstanceForPrescriptionWithID:(NSNumber *)prescriptionID {

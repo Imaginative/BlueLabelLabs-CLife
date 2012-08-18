@@ -138,10 +138,10 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
-            cell.textLabel.text = nil;
             [cell setSelectionStyle:UITableViewCellEditingStyleNone];
             
-            self.tf_name = [[UITextField alloc] initWithFrame:CGRectMake(10, 0, 280, 21)];
+            self.tf_name = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+            self.tf_name.font = [UIFont systemFontOfSize:17.0];
             self.tf_name.adjustsFontSizeToFitWidth = YES;
             self.tf_name.textColor = [UIColor blackColor];
             self.tf_name.placeholder = NSLocalizedString(@"ENTER FULL NAME", nil);
@@ -154,7 +154,7 @@
             self.tf_name.delegate = self;
             [self.tf_name setEnabled:YES];
             
-            cell.accessoryView = self.tf_name;
+            [cell.contentView addSubview:self.tf_name];
             
         }
         
@@ -310,6 +310,12 @@
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
+        // Scroll tableview to this row
+        [self.tbl_profile setContentOffset:CGPointMake(0, 0) animated:YES];
+        
+        // Set the name text field as active
+        [self.tf_name becomeFirstResponder];
+        
     }
     else if (indexPath.section == 1) {
         // Birthday selected
@@ -325,8 +331,13 @@
             self.pv_birthday.maximumDate = [NSDate date];
         }
         
-        if ([self.dateFormatter dateFromString:targetCell.detailTextLabel.text]) {
-            self.pv_birthday.date = [self.dateFormatter dateFromString:targetCell.detailTextLabel.text];
+        if ([self.dateFormatter dateFromString:targetCell.textLabel.text]) {
+            self.pv_birthday.date = [self.dateFormatter dateFromString:targetCell.textLabel.text];
+        }
+        else {
+            targetCell.textLabel.text = [self.dateFormatter stringFromDate:self.pv_birthday.date];
+            targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
+            targetCell.textLabel.textColor = [UIColor blackColor];
         }
         
         [self showPicker:(UIPickerView *)self.pv_birthday];
@@ -435,8 +446,8 @@
         self.navigationItem.rightBarButtonItem = rightButton;
         [rightButton release];
         
-        // remove the "Delete" button
-        self.navigationItem.leftBarButtonItem = nil;
+//        // remove the "Delete" button
+//        self.navigationItem.leftBarButtonItem = nil;
     }
 }
 
@@ -521,8 +532,8 @@
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
     
-    // add the "Delete" button to the nav bar
-    [self showDeleteNavBarButton];
+//    // add the "Delete" button to the nav bar
+//    [self showDeleteNavBarButton];
 }
 
 #pragma mark UIDatePickerView Methods
@@ -589,7 +600,7 @@
     
     // disable "Done" and "Delete" buttons until text entry complete
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    self.navigationItem.leftBarButtonItem.enabled = NO;
+//    self.navigationItem.leftBarButtonItem.enabled = NO;
     
     // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
     [self.tbl_profile addGestureRecognizer:self.gestureRecognizer];
@@ -602,7 +613,7 @@
     
     // Re-enable "Done" and "Delete" buttons
     self.navigationItem.rightBarButtonItem.enabled = YES;
-    self.navigationItem.leftBarButtonItem.enabled = YES;
+//    self.navigationItem.leftBarButtonItem.enabled = YES;
     
     // remove the tap gesture recognizer so it does not interfere with other table view touches
     [self.tbl_profile removeGestureRecognizer:self.gestureRecognizer];
@@ -623,26 +634,49 @@
 }
 
 #pragma mark - UI Action Methods
-- (void)showDeleteNavBarButton {
-    // add the "Delete" button to the nav bar
+//- (void)showDeleteNavBarButton {
+//    // add the "Delete" button to the nav bar
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [button setBackgroundImage:[UIImage imageNamed:@"delete_red.png"] forState:UIControlStateNormal];
+//    [button setTitle:NSLocalizedString(@"DELETE", nil) forState:UIControlStateNormal];
+//    button.titleLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+//    button.titleLabel.shadowColor = [UIColor lightGrayColor];
+//    button.titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
+//    [button.layer setCornerRadius:5.0f];
+//    [button.layer setMasksToBounds:YES];
+//    [button.layer setBorderWidth:1.0f];
+//    [button.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
+//    button.frame=CGRectMake(0.0, 100.0, 60.0, 30.0);
+//    
+//    [button addTarget:self action:@selector(onDeleteProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem* leftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    
+//    self.navigationItem.leftBarButtonItem = leftButton;
+//    [leftButton release];
+//}
+
+- (void)showDeleteButton {
+    // add the "Delete" button to the footer of the tableview
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:[UIImage imageNamed:@"delete_red.png"] forState:UIControlStateNormal];
-    [button setTitle:NSLocalizedString(@"DELETE", nil) forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+    [button setTitle:NSLocalizedString(@"DELETE PROFILE", nil) forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont boldSystemFontOfSize:17.0f];
     button.titleLabel.shadowColor = [UIColor lightGrayColor];
     button.titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
-    [button.layer setCornerRadius:5.0f];
+    [button.layer setCornerRadius:10.0f];
     [button.layer setMasksToBounds:YES];
-    [button.layer setBorderWidth:1.0f];
+    [button.layer setBorderWidth:2.0f];
     [button.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
-    button.frame=CGRectMake(0.0, 100.0, 60.0, 30.0);
+    button.frame = CGRectMake(10.0f, 15.0f, 300.0f, 44.0f);
     
     [button addTarget:self action:@selector(onDeleteProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIBarButtonItem* leftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 80.0f)];
+    [footer addSubview:button];
     
-    self.navigationItem.leftBarButtonItem = leftButton;
-    [leftButton release];
+    self.tbl_profile.tableFooterView = footer;
+    [footer release];
 }
 
 - (void)hideKeyboard {
@@ -665,8 +699,9 @@
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
     
-    // add the "Delete" button to the nav bar
-    [self showDeleteNavBarButton];
+    // add the "Delete" button to the table view's footer
+//    [self showDeleteNavBarButton];
+    [self showDeleteButton];
     
 }
 
@@ -688,7 +723,8 @@
     [rightButton release];
     
     // remove the "Delete" button
-    self.navigationItem.leftBarButtonItem = nil;
+//    self.navigationItem.leftBarButtonItem = nil;
+    self.tbl_profile.tableFooterView = nil;
 }
 
 - (void)deleteProfile {

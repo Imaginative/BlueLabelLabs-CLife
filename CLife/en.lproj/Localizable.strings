@@ -42,6 +42,7 @@
 "EDIT PROFILE" = "Edit Profile";
 "EDIT PROFILE MESSAGE" = "Would you like to back up your history before editing your profile?";
 
+"DELETE PROFILE" = "Delete profile";
 "DELETE PROFILE MESSAGE" = "Deleting your profile will erase all data ￼and history. Would you like to export your data and history before deleting your profile?";
 
 // Prescriptions
@@ -72,6 +73,10 @@
 "ML" = "ml";
 "L" = "l";
 
+"EDIT PRESCRIPTION" = "Edit Prescription";
+"EDIT PRESCRIPTION MESSAGE" = "Would you like to back up your history before editing this prescription?";
+
+"DELETE PRESCRIPTION" = "Delete prescription";
 "DELETE PRESCRIPTION MESSAGE" = "Would you like to export your data and history before deleting this prescription?";
 
 
