@@ -7,6 +7,8 @@
 //
 
 #import "ClifePrescriptionDetailsViewController.h"
+#import "Prescription.h"
+#import "IDGenerator.h"
 
 @interface ClifePrescriptionDetailsViewController ()
 
@@ -969,6 +971,27 @@
                                     action:@selector(onEditProfileButtonPressed:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
+    
+    //we need to save the prescription object
+    IDGenerator* idGenerator = [IDGenerator instance];
+    NSNumber* prescriptionID = [idGenerator generateNewId:PRESCRIPTION];
+    NSString* prescriptionName = self.tf_medicationName.text;
+    
+    int selectedMethodIndex = [self.pv_method selectedRowInComponent:0];
+    NSString* method = [self.methodArray objectAtIndex:selectedMethodIndex];
+    NSString* dosageAmount = self.tf_dosageAmount.text;
+    
+    int selectedDosageIndex = [self.pv_dosageUnit selectedRowInComponent:0];
+    NSString* dosageUnit = [self.dosageUnitArray objectAtIndex:selectedDosageIndex];
+    
+    NSString* notes = self.tf_medicationName.text;
+    
+    ResourceContext* resourceContext = [ResourceContext instance];
+    Prescription* prescription = [Prescription createPrescription:prescriptionID  withName:prescriptionName withMethod:method withDosageAmount:dosageAmount withDosageUnit:dosageUnit withNotes:notes];
+    
+    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+    
+    
     
     // remove the "Delete" button
 //    self.navigationItem.leftBarButtonItem = nil;

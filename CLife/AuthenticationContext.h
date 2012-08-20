@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "Resource.h"
 #import "IJSONSerializable.h"
+#import "User.h"
 
 @interface AuthenticationContext : NSManagedObject <IJSONSerializable> {
 
@@ -32,6 +33,7 @@
 - (BOOL) hasTwitter;
 
 + (id)          createInstanceOfAuthenticationContext;
++ (id)          createInstanceOfAuthenticationContextForUser:(User*)user;
 + (id)          createInstanceOfAuthenticationContextFromJSON:(NSDictionary*)jsonDictionary;
 
 @end

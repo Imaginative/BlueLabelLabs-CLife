@@ -28,7 +28,8 @@
 
 @property (nonatomic,retain) NSString* sex;
 @property (nonatomic,retain) NSNumber* dateborn;
-@property (nonatomic,retain) NSNumber* bloodtype;
+@property (nonatomic,retain) NSString* bloodtype;
 
++ (User*) createNewDefaultUser;
 
 @end

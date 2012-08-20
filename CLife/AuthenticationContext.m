@@ -13,6 +13,7 @@
 #import "Macros.h"
 #import "NSStringGUIDCategory.h"
 
+
 @implementation AuthenticationContext
 @dynamic userid;
 @dynamic expirydate;
@@ -188,6 +189,18 @@
     AuthenticationContext* retVal = [[AuthenticationContext alloc]initWithEntity:entity insertIntoManagedObjectContext:nil];
     [retVal autorelease];
     return retVal;    
+}
+
++ (id) createInstanceOfAuthenticationContextForUser:(User*)user
+{
+    AuthenticationContext* authenticationContext = [AuthenticationContext createInstanceOfAuthenticationContext];
+    authenticationContext.userid = user.objectid;
+    authenticationContext.hastwitter = [NSNumber numberWithBool:NO];
+    authenticationContext.hasfacebook = [NSNumber numberWithBool:NO];
+    authenticationContext.isfirsttime = [NSNumber numberWithBool:NO];
+    authenticationContext.authenticator = [NSData data];
+    
+    return authenticationContext;
 }
 
 + (id) createInstanceOfAuthenticationContextFromJSON:(NSDictionary *)jsonDictionary {

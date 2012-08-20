@@ -365,6 +365,60 @@ withAuthenticationContext:(AuthenticationContext *)context
 
 }
 
+//this method creates a new user object and logs that user into the authentication manager
+//normally called during startup
+- (User*)createNewUserAndLogin
+{
+    NSString* activityName = @"AuthenticationManager.createNewUserAndLogin:";
+    
+    if (![self isUserAuthenticated])
+    {
+        //we need to create a new user object
+        User* newUser = [User createNewDefaultUser];
+        //we now have a new user
+        //let us save the user to the db
+        ResourceContext* resourceContext = [ResourceContext instance];
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        
+        LOG_SECURITY(0,@"%@Initialized new user object with ID:%@",activityName,[newUser.objectid stringValue]);
+        
+
+        
+        //now let us log this user in
+        AuthenticationContext* authenticationContext = [AuthenticationContext createInstanceOfAuthenticationContextForUser:newUser];
+        
+        authenticationContext.isfirsttime = [NSNumber numberWithBool:YES];
+        
+        //lets save the context
+        BOOL contextSavedToKeyChain = [self saveAuthenticationContextToKeychainForUser:authenticationContext.userid withAuthenticationContext:authenticationContext];
+        
+        if (contextSavedToKeyChain)
+        {
+            LOG_SECURITY(0,@"%@Successfully saved context for user %@",activityName,newUser.objectid);
+            BOOL result = [self loginUser:newUser.objectid withAuthenticationContext:authenticationContext isSavedLogin:NO];
+            if (result) {
+                LOG_SECURITY(0,@"%@Login completed successfully");
+                return newUser;
+            }
+            else {
+                LOG_SECURITY(1,@"%@Login failed for unknown reasons");
+                return nil;
+            }
+        }
+        else {
+            //error condition
+            LOG_SECURITY(1,@"%@Could not save authentication context for user %@",activityName,newUser.objectid);
+            return nil;
+        }
+        
+    }
+    else {
+        LOG_SECURITY(0,@"%@Skipping creation of new user has there is already one logged in",activityName);
+        return nil;
+    }
+}
+
+
 #pragma mark - Async Callback Handlers
 - (void) onGetAuthenticationContextDownloaded:(CallbackResult*)result {
     NSString* activityName = @"AuthenticationManager.onGetAuthenticationContextDownloaded:";

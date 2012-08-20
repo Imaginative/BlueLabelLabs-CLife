@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AuthenticationContext.h"
 #import "FBConnect.h"
+#import "User.h"
 
 @class SA_OAuthTwitterEngine;
 @interface AuthenticationManager : NSObject <FBSessionDelegate, FBRequestDelegate> {
@@ -38,6 +39,7 @@ withAuthenticationContext:(AuthenticationContext*)context  isSavedLogin:(BOOL)is
 - (BOOL)processAuthenticationResponse:(CallbackResult*)result;
 - (BOOL)saveAuthenticationContextToKeychainForUser:(NSNumber*)userID withAuthenticationContext:(AuthenticationContext*)context;
 - (void) logoff;
+- (User*) createNewUserAndLogin;
 + (id) instance;
 
 @end
