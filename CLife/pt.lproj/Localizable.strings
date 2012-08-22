@@ -8,5 +8,75 @@
 */
 
 
+// General
+"YES" = "Sim";
+"NO" = "Não";
+"DELETE" = "Excluir";
+"CANCEL" = "Cancelar";
+
+"DELETE WITH DATA EXPORT" = "Delete with data export";
+"DELETE WITHOUT DATA EXPORT" = "Delete without data export";
+
 // Tab Bar
-"PROFILE" = "Perfil";
+"PROFILE" = "Profile";
+"PRESCRIPTIONS" = "Prescriptions";
+"HISTORY" = "History";
+
+// Profile
+"NAME" = "Name";
+"ENTER FULL NAME" = "Enter full name";
+
+"ENTER BIRTHDAY" = "Enter birthday";
+"BIRTHDAY" = "Birthday";
+
+"GENDER" = "Gender";
+"SELECT GENDER" = "Select gender";
+"MALE" = "Male";
+"FEMALE" = "Female";
+
+"BLOOD TYPE" = "Blood Type";
+"SELECT BLOOD TYPE" = "Select blood type";
+"A" = "A";
+"B" = "B";
+"AB" = "AB";
+"O" = "O";
+
+"EDIT PROFILE" = "Edit Profile";
+"EDIT PROFILE MESSAGE" = "Would you like to back up your history before editing your profile?";
+
+"DELETE PROFILE" = "Delete profile";
+"DELETE PROFILE MESSAGE" = "Deleting your profile will erase all data ￼and history. Would you like to export your data and history before deleting your profile?";
+
+// Prescriptions
+"MEDICATION" = "Medication";
+"ENTER MEDICATION NAME" = "Enter medication name";
+
+"METHOD" = "Method";
+"SELECT METHOD" = "Select administration method";
+
+"DOSAGE" = "Dosage";
+"AMOUNT" = "Amount";
+"ENTER AMOUNT" = "Enter amount";
+"UNIT" = "Unit";
+"SELECT UNIT" = "Select unit";
+
+"REASON" = "Reason";
+"ENTER REASON" = "Enter the reason for this medication";
+
+"PILL" = "Pill";
+"LIQUID" = "Liquid";
+"TOPICAL" = "Topical";
+"SYRINGE" = "Syringe";
+
+"UG" = "ug";
+"MG" = "mg";
+"G" = "g";
+"UL" = "ul";
+"ML" = "ml";
+"L" = "l";
+
+"EDIT PRESCRIPTION" = "Edit Prescription";
+"EDIT PRESCRIPTION MESSAGE" = "Would you like to back up your history before editing this prescription?";
+
+"DELETE PRESCRIPTION" = "Delete prescription";
+"DELETE PRESCRIPTION MESSAGE" = "Would you like to export your data and history before deleting this prescription?";
