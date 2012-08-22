@@ -84,6 +84,44 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    
+    //we load up saved user information
+    AuthenticationManager* authenticationManager = [AuthenticationManager instance];
+    ResourceContext* resourceContext = [ResourceContext instance];
+    NSNumber* loggedInUserID = [authenticationManager m_LoggedInUserID];
+    
+    User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:loggedInUserID];
+    
+    //now lets load up the fields
+    if (loggedInUser.displayname != nil &&
+        ![loggedInUser.displayname isEqualToString:@""])
+    {
+        self.tf_name.text = loggedInUser.displayname;
+    }
+    
+    if (loggedInUser.bloodtype != nil &&
+        ![loggedInUser.bloodtype isEqualToString:@""])
+    {
+        //lets find the index of the user's blood type
+        int indexOfBloodType = [self.bloodTypeArray indexOfObject:loggedInUser.bloodtype];
+        [self.pv_bloodType selectRow:indexOfBloodType inComponent:0 animated:NO];
+        
+    }
+    
+    if (loggedInUser.sex != nil &&
+        ![loggedInUser.sex isEqualToString:@""])
+    {
+        //lets find the index of the user's sex
+        int indexOfGender = [self.genderArray indexOfObject:loggedInUser.sex];
+        [self.pv_gender selectRow:indexOfGender inComponent:0 animated:NO];
+        
+    }
+    
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -721,6 +759,55 @@
                                     action:@selector(onEditProfileButtonPressed:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
+    
+    
+    //we need to save the profile data to the current user object
+    NSNumber* loggedInUserID = [[AuthenticationManager instance]m_LoggedInUserID];
+    
+    //grabt he user object
+    ResourceContext* resourceContext = [ResourceContext instance];
+    User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:loggedInUserID];
+    
+    //now we update the user object iwth the changed properties
+    NSString* name = [self.tf_name text];
+    
+    int genderIndex = [self.pv_gender selectedRowInComponent:0];
+    NSString* gender = [self.genderArray objectAtIndex:genderIndex];
+    
+    int bloodIndex = [self.pv_bloodType selectedRowInComponent:0];
+    NSString* bloodType = [self.bloodTypeArray objectAtIndex:bloodIndex];
+    
+    
+    NSDate* birthday = self.pv_birthday.date;
+    
+    
+    
+    if (![loggedInUser.displayname isEqualToString:name])
+    {
+        loggedInUser.displayname = name; 
+    }
+    
+    if (![loggedInUser.sex isEqualToString:gender])
+    {
+        loggedInUser.sex = gender;
+    }
+    
+    if (![loggedInUser.bloodtype isEqualToString:bloodType])
+    {
+        loggedInUser.bloodtype = bloodType;
+    }
+    
+    if (birthday != nil)
+    {
+        double doubleBirthday = [birthday timeIntervalSince1970];
+        if ([loggedInUser.dateborn doubleValue] != doubleBirthday)
+        {
+            loggedInUser.dateborn = [NSNumber numberWithDouble:doubleBirthday];
+        }
+    }
+    
+    //now we save the changes
+    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
     
     // remove the "Delete" button
 //    self.navigationItem.leftBarButtonItem = nil;
