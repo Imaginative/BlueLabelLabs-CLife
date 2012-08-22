@@ -30,6 +30,12 @@
 @synthesize tv_reason               = m_tv_reason;
 @synthesize v_disabledBackground    = m_v_disabledBackground;
 @synthesize isEditing               = m_isEditing;
+@synthesize medicationName          = m_medicationName;
+@synthesize startDate               = m_startDate;
+@synthesize method                  = m_method;
+@synthesize dosageAmount            = m_dosageAmount;
+@synthesize dosageUnit              = m_dosageUnit;
+@synthesize reason                  = m_reason;
 
 
 #pragma mark - Initialization
@@ -648,7 +654,7 @@
         UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
                                         initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                         target:self
-                                        action:@selector(doneEditingProfile:)];
+                                        action:@selector(doneEditingPrescription:)];
         self.navigationItem.rightBarButtonItem = rightButton;
         [rightButton release];
     }
@@ -662,6 +668,9 @@
     cell.textLabel.text = [self.dateFormatter stringFromDate:self.pv_startDate.date];
     cell.textLabel.font = [UIFont systemFontOfSize:17.0];
     cell.textLabel.textColor = [UIColor blackColor];
+    
+    double doubleDate = [self.pv_startDate.date timeIntervalSince1970];
+    self.startDate = [NSNumber numberWithDouble:doubleDate];
 }
 
 #pragma mark UIPickerView Data Source
@@ -702,11 +711,15 @@
         cell.textLabel.text = [self.methodArray objectAtIndex:row];
         cell.textLabel.font = [UIFont systemFontOfSize:17.0];
         cell.textLabel.textColor = [UIColor blackColor];
+        
+        self.method = [self.methodArray objectAtIndex:row];
     }
     else if (pickerView == self.pv_dosageUnit) {
         cell.detailTextLabel.text = [self.dosageUnitArray objectAtIndex:row];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
         cell.detailTextLabel.textColor = [UIColor darkGrayColor];
+        
+        self.dosageUnit = [self.dosageUnitArray objectAtIndex:row];
     }
 }
 
@@ -765,6 +778,8 @@
         // caption is acceptable
         
         NSString *trimmedReason = [self.tv_reason.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        
+        self.reason = trimmedReason;
         
     }
     
@@ -825,9 +840,13 @@
     NSIndexPath *indexPath;
     if (textField == self.tf_medicationName) {
         indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        
+        self.medicationName = [self.tf_medicationName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     }
     else if (textField == self.tf_dosageAmount) {
         indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
+        
+        self.dosageAmount = [self.tf_dosageAmount.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     }
     [self.tbl_prescriptionDetails deselectRowAtIndexPath:indexPath animated:NO];
     
@@ -945,7 +964,7 @@
     UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
                                     initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                     target:self
-                                    action:@selector(doneEditingProfile:)];
+                                    action:@selector(doneEditingPrescription:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
     
@@ -955,7 +974,7 @@
     
 }
 
-- (void)doneEditingProfile:(id)sender {
+- (void)doneEditingPrescription:(id)sender {
     self.isEditing = NO;
     
     // Reload the table view to disable user interaction and accessory views on the tableview cells
@@ -972,30 +991,41 @@
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
     
-    //we need to save the prescription object
-    IDGenerator* idGenerator = [IDGenerator instance];
-    NSNumber* prescriptionID = [idGenerator generateNewId:PRESCRIPTION];
-    NSString* prescriptionName = self.tf_medicationName.text;
-    
-    int selectedMethodIndex = [self.pv_method selectedRowInComponent:0];
-    NSString* method = [self.methodArray objectAtIndex:selectedMethodIndex];
-    NSString* dosageAmount = self.tf_dosageAmount.text;
-    
-    int selectedDosageIndex = [self.pv_dosageUnit selectedRowInComponent:0];
-    NSString* dosageUnit = [self.dosageUnitArray objectAtIndex:selectedDosageIndex];
-    
-    NSString* notes = self.tf_medicationName.text;
-    
-    ResourceContext* resourceContext = [ResourceContext instance];
-    Prescription* prescription = [Prescription createPrescription:prescriptionID  withName:prescriptionName withMethod:method withDosageAmount:dosageAmount withDosageUnit:dosageUnit withNotes:notes];
-    
-    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-    
+//    //we need to save the prescription object
+//    IDGenerator* idGenerator = [IDGenerator instance];
+//    NSNumber* prescriptionID = [idGenerator generateNewId:PRESCRIPTION];
+//    NSString* prescriptionName = self.tf_medicationName.text;
+//    
+//    int selectedMethodIndex = [self.pv_method selectedRowInComponent:0];
+//    NSString* method = [self.methodArray objectAtIndex:selectedMethodIndex];
+//    NSString* dosageAmount = self.tf_dosageAmount.text;
+//    
+//    int selectedDosageIndex = [self.pv_dosageUnit selectedRowInComponent:0];
+//    NSString* dosageUnit = [self.dosageUnitArray objectAtIndex:selectedDosageIndex];
+//    
+//    NSString* notes = self.tf_medicationName.text;
+//    
+//    ResourceContext* resourceContext = [ResourceContext instance];
+//    Prescription* prescription = [Prescription createPrescription:prescriptionID  withName:prescriptionName withMethod:method withDosageAmount:dosageAmount withDosageUnit:dosageUnit withNotes:notes];
+//    
+//    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
     
     
     // remove the "Delete" button
 //    self.navigationItem.leftBarButtonItem = nil;
     self.tbl_prescriptionDetails.tableFooterView = nil;
+    
+    // Update the prescription properties and save
+    ResourceContext *resourceContext = [ResourceContext instance];
+    Prescription *prescription = (Prescription *)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
+    
+    prescription.name = self.medicationName;
+    prescription.datestart = self.startDate;
+    prescription.dosageamount = self.dosageAmount;
+    prescription.dosageunit = self.dosageUnit;
+    prescription.notes = self.reason;
+    
+    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
 }
 
 - (void)deletePrescription {
@@ -1027,6 +1057,14 @@
 }
 
 - (void)onDoneAddingPrescriptionButtonPressed:(id)sender {
+    ResourceContext* resourceContext = [ResourceContext instance];
+    
+    Prescription *prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withDosageAmount:self.dosageAmount withDosageUnit:self.dosageUnit withNotes:self.reason];   
+     
+    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+    
+    self.prescriptionID = prescription.objectid;
+    
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 

@@ -10,6 +10,8 @@
 #import "AuthenticationManager.h"
 #import "User.h"
 #import "DateTimeHelper.h"
+#import "IDGenerator.h"
+
 @implementation Prescription
 @dynamic name;
 @dynamic alert;
@@ -26,12 +28,11 @@
 
 
 #pragma mark - Static Initializers
-+ (Prescription*) createPrescription:(NSNumber *)prescriptionID 
-                            withName:(NSString *)name 
-                          withMethod:(NSString *)method 
-                    withDosageAmount:(NSString *)dosage 
-                      withDosageUnit:(NSString *)dosageUnit 
-                           withNotes:(NSString *)notes
++ (Prescription *) createPrescriptionWithName:(NSString *)name 
+                                   withMethod:(NSString *)method 
+                             withDosageAmount:(NSString *)dosage 
+                               withDosageUnit:(NSString *)dosageUnit 
+                                    withNotes:(NSString *)notes
 {
     
     
@@ -40,6 +41,9 @@
     Prescription* prescription = (Prescription*)[Resource createInstanceOfType:PRESCRIPTION withResourceContext:resourceContext];
     
     User* user = (User*)[resourceContext resourceWithType:USER withID:authenticationManager.m_LoggedInUserID];
+    
+    IDGenerator* idGenerator = [IDGenerator instance];
+    NSNumber* prescriptionID = [idGenerator generateNewId:PRESCRIPTION];
     
     prescription.objectid = prescriptionID;
     prescription.name = name;
@@ -60,7 +64,6 @@
     prescription.frequency = [NSNumber numberWithInt:0];
     
     return prescription;
-    
     
 }
 

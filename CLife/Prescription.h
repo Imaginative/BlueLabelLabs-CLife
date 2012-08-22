@@ -25,10 +25,9 @@
 @property (nonatomic,retain) NSNumber* userid;
 @property (nonatomic,retain) NSString* notes;
 
-+ (Prescription*) createPrescription:(NSNumber*)prescriptionID 
-                            withName:(NSString*)name 
-                          withMethod:(NSString*)method 
-                    withDosageAmount:(NSString*)dosage 
-                      withDosageUnit:(NSString*)dosageUnit 
-                           withNotes:(NSString*)notes;
++ (Prescription*) createPrescriptionWithName:(NSString *)name 
+                                  withMethod:(NSString *)method 
+                            withDosageAmount:(NSString *)dosage 
+                              withDosageUnit:(NSString *)dosageUnit 
+                                   withNotes:(NSString *)notes;
 @end

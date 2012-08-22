@@ -17,6 +17,7 @@
     NSNumber                *m_prescriptionID;
     
     UITextField             *m_tf_medicationName;
+    
     UITapGestureRecognizer  *m_gestureRecognizer;
     
     UIDatePicker            *m_pv_startDate;
@@ -34,6 +35,13 @@
     UIView                  *m_v_disabledBackground;
     
     BOOL                    m_isEditing;
+    
+    NSString                *m_medicationName;
+    NSNumber                *m_startDate;
+    NSString                *m_method;
+    NSString                *m_dosageAmount;
+    NSString                *m_dosageUnit;
+    NSString                *m_reason;
     
 }
 
@@ -60,6 +68,13 @@
 @property (nonatomic, retain) IBOutlet  UIView                  *v_disabledBackground;
 
 @property (nonatomic, assign)           BOOL                    isEditing;
+
+@property (nonatomic, retain)           NSString                *medicationName;
+@property (nonatomic, retain)           NSNumber                *startDate;
+@property (nonatomic, retain)           NSString                *method;
+@property (nonatomic, retain)           NSString                *dosageAmount;
+@property (nonatomic, retain)           NSString                *dosageUnit;
+@property (nonatomic, retain)           NSString                *reason;
 
 #pragma mark - Static Initializers
 + (ClifePrescriptionDetailsViewController *)createInstanceForPrescriptionWithID:(NSNumber *)prescriptionID;
