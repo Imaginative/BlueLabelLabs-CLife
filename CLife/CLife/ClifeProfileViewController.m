@@ -8,6 +8,7 @@
 
 #import "ClifeProfileViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DateTimeHelper.h"
 
 @interface ClifeProfileViewController ()
 
@@ -26,6 +27,11 @@
 @synthesize bloodTypeArray      = m_bloodTypeArray;
 @synthesize v_disabledBackground = m_v_disabledBackground;
 @synthesize isEditing           = m_isEditing;
+@synthesize isNewUser           = m_isNewUser;
+@synthesize name                = m_name;
+@synthesize birthday            = m_birthday;
+@synthesize gender              = m_gender;
+@synthesize bloodType           = m_bloodType;
 
 
 #pragma mark - Initialization
@@ -74,50 +80,85 @@
     // Setup tap gesture recognizer to capture touches on the tableview when the keyboard is visible
     self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     
-    // add the "Edit" button to the nav bar
-    UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                    initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                    target:self
-                                    action:@selector(onEditProfileButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
-    [rightButton release];
-    
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidAppear:YES];
+    [super viewWillAppear:YES];
     
-    //we load up saved user information
-    AuthenticationManager* authenticationManager = [AuthenticationManager instance];
-    ResourceContext* resourceContext = [ResourceContext instance];
-    NSNumber* loggedInUserID = [authenticationManager m_LoggedInUserID];
-    
-    User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:loggedInUserID];
-    
-    //now lets load up the fields
-    if (loggedInUser.displayname != nil &&
-        ![loggedInUser.displayname isEqualToString:@""])
+//    //we load up saved user information
+//    AuthenticationManager* authenticationManager = [AuthenticationManager instance];
+//    ResourceContext* resourceContext = [ResourceContext instance];
+//    NSNumber* loggedInUserID = [authenticationManager m_LoggedInUserID];
+//    
+//    User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:loggedInUserID];
+//    
+//    //now lets load up the fields
+//    if (loggedInUser.displayname != nil &&
+//        ![loggedInUser.displayname isEqualToString:@""])
+//    {
+//        self.tf_name.text = loggedInUser.displayname;
+//    }
+//    
+//    if (loggedInUser.bloodtype != nil &&
+//        ![loggedInUser.bloodtype isEqualToString:@""])
+//    {
+//        //lets find the index of the user's blood type
+//        int indexOfBloodType = [self.bloodTypeArray indexOfObject:loggedInUser.bloodtype];
+//        [self.pv_bloodType selectRow:indexOfBloodType inComponent:0 animated:NO];
+//        
+//    }
+//    
+//    if (loggedInUser.sex != nil &&
+//        ![loggedInUser.sex isEqualToString:@""])
+//    {
+//        //lets find the index of the user's sex
+//        int indexOfGender = [self.genderArray indexOfObject:loggedInUser.sex];
+//        [self.pv_gender selectRow:indexOfGender inComponent:0 animated:NO];
+//        
+//    }
+
+    // Are we opening an existing prescription or adding a new one?
+    if (self.loggedInUser.username != nil &&
+        ![self.loggedInUser.displayname isEqualToString:@""])
     {
-        self.tf_name.text = loggedInUser.displayname;
-    }
-    
-    if (loggedInUser.bloodtype != nil &&
-        ![loggedInUser.bloodtype isEqualToString:@""])
-    {
-        //lets find the index of the user's blood type
-        int indexOfBloodType = [self.bloodTypeArray indexOfObject:loggedInUser.bloodtype];
-        [self.pv_bloodType selectRow:indexOfBloodType inComponent:0 animated:NO];
+        // Existing user
+        self.isEditing = NO;
+        self.isNewUser = NO;
         
-    }
-    
-    if (loggedInUser.sex != nil &&
-        ![loggedInUser.sex isEqualToString:@""])
-    {
-        //lets find the index of the user's sex
-        int indexOfGender = [self.genderArray indexOfObject:loggedInUser.sex];
-        [self.pv_gender selectRow:indexOfGender inComponent:0 animated:NO];
+        // add the "Edit" button to the nav bar
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                        target:self
+                                        action:@selector(onEditProfileButtonPressed:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
         
+        // Set profile values to that of the logged in user
+        self.name = self.loggedInUser.username;
+        self.birthday = self.loggedInUser.dateborn;
+        self.gender = self.loggedInUser.sex;
+        self.bloodType = self.loggedInUser.bloodtype;
+    }
+    else {
+        // We are adding a new user
+        self.isEditing = YES;
+        self.isNewUser = YES;
+        
+        // add the "Done" button to the nav bar
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                        target:self
+                                        action:@selector(doneEditingProfile:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
+        
+        // Set profile values to nil
+        self.name = nil;
+        self.birthday = nil;
+        self.gender = nil;
+        self.bloodType = nil;
+
     }
     
 }
@@ -196,6 +237,13 @@
             
         }
         
+        if (self.name != nil) {
+            self.tf_name.text = self.name;
+        }
+        else {
+            self.tf_name.text = nil;
+        }
+        
         // disable the cell until the "Edit" button is pressed
         if (self.isEditing == YES) {
             [cell setUserInteractionEnabled:YES];
@@ -216,6 +264,19 @@
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
             cell.textLabel.text = NSLocalizedString(@"ENTER BIRTHDAY", nil);
+            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+        }
+        
+        if (self.birthday != nil) {
+            cell.textLabel.textColor = [UIColor blackColor];
+            cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+            
+            NSDate *birthday = [DateTimeHelper parseWebServiceDateDouble:self.birthday];
+            cell.textLabel.text = [self.dateFormatter stringFromDate:birthday];;
+        }
+        else {
+            cell.textLabel.text = NSLocalizedString(@"SELECT GENDER", nil);
             cell.textLabel.font = [UIFont systemFontOfSize:16.0];
             cell.textLabel.textColor = [UIColor lightGrayColor];
         }
@@ -244,6 +305,17 @@
             cell.textLabel.textColor = [UIColor lightGrayColor];
         }
         
+        if (self.gender != nil) {
+            cell.textLabel.textColor = [UIColor blackColor];
+            cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+            cell.textLabel.text = self.gender;
+        }
+        else {
+            cell.textLabel.text = NSLocalizedString(@"SELECT GENDER", nil);
+            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+        }
+        
         // disable the cell until the "Edit" button is pressed
         if (self.isEditing == YES) {
             [cell setUserInteractionEnabled:YES];
@@ -263,6 +335,17 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
+            cell.textLabel.text = NSLocalizedString(@"SELECT BLOOD TYPE", nil);
+            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+        }
+        
+        if (self.bloodType != nil) {
+            cell.textLabel.textColor = [UIColor blackColor];
+            cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+            cell.textLabel.text = self.bloodType;
+        }
+        else {
             cell.textLabel.text = NSLocalizedString(@"SELECT BLOOD TYPE", nil);
             cell.textLabel.font = [UIFont systemFontOfSize:16.0];
             cell.textLabel.textColor = [UIColor lightGrayColor];
@@ -371,11 +454,19 @@
         
         if ([self.dateFormatter dateFromString:targetCell.textLabel.text]) {
             self.pv_birthday.date = [self.dateFormatter dateFromString:targetCell.textLabel.text];
+            
+            NSDate* birthday = [self.dateFormatter dateFromString:targetCell.textLabel.text];
+            double doubleDate = [birthday timeIntervalSince1970];
+            self.birthday = [NSNumber numberWithDouble:doubleDate];
         }
         else {
             targetCell.textLabel.text = [self.dateFormatter stringFromDate:self.pv_birthday.date];
             targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
             targetCell.textLabel.textColor = [UIColor blackColor];
+            
+            NSDate* birthday = self.pv_birthday.date;
+            double doubleDate = [birthday timeIntervalSince1970];
+            self.birthday = [NSNumber numberWithDouble:doubleDate];
         }
         
         [self showPicker:(UIPickerView *)self.pv_birthday];
@@ -398,11 +489,15 @@
         if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT GENDER", nil)] == NO) {
             int row = [self.genderArray indexOfObject:targetCell.textLabel.text];
             [self.pv_gender selectRow:row inComponent:0 animated:YES];
+            
+            self.gender = [self.genderArray objectAtIndex:row];
         }
         else {
             targetCell.textLabel.text = [self.genderArray objectAtIndex:0];
             targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
             targetCell.textLabel.textColor = [UIColor blackColor];
+            
+            self.gender = [self.genderArray objectAtIndex:0];
         }
         
         [self showPicker:self.pv_gender];
@@ -425,11 +520,15 @@
         if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT BLOOD TYPE", nil)] == NO) {
             int row = [self.bloodTypeArray indexOfObject:targetCell.textLabel.text];
             [self.pv_bloodType selectRow:row inComponent:0 animated:YES];
+            
+            self.gender = [self.genderArray objectAtIndex:row];
         }
         else {
             targetCell.textLabel.text = [self.bloodTypeArray objectAtIndex:0];
             targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
             targetCell.textLabel.textColor = [UIColor blackColor];
+            
+            self.gender = [self.genderArray objectAtIndex:0];
         }
         
         [self showPicker:self.pv_bloodType];
@@ -582,6 +681,10 @@
     cell.textLabel.text = [self.dateFormatter stringFromDate:self.pv_birthday.date];
     cell.textLabel.font = [UIFont systemFontOfSize:17.0];
     cell.textLabel.textColor = [UIColor blackColor];
+    
+    NSDate* currentDate = [NSDate date];
+    double doubleDate = [currentDate timeIntervalSince1970];
+    self.birthday = [NSNumber numberWithDouble:doubleDate];
 }
 
 #pragma mark UIPickerView Data Source
@@ -622,9 +725,13 @@
     
     if (pickerView == self.pv_gender) {
         cell.textLabel.text = [self.genderArray objectAtIndex:row];
+        
+        self.gender = [self.genderArray objectAtIndex:row];
     }
     else if (pickerView == self.pv_bloodType) {
         cell.textLabel.text = [self.bloodTypeArray objectAtIndex:row];
+        
+        self.bloodType = [self.bloodTypeArray objectAtIndex:row];
     }
     else {
         cell.textLabel.text = nil;
@@ -648,6 +755,7 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     // textfield editing has ended
+    self.tf_name = textField;
     
     // Re-enable "Done" and "Delete" buttons
     self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -655,6 +763,8 @@
     
     // remove the tap gesture recognizer so it does not interfere with other table view touches
     [self.tbl_profile removeGestureRecognizer:self.gestureRecognizer];
+    
+    self.name = self.tf_name.text;
     
 }
 
@@ -761,52 +871,58 @@
     [rightButton release];
     
     
-    //we need to save the profile data to the current user object
-    NSNumber* loggedInUserID = [[AuthenticationManager instance]m_LoggedInUserID];
+//    //we need to save the profile data to the current user object
+//    NSNumber* loggedInUserID = [[AuthenticationManager instance] m_LoggedInUserID];
     
-    //grabt he user object
-    ResourceContext* resourceContext = [ResourceContext instance];
-    User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:loggedInUserID];
+//    //grab the user object
+//    ResourceContext* resourceContext = [ResourceContext instance];
+//    User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:loggedInUserID];
+    
+//    //now we update the user object iwth the changed properties
+//    NSString* name = [self.tf_name text];
+//    
+//    int genderIndex = [self.pv_gender selectedRowInComponent:0];
+//    NSString* gender = [self.genderArray objectAtIndex:genderIndex];
+//    
+//    int bloodIndex = [self.pv_bloodType selectedRowInComponent:0];
+//    NSString* bloodType = [self.bloodTypeArray objectAtIndex:bloodIndex];
+//    
+//    
+//    NSDate* birthday = self.pv_birthday.date;
+//    
+//    
+//    if (![loggedInUser.displayname isEqualToString:name])
+//    {
+//        loggedInUser.displayname = name; 
+//    }
+//    
+//    if (![loggedInUser.sex isEqualToString:gender])
+//    {
+//        loggedInUser.sex = gender;
+//    }
+//    
+//    if (![loggedInUser.bloodtype isEqualToString:bloodType])
+//    {
+//        loggedInUser.bloodtype = bloodType;
+//    }
+//    
+//    if (birthday != nil)
+//    {
+//        double doubleBirthday = [birthday timeIntervalSince1970];
+//        if ([loggedInUser.dateborn doubleValue] != doubleBirthday)
+//        {
+//            loggedInUser.dateborn = [NSNumber numberWithDouble:doubleBirthday];
+//        }
+//    }
     
     //now we update the user object iwth the changed properties
-    NSString* name = [self.tf_name text];
-    
-    int genderIndex = [self.pv_gender selectedRowInComponent:0];
-    NSString* gender = [self.genderArray objectAtIndex:genderIndex];
-    
-    int bloodIndex = [self.pv_bloodType selectedRowInComponent:0];
-    NSString* bloodType = [self.bloodTypeArray objectAtIndex:bloodIndex];
-    
-    
-    NSDate* birthday = self.pv_birthday.date;
-    
-    
-    
-    if (![loggedInUser.displayname isEqualToString:name])
-    {
-        loggedInUser.displayname = name; 
-    }
-    
-    if (![loggedInUser.sex isEqualToString:gender])
-    {
-        loggedInUser.sex = gender;
-    }
-    
-    if (![loggedInUser.bloodtype isEqualToString:bloodType])
-    {
-        loggedInUser.bloodtype = bloodType;
-    }
-    
-    if (birthday != nil)
-    {
-        double doubleBirthday = [birthday timeIntervalSince1970];
-        if ([loggedInUser.dateborn doubleValue] != doubleBirthday)
-        {
-            loggedInUser.dateborn = [NSNumber numberWithDouble:doubleBirthday];
-        }
-    }
+    self.loggedInUser.username = self.name;
+    self.loggedInUser.dateborn = self.birthday;
+    self.loggedInUser.sex = self.gender;
+    self.loggedInUser.bloodtype = self.bloodType;
     
     //now we save the changes
+    ResourceContext* resourceContext = [ResourceContext instance];
     [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
     
     // remove the "Delete" button

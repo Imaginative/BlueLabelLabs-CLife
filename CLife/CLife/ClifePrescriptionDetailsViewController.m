@@ -87,35 +87,6 @@
     // Setup tap gesture recognizer to capture touches on the tableview when the keyboard is visible
     self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     
-    // add the "Edit" button to the nav bar if openning an existing prescription
-    if (self.prescriptionID != nil) {
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                        target:self
-                                        action:@selector(onEditPrescriptionButtonPressed:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
-    }
-    else {
-        // We are adding a new prescription
-        self.isEditing = YES;
-        
-        // add the "Done" button to the nav bar
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                        target:self
-                                        action:@selector(onDoneAddingPrescriptionButtonPressed:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
-        
-        // add the "Cancel" button to the nav bar
-        UIBarButtonItem* leftButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                        target:self
-                                        action:@selector(onCanceledAddingPrescriptionButtonPressed:)];
-        self.navigationItem.leftBarButtonItem = leftButton;
-        [leftButton release];
-    }
 }
 
 - (void)viewDidUnload
@@ -135,6 +106,61 @@
     self.tv_reason = nil;
     self.v_disabledBackground = nil;
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // Are we opening an existing prescription or adding a new one?
+    if (self.prescriptionID != nil) {
+        // Existing prescription
+        self.isEditing = NO;
+        
+        // add the "Edit" button to the nav bar if openning an existing prescription
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                        target:self
+                                        action:@selector(onEditPrescriptionButtonPressed:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
+        
+        // Get the prescription object
+        ResourceContext* resourceContext = [ResourceContext instance];
+        Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
+        
+        self.medicationName = prescription.name;
+        self.method = prescription.method;
+        self.dosageAmount = prescription.dosageamount;
+        self.dosageUnit = prescription.dosageunit;
+        self.reason = prescription.notes;
+    }
+    else {
+        // We are adding a new prescription
+        self.isEditing = YES;
+        
+        // add the "Done" button to the nav bar
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                        target:self
+                                        action:@selector(onDoneAddingPrescriptionButtonPressed:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
+        
+        // add the "Cancel" button to the nav bar
+        UIBarButtonItem* leftButton = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                       target:self
+                                       action:@selector(onCanceledAddingPrescriptionButtonPressed:)];
+        self.navigationItem.leftBarButtonItem = leftButton;
+        [leftButton release];
+        
+        self.medicationName = nil;
+        self.method = nil;
+        self.dosageAmount = nil;
+        self.dosageUnit = nil;
+        self.reason = nil;
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -201,6 +227,13 @@
             
         }
         
+        if (self.medicationName != nil) {
+            self.tf_medicationName.text = self.medicationName;
+        }
+        else {
+            self.tf_medicationName.text = nil;
+        }
+        
         // disable the cell until the "Edit" button is pressed
         if (self.isEditing == YES) {
             [cell setUserInteractionEnabled:YES];
@@ -220,6 +253,17 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
+            cell.textLabel.text = NSLocalizedString(@"SELECT METHOD", nil);
+            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+        }
+        
+        if (self.method != nil) {
+            cell.textLabel.textColor = [UIColor blackColor];
+            cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+            cell.textLabel.text = self.method;
+        }
+        else {
             cell.textLabel.text = NSLocalizedString(@"SELECT METHOD", nil);
             cell.textLabel.font = [UIFont systemFontOfSize:16.0];
             cell.textLabel.textColor = [UIColor lightGrayColor];
@@ -267,6 +311,13 @@
                 
             }
             
+            if (self.dosageAmount != nil) {
+                self.tf_dosageAmount.text = self.dosageAmount;
+            }
+            else {
+                self.tf_dosageAmount.text = nil;
+            }
+            
             // disable the cell until the "Edit" button is pressed
             if (self.isEditing == YES) {
                 [cell setUserInteractionEnabled:YES];
@@ -287,6 +338,16 @@
                 cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
                 
                 cell.textLabel.text = NSLocalizedString(@"UNIT", nil);
+                cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+                cell.detailTextLabel.text = NSLocalizedString(@"SELECT UNIT", nil);
+            }
+            
+            if (self.dosageUnit != nil) {
+//                cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+                cell.detailTextLabel.textColor = [UIColor darkGrayColor];
+                cell.detailTextLabel.text = self.dosageUnit;
+            }
+            else {
                 cell.detailTextLabel.textColor = [UIColor lightGrayColor];
                 cell.detailTextLabel.text = NSLocalizedString(@"SELECT UNIT", nil);
             }
@@ -328,6 +389,15 @@
             
             [cell.contentView addSubview:self.tv_reason];
             
+        }
+        
+        if (self.reason != nil) {
+            self.tv_reason.textColor = [UIColor blackColor];
+            self.tv_reason.text = self.reason;
+        }
+        else {
+            self.tv_reason.textColor = [UIColor lightGrayColor];
+            self.tv_reason.text = NSLocalizedString(@"ENTER REASON", nil);
         }
         
         // disable the cell until the "Edit" button is pressed
@@ -442,11 +512,15 @@
         if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT METHOD", nil)] == NO) {
             int row = [self.methodArray indexOfObject:targetCell.textLabel.text];
             [self.pv_method selectRow:row inComponent:0 animated:YES];
+            
+            self.method = [self.methodArray objectAtIndex:row];
         }
         else {
             targetCell.textLabel.text = [self.methodArray objectAtIndex:0];
             targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
             targetCell.textLabel.textColor = [UIColor blackColor];
+            
+            self.method = [self.methodArray objectAtIndex:0];
         }
         
         [self showPicker:self.pv_method];
@@ -483,18 +557,17 @@
             if ([targetCell.detailTextLabel.text isEqualToString:NSLocalizedString(@"SELECT UNIT", nil)] == NO) {
                 int row = [self.dosageUnitArray indexOfObject:targetCell.textLabel.text];
                 [self.pv_dosageUnit selectRow:row inComponent:0 animated:YES];
+                
+                self.dosageUnit = [self.dosageUnitArray objectAtIndex:row];
             }
             else {
                 targetCell.detailTextLabel.text = [self.dosageUnitArray objectAtIndex:0];
 //                targetCell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
                 targetCell.detailTextLabel.textColor = [UIColor darkGrayColor];
+                
+                self.dosageUnit = [self.dosageUnitArray objectAtIndex:0];
             }
-            
-            if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT METHOD", nil)] == NO) {
-                int row = [self.methodArray indexOfObject:targetCell.textLabel.text];
-                [self.pv_method selectRow:row inComponent:0 animated:YES];
-            }
-            
+                        
             [self showPicker:self.pv_dosageUnit];
         }
     }
@@ -716,7 +789,7 @@
     }
     else if (pickerView == self.pv_dosageUnit) {
         cell.detailTextLabel.text = [self.dosageUnitArray objectAtIndex:row];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
+//        cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
         cell.detailTextLabel.textColor = [UIColor darkGrayColor];
         
         self.dosageUnit = [self.dosageUnitArray objectAtIndex:row];
@@ -932,7 +1005,7 @@
     [button.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
     button.frame = CGRectMake(10.0f, 15.0f, 300.0f, 44.0f);
     
-    [button addTarget:self action:@selector(onDeletePprescriptionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(onDeletePrescriptionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 80.0f)];
     [footer addSubview:button];
@@ -960,6 +1033,9 @@
     // Reload the table view to enable user interaction and accessory views on the tableview cells
     [self.tbl_prescriptionDetails reloadData];
     
+    // Hide the back button
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    
     // add the "Done" button to the nav bar
     UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
                                     initWithBarButtonSystemItem:UIBarButtonSystemItemDone
@@ -977,39 +1053,19 @@
 - (void)doneEditingPrescription:(id)sender {
     self.isEditing = NO;
     
-    // Reload the table view to disable user interaction and accessory views on the tableview cells
-    [self.tbl_prescriptionDetails reloadData];
-    
     // Hide the keyboard if it is shown
     [self hideKeyboard];
+    
+    // Re-show the back button
+    [self.navigationItem setHidesBackButton:NO animated:YES];
     
     // add the "Edit" button back to the nav bar
     UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
                                     initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
                                     target:self
-                                    action:@selector(onEditProfileButtonPressed:)];
+                                    action:@selector(onEditPrescriptionButtonPressed:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
-    
-//    //we need to save the prescription object
-//    IDGenerator* idGenerator = [IDGenerator instance];
-//    NSNumber* prescriptionID = [idGenerator generateNewId:PRESCRIPTION];
-//    NSString* prescriptionName = self.tf_medicationName.text;
-//    
-//    int selectedMethodIndex = [self.pv_method selectedRowInComponent:0];
-//    NSString* method = [self.methodArray objectAtIndex:selectedMethodIndex];
-//    NSString* dosageAmount = self.tf_dosageAmount.text;
-//    
-//    int selectedDosageIndex = [self.pv_dosageUnit selectedRowInComponent:0];
-//    NSString* dosageUnit = [self.dosageUnitArray objectAtIndex:selectedDosageIndex];
-//    
-//    NSString* notes = self.tf_medicationName.text;
-//    
-//    ResourceContext* resourceContext = [ResourceContext instance];
-//    Prescription* prescription = [Prescription createPrescription:prescriptionID  withName:prescriptionName withMethod:method withDosageAmount:dosageAmount withDosageUnit:dosageUnit withNotes:notes];
-//    
-//    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-    
     
     // remove the "Delete" button
 //    self.navigationItem.leftBarButtonItem = nil;
@@ -1020,12 +1076,15 @@
     Prescription *prescription = (Prescription *)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
     
     prescription.name = self.medicationName;
-    prescription.datestart = self.startDate;
+    prescription.method = self.method;
     prescription.dosageamount = self.dosageAmount;
     prescription.dosageunit = self.dosageUnit;
     prescription.notes = self.reason;
     
     [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+    
+    // Reload the table view to disable user interaction and accessory views on the tableview cells
+    [self.tbl_prescriptionDetails reloadData];
 }
 
 - (void)deletePrescription {

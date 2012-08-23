@@ -28,6 +28,12 @@
     UIView                  *m_v_disabledBackground;
     
     BOOL                    m_isEditing;
+    BOOL                    m_isNewUser;
+    
+    NSString                *m_name;
+    NSNumber                *m_birthday;
+    NSString                *m_gender;
+    NSString                *m_bloodType;
     
 }
 
@@ -48,6 +54,12 @@
 @property (nonatomic, retain) IBOutlet  UIView                  *v_disabledBackground;
 
 @property (nonatomic, assign)           BOOL                    isEditing;
+@property (nonatomic, assign)           BOOL                    isNewUser;
+
+@property (nonatomic, retain)           NSString                *name;
+@property (nonatomic, retain)           NSNumber                *birthday;
+@property (nonatomic, retain)           NSString                *gender;
+@property (nonatomic, retain)           NSString                *bloodType;
 
 #pragma mark - Static Initializers
 + (ClifeProfileViewController *)createInstance;

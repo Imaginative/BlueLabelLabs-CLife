@@ -8,14 +8,60 @@
 
 #import "ClifePrescriptionsViewController.h"
 #import "ClifePrescriptionDetailsViewController.h"
+#import "ClifeAppDelegate.h"
+#import "Prescription.h"
+#import "Attributes.h"
+#import "Macros.h"
+
+#define kMAXROWS 1000
 
 @interface ClifePrescriptionsViewController ()
 
 @end
 
 @implementation ClifePrescriptionsViewController
+@synthesize frc_prescriptions   = __frc_prescriptions;
 @synthesize tbl_prescriptions   = m_tbl_prescriptions;
 
+
+#pragma mark - Properties
+- (NSFetchedResultsController*)frc_prescriptions {
+    NSString* activityName = @"ClifePrescriptionsViewController.frc_prescriptions:";
+    if (__frc_prescriptions != nil) {
+        return __frc_prescriptions;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    ResourceContext* resourceContext = [ResourceContext instance];
+    ClifeAppDelegate* app = (ClifeAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    NSEntityDescription *entityDescription  = [NSEntityDescription entityForName:PRESCRIPTION inManagedObjectContext:app.managedObjectContext];
+    
+    NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NAME ascending:YES];
+    
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [fetchRequest setEntity:entityDescription];
+    
+    [fetchRequest setFetchBatchSize:kMAXROWS];
+    
+    NSFetchedResultsController* controller = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:resourceContext.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    
+    controller.delegate = self;
+    self.frc_prescriptions = controller;
+    
+    NSError* error = nil;
+    [controller performFetch:&error];
+  	if (error != nil)
+    {
+        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(1, @"%@Could not create instance of NSFetchedResultsController due to %@", activityName, [error userInfo]);
+    }
+    
+    [controller release];
+    [fetchRequest release];
+    [sortDescriptor release];
+    return __frc_prescriptions;
+    
+}
 
 #pragma mark - Initialization
 
@@ -60,24 +106,67 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    NSInteger rows = [[self.frc_prescriptions fetchedObjects] count];
+    
+    if (rows == 0) {
+        rows = 1;   // Show "add prescription row"
+    }
+    
+    return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *CellIdentifier;
     
-    // Configure the cell...
+    UITableViewCell *cell;
+    
+    NSInteger count = [[self.frc_prescriptions fetchedObjects]count];
+    
+    if (count > 0 && indexPath.row < count) {
+        // Set prescription
+        CellIdentifier = @"Prescription";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+        }
+        
+        Prescription *prescription = [[self.frc_prescriptions fetchedObjects] objectAtIndex:indexPath.row];
+        
+        cell.textLabel.text = prescription.name;
+        cell.imageView.image = [UIImage imageNamed:@"icon-pill.png"];
+        
+    }
+    else {
+        // Set None row
+        CellIdentifier = @"NoPrescription";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            
+            cell.textLabel.text = @"Press '+' to add a prescription";
+            
+            cell.textLabel.textAlignment = UITextAlignmentCenter;
+            cell.textLabel.shadowColor = [UIColor whiteColor];
+            cell.textLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+            
+            cell.userInteractionEnabled = NO;
+        }
+        
+    }
     
     return cell;
 }
@@ -125,21 +214,56 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    
+    Prescription *prescription = [[self.frc_prescriptions fetchedObjects] objectAtIndex:indexPath.row];
+    
+    ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:prescription.objectid];
+    
+    [self.navigationController pushViewController:prescriptionDetailsVC animated:YES];
 }
 
 #pragma mark - UI Action Methods
 - (void)onAddPrescriptionButtonPressed:(id)sender {
     ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:nil];
+    
     UINavigationController *navigationcontroller = [[[UINavigationController alloc] initWithRootViewController:prescriptionDetailsVC] autorelease];
     [self.navigationController presentModalViewController:navigationcontroller animated:YES];
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate methods
+//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+//{
+//    [self.tbl_prescriptions beginUpdates];
+//}
+//
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//{
+//    [self.tbl_prescriptions endUpdates];
+//}
+
+- (void) controller:(NSFetchedResultsController *)controller 
+    didChangeObject:(id)anObject
+        atIndexPath:(NSIndexPath *)indexPath 
+      forChangeType:(NSFetchedResultsChangeType)type 
+       newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    NSString* activityName = @"ClifePrescriptionsViewController.controller.didChangeObject:";
+    
+    if (type == NSFetchedResultsChangeDelete)
+    {
+        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(0,@"%@ Received NSFetechedResultsChangeDelete notification",activityName);
+    }
+    
+    if (controller == self.frc_prescriptions) {
+        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(0, @"%@Received a didChange message from a NSFetchedResultsController. %p", activityName, &controller);
+        
+        if (indexPath.row < kMAXROWS) {
+            [self.tbl_prescriptions reloadData];
+        }
+    }
+    else {
+        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(1, @"%@Received a didChange message from a NSFetchedResultsController that isnt mine. %p", activityName, &controller);
+    }
 }
 
 #pragma mark - Static Initializers

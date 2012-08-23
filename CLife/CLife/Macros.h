@@ -56,16 +56,8 @@
 #define LOG_PROGRESSVIEW(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"progressview",level,__VA_ARGS__)
 
 
-// Mime-Me spcecific logs
-#define LOG_MIME_MECREATEMIMEVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"mime_mecreatemimeviewvontroller",level,__VA_ARGS__)
-#define LOG_MIME_MEGUESSMENUVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"mime_meguessmenuviewvontroller",level,__VA_ARGS__)
-#define LOG_MIME_MEGUESSFULLTABLEVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"mime_meguessfulltableviewvontroller",level,__VA_ARGS__)
-#define LOG_MIME_MESCRAPBOOKMENUVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"mime_mescrapbookmenuviewvontroller",level,__VA_ARGS__)
-#define LOG_MIME_MEFRIENDPICKERVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"mime_mefriendpickerviewvontroller",level,__VA_ARGS__)
-#define LOG_MIME_MEFRIENDLISTTABLEVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"mime_friendlisttableviewvontroller",level,__VA_ARGS__)
-#define LOG_MIME_MESCRAPBOOKFULLTABLEVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"mime_scrapbookfulltableviewvontroller",level,__VA_ARGS__)
-
-
+// Clife spcecific logs
+#define LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"clifeprescriptionsviewvontroller",level,__VA_ARGS__)
 
 
 #else

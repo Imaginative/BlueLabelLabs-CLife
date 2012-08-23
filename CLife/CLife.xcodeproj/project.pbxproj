@@ -27,6 +27,7 @@
 		5277E84515DFE303003A1DCF /* ClifePrescriptionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E84315DFE303003A1DCF /* ClifePrescriptionDetailsViewController.m */; };
 		5277E84615DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5277E84415DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib */; };
 		5277E84915DFE349003A1DCF /* UILoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E84815DFE349003A1DCF /* UILoginView.m */; };
+		52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B3E7E715E67F75004E9C4A /* icon-pill.png */; };
 		C53DC69C15D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
 		C53DC69E15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
 		C53DC6A015D4378300CC7D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */; };
@@ -206,6 +207,7 @@
 		5277E84415DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifePrescriptionDetailsViewController.xib; sourceTree = "<group>"; };
 		5277E84715DFE349003A1DCF /* UILoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoginView.h; sourceTree = "<group>"; };
 		5277E84815DFE349003A1DCF /* UILoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILoginView.m; sourceTree = "<group>"; };
+		52B3E7E715E67F75004E9C4A /* icon-pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-pill.png"; sourceTree = "<group>"; };
 		C53DC69715D4378300CC7D14 /* CLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53DC69B15D4378300CC7D14 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C53DC69D15D4378300CC7D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -563,6 +565,7 @@
 				5277E7E115DD4F7E003A1DCF /* icon-medical@2x.png */,
 				5277E7FA15DD6B67003A1DCF /* icon-clock.png */,
 				5277E7FB15DD6B67003A1DCF /* icon-clock@2x.png */,
+				52B3E7E715E67F75004E9C4A /* icon-pill.png */,
 				5277E7F815DD62F1003A1DCF /* Localizable.strings */,
 			);
 			name = Resources;
@@ -1214,6 +1217,7 @@
 				5277E83915DFE29C003A1DCF /* ClifeProfileViewController.xib in Resources */,
 				5277E84115DFE2EE003A1DCF /* ClifePrescriptionsViewController.xib in Resources */,
 				5277E84615DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib in Resources */,
+				52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

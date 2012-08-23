@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface ClifePrescriptionsViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate > {
+@interface ClifePrescriptionsViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate > {
     
     UITableView             *m_tbl_prescriptions;
     
 }
 
-@property (nonatomic, retain) IBOutlet  UITableView             *tbl_prescriptions;
+@property (nonatomic, retain)           NSFetchedResultsController  *frc_prescriptions;
+
+@property (nonatomic, retain) IBOutlet  UITableView                 *tbl_prescriptions;
 
 #pragma mark - Static Initializers
 + (ClifePrescriptionsViewController *)createInstance;
