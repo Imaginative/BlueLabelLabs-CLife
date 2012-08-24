@@ -521,14 +521,14 @@
             int row = [self.bloodTypeArray indexOfObject:targetCell.textLabel.text];
             [self.pv_bloodType selectRow:row inComponent:0 animated:YES];
             
-            self.gender = [self.genderArray objectAtIndex:row];
+            self.bloodType = [self.bloodTypeArray objectAtIndex:row];
         }
         else {
             targetCell.textLabel.text = [self.bloodTypeArray objectAtIndex:0];
             targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
             targetCell.textLabel.textColor = [UIColor blackColor];
             
-            self.gender = [self.genderArray objectAtIndex:0];
+            self.bloodType = [self.bloodTypeArray objectAtIndex:0];
         }
         
         [self showPicker:self.pv_bloodType];
@@ -757,6 +757,17 @@
     // textfield editing has ended
     self.tf_name = textField;
     
+    NSString *enteredText = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    if ([enteredText isEqualToString:@""] == YES ||
+        [enteredText isEqualToString:@" "] == YES)
+    {
+        self.name = nil;
+    }
+    else {
+        self.name = enteredText;
+    }
+    
     // Re-enable "Done" and "Delete" buttons
     self.navigationItem.rightBarButtonItem.enabled = YES;
 //    self.navigationItem.leftBarButtonItem.enabled = YES;
@@ -854,84 +865,74 @@
 }
 
 - (void)doneEditingProfile:(id)sender {
-    self.isEditing = NO;
-
-    // Reload the table view to disable user interaction and accessory views on the tableview cells
-    [self.tbl_profile reloadData];
-    
-    // Hide the keyboard if it is shown
-    [self hideKeyboard];
-    
-    // add the "Edit" button back to the nav bar
-    UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                    initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                    target:self
-                                    action:@selector(onEditProfileButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
-    [rightButton release];
-    
-    
-//    //we need to save the profile data to the current user object
-//    NSNumber* loggedInUserID = [[AuthenticationManager instance] m_LoggedInUserID];
-    
-//    //grab the user object
-//    ResourceContext* resourceContext = [ResourceContext instance];
-//    User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:loggedInUserID];
-    
-//    //now we update the user object iwth the changed properties
-//    NSString* name = [self.tf_name text];
-//    
-//    int genderIndex = [self.pv_gender selectedRowInComponent:0];
-//    NSString* gender = [self.genderArray objectAtIndex:genderIndex];
-//    
-//    int bloodIndex = [self.pv_bloodType selectedRowInComponent:0];
-//    NSString* bloodType = [self.bloodTypeArray objectAtIndex:bloodIndex];
-//    
-//    
-//    NSDate* birthday = self.pv_birthday.date;
-//    
-//    
-//    if (![loggedInUser.displayname isEqualToString:name])
-//    {
-//        loggedInUser.displayname = name; 
-//    }
-//    
-//    if (![loggedInUser.sex isEqualToString:gender])
-//    {
-//        loggedInUser.sex = gender;
-//    }
-//    
-//    if (![loggedInUser.bloodtype isEqualToString:bloodType])
-//    {
-//        loggedInUser.bloodtype = bloodType;
-//    }
-//    
-//    if (birthday != nil)
-//    {
-//        double doubleBirthday = [birthday timeIntervalSince1970];
-//        if ([loggedInUser.dateborn doubleValue] != doubleBirthday)
-//        {
-//            loggedInUser.dateborn = [NSNumber numberWithDouble:doubleBirthday];
-//        }
-//    }
-    
-    //now we update the user object iwth the changed properties
-    self.loggedInUser.username = self.name;
-    self.loggedInUser.dateborn = self.birthday;
-    self.loggedInUser.sex = self.gender;
-    self.loggedInUser.bloodtype = self.bloodType;
-    
-    //now we save the changes
-    ResourceContext* resourceContext = [ResourceContext instance];
-    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-    
-    // remove the "Delete" button
-//    self.navigationItem.leftBarButtonItem = nil;
-    self.tbl_profile.tableFooterView = nil;
+    if (self.name == nil ||
+        self.birthday == nil ||
+        self.gender == nil ||
+        self.bloodType == nil ||
+        [self.name isEqualToString:@""] ||
+        [self.gender isEqualToString:@""] ||
+        [self.bloodType isEqualToString:@""])
+    {
+        // Promt user to complete all fields
+        UIAlertView* alert = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"INCOMPLETE", nil)
+                              message:NSLocalizedString(@"INCOMPLETE MESSAGE", nil)
+                              delegate:self
+                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+    else {
+        // Exit editing and save changes
+        
+        self.isEditing = NO;
+        
+        // Reload the table view to disable user interaction and accessory views on the tableview cells
+        [self.tbl_profile reloadData];
+        
+        // Hide the keyboard if it is shown
+        [self hideKeyboard];
+        
+        // add the "Edit" button back to the nav bar
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                        target:self
+                                        action:@selector(onEditProfileButtonPressed:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
+        
+        //now we update the user object iwth the changed properties
+        self.loggedInUser.username = self.name;
+        self.loggedInUser.dateborn = self.birthday;
+        self.loggedInUser.sex = self.gender;
+        self.loggedInUser.bloodtype = self.bloodType;
+        
+        //now we save the changes
+        ResourceContext* resourceContext = [ResourceContext instance];
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        
+        // remove the "Delete" button
+        //    self.navigationItem.leftBarButtonItem = nil;
+        self.tbl_profile.tableFooterView = nil;
+    }
 }
 
 - (void)deleteProfile {
+    // Delete the profile object
+    ResourceContext *resourceContext = [ResourceContext instance];
+    [resourceContext delete:self.loggedInUser.objectid withType:USER];
     
+    self.loggedInUser.objectid = nil;
+    self.name = nil;
+    self.birthday = nil;
+    self.gender = nil;
+    self.bloodType = nil;
+    
+    self.isEditing = YES;
+    self.isNewUser = YES;
+    
+    [self.tbl_profile reloadData];
 }
 
 - (void)onEditProfileButtonPressed:(id)sender {
@@ -977,7 +978,7 @@
     }
     else if (buttonIndex == 1) {
         // Process delete WITH data export
-        
+        [self deleteProfile];
     }
     else {
         // Cancel

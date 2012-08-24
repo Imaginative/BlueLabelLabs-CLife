@@ -15,6 +15,9 @@
 "DELETE WITH DATA EXPORT" = "Delete with data export";
 "DELETE WITHOUT DATA EXPORT" = "Delete without data export";
 
+"INCOMPLETE" = "Incomplete";
+"INCOMPLETE MESSAGE" = "Please complete all required fields before saving.";
+
 // Tab Bar
 "PROFILE" = "Profile";
 "PRESCRIPTIONS" = "Prescriptions";
@@ -58,7 +61,7 @@
 "UNIT" = "Unit";
 "SELECT UNIT" = "Select unit";
 
-"REASON" = "Reason";
+"REASON" = "Reason (optional)";
 "ENTER REASON" = "Enter the reason for this medication";
 
 "PILL" = "Pill";

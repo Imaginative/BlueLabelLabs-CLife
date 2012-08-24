@@ -908,19 +908,35 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     // textfield editing has ended
+    NSString *enteredText = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     // Deselect this row
     NSIndexPath *indexPath;
     if (textField == self.tf_medicationName) {
         indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         
-        self.medicationName = [self.tf_medicationName.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if ([enteredText isEqualToString:@""] == YES ||
+            [enteredText isEqualToString:@" "] == YES)
+        {
+            self.medicationName = nil;
+        }
+        else {
+            self.medicationName = enteredText;
+        }
     }
     else if (textField == self.tf_dosageAmount) {
         indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
         
-        self.dosageAmount = [self.tf_dosageAmount.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if ([enteredText isEqualToString:@""] == YES ||
+            [enteredText isEqualToString:@" "] == YES)
+        {
+            self.dosageAmount = nil;
+        }
+        else {
+            self.dosageAmount = enteredText;
+        }
     }
+    
     [self.tbl_prescriptionDetails deselectRowAtIndexPath:indexPath animated:NO];
     
     // Re-enable nav bar buttons until text entry complete
@@ -952,22 +968,6 @@
     return YES;
 }
 
-#pragma mark - UIActionSheet Delegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        // Process delete WITHOUT data export
-        [self deletePrescription];
-    }
-    else if (buttonIndex == 1) {
-        // Process delete WITH data export
-        
-    }
-    else {
-        // Cancel
-        
-    }
-}
-
 #pragma mark - UI Action Methods
 //- (void)showDeleteNavBarButton {
 //    // add the "Delete" button to the nav bar
@@ -995,7 +995,7 @@
     // add the "Delete" button to the footer of the tableview
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:[UIImage imageNamed:@"delete_red.png"] forState:UIControlStateNormal];
-    [button setTitle:NSLocalizedString(@"DELETE PROFILE", nil) forState:UIControlStateNormal];
+    [button setTitle:NSLocalizedString(@"DELETE PRESCRIPTION", nil) forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont boldSystemFontOfSize:17.0f];
     button.titleLabel.shadowColor = [UIColor lightGrayColor];
     button.titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
@@ -1051,44 +1051,78 @@
 }
 
 - (void)doneEditingPrescription:(id)sender {
-    self.isEditing = NO;
-    
-    // Hide the keyboard if it is shown
-    [self hideKeyboard];
-    
-    // Re-show the back button
-    [self.navigationItem setHidesBackButton:NO animated:YES];
-    
-    // add the "Edit" button back to the nav bar
-    UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                    initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                    target:self
-                                    action:@selector(onEditPrescriptionButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
-    [rightButton release];
-    
-    // remove the "Delete" button
-//    self.navigationItem.leftBarButtonItem = nil;
-    self.tbl_prescriptionDetails.tableFooterView = nil;
-    
-    // Update the prescription properties and save
-    ResourceContext *resourceContext = [ResourceContext instance];
-    Prescription *prescription = (Prescription *)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
-    
-    prescription.name = self.medicationName;
-    prescription.method = self.method;
-    prescription.dosageamount = self.dosageAmount;
-    prescription.dosageunit = self.dosageUnit;
-    prescription.notes = self.reason;
-    
-    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-    
-    // Reload the table view to disable user interaction and accessory views on the tableview cells
-    [self.tbl_prescriptionDetails reloadData];
+    if (self.medicationName == nil ||
+        self.method == nil ||
+        self.dosageAmount == nil ||
+        self.dosageUnit == nil ||
+        [self.medicationName isEqualToString:@""] ||
+        [self.method isEqualToString:@""] ||
+        [self.dosageAmount isEqualToString:@""] ||
+        [self.dosageUnit isEqualToString:@""])
+    {
+        // Promt user to complete all fields
+        UIAlertView* alert = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"INCOMPLETE", nil)
+                              message:NSLocalizedString(@"INCOMPLETE MESSAGE", nil)
+                              delegate:self
+                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+    else {
+        // Exit editing and save changes
+        
+        self.isEditing = NO;
+        
+        // Hide the keyboard if it is shown
+        [self hideKeyboard];
+        
+        // Re-show the back button
+        [self.navigationItem setHidesBackButton:NO animated:YES];
+        
+        // add the "Edit" button back to the nav bar
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                        target:self
+                                        action:@selector(onEditPrescriptionButtonPressed:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
+        
+        // remove the "Delete" button
+        //    self.navigationItem.leftBarButtonItem = nil;
+        self.tbl_prescriptionDetails.tableFooterView = nil;
+        
+        // Update the prescription properties and save
+        ResourceContext *resourceContext = [ResourceContext instance];
+        Prescription *prescription = (Prescription *)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
+        
+        prescription.name = self.medicationName;
+        prescription.method = self.method;
+        prescription.dosageamount = self.dosageAmount;
+        prescription.dosageunit = self.dosageUnit;
+        prescription.notes = self.reason;
+        
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        
+        // Reload the table view to disable user interaction and accessory views on the tableview cells
+        [self.tbl_prescriptionDetails reloadData];
+    }
 }
 
 - (void)deletePrescription {
+    // Delete the prescription object
+    ResourceContext *resourceContext = [ResourceContext instance];
+    [resourceContext delete:self.prescriptionID withType:PRESCRIPTION];
     
+    self.prescriptionID = nil;
+    self.medicationName = nil;
+    self.method = nil;
+    self.dosageAmount = nil;
+    self.dosageUnit = nil;
+    self.reason = nil;
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)onEditPrescriptionButtonPressed:(id)sender {
@@ -1116,15 +1150,37 @@
 }
 
 - (void)onDoneAddingPrescriptionButtonPressed:(id)sender {
-    ResourceContext* resourceContext = [ResourceContext instance];
-    
-    Prescription *prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withDosageAmount:self.dosageAmount withDosageUnit:self.dosageUnit withNotes:self.reason];   
-     
-    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-    
-    self.prescriptionID = prescription.objectid;
-    
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    if (self.medicationName == nil ||
+        self.method == nil ||
+        self.dosageAmount == nil ||
+        self.dosageUnit == nil ||
+        [self.medicationName isEqualToString:@""] ||
+        [self.method isEqualToString:@""] ||
+        [self.dosageAmount isEqualToString:@""] ||
+        [self.dosageUnit isEqualToString:@""])
+    {
+        // Promt user to complete all fields
+        UIAlertView* alert = [[UIAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"INCOMPLETE", nil)
+                              message:NSLocalizedString(@"INCOMPLETE MESSAGE", nil)
+                              delegate:self
+                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+    else {
+        // Exit editing and save changes
+        ResourceContext* resourceContext = [ResourceContext instance];
+        
+        Prescription *prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withDosageAmount:self.dosageAmount withDosageUnit:self.dosageUnit withNotes:self.reason];   
+        
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        
+        self.prescriptionID = prescription.objectid;
+        
+        [self.navigationController dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (void)onCanceledAddingPrescriptionButtonPressed:(id)sender {
@@ -1139,6 +1195,22 @@
     }
     else {
         [self editPrescription];
+    }
+}
+
+#pragma mark - UIActionSheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        // Process delete WITHOUT data export
+        [self deletePrescription];
+    }
+    else if (buttonIndex == 1) {
+        // Process delete WITH data export
+        [self deletePrescription];
+    }
+    else {
+        // Cancel
+        
     }
 }
 
