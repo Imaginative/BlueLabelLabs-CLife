@@ -87,31 +87,6 @@
     // Setup tap gesture recognizer to capture touches on the tableview when the keyboard is visible
     self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-    
-    self.tbl_prescriptionDetails = nil;
-    self.tf_medicationName = nil;
-    self.gestureRecognizer = nil;
-    self.pv_startDate = nil;
-    self.dateFormatter = nil;
-    self.pv_method = nil;
-    self.tf_dosageAmount = nil;
-    self.pv_dosageUnit = nil;
-    self.tv_reason = nil;
-    self.v_disabledBackground = nil;
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
     // Are we opening an existing prescription or adding a new one?
     if (self.prescriptionID != nil) {
         // Existing prescription
@@ -161,6 +136,81 @@
         self.dosageUnit = nil;
         self.reason = nil;
     }
+    
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+    
+    self.tbl_prescriptionDetails = nil;
+    self.tf_medicationName = nil;
+    self.gestureRecognizer = nil;
+    self.pv_startDate = nil;
+    self.dateFormatter = nil;
+    self.pv_method = nil;
+    self.tf_dosageAmount = nil;
+    self.pv_dosageUnit = nil;
+    self.tv_reason = nil;
+    self.v_disabledBackground = nil;
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+//    // Are we opening an existing prescription or adding a new one?
+//    if (self.prescriptionID != nil) {
+//        // Existing prescription
+//        self.isEditing = NO;
+//        
+//        // add the "Edit" button to the nav bar if openning an existing prescription
+//        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+//                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+//                                        target:self
+//                                        action:@selector(onEditPrescriptionButtonPressed:)];
+//        self.navigationItem.rightBarButtonItem = rightButton;
+//        [rightButton release];
+//        
+//        // Get the prescription object
+//        ResourceContext* resourceContext = [ResourceContext instance];
+//        Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
+//        
+//        self.medicationName = prescription.name;
+//        self.method = prescription.method;
+//        self.dosageAmount = prescription.dosageamount;
+//        self.dosageUnit = prescription.dosageunit;
+//        self.reason = prescription.notes;
+//    }
+//    else {
+//        // We are adding a new prescription
+//        self.isEditing = YES;
+//        
+//        // add the "Done" button to the nav bar
+//        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+//                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+//                                        target:self
+//                                        action:@selector(onDoneAddingPrescriptionButtonPressed:)];
+//        self.navigationItem.rightBarButtonItem = rightButton;
+//        [rightButton release];
+//        
+//        // add the "Cancel" button to the nav bar
+//        UIBarButtonItem* leftButton = [[UIBarButtonItem alloc]
+//                                       initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+//                                       target:self
+//                                       action:@selector(onCanceledAddingPrescriptionButtonPressed:)];
+//        self.navigationItem.leftBarButtonItem = leftButton;
+//        [leftButton release];
+//        
+//        self.medicationName = nil;
+//        self.method = nil;
+//        self.dosageAmount = nil;
+//        self.dosageUnit = nil;
+//        self.reason = nil;
+//    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -828,6 +878,25 @@
     
     // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
     [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
+    
+    // create a done view + done button, attach to it a doneClicked action, and place it in a toolbar as an accessory input view.
+    // Prepare done button
+    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+    keyboardDoneButtonView.barStyle = UIBarStyleBlack;
+    keyboardDoneButtonView.translucent = YES;
+    keyboardDoneButtonView.tintColor = nil;
+    [keyboardDoneButtonView sizeToFit];
+    
+    UIBarButtonItem* doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                 target:self
+                                                                                 action:@selector(hideKeyboard)] autorelease];
+    
+    UIBarButtonItem *flexSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:flexSpace, doneButton, nil]];
+    
+    // Plug the keyboardDoneButtonView into the text view.
+    textView.inputAccessoryView = keyboardDoneButtonView;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -902,6 +971,25 @@
     
     // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
     [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
+    
+    // create a done view + done button, attach to it a doneClicked action, and place it in a toolbar as an accessory input view.
+    // Prepare done button
+    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+    keyboardDoneButtonView.barStyle = UIBarStyleBlack;
+    keyboardDoneButtonView.translucent = YES;
+    keyboardDoneButtonView.tintColor = nil;
+    [keyboardDoneButtonView sizeToFit];
+    
+    UIBarButtonItem* doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                 target:self
+                                                                                 action:@selector(hideKeyboard)] autorelease];
+    
+    UIBarButtonItem *flexSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:flexSpace, doneButton, nil]];
+    
+    // Plug the keyboardDoneButtonView into the text field.
+    textField.inputAccessoryView = keyboardDoneButtonView;
     
 }
 

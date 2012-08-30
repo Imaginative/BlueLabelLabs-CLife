@@ -16,8 +16,11 @@
 
 @implementation ClifeProfileViewController
 @synthesize tbl_profile         = m_tbl_profile;
-@synthesize sectionsArray  = m_sectionsArray;
+@synthesize sectionsArray       = m_sectionsArray;
 @synthesize tf_name             = m_tf_name;
+@synthesize tf_birthday         = m_tf_birthday;
+@synthesize tf_gender           = m_tf_gender;
+@synthesize tf_bloodType        = m_tf_bloodType;
 @synthesize gestureRecognizer   = m_gestureRecognizer;
 @synthesize pv_birthday         = m_pv_birthday;
 @synthesize dateFormatter       = m_dateFormatter;
@@ -78,45 +81,13 @@
                            nil];
     
     // Setup tap gesture recognizer to capture touches on the tableview when the keyboard is visible
-    self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputView)];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    
-//    //we load up saved user information
-//    AuthenticationManager* authenticationManager = [AuthenticationManager instance];
-//    ResourceContext* resourceContext = [ResourceContext instance];
-//    NSNumber* loggedInUserID = [authenticationManager m_LoggedInUserID];
-//    
-//    User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:loggedInUserID];
-//    
-//    //now lets load up the fields
-//    if (loggedInUser.displayname != nil &&
-//        ![loggedInUser.displayname isEqualToString:@""])
-//    {
-//        self.tf_name.text = loggedInUser.displayname;
-//    }
-//    
-//    if (loggedInUser.bloodtype != nil &&
-//        ![loggedInUser.bloodtype isEqualToString:@""])
-//    {
-//        //lets find the index of the user's blood type
-//        int indexOfBloodType = [self.bloodTypeArray indexOfObject:loggedInUser.bloodtype];
-//        [self.pv_bloodType selectRow:indexOfBloodType inComponent:0 animated:NO];
-//        
-//    }
-//    
-//    if (loggedInUser.sex != nil &&
-//        ![loggedInUser.sex isEqualToString:@""])
-//    {
-//        //lets find the index of the user's sex
-//        int indexOfGender = [self.genderArray indexOfObject:loggedInUser.sex];
-//        [self.pv_gender selectRow:indexOfGender inComponent:0 animated:NO];
-//        
-//    }
 
     // Are we opening an existing prescription or adding a new one?
     if (self.loggedInUser.username != nil &&
@@ -170,6 +141,9 @@
     
     self.tbl_profile = nil;
     self.tf_name = nil;
+    self.tf_birthday = nil;
+    self.tf_gender = nil;
+    self.tf_bloodType = nil;
     self.gestureRecognizer = nil;
     self.pv_birthday = nil;
     self.dateFormatter = nil;
@@ -224,14 +198,15 @@
             self.tf_name.adjustsFontSizeToFitWidth = YES;
             self.tf_name.textColor = [UIColor blackColor];
             self.tf_name.placeholder = NSLocalizedString(@"ENTER FULL NAME", nil);
-            self.tf_name.keyboardType = UIKeyboardTypeDefault;
-            self.tf_name.returnKeyType = UIReturnKeyDone;
             self.tf_name.backgroundColor = [UIColor clearColor];
-            self.tf_name.autocorrectionType = UITextAutocorrectionTypeNo;
-            self.tf_name.autocapitalizationType = UITextAutocapitalizationTypeWords;
             self.tf_name.textAlignment = UITextAlignmentLeft;
             self.tf_name.delegate = self;
             [self.tf_name setEnabled:YES];
+            
+            self.tf_name.keyboardType = UIKeyboardTypeDefault;
+            self.tf_name.returnKeyType = UIReturnKeyDone;
+            self.tf_name.autocorrectionType = UITextAutocorrectionTypeNo;
+            self.tf_name.autocapitalizationType = UITextAutocapitalizationTypeWords;
             
             [cell.contentView addSubview:self.tf_name];
             
@@ -263,32 +238,51 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
-            cell.textLabel.text = NSLocalizedString(@"ENTER BIRTHDAY", nil);
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            cell.textLabel.textColor = [UIColor lightGrayColor];
+            [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+            
+            // Initialize the birthday picker view
+            if (self.pv_birthday == nil) {
+                UIDatePicker* pickerView = [[[UIDatePicker alloc] init] autorelease];
+                [pickerView sizeToFit];
+                pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                [pickerView addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+                pickerView.datePickerMode = UIDatePickerModeDate;
+                pickerView.maximumDate = [NSDate date];
+                
+                self.pv_birthday = pickerView;
+            }
+            
+            self.tf_birthday = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+            self.tf_birthday.font = [UIFont systemFontOfSize:17.0];
+            self.tf_birthday.adjustsFontSizeToFitWidth = YES;
+            self.tf_birthday.textColor = [UIColor blackColor];
+            self.tf_birthday.placeholder = NSLocalizedString(@"ENTER BIRTHDAY", nil);
+            self.tf_birthday.backgroundColor = [UIColor clearColor];
+            self.tf_birthday.textAlignment = UITextAlignmentLeft;
+            self.tf_birthday.delegate = self;
+            [self.tf_birthday setEnabled:YES];
+            
+            self.tf_birthday.inputView = self.pv_birthday;
+            
+            [cell.contentView addSubview:self.tf_birthday];
         }
         
         if (self.birthday != nil) {
-            cell.textLabel.textColor = [UIColor blackColor];
-            cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-            
             NSDate *birthday = [DateTimeHelper parseWebServiceDateDouble:self.birthday];
-            cell.textLabel.text = [self.dateFormatter stringFromDate:birthday];;
+            self.tf_birthday.text = [self.dateFormatter stringFromDate:birthday];
         }
         else {
-            cell.textLabel.text = NSLocalizedString(@"SELECT GENDER", nil);
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            cell.textLabel.textColor = [UIColor lightGrayColor];
+            self.tf_birthday.text = nil;
         }
         
         // disable the cell until the "Edit" button is pressed
         if (self.isEditing == YES) {
             [cell setUserInteractionEnabled:YES];
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [self.tf_birthday setClearButtonMode:UITextFieldViewModeAlways];
         }
         else {
             [cell setUserInteractionEnabled:NO];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            [self.tf_birthday setClearButtonMode:UITextFieldViewModeNever];
         }
     }
     else if (indexPath.section == 2) {
@@ -300,30 +294,50 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
-            cell.textLabel.text = NSLocalizedString(@"SELECT GENDER", nil);
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            cell.textLabel.textColor = [UIColor lightGrayColor];
+            [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+            
+            // Initialize the gender picker view
+            if (self.pv_gender == nil) {
+                UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
+                [pickerView sizeToFit];
+                pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                pickerView.dataSource = self;
+                pickerView.delegate = self;
+                pickerView.showsSelectionIndicator = YES;
+                
+                self.pv_gender = pickerView;
+            }
+            
+            self.tf_gender = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+            self.tf_gender.font = [UIFont systemFontOfSize:17.0];
+            self.tf_gender.adjustsFontSizeToFitWidth = YES;
+            self.tf_gender.textColor = [UIColor blackColor];
+            self.tf_gender.placeholder = NSLocalizedString(@"SELECT GENDER", nil);
+            self.tf_gender.backgroundColor = [UIColor clearColor];
+            self.tf_gender.textAlignment = UITextAlignmentLeft;
+            self.tf_gender.delegate = self;
+            [self.tf_gender setEnabled:YES];
+            
+            self.tf_gender.inputView = self.pv_gender;
+            
+            [cell.contentView addSubview:self.tf_gender];
         }
         
         if (self.gender != nil) {
-            cell.textLabel.textColor = [UIColor blackColor];
-            cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-            cell.textLabel.text = self.gender;
+            self.tf_gender.text = self.gender;
         }
         else {
-            cell.textLabel.text = NSLocalizedString(@"SELECT GENDER", nil);
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            cell.textLabel.textColor = [UIColor lightGrayColor];
+            self.tf_gender.text = nil;
         }
         
         // disable the cell until the "Edit" button is pressed
         if (self.isEditing == YES) {
             [cell setUserInteractionEnabled:YES];
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [self.tf_gender setClearButtonMode:UITextFieldViewModeAlways];
         }
         else {
             [cell setUserInteractionEnabled:NO];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            [self.tf_gender setClearButtonMode:UITextFieldViewModeNever];
         }
     }
     else if (indexPath.section == 3) {
@@ -334,31 +348,52 @@
         
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+
             
-            cell.textLabel.text = NSLocalizedString(@"SELECT BLOOD TYPE", nil);
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            cell.textLabel.textColor = [UIColor lightGrayColor];
+            [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+            
+            // Initialize the blood type picker view
+            if (self.pv_bloodType == nil) {
+                UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
+                [pickerView sizeToFit];
+                pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                pickerView.dataSource = self;
+                pickerView.delegate = self;
+                pickerView.showsSelectionIndicator = YES;
+                
+                self.pv_bloodType = pickerView;
+            }
+            
+            self.tf_bloodType = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+            self.tf_bloodType.font = [UIFont systemFontOfSize:17.0];
+            self.tf_bloodType.adjustsFontSizeToFitWidth = YES;
+            self.tf_bloodType.textColor = [UIColor blackColor];
+            self.tf_bloodType.placeholder = NSLocalizedString(@"SELECT BLOOD TYPE", nil);
+            self.tf_bloodType.backgroundColor = [UIColor clearColor];
+            self.tf_bloodType.textAlignment = UITextAlignmentLeft;
+            self.tf_bloodType.delegate = self;
+            [self.tf_bloodType setEnabled:YES];
+            
+            self.tf_bloodType.inputView = self.pv_bloodType;
+            
+            [cell.contentView addSubview:self.tf_bloodType];
         }
         
         if (self.bloodType != nil) {
-            cell.textLabel.textColor = [UIColor blackColor];
-            cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-            cell.textLabel.text = self.bloodType;
+            self.tf_bloodType.text = self.bloodType;
         }
         else {
-            cell.textLabel.text = NSLocalizedString(@"SELECT BLOOD TYPE", nil);
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            cell.textLabel.textColor = [UIColor lightGrayColor];
+            self.tf_bloodType.text = nil;
         }
         
         // disable the cell until the "Edit" button is pressed
         if (self.isEditing == YES) {
             [cell setUserInteractionEnabled:YES];
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [self.tf_bloodType setClearButtonMode:UITextFieldViewModeAlways];
         }
         else {
             [cell setUserInteractionEnabled:NO];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            [self.tf_bloodType setClearButtonMode:UITextFieldViewModeNever];
         }
     }
     else {
@@ -424,15 +459,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *targetCell = [tableView cellForRowAtIndexPath:indexPath];
-    
     if (indexPath.section == 0) {
         // Name selected
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-        // Scroll tableview to this row
-        [self.tbl_profile setContentOffset:CGPointMake(0, 0) animated:YES];
         
         // Set the name text field as active
         [self.tf_name becomeFirstResponder];
@@ -441,249 +471,40 @@
     else if (indexPath.section == 1) {
         // Birthday selected
         
-        // Scroll tableview to this row
-        [self.tbl_profile setContentOffset:CGPointMake(0, 0) animated:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        // Show the date picker
-        if (self.pv_birthday == nil) {
-            self.pv_birthday = [[UIDatePicker alloc] init];
-            [self.pv_birthday addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
-            self.pv_birthday.datePickerMode = UIDatePickerModeDate;
-            self.pv_birthday.maximumDate = [NSDate date];
-        }
-        
-        if ([self.dateFormatter dateFromString:targetCell.textLabel.text]) {
-            self.pv_birthday.date = [self.dateFormatter dateFromString:targetCell.textLabel.text];
-            
-            NSDate* birthday = [self.dateFormatter dateFromString:targetCell.textLabel.text];
-            double doubleDate = [birthday timeIntervalSince1970];
-            self.birthday = [NSNumber numberWithDouble:doubleDate];
-        }
-        else {
-            targetCell.textLabel.text = [self.dateFormatter stringFromDate:self.pv_birthday.date];
-            targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
-            targetCell.textLabel.textColor = [UIColor blackColor];
-            
-            NSDate* birthday = self.pv_birthday.date;
-            double doubleDate = [birthday timeIntervalSince1970];
-            self.birthday = [NSNumber numberWithDouble:doubleDate];
-        }
-        
-        [self showPicker:(UIPickerView *)self.pv_birthday];
+        // Set the birthday text field as active
+        [self.tf_birthday becomeFirstResponder];
         
     }
     else if (indexPath.section == 2) {
         // Gender selected
         
-        // Scroll tableview to this row
-        [self.tbl_profile setContentOffset:CGPointMake(0, 85) animated:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        if (self.pv_gender == nil) {
-            self.pv_gender = [[UIPickerView alloc] init];
-            self.pv_gender.dataSource = self;
-            self.pv_gender.delegate = self;
-            
-            self.pv_gender.showsSelectionIndicator = YES;
-        }
-        
-        if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT GENDER", nil)] == NO) {
-            int row = [self.genderArray indexOfObject:targetCell.textLabel.text];
-            [self.pv_gender selectRow:row inComponent:0 animated:YES];
-            
-            self.gender = [self.genderArray objectAtIndex:row];
-        }
-        else {
-            targetCell.textLabel.text = [self.genderArray objectAtIndex:0];
-            targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
-            targetCell.textLabel.textColor = [UIColor blackColor];
-            
-            self.gender = [self.genderArray objectAtIndex:0];
-        }
-        
-        [self showPicker:self.pv_gender];
+        // Set the gender text field as active
+        [self.tf_gender becomeFirstResponder];
         
     }
     else if (indexPath.section == 3) {
         // Blood Type selected
         
-        // Scroll tableview to this row
-        [self.tbl_profile setContentOffset:CGPointMake(0, 177) animated:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        if (self.pv_bloodType == nil) {
-            self.pv_bloodType = [[UIPickerView alloc] init];
-            self.pv_bloodType.dataSource = self;
-            self.pv_bloodType.delegate = self;
-            
-            self.pv_bloodType.showsSelectionIndicator = YES;
-        }
-        
-        if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT BLOOD TYPE", nil)] == NO) {
-            int row = [self.bloodTypeArray indexOfObject:targetCell.textLabel.text];
-            [self.pv_bloodType selectRow:row inComponent:0 animated:YES];
-            
-            self.bloodType = [self.bloodTypeArray objectAtIndex:row];
-        }
-        else {
-            targetCell.textLabel.text = [self.bloodTypeArray objectAtIndex:0];
-            targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
-            targetCell.textLabel.textColor = [UIColor blackColor];
-            
-            self.bloodType = [self.bloodTypeArray objectAtIndex:0];
-        }
-        
-        [self showPicker:self.pv_bloodType];
+        // Set the gender text field as active
+        [self.tf_bloodType becomeFirstResponder];
         
     }
 }
 
 #pragma mark - UIPickerView Methods
-- (void)showPicker:(UIPickerView *)pickerView {
-    if (pickerView.superview == nil)
-    {
-        // Show the disabled background so user cannot touch into the tableview while picker is shown
-        [self.v_disabledBackground setAlpha:0.0];
-        [self.view bringSubviewToFront:self.v_disabledBackground];
-        
-        [self.view.window addSubview:pickerView];
-        
-        // size up the picker view to our screen and compute the start/end frame origin for our slide up animation
-        //
-        // compute the start frame
-        CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-        CGSize pickerSize = [pickerView sizeThatFits:CGSizeZero];
-        CGRect startRect = CGRectMake(0.0,
-                                      screenRect.origin.y + screenRect.size.height,
-                                      pickerSize.width, pickerSize.height);
-        pickerView.frame = startRect;
-        
-        // compute the end frame
-        CGRect pickerRect = CGRectMake(0.0,
-                                       screenRect.origin.y + screenRect.size.height - pickerSize.height,
-                                       pickerSize.width,
-                                       pickerSize.height);
-        // start the slide up animation
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.3];
-        
-        // we need to perform some post operations after the animation is complete
-        [UIView setAnimationDelegate:self];
-        
-        pickerView.frame = pickerRect;
-        
-        // animate the showing of the disabled background so user cannot touch into the tableview while picker is shown
-        [self.v_disabledBackground setAlpha:0.4];
-        
-        [UIView commitAnimations];
-        
-        // add the "Done" button to the nav bar
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                        target:self
-                                        action:@selector(pickerDoneAction:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
-        
-//        // remove the "Delete" button
-//        self.navigationItem.leftBarButtonItem = nil;
-    }
-}
-
-- (void)pickerDoneAction:(id)sender
-{
-    // Determine which picker to hide
-    BOOL pickerInSuperView = NO;
-    UIPickerView *pickerView;
-    if (self.pv_birthday.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = (UIPickerView *)self.pv_birthday;
-    }
-    else if (self.pv_gender.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = self.pv_gender;
-    }
-    else if (self.pv_bloodType.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = self.pv_bloodType;
-    }
-    
-    if (pickerInSuperView == YES) {
-        CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-        CGRect endFrame = pickerView.frame;
-        endFrame.origin.y = screenRect.origin.y + screenRect.size.height;
-        
-        // start the slide down animation
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.3];
-        
-        // we need to perform some post operations after the animation is complete
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationDidStopSelector:@selector(slideDownDidStop)];
-        
-        pickerView.frame = endFrame;
-        
-        // Hide the disabled background
-        [self.v_disabledBackground setAlpha:0.0];
-        
-        [UIView commitAnimations];
-        
-        // remove the "Done" button in the nav bar
-        self.navigationItem.rightBarButtonItem = nil;
-        
-        // deselect the current table row
-        NSIndexPath *indexPath = [self.tbl_profile indexPathForSelectedRow];
-        [self.tbl_profile deselectRowAtIndexPath:indexPath animated:YES];
-    }
-}
-
-- (void)slideDownDidStop
-{
-    // the picker has finished sliding downwards, so remove it
-    
-    [self.view sendSubviewToBack:self.v_disabledBackground];
-    
-    // Determine which picker to remove
-    BOOL pickerInSuperView = NO;
-    UIPickerView *pickerView;
-    if (self.pv_birthday.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = (UIPickerView *)self.pv_birthday;
-    }
-    else if (self.pv_gender.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = self.pv_gender;
-    }
-    else if (self.pv_bloodType.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = self.pv_bloodType;
-    }
-    
-    if (pickerInSuperView == YES) {
-        [pickerView removeFromSuperview];
-    }
-    
-    // add the "Done" button to the nav bar
-    UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                    initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                    target:self
-                                    action:@selector(doneEditingProfile:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
-    [rightButton release];
-    
-//    // add the "Delete" button to the nav bar
-//    [self showDeleteNavBarButton];
-}
-
 #pragma mark UIDatePickerView Methods
 - (void)dateChanged:(id)sender
 {
-    NSIndexPath *indexPath = [self.tbl_profile indexPathForSelectedRow];
-    UITableViewCell *cell = [self.tbl_profile cellForRowAtIndexPath:indexPath];
-    cell.textLabel.text = [self.dateFormatter stringFromDate:self.pv_birthday.date];
-    cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-    cell.textLabel.textColor = [UIColor blackColor];
+    self.tf_birthday.text = [self.dateFormatter stringFromDate:self.pv_birthday.date];
     
-    NSDate* currentDate = [NSDate date];
-    double doubleDate = [currentDate timeIntervalSince1970];
+    NSDate* birthday = self.pv_birthday.date;
+    double doubleDate = [birthday timeIntervalSince1970];
     self.birthday = [NSNumber numberWithDouble:doubleDate];
 }
 
@@ -718,23 +539,15 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSIndexPath *indexPath = [self.tbl_profile indexPathForSelectedRow];
-    UITableViewCell *cell = [self.tbl_profile cellForRowAtIndexPath:indexPath];
-    cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-    cell.textLabel.textColor = [UIColor blackColor];
-    
     if (pickerView == self.pv_gender) {
-        cell.textLabel.text = [self.genderArray objectAtIndex:row];
+        self.tf_gender.text = [self.genderArray objectAtIndex:row];
         
         self.gender = [self.genderArray objectAtIndex:row];
     }
     else if (pickerView == self.pv_bloodType) {
-        cell.textLabel.text = [self.bloodTypeArray objectAtIndex:row];
+        self.tf_bloodType.text = [self.bloodTypeArray objectAtIndex:row];
         
         self.bloodType = [self.bloodTypeArray objectAtIndex:row];
-    }
-    else {
-        cell.textLabel.text = nil;
     }
 }
 
@@ -743,39 +556,181 @@
 {
     // textfield editing has begun
     
+    // Determine which text field is active and make appropriate changes
+    if (textField == self.tf_name) {
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.tbl_profile addGestureRecognizer:self.gestureRecognizer];
+        
+    }
+    else if (textField == self.tf_birthday) {
+        
+        [self showDisabledBackgroundView];
+        
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
+        
+        // Scroll tableview to this row
+        [self.tbl_profile setContentOffset:CGPointMake(0, 45) animated:YES];
+        
+        if ([self.dateFormatter dateFromString:self.tf_birthday.text]) {
+            self.pv_birthday.date = [self.dateFormatter dateFromString:self.tf_birthday.text];
+            
+            NSDate* birthday = [self.dateFormatter dateFromString:self.tf_birthday.text];
+            double doubleDate = [birthday timeIntervalSince1970];
+            self.birthday = [NSNumber numberWithDouble:doubleDate];
+        }
+        else {
+            self.tf_birthday.text = [self.dateFormatter stringFromDate:self.pv_birthday.date];
+            
+            NSDate* birthday = self.pv_birthday.date;
+            double doubleDate = [birthday timeIntervalSince1970];
+            self.birthday = [NSNumber numberWithDouble:doubleDate];
+        }
+        
+    }
+    else if (textField == self.tf_gender) {
+        
+        [self showDisabledBackgroundView];
+        
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
+        
+        // Scroll tableview to this row
+        [self.tbl_profile setContentOffset:CGPointMake(0, 115) animated:YES];
+        
+        if ([self.tf_gender.text isEqualToString:@""] == NO &&
+            [self.tf_gender.text isEqualToString:@" "] == NO)
+        {
+            int row = [self.genderArray indexOfObject:self.tf_gender.text];
+            [self.pv_gender selectRow:row inComponent:0 animated:YES];
+            
+            self.gender = [self.genderArray objectAtIndex:row];
+        }
+        else {
+            self.tf_gender.text = [self.genderArray objectAtIndex:0];
+            
+            self.gender = [self.genderArray objectAtIndex:0];
+        }
+        
+    }
+    else if (textField == self.tf_bloodType) {
+        
+        [self showDisabledBackgroundView];
+        
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
+        
+        // Scroll tableview to this row
+        [self.tbl_profile setContentOffset:CGPointMake(0, 187) animated:YES];
+        
+        if ([self.tf_bloodType.text isEqualToString:@""] == NO &&
+            [self.tf_bloodType.text isEqualToString:@" "] == NO)
+        {
+            int row = [self.bloodTypeArray indexOfObject:self.tf_bloodType.text];
+            [self.pv_bloodType selectRow:row inComponent:0 animated:YES];
+            
+            self.bloodType = [self.bloodTypeArray objectAtIndex:row];
+        }
+        else {
+            self.tf_bloodType.text = [self.bloodTypeArray objectAtIndex:0];
+            
+            self.bloodType = [self.bloodTypeArray objectAtIndex:0];
+        }
+        
+    }
+    
     // disable "Done" and "Delete" buttons until text entry complete
     self.navigationItem.rightBarButtonItem.enabled = NO;
-//    self.navigationItem.leftBarButtonItem.enabled = NO;
     
-    // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
-    [self.tbl_profile addGestureRecognizer:self.gestureRecognizer];
+    // create a done view + done button, attach to it a doneClicked action, and place it in a toolbar as an accessory input view.
+    // Prepare done button
+    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+    keyboardDoneButtonView.barStyle = UIBarStyleBlack;
+    keyboardDoneButtonView.translucent = YES;
+    keyboardDoneButtonView.tintColor = nil;
+    [keyboardDoneButtonView sizeToFit];
+    
+    UIBarButtonItem* doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                 target:self
+                                                                                 action:@selector(hideInputView)] autorelease];
+    
+    UIBarButtonItem *flexSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+    
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:flexSpace, doneButton, nil]];
+    
+    // Plug the keyboardDoneButtonView into the text field.
+    textField.inputAccessoryView = keyboardDoneButtonView;
     
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     // textfield editing has ended
-    self.tf_name = textField;
-    
     NSString *enteredText = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    if ([enteredText isEqualToString:@""] == YES ||
-        [enteredText isEqualToString:@" "] == YES)
-    {
-        self.name = nil;
+    // Determine which text field is active and make appropriate changes
+    if (textField == self.tf_name) {
+        
+        if ([enteredText isEqualToString:@""] == YES ||
+            [enteredText isEqualToString:@" "] == YES)
+        {
+            self.name = nil;
+        }
+        else {
+            self.name = enteredText;
+        }
+        
+        // remove the tap gesture recognizer so it does not interfere with other table view touches
+        [self.tbl_profile removeGestureRecognizer:self.gestureRecognizer];
     }
-    else {
-        self.name = enteredText;
+    else if (textField == self.tf_birthday) {
+        
+        [self hideDisabledBackgroundView];
+        
+        if ([self.dateFormatter dateFromString:enteredText]) {
+            self.pv_birthday.date = [self.dateFormatter dateFromString:enteredText];
+            
+            NSDate* birthday = [self.dateFormatter dateFromString:enteredText];
+            double doubleDate = [birthday timeIntervalSince1970];
+            self.birthday = [NSNumber numberWithDouble:doubleDate];
+        }
+        else {
+            self.tf_birthday.text = [self.dateFormatter stringFromDate:self.pv_birthday.date];
+            
+            NSDate* birthday = self.pv_birthday.date;
+            double doubleDate = [birthday timeIntervalSince1970];
+            self.birthday = [NSNumber numberWithDouble:doubleDate];
+        }
+    }
+    else if (textField == self.tf_gender) {
+        
+        [self hideDisabledBackgroundView];
+        
+        if ([enteredText isEqualToString:@""] == YES ||
+            [enteredText isEqualToString:@" "] == YES)
+        {
+            self.gender = nil;
+        }
+        else {
+            self.gender = enteredText;
+        }
+    }
+    else if (textField == self.tf_bloodType) {
+        
+        [self hideDisabledBackgroundView];
+        
+        if ([enteredText isEqualToString:@""] == YES ||
+            [enteredText isEqualToString:@" "] == YES)
+        {
+            self.bloodType = nil;
+        }
+        else {
+            self.bloodType = enteredText;
+        }
     }
     
     // Re-enable "Done" and "Delete" buttons
     self.navigationItem.rightBarButtonItem.enabled = YES;
-//    self.navigationItem.leftBarButtonItem.enabled = YES;
-    
-    // remove the tap gesture recognizer so it does not interfere with other table view touches
-    [self.tbl_profile removeGestureRecognizer:self.gestureRecognizer];
-    
-    self.name = self.tf_name.text;
     
 }
 
@@ -793,27 +748,38 @@
 }
 
 #pragma mark - UI Action Methods
-//- (void)showDeleteNavBarButton {
-//    // add the "Delete" button to the nav bar
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [button setBackgroundImage:[UIImage imageNamed:@"delete_red.png"] forState:UIControlStateNormal];
-//    [button setTitle:NSLocalizedString(@"DELETE", nil) forState:UIControlStateNormal];
-//    button.titleLabel.font = [UIFont boldSystemFontOfSize:12.0f];
-//    button.titleLabel.shadowColor = [UIColor lightGrayColor];
-//    button.titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
-//    [button.layer setCornerRadius:5.0f];
-//    [button.layer setMasksToBounds:YES];
-//    [button.layer setBorderWidth:1.0f];
-//    [button.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
-//    button.frame=CGRectMake(0.0, 100.0, 60.0, 30.0);
-//    
-//    [button addTarget:self action:@selector(onDeleteProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    UIBarButtonItem* leftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-//    
-//    self.navigationItem.leftBarButtonItem = leftButton;
-//    [leftButton release];
-//}
+- (void)showDisabledBackgroundView {
+    // Show the disabled background so user cannot touch into the tableview while picker is shown
+    [self.v_disabledBackground setAlpha:0.0];
+    [self.view bringSubviewToFront:self.v_disabledBackground];
+    
+    // start the show disabled view animation
+    [self.v_disabledBackground setAlpha:0.0];
+    [self.view bringSubviewToFront:self.v_disabledBackground];
+    
+    [UIView animateWithDuration:0.3
+                        delay:0.0
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         [self.v_disabledBackground setAlpha:0.4];
+                     } 
+                     completion:^(BOOL finished){
+                         
+                     }];
+}
+
+- (void)hideDisabledBackgroundView {
+    // start the hide disabled view animation
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         [self.v_disabledBackground setAlpha:0.0];
+                     } 
+                     completion:^(BOOL finished){
+                         [self.view sendSubviewToBack:self.v_disabledBackground];
+                     }];
+}
 
 - (void)showDeleteButton {
     // add the "Delete" button to the footer of the tableview
@@ -838,10 +804,8 @@
     [footer release];
 }
 
-- (void)hideKeyboard {
-    if ([self.tf_name isFirstResponder] == YES) {
-        [self.tf_name resignFirstResponder];
-    }
+- (void)hideInputView {
+    [[self view] endEditing:YES];
 }
 
 - (void)editProfile {
@@ -892,7 +856,7 @@
         [self.tbl_profile reloadData];
         
         // Hide the keyboard if it is shown
-        [self hideKeyboard];
+        [self hideInputView];
         
         // add the "Edit" button back to the nav bar
         UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]

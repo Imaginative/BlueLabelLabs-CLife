@@ -15,6 +15,10 @@
     NSArray                 *m_sectionsArray;
     
     UITextField             *m_tf_name;
+    UITextField             *m_tf_birthday;
+    UITextField             *m_tf_gender;
+    UITextField             *m_tf_bloodType;
+    
     UITapGestureRecognizer  *m_gestureRecognizer;
     
     UIDatePicker            *m_pv_birthday;
@@ -41,6 +45,10 @@
 @property (nonatomic, retain)           NSArray                 *sectionsArray;
 
 @property (nonatomic, retain)           UITextField             *tf_name;
+@property (nonatomic, retain)           UITextField             *tf_birthday;
+@property (nonatomic, retain)           UITextField             *tf_gender;
+@property (nonatomic, retain)           UITextField             *tf_bloodType;
+
 @property (nonatomic, retain)           UITapGestureRecognizer  *gestureRecognizer;
 
 @property (nonatomic, retain)           UIDatePicker            *pv_birthday;
