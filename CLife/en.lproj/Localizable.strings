@@ -12,6 +12,7 @@
 "NO" = "No";
 "DELETE" = "Delete";
 "CANCEL" = "Cancel";
+"NONE" = "None";
 "DELETE WITH DATA EXPORT" = "Delete with data export";
 "DELETE WITHOUT DATA EXPORT" = "Delete without data export";
 
@@ -60,6 +61,30 @@
 "ENTER AMOUNT" = "Enter amount";
 "UNIT" = "Unit";
 "SELECT UNIT" = "Select unit";
+
+"SCHEDULE" = "Schedule";
+"ENTER START DATE" = "Enter start date";
+"STARTS" = "Starts";
+"TAKE" = "Take";
+"DOSE" = "dose";
+"DOSES" = "doses";
+"EVERY" = "Every";
+"FOR" = "For";
+"REMINDER" = "Reminder";
+"BEFORE" = "before";
+
+"MINUTE" = "minute";
+"MINUTES" = "minutes";
+"HOUR" = "hour";
+"HOURS" = "hours";
+"DAY" = "day";
+"DAYS" = "days";
+"WEEK" = "week";
+"WEEKS" = "weeks";
+"MONTH" = "month";
+"MONTHS" = "months";
+"YEAR" = "year";
+"YEARS" = "years";
 
 "REASON" = "Reason (optional)";
 "ENTER REASON" = "Enter the reason for this medication";

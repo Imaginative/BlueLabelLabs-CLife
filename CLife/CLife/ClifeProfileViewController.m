@@ -250,21 +250,21 @@
                 pickerView.maximumDate = [NSDate date];
                 
                 self.pv_birthday = pickerView;
+                
+                self.tf_birthday = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+                self.tf_birthday.font = [UIFont systemFontOfSize:17.0];
+                self.tf_birthday.adjustsFontSizeToFitWidth = YES;
+                self.tf_birthday.textColor = [UIColor blackColor];
+                self.tf_birthday.placeholder = NSLocalizedString(@"ENTER BIRTHDAY", nil);
+                self.tf_birthday.backgroundColor = [UIColor clearColor];
+                self.tf_birthday.textAlignment = UITextAlignmentLeft;
+                self.tf_birthday.delegate = self;
+                [self.tf_birthday setEnabled:YES];
+                
+                self.tf_birthday.inputView = self.pv_birthday;
+                
+                [cell.contentView addSubview:self.tf_birthday];
             }
-            
-            self.tf_birthday = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
-            self.tf_birthday.font = [UIFont systemFontOfSize:17.0];
-            self.tf_birthday.adjustsFontSizeToFitWidth = YES;
-            self.tf_birthday.textColor = [UIColor blackColor];
-            self.tf_birthday.placeholder = NSLocalizedString(@"ENTER BIRTHDAY", nil);
-            self.tf_birthday.backgroundColor = [UIColor clearColor];
-            self.tf_birthday.textAlignment = UITextAlignmentLeft;
-            self.tf_birthday.delegate = self;
-            [self.tf_birthday setEnabled:YES];
-            
-            self.tf_birthday.inputView = self.pv_birthday;
-            
-            [cell.contentView addSubview:self.tf_birthday];
         }
         
         if (self.birthday != nil) {
@@ -306,21 +306,21 @@
                 pickerView.showsSelectionIndicator = YES;
                 
                 self.pv_gender = pickerView;
+                
+                self.tf_gender = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+                self.tf_gender.font = [UIFont systemFontOfSize:17.0];
+                self.tf_gender.adjustsFontSizeToFitWidth = YES;
+                self.tf_gender.textColor = [UIColor blackColor];
+                self.tf_gender.placeholder = NSLocalizedString(@"SELECT GENDER", nil);
+                self.tf_gender.backgroundColor = [UIColor clearColor];
+                self.tf_gender.textAlignment = UITextAlignmentLeft;
+                self.tf_gender.delegate = self;
+                [self.tf_gender setEnabled:YES];
+                
+                self.tf_gender.inputView = self.pv_gender;
+                
+                [cell.contentView addSubview:self.tf_gender];
             }
-            
-            self.tf_gender = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
-            self.tf_gender.font = [UIFont systemFontOfSize:17.0];
-            self.tf_gender.adjustsFontSizeToFitWidth = YES;
-            self.tf_gender.textColor = [UIColor blackColor];
-            self.tf_gender.placeholder = NSLocalizedString(@"SELECT GENDER", nil);
-            self.tf_gender.backgroundColor = [UIColor clearColor];
-            self.tf_gender.textAlignment = UITextAlignmentLeft;
-            self.tf_gender.delegate = self;
-            [self.tf_gender setEnabled:YES];
-            
-            self.tf_gender.inputView = self.pv_gender;
-            
-            [cell.contentView addSubview:self.tf_gender];
         }
         
         if (self.gender != nil) {
@@ -362,21 +362,21 @@
                 pickerView.showsSelectionIndicator = YES;
                 
                 self.pv_bloodType = pickerView;
+                
+                self.tf_bloodType = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+                self.tf_bloodType.font = [UIFont systemFontOfSize:17.0];
+                self.tf_bloodType.adjustsFontSizeToFitWidth = YES;
+                self.tf_bloodType.textColor = [UIColor blackColor];
+                self.tf_bloodType.placeholder = NSLocalizedString(@"SELECT BLOOD TYPE", nil);
+                self.tf_bloodType.backgroundColor = [UIColor clearColor];
+                self.tf_bloodType.textAlignment = UITextAlignmentLeft;
+                self.tf_bloodType.delegate = self;
+                [self.tf_bloodType setEnabled:YES];
+                
+                self.tf_bloodType.inputView = self.pv_bloodType;
+                
+                [cell.contentView addSubview:self.tf_bloodType];
             }
-            
-            self.tf_bloodType = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
-            self.tf_bloodType.font = [UIFont systemFontOfSize:17.0];
-            self.tf_bloodType.adjustsFontSizeToFitWidth = YES;
-            self.tf_bloodType.textColor = [UIColor blackColor];
-            self.tf_bloodType.placeholder = NSLocalizedString(@"SELECT BLOOD TYPE", nil);
-            self.tf_bloodType.backgroundColor = [UIColor clearColor];
-            self.tf_bloodType.textAlignment = UITextAlignmentLeft;
-            self.tf_bloodType.delegate = self;
-            [self.tf_bloodType setEnabled:YES];
-            
-            self.tf_bloodType.inputView = self.pv_bloodType;
-            
-            [cell.contentView addSubview:self.tf_bloodType];
         }
         
         if (self.bloodType != nil) {
@@ -558,6 +558,9 @@
     
     // Determine which text field is active and make appropriate changes
     if (textField == self.tf_name) {
+        // Disable the table view scrolling
+        [self.tbl_profile setScrollEnabled:NO];
+        
         // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
         [self.tbl_profile addGestureRecognizer:self.gestureRecognizer];
         
@@ -596,7 +599,7 @@
         [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
         
         // Scroll tableview to this row
-        [self.tbl_profile setContentOffset:CGPointMake(0, 115) animated:YES];
+        [self.tbl_profile setContentOffset:CGPointMake(0, 125) animated:YES];
         
         if ([self.tf_gender.text isEqualToString:@""] == NO &&
             [self.tf_gender.text isEqualToString:@" "] == NO)
@@ -621,7 +624,7 @@
         [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
         
         // Scroll tableview to this row
-        [self.tbl_profile setContentOffset:CGPointMake(0, 187) animated:YES];
+        [self.tbl_profile setContentOffset:CGPointMake(0, 215) animated:YES];
         
         if ([self.tf_bloodType.text isEqualToString:@""] == NO &&
             [self.tf_bloodType.text isEqualToString:@" "] == NO)
@@ -670,6 +673,11 @@
     
     // Determine which text field is active and make appropriate changes
     if (textField == self.tf_name) {
+        // Enable the table view scrolling
+        [self.tbl_profile setScrollEnabled:YES];
+        
+        // remove the tap gesture recognizer so it does not interfere with other table view touches
+        [self.tbl_profile removeGestureRecognizer:self.gestureRecognizer];
         
         if ([enteredText isEqualToString:@""] == YES ||
             [enteredText isEqualToString:@" "] == YES)
@@ -680,8 +688,6 @@
             self.name = enteredText;
         }
         
-        // remove the tap gesture recognizer so it does not interfere with other table view touches
-        [self.tbl_profile removeGestureRecognizer:self.gestureRecognizer];
     }
     else if (textField == self.tf_birthday) {
         
@@ -823,7 +829,6 @@
     [rightButton release];
     
     // add the "Delete" button to the table view's footer
-//    [self showDeleteNavBarButton];
     [self showDeleteButton];
     
 }

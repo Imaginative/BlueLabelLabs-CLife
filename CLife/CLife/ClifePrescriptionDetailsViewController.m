@@ -9,6 +9,7 @@
 #import "ClifePrescriptionDetailsViewController.h"
 #import "Prescription.h"
 #import "IDGenerator.h"
+#import "DateTimeHelper.h"
 
 @interface ClifePrescriptionDetailsViewController ()
 
@@ -20,18 +21,30 @@
 @synthesize prescriptionID          = m_prescriptionID;
 @synthesize tf_medicationName       = m_tf_medicationName;
 @synthesize gestureRecognizer       = m_gestureRecognizer;
+@synthesize tf_scheduleStartDate    = m_tf_scheduleStartDate;
 @synthesize pv_startDate            = m_pv_startDate;
 @synthesize dateFormatter           = m_dateFormatter;
+@synthesize numberArray             = m_numberArray;
+@synthesize tf_scheduleAmount       = m_tf_scheduleAmount;
+@synthesize pv_scheduleAmount       = m_pv_scheduleAmount;
+@synthesize tf_scheduleRepeat       = m_tf_scheduleRepeat;
+@synthesize pv_scheduleRepeat       = m_pv_scheduleRepeat;
+@synthesize tf_scheduleDuration     = m_tf_scheduleDuration;
+@synthesize pv_scheduleDuration     = m_pv_scheduleDuration;
+@synthesize tf_scheduleReminder     = m_tf_scheduleReminder;
+@synthesize pv_scheduleReminder     = m_pv_scheduleReminder;
+@synthesize tf_method               = m_tf_method;
 @synthesize pv_method               = m_pv_method;
 @synthesize methodArray             = m_methodArray;
 @synthesize tf_dosageAmount         = m_tf_dosageAmount;
+@synthesize tf_dosageUnit           = m_tf_dosageUnit;
 @synthesize pv_dosageUnit           = m_pv_dosageUnit;
 @synthesize dosageUnitArray         = m_dosageUnitArray;
 @synthesize tv_reason               = m_tv_reason;
 @synthesize v_disabledBackground    = m_v_disabledBackground;
 @synthesize isEditing               = m_isEditing;
 @synthesize medicationName          = m_medicationName;
-@synthesize startDate               = m_startDate;
+@synthesize sheduleStartDate        = m_scheduleStartDate;
 @synthesize method                  = m_method;
 @synthesize dosageAmount            = m_dosageAmount;
 @synthesize dosageUnit              = m_dosageUnit;
@@ -64,6 +77,7 @@
                           NSLocalizedString(@"MEDICATION", nil),
                           NSLocalizedString(@"METHOD", nil),
                           NSLocalizedString(@"DOSAGE", nil),
+                          NSLocalizedString(@"SCHEDULE", nil),
                           NSLocalizedString(@"REASON", nil),
                           nil];
     
@@ -84,8 +98,22 @@
                             NSLocalizedString(@"l", nil),
                            nil];
     
+    // Setup array for number pickers
+    NSMutableArray *mtblNumbersArray = [[NSMutableArray alloc] initWithObjects:[NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"DOSE", nil)], nil];
+    for (int i = 2; i <= 30; i++) {
+        [mtblNumbersArray addObject:[NSString stringWithFormat:@"%d %@", i, NSLocalizedString(@"DOSES", nil)]];
+    }
+    self.numberArray = [NSArray arrayWithArray:mtblNumbersArray];
+    
+    self.methodArray = [NSArray arrayWithObjects:
+                        NSLocalizedString(@"PILL", nil),
+                        NSLocalizedString(@"LIQUID", nil),
+                        NSLocalizedString(@"TOPICAL", nil),
+                        NSLocalizedString(@"SYRINGE", nil),
+                        nil];
+    
     // Setup tap gesture recognizer to capture touches on the tableview when the keyboard is visible
-    self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputView)];
     
     // Are we opening an existing prescription or adding a new one?
     if (self.prescriptionID != nil) {
@@ -148,10 +176,21 @@
     self.tbl_prescriptionDetails = nil;
     self.tf_medicationName = nil;
     self.gestureRecognizer = nil;
+    self.tf_scheduleStartDate = nil;
     self.pv_startDate = nil;
     self.dateFormatter = nil;
+    self.tf_scheduleAmount = nil;
+    self.pv_scheduleAmount = nil;
+    self.tf_scheduleRepeat = nil;
+    self.pv_scheduleRepeat = nil;
+    self.tf_scheduleDuration = nil;
+    self.pv_scheduleDuration = nil;
+    self.tf_scheduleReminder = nil;
+    self.pv_scheduleReminder = nil;
+    self.tf_method = nil;
     self.pv_method = nil;
     self.tf_dosageAmount = nil;
+    self.tf_dosageUnit = nil;
     self.pv_dosageUnit = nil;
     self.tv_reason = nil;
     self.v_disabledBackground = nil;
@@ -162,55 +201,6 @@
 {
     [super viewWillAppear:animated];
     
-//    // Are we opening an existing prescription or adding a new one?
-//    if (self.prescriptionID != nil) {
-//        // Existing prescription
-//        self.isEditing = NO;
-//        
-//        // add the "Edit" button to the nav bar if openning an existing prescription
-//        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-//                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-//                                        target:self
-//                                        action:@selector(onEditPrescriptionButtonPressed:)];
-//        self.navigationItem.rightBarButtonItem = rightButton;
-//        [rightButton release];
-//        
-//        // Get the prescription object
-//        ResourceContext* resourceContext = [ResourceContext instance];
-//        Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
-//        
-//        self.medicationName = prescription.name;
-//        self.method = prescription.method;
-//        self.dosageAmount = prescription.dosageamount;
-//        self.dosageUnit = prescription.dosageunit;
-//        self.reason = prescription.notes;
-//    }
-//    else {
-//        // We are adding a new prescription
-//        self.isEditing = YES;
-//        
-//        // add the "Done" button to the nav bar
-//        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-//                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-//                                        target:self
-//                                        action:@selector(onDoneAddingPrescriptionButtonPressed:)];
-//        self.navigationItem.rightBarButtonItem = rightButton;
-//        [rightButton release];
-//        
-//        // add the "Cancel" button to the nav bar
-//        UIBarButtonItem* leftButton = [[UIBarButtonItem alloc]
-//                                       initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-//                                       target:self
-//                                       action:@selector(onCanceledAddingPrescriptionButtonPressed:)];
-//        self.navigationItem.leftBarButtonItem = leftButton;
-//        [leftButton release];
-//        
-//        self.medicationName = nil;
-//        self.method = nil;
-//        self.dosageAmount = nil;
-//        self.dosageUnit = nil;
-//        self.reason = nil;
-//    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -231,7 +221,12 @@
 {
     // Return the number of rows in the section.
     if (section == 2) {
+        // Dosage section
         return 2;
+    }
+    if (section == 3) {
+        // Schedule section
+        return 5;
     }
     else {
         return 1;
@@ -303,30 +298,50 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
-            cell.textLabel.text = NSLocalizedString(@"SELECT METHOD", nil);
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            cell.textLabel.textColor = [UIColor lightGrayColor];
+            [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+            
+            // Initialize the gender picker view
+            if (self.pv_method == nil) {
+                UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
+                [pickerView sizeToFit];
+                pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                pickerView.dataSource = self;
+                pickerView.delegate = self;
+                pickerView.showsSelectionIndicator = YES;
+                
+                self.pv_method = pickerView;
+                
+                self.tf_method = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+                self.tf_method.font = [UIFont systemFontOfSize:17.0];
+                self.tf_method.adjustsFontSizeToFitWidth = YES;
+                self.tf_method.textColor = [UIColor blackColor];
+                self.tf_method.placeholder = NSLocalizedString(@"SELECT METHOD", nil);
+                self.tf_method.backgroundColor = [UIColor clearColor];
+                self.tf_method.textAlignment = UITextAlignmentLeft;
+                self.tf_method.delegate = self;
+                [self.tf_method setEnabled:YES];
+                
+                self.tf_method.inputView = self.pv_method;
+                
+                [cell.contentView addSubview:self.tf_method];
+            }
         }
         
         if (self.method != nil) {
-            cell.textLabel.textColor = [UIColor blackColor];
-            cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-            cell.textLabel.text = self.method;
+            self.tf_method.text = self.method;
         }
         else {
-            cell.textLabel.text = NSLocalizedString(@"SELECT METHOD", nil);
-            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            cell.textLabel.textColor = [UIColor lightGrayColor];
+            self.tf_method.text = nil;
         }
         
         // disable the cell until the "Edit" button is pressed
         if (self.isEditing == YES) {
             [cell setUserInteractionEnabled:YES];
-            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            [self.tf_method setClearButtonMode:UITextFieldViewModeAlways];
         }
         else {
             [cell setUserInteractionEnabled:NO];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            [self.tf_method setClearButtonMode:UITextFieldViewModeNever];
         }
     }
     else if (indexPath.section == 2) {
@@ -385,35 +400,337 @@
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             
             if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                
+                [cell setSelectionStyle:UITableViewCellEditingStyleNone];
                 
                 cell.textLabel.text = NSLocalizedString(@"UNIT", nil);
-                cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-                cell.detailTextLabel.text = NSLocalizedString(@"SELECT UNIT", nil);
+                
+                // Initialize the dosage unit picker view
+                if (self.pv_dosageUnit == nil) {
+                    UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
+                    [pickerView sizeToFit];
+                    pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                    pickerView.dataSource = self;
+                    pickerView.delegate = self;
+                    pickerView.showsSelectionIndicator = YES;
+                    
+                    self.pv_dosageUnit = pickerView;
+                    
+                    self.tf_dosageUnit = [[UITextField alloc] initWithFrame:CGRectMake(110, 0, 170, 21)];
+                    self.tf_dosageUnit.adjustsFontSizeToFitWidth = YES;
+                    self.tf_dosageUnit.textColor = [UIColor darkGrayColor];
+                    self.tf_dosageUnit.placeholder = NSLocalizedString(@"SELECT UNIT", nil);
+                    self.tf_dosageUnit.backgroundColor = [UIColor clearColor];
+                    self.tf_dosageUnit.textAlignment = UITextAlignmentRight;
+                    self.tf_dosageUnit.delegate = self;
+                    [self.tf_dosageUnit setEnabled:YES];
+                    
+                    self.tf_dosageUnit.inputView = self.pv_dosageUnit;
+                    
+                    cell.accessoryView = self.tf_dosageUnit;
+                }
             }
             
             if (self.dosageUnit != nil) {
-//                cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
-                cell.detailTextLabel.textColor = [UIColor darkGrayColor];
-                cell.detailTextLabel.text = self.dosageUnit;
+                self.tf_dosageUnit.text = self.dosageUnit;
             }
             else {
-                cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-                cell.detailTextLabel.text = NSLocalizedString(@"SELECT UNIT", nil);
+                self.tf_dosageUnit.text = nil;
             }
             
             // disable the cell until the "Edit" button is pressed
             if (self.isEditing == YES) {
                 [cell setUserInteractionEnabled:YES];
-                [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                [self.tf_dosageUnit setClearButtonMode:UITextFieldViewModeAlways];
             }
             else {
                 [cell setUserInteractionEnabled:NO];
-                [cell setAccessoryType:UITableViewCellAccessoryNone];
+                [self.tf_dosageUnit setClearButtonMode:UITextFieldViewModeNever];
             }
         }
     }
     else if (indexPath.section == 3) {
+        // Schedule section
+        
+        if (indexPath.row == 0) {
+            // Schedule start date row
+            
+            CellIdentifier = @"ScheduleStartDate";
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                
+                [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+                
+                cell.textLabel.text = NSLocalizedString(@"STARTS", nil);
+                
+                // Initialize the start date picker view
+                if (self.pv_startDate == nil) {
+                    UIDatePicker* pickerView = [[[UIDatePicker alloc] init] autorelease];
+                    [pickerView sizeToFit];
+                    pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                    [pickerView addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+                    pickerView.datePickerMode = UIDatePickerModeDateAndTime;
+                    
+                    self.pv_startDate = pickerView;
+                    
+                    self.tf_scheduleStartDate = [[UITextField alloc] initWithFrame:CGRectMake(110, 0, 170, 21)];
+                    self.tf_scheduleStartDate.adjustsFontSizeToFitWidth = YES;
+                    self.tf_scheduleStartDate.textColor = [UIColor darkGrayColor];
+                    self.tf_scheduleStartDate.backgroundColor = [UIColor clearColor];
+                    self.tf_scheduleStartDate.textAlignment = UITextAlignmentRight;
+                    self.tf_scheduleStartDate.delegate = self;
+                    [self.tf_scheduleStartDate setEnabled:YES];
+                    
+                    self.tf_scheduleStartDate.inputView = self.pv_startDate;
+                    
+                    cell.accessoryView = self.tf_scheduleStartDate;
+                }
+            }
+            
+            if (self.sheduleStartDate != nil) {
+                NSDate *startDate = [DateTimeHelper parseWebServiceDateDouble:self.sheduleStartDate];
+                self.tf_scheduleStartDate.text = [self.dateFormatter stringFromDate:startDate];
+            }
+            else {
+                NSDate *startDate = [NSDate date];
+                self.tf_scheduleStartDate.text = [self.dateFormatter stringFromDate:startDate];
+            }
+            
+//            // disable the cell until the "Edit" button is pressed
+//            if (self.isEditing == YES) {
+//                [cell setUserInteractionEnabled:YES];
+//                [self.tf_scheduleStartDate setClearButtonMode:UITextFieldViewModeAlways];
+//            }
+//            else {
+                [cell setUserInteractionEnabled:NO];
+                [self.tf_scheduleStartDate setClearButtonMode:UITextFieldViewModeNever];
+//            }
+        }
+        else if (indexPath.row == 1) {
+            // Schedule amount row
+            
+            CellIdentifier = @"ScheduleAmount";
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                
+                [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+                
+                cell.textLabel.text = NSLocalizedString(@"TAKE", nil);
+                
+                // Initialize the schedule amount picker view
+                if (self.pv_scheduleAmount == nil) {
+                    UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
+                    [pickerView sizeToFit];
+                    pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                    pickerView.dataSource = self;
+                    pickerView.delegate = self;
+                    pickerView.showsSelectionIndicator = YES;
+                    
+                    self.pv_scheduleAmount = pickerView;
+                    
+                    self.tf_scheduleAmount = [[UITextField alloc] initWithFrame:CGRectMake(110, 0, 170, 21)];
+                    self.tf_scheduleAmount.adjustsFontSizeToFitWidth = YES;
+                    self.tf_scheduleAmount.textColor = [UIColor darkGrayColor];
+                    self.tf_scheduleAmount.backgroundColor = [UIColor clearColor];
+                    self.tf_scheduleAmount.textAlignment = UITextAlignmentRight;
+                    self.tf_scheduleAmount.delegate = self;
+                    [self.tf_scheduleAmount setEnabled:YES];
+                    
+                    self.tf_scheduleAmount.inputView = self.pv_scheduleAmount;
+                    
+                    cell.accessoryView = self.tf_scheduleAmount;
+                }
+            }
+            
+//            if (self. != nil) {
+                self.tf_scheduleAmount.text = @"1 dose";
+//            }
+//            else {
+//                self.tf_scheduleAmount.text = nil;
+//            }
+            
+            // disable the cell until the "Edit" button is pressed
+//            if (self.isEditing == YES) {
+//                [cell setUserInteractionEnabled:YES];
+//                [self.tf_dosageUnit setClearButtonMode:UITextFieldViewModeAlways];
+//            }
+//            else {
+                [cell setUserInteractionEnabled:NO];
+                [self.tf_scheduleAmount setClearButtonMode:UITextFieldViewModeNever];
+//            }
+        }
+        else if (indexPath.row == 2) {
+            // Schedule amount row
+            
+            CellIdentifier = @"ScheduleRepeat";
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                
+                [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+                
+                cell.textLabel.text = NSLocalizedString(@"EVERY", nil);
+                
+                // Initialize the schedule repeat picker view
+                if (self.pv_scheduleRepeat == nil) {
+                    UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
+                    [pickerView sizeToFit];
+                    pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                    pickerView.dataSource = self;
+                    pickerView.delegate = self;
+                    pickerView.showsSelectionIndicator = YES;
+                    
+                    self.pv_scheduleRepeat = pickerView;
+                    
+                    self.tf_scheduleRepeat = [[UITextField alloc] initWithFrame:CGRectMake(110, 0, 170, 21)];
+                    self.tf_scheduleRepeat.adjustsFontSizeToFitWidth = YES;
+                    self.tf_scheduleRepeat.textColor = [UIColor darkGrayColor];
+                    self.tf_scheduleRepeat.backgroundColor = [UIColor clearColor];
+                    self.tf_scheduleRepeat.textAlignment = UITextAlignmentRight;
+                    self.tf_scheduleRepeat.delegate = self;
+                    [self.tf_scheduleRepeat setEnabled:YES];
+                    
+                    self.tf_scheduleRepeat.inputView = self.pv_scheduleRepeat;
+                    
+                    cell.accessoryView = self.tf_scheduleRepeat;
+                }
+            }
+            
+            //            if (self. != nil) {
+            self.tf_scheduleRepeat.text = @"6 hours";
+            //            }
+            //            else {
+            //                self.tf_scheduleAmount.text = nil;
+            //            }
+            
+            // disable the cell until the "Edit" button is pressed
+            //            if (self.isEditing == YES) {
+            //                [cell setUserInteractionEnabled:YES];
+            //                [self.tf_dosageUnit setClearButtonMode:UITextFieldViewModeAlways];
+            //            }
+            //            else {
+            [cell setUserInteractionEnabled:NO];
+            [self.tf_scheduleRepeat setClearButtonMode:UITextFieldViewModeNever];
+            //            }
+        }
+        else if (indexPath.row == 3) {
+            // Schedule duration row
+            
+            CellIdentifier = @"ScheduleDuration";
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                
+                [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+                
+                cell.textLabel.text = NSLocalizedString(@"FOR", nil);
+                
+                // Initialize the schedule repeat picker view
+                if (self.pv_scheduleDuration == nil) {
+                    UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
+                    [pickerView sizeToFit];
+                    pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                    pickerView.dataSource = self;
+                    pickerView.delegate = self;
+                    pickerView.showsSelectionIndicator = YES;
+                    
+                    self.pv_scheduleDuration = pickerView;
+                    
+                    self.tf_scheduleDuration = [[UITextField alloc] initWithFrame:CGRectMake(110, 0, 170, 21)];
+                    self.tf_scheduleDuration.adjustsFontSizeToFitWidth = YES;
+                    self.tf_scheduleDuration.textColor = [UIColor darkGrayColor];
+                    self.tf_scheduleDuration.backgroundColor = [UIColor clearColor];
+                    self.tf_scheduleDuration.textAlignment = UITextAlignmentRight;
+                    self.tf_scheduleDuration.delegate = self;
+                    [self.tf_scheduleDuration setEnabled:YES];
+                    
+                    self.tf_scheduleDuration.inputView = self.pv_scheduleDuration;
+                    
+                    cell.accessoryView = self.tf_scheduleDuration;
+                }
+            }
+            
+            //            if (self. != nil) {
+            self.tf_scheduleDuration.text = @"1 week";
+            //            }
+            //            else {
+            //                self.tf_scheduleAmount.text = nil;
+            //            }
+            
+            // disable the cell until the "Edit" button is pressed
+            //            if (self.isEditing == YES) {
+            //                [cell setUserInteractionEnabled:YES];
+            //                [self.tf_dosageUnit setClearButtonMode:UITextFieldViewModeAlways];
+            //            }
+            //            else {
+            [cell setUserInteractionEnabled:NO];
+            [self.tf_scheduleDuration setClearButtonMode:UITextFieldViewModeNever];
+            //            }
+        }
+        else if (indexPath.row == 4) {
+            // Schedule reminder row
+            
+            CellIdentifier = @"ScheduleReminder";
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            
+            if (cell == nil) {
+                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                
+                [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+                
+                cell.textLabel.text = NSLocalizedString(@"REMINDER", nil);
+                
+                // Initialize the schedule repeat picker view
+                if (self.pv_scheduleReminder == nil) {
+                    UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
+                    [pickerView sizeToFit];
+                    pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                    pickerView.dataSource = self;
+                    pickerView.delegate = self;
+                    pickerView.showsSelectionIndicator = YES;
+                    
+                    self.pv_scheduleReminder = pickerView;
+                    
+                    self.tf_scheduleReminder = [[UITextField alloc] initWithFrame:CGRectMake(110, 0, 170, 21)];
+                    self.tf_scheduleReminder.adjustsFontSizeToFitWidth = YES;
+                    self.tf_scheduleReminder.textColor = [UIColor darkGrayColor];
+                    self.tf_scheduleReminder.backgroundColor = [UIColor clearColor];
+                    self.tf_scheduleReminder.textAlignment = UITextAlignmentRight;
+                    self.tf_scheduleReminder.delegate = self;
+                    [self.tf_scheduleReminder setEnabled:YES];
+                    
+                    self.tf_scheduleReminder.inputView = self.pv_scheduleReminder;
+                    
+                    cell.accessoryView = self.tf_scheduleReminder;
+                }
+            }
+            
+            //            if (self. != nil) {
+            self.tf_scheduleReminder.text = @"5 minutes before";
+            //            }
+            //            else {
+            //                self.tf_scheduleAmount.text = nil;
+            //            }
+            
+            // disable the cell until the "Edit" button is pressed
+            //            if (self.isEditing == YES) {
+            //                [cell setUserInteractionEnabled:YES];
+            //                [self.tf_dosageUnit setClearButtonMode:UITextFieldViewModeAlways];
+            //            }
+            //            else {
+            [cell setUserInteractionEnabled:NO];
+            [self.tf_scheduleReminder setClearButtonMode:UITextFieldViewModeNever];
+            //            }
+        }
+    }
+    else if (indexPath.section == 4) {
         // Reason section
         
         CellIdentifier = @"Reason";
@@ -425,7 +742,7 @@
             cell.textLabel.text = nil;
             [cell setSelectionStyle:UITableViewCellEditingStyleNone];
             
-            self.tv_reason = [[UITextView alloc] initWithFrame:CGRectMake(5, 0, 290, 120)];
+            self.tv_reason = [[UITextView alloc] initWithFrame:CGRectMake(5, 0, 290, 115)];
             self.tv_reason.font = [UIFont systemFontOfSize:16.0f];
             self.tv_reason.textColor = [UIColor lightGrayColor];
             self.tv_reason.text = NSLocalizedString(@"ENTER REASON", nil);
@@ -519,10 +836,12 @@
 
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 3) {
-        return 120.0f;
+    if (indexPath.section == 4) {
+        return 115.0f;
     }
-    else if (indexPath.section == 2) {
+    else if (indexPath.section == 2 ||
+             indexPath.section == 3)
+    {
         return 45.0f;
     }
     else {
@@ -532,13 +851,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *targetCell = [tableView cellForRowAtIndexPath:indexPath];
-    
     if (indexPath.section == 0) {
         // Medication Name selected
         
-        // Scroll tableview to this row
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 0) animated:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         // Set the medication name text field as active
         [self.tf_medicationName becomeFirstResponder];
@@ -547,33 +863,10 @@
     else if (indexPath.section == 1) {
         // Method selected
         
-        // Scroll tableview to this row
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 0) animated:YES];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        // Show the method picker
-        if (self.pv_method == nil) {
-            self.pv_method = [[UIPickerView alloc] init];
-            self.pv_method.dataSource = self;
-            self.pv_method.delegate = self;
-            
-            self.pv_method.showsSelectionIndicator = YES;
-        }
-        
-        if ([targetCell.textLabel.text isEqualToString:NSLocalizedString(@"SELECT METHOD", nil)] == NO) {
-            int row = [self.methodArray indexOfObject:targetCell.textLabel.text];
-            [self.pv_method selectRow:row inComponent:0 animated:YES];
-            
-            self.method = [self.methodArray objectAtIndex:row];
-        }
-        else {
-            targetCell.textLabel.text = [self.methodArray objectAtIndex:0];
-            targetCell.textLabel.font = [UIFont systemFontOfSize:17.0];
-            targetCell.textLabel.textColor = [UIColor blackColor];
-            
-            self.method = [self.methodArray objectAtIndex:0];
-        }
-        
-        [self showPicker:self.pv_method];
+        // Set the birthday text field as active
+        [self.tf_method becomeFirstResponder];
         
     }
     else if (indexPath.section == 2) {
@@ -584,9 +877,6 @@
             
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
             
-            // Scroll tableview to this row
-            [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 85) animated:YES];
-            
             // Set the dosage amount text field as active
             [self.tf_dosageAmount becomeFirstResponder];
             
@@ -594,34 +884,13 @@
         else if (indexPath.row == 1) {
             // Dosage Unit row
             
-            // Scroll tableview to this row
-            [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 130) animated:YES];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
             
-            if (self.pv_dosageUnit == nil) {
-                self.pv_dosageUnit = [[UIPickerView alloc] init];
-                self.pv_dosageUnit.dataSource = self;
-                self.pv_dosageUnit.delegate = self;
-                self.pv_dosageUnit.showsSelectionIndicator = YES;
-            }
-            
-            if ([targetCell.detailTextLabel.text isEqualToString:NSLocalizedString(@"SELECT UNIT", nil)] == NO) {
-                int row = [self.dosageUnitArray indexOfObject:targetCell.textLabel.text];
-                [self.pv_dosageUnit selectRow:row inComponent:0 animated:YES];
-                
-                self.dosageUnit = [self.dosageUnitArray objectAtIndex:row];
-            }
-            else {
-                targetCell.detailTextLabel.text = [self.dosageUnitArray objectAtIndex:0];
-//                targetCell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
-                targetCell.detailTextLabel.textColor = [UIColor darkGrayColor];
-                
-                self.dosageUnit = [self.dosageUnitArray objectAtIndex:0];
-            }
-                        
-            [self showPicker:self.pv_dosageUnit];
+            // Set the dosage amount text field as active
+            [self.tf_dosageUnit becomeFirstResponder];
         }
     }
-    else if (indexPath.section == 3) {
+    else if (indexPath.section == 4) {
         // Reason selected
         
         [self.tv_reason becomeFirstResponder];
@@ -630,170 +899,14 @@
 }
 
 #pragma mark - UIPickerView Methods
-- (void)showPicker:(UIPickerView *)pickerView {
-    if (pickerView.superview == nil)
-    {
-        // Show the disabled background so user cannot touch into the tableview while picker is shown
-        [self.v_disabledBackground setAlpha:0.0];
-        [self.view bringSubviewToFront:self.v_disabledBackground];
-        
-        [self.view.window addSubview:pickerView];
-        
-        // size up the picker view to our screen and compute the start/end frame origin for our slide up animation
-        //
-        // compute the start frame
-        CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-        CGSize pickerSize = [pickerView sizeThatFits:CGSizeZero];
-        CGRect startRect = CGRectMake(0.0,
-                                      screenRect.origin.y + screenRect.size.height,
-                                      pickerSize.width, pickerSize.height);
-        pickerView.frame = startRect;
-        
-        // compute the end frame
-        CGRect pickerRect = CGRectMake(0.0,
-                                       screenRect.origin.y + screenRect.size.height - pickerSize.height,
-                                       pickerSize.width,
-                                       pickerSize.height);
-        // start the slide up animation
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.3];
-        
-        // we need to perform some post operations after the animation is complete
-        [UIView setAnimationDelegate:self];
-        
-        pickerView.frame = pickerRect;
-        
-        // animate the showing of the disabled background so user cannot touch into the tableview while picker is shown
-        [self.v_disabledBackground setAlpha:0.4];
-        
-        [UIView commitAnimations];
-        
-        // add the "Done" button to the nav bar
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                        target:self
-                                        action:@selector(pickerDoneAction:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
-        
-        // disable the "Cancel" button if it is shown
-        if (self.prescriptionID == nil) {
-            // New prescription
-            self.navigationItem.leftBarButtonItem.enabled = NO;
-        }
-    }
-}
-
-- (void)pickerDoneAction:(id)sender
-{
-    // Determine which picker to hide
-    BOOL pickerInSuperView = NO;
-    UIPickerView *pickerView;
-    if (self.pv_startDate.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = (UIPickerView *)self.pv_startDate;
-    }
-    else if (self.pv_method.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = self.pv_method;
-    }
-    else if (self.pv_dosageUnit.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = self.pv_dosageUnit;
-    }
-    
-    if (pickerInSuperView == YES) {
-        CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-        CGRect endFrame = pickerView.frame;
-        endFrame.origin.y = screenRect.origin.y + screenRect.size.height;
-        
-        // start the slide down animation
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationDuration:0.3];
-        
-        // we need to perform some post operations after the animation is complete
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationDidStopSelector:@selector(slideDownDidStop)];
-        
-        pickerView.frame = endFrame;
-        
-        // Hide the disabled background
-        [self.v_disabledBackground setAlpha:0.0];
-        
-        [UIView commitAnimations];
-        
-        // remove the "Done" button in the nav bar
-        self.navigationItem.rightBarButtonItem = nil;
-        
-        // deselect the current table row
-        NSIndexPath *indexPath = [self.tbl_prescriptionDetails indexPathForSelectedRow];
-        [self.tbl_prescriptionDetails deselectRowAtIndexPath:indexPath animated:YES];
-    }
-}
-
-- (void)slideDownDidStop
-{
-    // the picker has finished sliding downwards, so remove it
-    
-    [self.view sendSubviewToBack:self.v_disabledBackground];
-    
-    // Determine which picker to remove
-    BOOL pickerInSuperView = NO;
-    UIPickerView *pickerView;
-    if (self.pv_startDate.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = (UIPickerView *)self.pv_startDate;
-    }
-    else if (self.pv_method.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = self.pv_method;
-    }
-    else if (self.pv_dosageUnit.superview != nil) {
-        pickerInSuperView = YES;
-        pickerView = self.pv_dosageUnit;
-    }
-    
-    if (pickerInSuperView == YES) {
-        [pickerView removeFromSuperview];
-    }
-    
-    
-    if (self.prescriptionID == nil) {
-        // New prescription
-        self.navigationItem.leftBarButtonItem.enabled = YES;
-        
-        // add the "Done" button back to the nav bar
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                        target:self
-                                        action:@selector(onDoneAddingPrescriptionButtonPressed:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
-    }
-    else {
-        // editing existing prescription
-        
-        // add the "Done" button to the nav bar
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                        target:self
-                                        action:@selector(doneEditingPrescription:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
-    }
-}
-
 #pragma mark UIDatePickerView Methods
 - (void)dateChanged:(id)sender
 {
-    NSIndexPath *indexPath = [self.tbl_prescriptionDetails indexPathForSelectedRow];
-    UITableViewCell *cell = [self.tbl_prescriptionDetails cellForRowAtIndexPath:indexPath];
-    cell.textLabel.text = [self.dateFormatter stringFromDate:self.pv_startDate.date];
-    cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-    cell.textLabel.textColor = [UIColor blackColor];
+//    self.tf_startDate.text = [self.dateFormatter stringFromDate:self.pv_birthday.date];
     
-    double doubleDate = [self.pv_startDate.date timeIntervalSince1970];
-    self.startDate = [NSNumber numberWithDouble:doubleDate];
+    NSDate* startDate = self.pv_startDate.date;
+    double doubleDate = [startDate timeIntervalSince1970];
+    self.sheduleStartDate = [NSNumber numberWithDouble:doubleDate];
 }
 
 #pragma mark UIPickerView Data Source
@@ -827,20 +940,13 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSIndexPath *indexPath = [self.tbl_prescriptionDetails indexPathForSelectedRow];
-    UITableViewCell *cell = [self.tbl_prescriptionDetails cellForRowAtIndexPath:indexPath];
-    
     if (pickerView == self.pv_method) {
-        cell.textLabel.text = [self.methodArray objectAtIndex:row];
-        cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-        cell.textLabel.textColor = [UIColor blackColor];
+        self.tf_method.text = [self.methodArray objectAtIndex:row];
         
         self.method = [self.methodArray objectAtIndex:row];
     }
     else if (pickerView == self.pv_dosageUnit) {
-        cell.detailTextLabel.text = [self.dosageUnitArray objectAtIndex:row];
-//        cell.detailTextLabel.font = [UIFont systemFontOfSize:17.0];
-        cell.detailTextLabel.textColor = [UIColor darkGrayColor];
+        self.tf_dosageUnit.text = [self.dosageUnitArray objectAtIndex:row];
         
         self.dosageUnit = [self.dosageUnitArray objectAtIndex:row];
     }
@@ -853,7 +959,7 @@
     self.tv_reason = textView;
     
     // Scroll tableview to this row
-    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 335) animated:YES];
+    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 610) animated:YES];
     
     // Mark this row selected
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
@@ -889,7 +995,7 @@
     
     UIBarButtonItem* doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                  target:self
-                                                                                 action:@selector(hideKeyboard)] autorelease];
+                                                                                 action:@selector(hideInputView)] autorelease];
     
     UIBarButtonItem *flexSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
     
@@ -946,17 +1052,75 @@
 {
     // textfield editing has begun
     
-    // Mark this row selected
-    NSIndexPath *indexPath;
+    // Determine which text field is active and make appropriate changes
     if (textField == self.tf_medicationName) {
-        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 0) animated:YES];
+        // Disable the table view scrolling
+        [self.tbl_prescriptionDetails setScrollEnabled:NO];
+        
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
+        
+    }
+    else if (textField == self.tf_method) {
+        
+        [self showDisabledBackgroundView];
+        
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
+        
+        // Scroll tableview to this row
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 50) animated:YES];
+        
+        if ([self.tf_method.text isEqualToString:@""] == NO &&
+            [self.tf_method.text isEqualToString:@" "] == NO)
+        {
+            int row = [self.methodArray indexOfObject:self.tf_method.text];
+            [self.pv_method selectRow:row inComponent:0 animated:YES];
+            
+            self.method = [self.methodArray objectAtIndex:row];
+        }
+        else {
+            self.tf_method.text = [self.methodArray objectAtIndex:0];
+            
+            self.method = [self.methodArray objectAtIndex:0];
+        }
+        
     }
     else if (textField == self.tf_dosageAmount) {
-        indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 85) animated:YES];
+        // Disable the table view scrolling
+        [self.tbl_prescriptionDetails setScrollEnabled:NO];
+        
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
+        
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 135) animated:YES];
+        
     }
-    [self.tbl_prescriptionDetails selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    else if (textField == self.tf_dosageUnit) {
+        
+        [self showDisabledBackgroundView];
+        
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
+        
+        // Scroll tableview to this row
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 170) animated:YES];
+        
+        if ([self.tf_dosageUnit.text isEqualToString:@""] == NO &&
+            [self.tf_dosageUnit.text isEqualToString:@" "] == NO)
+        {
+            int row = [self.dosageUnitArray indexOfObject:self.tf_dosageUnit.text];
+            [self.pv_dosageUnit selectRow:row inComponent:0 animated:YES];
+            
+            self.dosageUnit = [self.dosageUnitArray objectAtIndex:row];
+        }
+        else {
+            self.tf_dosageUnit.text = [self.dosageUnitArray objectAtIndex:0];
+            
+            self.method = [self.dosageUnitArray objectAtIndex:0];
+        }
+        
+    }
     
     // disable nav bar buttons until text entry complete
     if (self.prescriptionID == nil) {
@@ -969,9 +1133,6 @@
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
     
-    // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
-    [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
-    
     // create a done view + done button, attach to it a doneClicked action, and place it in a toolbar as an accessory input view.
     // Prepare done button
     UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
@@ -982,7 +1143,7 @@
     
     UIBarButtonItem* doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                  target:self
-                                                                                 action:@selector(hideKeyboard)] autorelease];
+                                                                                 action:@selector(hideInputView)] autorelease];
     
     UIBarButtonItem *flexSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
     
@@ -998,10 +1159,12 @@
     // textfield editing has ended
     NSString *enteredText = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    // Deselect this row
-    NSIndexPath *indexPath;
     if (textField == self.tf_medicationName) {
-        indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        // Enable the table view scrolling
+        [self.tbl_prescriptionDetails setScrollEnabled:YES];
+        
+        // remove the tap gesture recognizer so it does not interfere with other table view touches
+        [self.tbl_prescriptionDetails removeGestureRecognizer:self.gestureRecognizer];
         
         if ([enteredText isEqualToString:@""] == YES ||
             [enteredText isEqualToString:@" "] == YES)
@@ -1012,8 +1175,24 @@
             self.medicationName = enteredText;
         }
     }
+    else if (textField == self.tf_method) {
+        [self hideDisabledBackgroundView];
+        
+        if ([enteredText isEqualToString:@""] == YES ||
+            [enteredText isEqualToString:@" "] == YES)
+        {
+            self.method = nil;
+        }
+        else {
+            self.method = enteredText;
+        }
+    }
     else if (textField == self.tf_dosageAmount) {
-        indexPath = [NSIndexPath indexPathForRow:0 inSection:2];
+        // Enable the table view scrolling
+        [self.tbl_prescriptionDetails setScrollEnabled:YES];
+        
+        // remove the tap gesture recognizer so it does not interfere with other table view touches
+        [self.tbl_prescriptionDetails removeGestureRecognizer:self.gestureRecognizer];
         
         if ([enteredText isEqualToString:@""] == YES ||
             [enteredText isEqualToString:@" "] == YES)
@@ -1024,8 +1203,18 @@
             self.dosageAmount = enteredText;
         }
     }
-    
-    [self.tbl_prescriptionDetails deselectRowAtIndexPath:indexPath animated:NO];
+    else if (textField == self.tf_dosageUnit) {
+        [self hideDisabledBackgroundView];
+        
+        if ([enteredText isEqualToString:@""] == YES ||
+            [enteredText isEqualToString:@" "] == YES)
+        {
+            self.dosageUnit = nil;
+        }
+        else {
+            self.dosageUnit = enteredText;
+        }
+    }
     
     // Re-enable nav bar buttons until text entry complete
     if (self.prescriptionID == nil) {
@@ -1037,9 +1226,6 @@
         // Editing existing prescription
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }
-    
-    // remove the tap gesture recognizer so it does not interfere with other table view touches
-    [self.tbl_prescriptionDetails removeGestureRecognizer:self.gestureRecognizer];
     
 }
 
@@ -1057,27 +1243,83 @@
 }
 
 #pragma mark - UI Action Methods
-//- (void)showDeleteNavBarButton {
-//    // add the "Delete" button to the nav bar
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [button setBackgroundImage:[UIImage imageNamed:@"delete_red.png"] forState:UIControlStateNormal];
-//    [button setTitle:NSLocalizedString(@"DELETE", nil) forState:UIControlStateNormal];
-//    button.titleLabel.font = [UIFont boldSystemFontOfSize:12.0f];
-//    button.titleLabel.shadowColor = [UIColor lightGrayColor];
-//    button.titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
-//    [button.layer setCornerRadius:5.0f];
-//    [button.layer setMasksToBounds:YES];
-//    [button.layer setBorderWidth:1.0f];
-//    [button.layer setBorderColor: [[UIColor darkGrayColor] CGColor]];
-//    button.frame=CGRectMake(0.0, 100.0, 60.0, 30.0);
-//    
-//    [button addTarget:self action:@selector(onDeletePrescriptionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    UIBarButtonItem* leftButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-//    
-//    self.navigationItem.leftBarButtonItem = leftButton;
-//    [leftButton release];
-//}
+- (void)scheduleReminders {
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    
+    // Get the current date
+    NSDate *pickerDate = [self.pv_startDate date];
+    
+    // Break the date up into components
+    NSDateComponents *dateComponents = [calendar components:( NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit )
+												   fromDate:pickerDate];
+    NSDateComponents *timeComponents = [calendar components:( NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit )
+												   fromDate:pickerDate];
+    // Set up the fire time
+    NSDateComponents *dateComps = [[NSDateComponents alloc] init];
+    [dateComps setDay:[dateComponents day]];
+    [dateComps setMonth:[dateComponents month]];
+    [dateComps setYear:[dateComponents year]];
+    [dateComps setHour:[timeComponents hour]];
+    [dateComps setMinute:[timeComponents minute] + 1];
+	[dateComps setSecond:[timeComponents second]];
+    NSDate *itemDate = [calendar dateFromComponents:dateComps];
+    [dateComps release];
+    
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    if (localNotif == nil)
+        return;
+    localNotif.fireDate = itemDate;
+    localNotif.timeZone = [NSTimeZone defaultTimeZone];
+    
+	// Notification details
+    localNotif.alertBody = @"Take medication";
+	// Set the action button
+    localNotif.alertAction = @"Confirm";
+    
+    localNotif.soundName = UILocalNotificationDefaultSoundName;
+    localNotif.applicationIconBadgeNumber = 1;
+    
+	// Specify custom data for the notification
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"someValue" forKey:@"someKey"];
+    localNotif.userInfo = infoDict;
+    
+	// Schedule the notification
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+    [localNotif release];
+}
+
+- (void)showDisabledBackgroundView {
+    // Show the disabled background so user cannot touch into the tableview while picker is shown
+    [self.v_disabledBackground setAlpha:0.0];
+    [self.view bringSubviewToFront:self.v_disabledBackground];
+    
+    // start the show disabled view animation
+    [self.v_disabledBackground setAlpha:0.0];
+    [self.view bringSubviewToFront:self.v_disabledBackground];
+    
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         [self.v_disabledBackground setAlpha:0.4];
+                     } 
+                     completion:^(BOOL finished){
+                         
+                     }];
+}
+
+- (void)hideDisabledBackgroundView {
+    // start the hide disabled view animation
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         [self.v_disabledBackground setAlpha:0.0];
+                     } 
+                     completion:^(BOOL finished){
+                         [self.view sendSubviewToBack:self.v_disabledBackground];
+                     }];
+}
 
 - (void)showDeleteButton {
     // add the "Delete" button to the footer of the tableview
@@ -1102,16 +1344,8 @@
     [footer release];
 }
 
-- (void)hideKeyboard {
-    if ([self.tf_medicationName isFirstResponder] == YES) {
-        [self.tf_medicationName resignFirstResponder];
-    }
-    else if ([self.tf_dosageAmount isFirstResponder] == YES) {
-        [self.tf_dosageAmount resignFirstResponder];
-    }
-    else if ([self.tv_reason isFirstResponder] == YES) {
-        [self.tv_reason resignFirstResponder];
-    }
+- (void)hideInputView {
+    [[self view] endEditing:YES];
 }
 
 - (void)editPrescription {
@@ -1164,7 +1398,7 @@
         self.isEditing = NO;
         
         // Hide the keyboard if it is shown
-        [self hideKeyboard];
+        [self hideInputView];
         
         // Re-show the back button
         [self.navigationItem setHidesBackButton:NO animated:YES];
@@ -1258,6 +1492,9 @@
         [alert release];
     }
     else {
+        // Schedule the reminders
+        [self scheduleReminders];
+        
         // Exit editing and save changes
         ResourceContext* resourceContext = [ResourceContext instance];
         
