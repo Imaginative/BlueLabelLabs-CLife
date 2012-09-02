@@ -58,7 +58,7 @@
 
 // Clife spcecific logs
 #define LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"clifeprescriptionsviewvontroller",level,__VA_ARGS__)
-
+#define LOG_LOCALNOTIFICATIONMANAGER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"localnotificationmanager",level,__VA_ARGS__)
 
 #else
 #define LOG_NETWORK(...)    do{}while(0)
@@ -112,6 +112,8 @@
 #define LOG_MIME_MESCRAPBOOKFULLTABLEVIEWCONTROLLER(...) do {} while (0)
 
 #define LOG_MIME_FRIENDPICKERVIEWCONTROLLER(level, ...)   do{}while(0)
+
+#define LOG_LOCALNOTIFICATIONMANAGER(level, ...)   do{}while(0)
 
 
 

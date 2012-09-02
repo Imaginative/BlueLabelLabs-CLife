@@ -163,6 +163,7 @@
 		C5A4887015DAA9C50023180C /* PlatformDataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = C5A4886F15DAA9C50023180C /* PlatformDataModel.xcdatamodel */; };
 		C5A4887315DAB1C10023180C /* Prescription.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4887215DAB1C10023180C /* Prescription.m */; };
 		C5A4887615DABFFE0023180C /* PrescriptionInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4887515DABFFE0023180C /* PrescriptionInstance.m */; };
+		C5D45C0815F3A1BD00FB5A49 /* LocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D45C0715F3A1BD00FB5A49 /* LocalNotificationManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -493,6 +494,8 @@
 		C5A4887215DAB1C10023180C /* Prescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Prescription.m; sourceTree = "<group>"; };
 		C5A4887415DABFFE0023180C /* PrescriptionInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrescriptionInstance.h; sourceTree = "<group>"; };
 		C5A4887515DABFFE0023180C /* PrescriptionInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrescriptionInstance.m; sourceTree = "<group>"; };
+		C5D45C0615F3A1BD00FB5A49 /* LocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationManager.h; sourceTree = "<group>"; };
+		C5D45C0715F3A1BD00FB5A49 /* LocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -626,6 +629,7 @@
 		C53DC6A115D4378300CC7D14 /* CLife */ = {
 			isa = PBXGroup;
 			children = (
+				C5D45C0415F3A1A500FB5A49 /* Singletons */,
 				C53DC87415D4415300CC7D14 /* Views */,
 				5277E7D915DD4BD6003A1DCF /* Controllers */,
 				C53DC86415D43EBE00CC7D14 /* Macros.h */,
@@ -1125,6 +1129,15 @@
 			name = Generic;
 			sourceTree = "<group>";
 		};
+		C5D45C0415F3A1A500FB5A49 /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				C5D45C0615F3A1BD00FB5A49 /* LocalNotificationManager.h */,
+				C5D45C0715F3A1BD00FB5A49 /* LocalNotificationManager.m */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1368,6 +1381,7 @@
 				5277E84015DFE2EE003A1DCF /* ClifePrescriptionsViewController.m in Sources */,
 				5277E84515DFE303003A1DCF /* ClifePrescriptionDetailsViewController.m in Sources */,
 				5277E84915DFE349003A1DCF /* UILoginView.m in Sources */,
+				C5D45C0815F3A1BD00FB5A49 /* LocalNotificationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,10 +7,11 @@
 //
 
 #import "Resource.h"
+#import "Prescription.h"
 
 @interface PrescriptionInstance : Resource
 {
-
+ 
 }
 
 @property (nonatomic,retain) NSNumber* prescriptionid;
@@ -20,5 +21,9 @@
 @property (nonatomic,retain) NSNumber* state;
 @property (nonatomic,retain) NSString* notes;
 @property (nonatomic,retain) NSNumber* hasnotificationbeenscheduled;
+@property (nonatomic,retain) Prescription* prescription;
 
+- (NSDate*) fireDate;
+- (UILocalNotification*) createLocalNotification;
++ (NSArray*) createPrescriptionInstancesFor:(Prescription*)prescription;
 @end

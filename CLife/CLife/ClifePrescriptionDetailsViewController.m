@@ -10,7 +10,8 @@
 #import "Prescription.h"
 #import "IDGenerator.h"
 #import "DateTimeHelper.h"
-
+#import "PrescriptionInstance.h"
+#import "LocalNotificationManager.h"
 @interface ClifePrescriptionDetailsViewController ()
 
 @end
@@ -1493,12 +1494,28 @@
     }
     else {
         // Schedule the reminders
-        [self scheduleReminders];
+        // We dont need this method in the final version, you can uncomment it for now
+        // since the real method doesn work
+        //[self scheduleReminders];
         
         // Exit editing and save changes
         ResourceContext* resourceContext = [ResourceContext instance];
         
         Prescription *prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withDosageAmount:self.dosageAmount withDosageUnit:self.dosageUnit withNotes:self.reason];   
+        
+        //we need to then create an array of prescription objects corresponding to this
+        //particular prescription
+        NSArray* prescriptionInstances = [PrescriptionInstance createPrescriptionInstancesFor:prescription];
+        //now we have an array of prescription instances corresponding to the prescription
+        
+        //we pass this to the local notification manager which will schedule them for
+        //notifications as appropriate
+        LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
+        [localNotificationManager scheduleNotificationsFor:prescriptionInstances];
+        
+        
+        
+        
         
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
         

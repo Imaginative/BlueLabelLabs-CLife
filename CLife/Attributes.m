@@ -141,3 +141,7 @@ NSString* const ISPUBLIC                =@"ispublic";
 NSString* const ISFAVORITE              =@"isfavorite";
 NSString* const HASANSWERED             =@"hasanswered";
 NSString* const MIMEID                  =@"mimeid";
+
+//CLIfe attributes
+NSString* const PRESCRIPTIONINSTANCEID  =@"prescriptioninstanceid";
+NSString* const PRESCRIPTIONID          =@"prescriptionid";
