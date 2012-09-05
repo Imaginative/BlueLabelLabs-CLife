@@ -60,15 +60,16 @@
     </entity>
     <entity name="Prescription" representedClassName="Prescription" parentEntity="resource" syncable="YES">
         <attribute name="alert" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dateend" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="datestart" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="dosageamount" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="dosageunit" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="duration" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="frequency" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="method" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="repeat" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="numberofdoses" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="repeatmultiple" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="repeatperiod" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="strength" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="PrescriptionInstance" representedClassName="PrescriptionInstance" parentEntity="resource" syncable="YES">
@@ -124,7 +125,7 @@
         <element name="AttributeInstanceData" positionX="-216" positionY="-141" width="128" height="150"/>
         <element name="authenticationcontext" positionX="-198" positionY="336" width="128" height="150"/>
         <element name="feed" positionX="367" positionY="576" width="128" height="180"/>
-        <element name="Prescription" positionX="-144" positionY="612" width="128" height="210"/>
+        <element name="Prescription" positionX="-144" positionY="612" width="128" height="225"/>
         <element name="PrescriptionInstance" positionX="-387" positionY="522" width="128" height="150"/>
         <element name="request" positionX="340" positionY="90" width="128" height="165"/>
         <element name="resource" positionX="160" positionY="414" width="128" height="135"/>
