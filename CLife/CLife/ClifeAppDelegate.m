@@ -78,24 +78,6 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     
-    AuthenticationManager* authenticationManager = [AuthenticationManager instance];
-    
-    //lets check if a user is currently logged in 
-    if (![authenticationManager isUserAuthenticated])
-    {   
-        //there is no user object currently logged in, we must be running on startup
-        //we instruct the authenticatoin manager to create a new user object and log that in
-        User* newUser = [authenticationManager createNewUserAndLogin];
-        if (newUser != nil)
-        {
-            //success everything worked
-            
-        }
-        else {
-            //error condition
-        }
-    }
-    
     // Override point for customization after application launch.
     
     UIViewController *viewController1 = [ClifeProfileViewController createInstance];
@@ -111,6 +93,41 @@
     self.tabBarController.viewControllers = [NSArray arrayWithObjects:navigationcontroller1, navigationcontroller2, navigationcontroller3, nil];
     
     self.window.rootViewController = self.tabBarController;
+    
+    AuthenticationManager* authenticationManager = [AuthenticationManager instance];
+    
+    //lets check if a user is currently logged in 
+    if (![authenticationManager isUserAuthenticated])
+    {   
+        //there is no user object currently logged in, we must be running on startup
+        //we instruct the authenticatoin manager to create a new user object and log that in
+        User* newUser = [authenticationManager createNewUserAndLogin];
+        if (newUser != nil)
+        {
+            //success everything worked, force the user to create a profile
+            [self.tabBarController setSelectedIndex:0];
+            
+        }
+        else {
+            //error condition
+            [self.tabBarController setSelectedIndex:0];
+        }
+    }
+    else {
+        ResourceContext* resourceContext = [ResourceContext instance];
+        User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:self.authenticationManager.m_LoggedInUserID];
+        
+        if (loggedInUser.username != nil &&
+            ![loggedInUser.displayname isEqualToString:@""])
+        {
+            [self.tabBarController setSelectedIndex:1];
+        }
+        else {
+            [self.tabBarController setSelectedIndex:0];
+        }
+    }
+    
+    
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -766,6 +766,7 @@
                     
                     self.tf_scheduleEndDate = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
                     self.tf_scheduleEndDate.adjustsFontSizeToFitWidth = YES;
+                    self.tf_scheduleEndDate.placeholder = NSLocalizedString(@"ENTER ENDS", nil);
                     self.tf_scheduleEndDate.textColor = [UIColor darkGrayColor];
                     self.tf_scheduleEndDate.backgroundColor = [UIColor clearColor];
                     self.tf_scheduleEndDate.textAlignment = UITextAlignmentRight;
@@ -783,12 +784,14 @@
                 self.tf_scheduleEndDate.text = [self.dateOnlyFormatter stringFromDate:endDate];
             }
             else {
-                NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-                NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
-                components.day = 1;
-                NSDate* endDate = [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
+//                NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+//                NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
+//                components.day = 1;
+//                NSDate* endDate = [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
+//                
+//                self.tf_scheduleEndDate.text = [self.dateOnlyFormatter stringFromDate:endDate];
                 
-                self.tf_scheduleEndDate.text = [self.dateOnlyFormatter stringFromDate:endDate];
+                self.tf_scheduleEndDate.text = nil;
             }
             
             // disable the cell until the "Edit" button is pressed
@@ -1425,10 +1428,10 @@
             [self.pv_scheduleOccurences selectRow:(occurences - 1) inComponent:0 animated:YES];
         }
         else {
-            self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"TIME THAT DAY", nil)];
-            
-            self.scheduleOccurenceNumber = [NSNumber numberWithInt:1];
-            self.scheduleOccurenceUnit = NSLocalizedString(@"DAY", nil);
+//            self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"TIME THAT DAY", nil)];
+//            
+//            self.scheduleOccurenceNumber = [NSNumber numberWithInt:1];
+//            self.scheduleOccurenceUnit = NSLocalizedString(@"DAY", nil);
         }
         
     }
@@ -1741,9 +1744,11 @@
     
     self.tf_scheduleEndDate.text = NSLocalizedString(@"NO END DATE", nil);
     
-    NSDate* endDate = [NSDate distantFuture];
-    double doubleDate = [endDate timeIntervalSince1970];
-    self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];    
+//    NSDate* endDate = [NSDate distantFuture];
+//    double doubleDate = [endDate timeIntervalSince1970];
+//    self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
+    
+    self.scheduleEndDate = nil;
 }
 
 - (void)showDisabledBackgroundView {

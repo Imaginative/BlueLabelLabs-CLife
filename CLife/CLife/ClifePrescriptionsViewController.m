@@ -219,6 +219,7 @@
     
     ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:prescription.objectid];
     
+    [prescriptionDetailsVC setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:prescriptionDetailsVC animated:YES];
 }
 

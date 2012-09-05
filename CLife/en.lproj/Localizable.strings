@@ -14,6 +14,7 @@
 "CANCEL" = "Cancel";
 "CONFIRM" = "Confirm";
 "NONE" = "None";
+"OPTIONAL" = "optional";
 "DELETE WITH DATA EXPORT" = "Delete with data export";
 "DELETE WITHOUT DATA EXPORT" = "Delete without data export";
 
@@ -74,12 +75,13 @@
 "DOSE" = "dose";
 "DOSES" = "doses";
 "ENDS" = "Ends";
+"ENTER ENDS" = "optional: date to stop";
 "NO END DATE" = "No end date";
 "REPEATS" = "Repeats";
 "ENTER REPEATS" = "ex. Every 4 hours";
 "EVERY" = "Every";
 "OCCURS" = "Occurs";
-"ENTER OCCURS" = "how many times that day";
+"ENTER OCCURS" = "optional: times that day";
 "TIME THAT DAY" = "time that day";
 "TIMES THAT DAY" = "times that day";
 

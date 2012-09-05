@@ -29,6 +29,7 @@
 @synthesize genderArray         = m_genderArray;
 @synthesize bloodTypeArray      = m_bloodTypeArray;
 @synthesize v_disabledBackground = m_v_disabledBackground;
+@synthesize lbl_disableTabBar   = m_lbl_disableTabBar;
 @synthesize isEditing           = m_isEditing;
 @synthesize isNewUser           = m_isNewUser;
 @synthesize name                = m_name;
@@ -136,6 +137,14 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (self.isEditing == YES) {
+        [self hideTabBar];
+    }
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -152,6 +161,7 @@
     self.pv_gender = nil;
     self.pv_bloodType = nil;
     self.v_disabledBackground = nil;
+    self.lbl_disableTabBar = nil;
     self.av_edit = nil;
     self.av_delete = nil;
 }
@@ -758,6 +768,60 @@
 }
 
 #pragma mark - UI Action Methods
+- (void)showTabBar {
+    if (self.lbl_disableTabBar.superview != nil) {
+        // Now hide the covering view if it is visible
+        
+        [UIView animateWithDuration:0.4
+                         animations:^ {
+                             [self.lbl_disableTabBar setAlpha:0.0f];
+                         }
+                         completion:^(BOOL finished) {
+                             [self.lbl_disableTabBar removeFromSuperview];
+                         }];
+    }
+}
+
+- (void)hideTabBar {
+    CGRect tabBarFrame = self.tabBarController.tabBar.frame;
+    
+    // Add a view behind the tabbar that tells the user they
+    // cannot move forward unitl editing is complete.
+    if (self.lbl_disableTabBar == nil) {
+        UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 0.0f, tabBarFrame.size.width, tabBarFrame.size.height)] autorelease];
+        label.text = @"Please complete your profile to continue";
+        label.textAlignment = UITextAlignmentCenter;
+        label.backgroundColor = [UIColor redColor];
+        label.textColor = [UIColor whiteColor];
+        label.shadowColor = [UIColor darkGrayColor];
+        label.shadowOffset = CGSizeMake(0.0f, -1.0f);
+        
+        // Add a border to the top of the label
+        CALayer *topBorder = [CALayer layer];
+        topBorder.borderColor = [UIColor darkGrayColor].CGColor;
+        topBorder.borderWidth = 1;
+        topBorder.frame = CGRectMake(-1, 0, label.frame.size.width+2, label.frame.size.height+2);
+        [label.layer addSublayer:topBorder];
+        
+        label.userInteractionEnabled = YES; // This will prevent touches from being passed through to the tab bar buttons beneath
+        
+        self.lbl_disableTabBar = label;
+    }
+    
+    if (self.lbl_disableTabBar.superview == nil) {
+        // Now animate the showing of the label that will prevent
+        // touches on the tab bar until the user is done editing.
+        
+        [self.lbl_disableTabBar setAlpha:0.0f];
+        [self.tabBarController.tabBar addSubview:self.lbl_disableTabBar];
+        
+        [UIView animateWithDuration:0.3 animations:^ {
+            [self.lbl_disableTabBar setAlpha:1.0f];
+        }];
+    }
+    
+}
+
 - (void)showDisabledBackgroundView {
     // Show the disabled background so user cannot touch into the tableview while picker is shown
     [self.v_disabledBackground setAlpha:0.0];
@@ -821,6 +885,9 @@
 - (void)editProfile {
     self.isEditing = YES;
     
+    // Hide the tab bar so the user cannot move forward until edit is complete
+    [self hideTabBar];
+    
     // Reload the table view to enable user interaction and accessory views on the tableview cells
     [self.tbl_profile reloadData];
         
@@ -861,6 +928,9 @@
         
         self.isEditing = NO;
         
+        // Editing is complete, show the tab bar
+        [self showTabBar];
+        
         // Reload the table view to disable user interaction and accessory views on the tableview cells
         [self.tbl_profile reloadData];
         
@@ -887,6 +957,9 @@
         
         // remove the "Delete" button
         self.tbl_profile.tableFooterView = nil;
+        
+        // Scroll tableview back to the top
+        [self.tbl_profile setContentOffset:CGPointMake(0, 0) animated:YES];
     }
 }
 
@@ -904,10 +977,12 @@
     self.isEditing = YES;
     self.isNewUser = YES;
     
+    [self.tbl_profile reloadData];
+    
+    [self editProfile];
+    
     // remove the "Delete" button
     self.tbl_profile.tableFooterView = nil;
-    
-    [self.tbl_profile reloadData];
 }
 
 - (void)onEditProfileButtonPressed:(id)sender {

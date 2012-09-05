@@ -31,6 +31,7 @@
     NSArray                 *m_bloodTypeArray;
     
     UIView                  *m_v_disabledBackground;
+    UILabel                 *m_lbl_disableTabBar;
     
     BOOL                    m_isEditing;
     BOOL                    m_isNewUser;
@@ -64,6 +65,7 @@
 @property (nonatomic, retain)           NSArray                 *bloodTypeArray;
 
 @property (nonatomic, retain) IBOutlet  UIView                  *v_disabledBackground;
+@property (nonatomic, retain)           UILabel                 *lbl_disableTabBar;
 
 @property (nonatomic, assign)           BOOL                    isEditing;
 @property (nonatomic, assign)           BOOL                    isNewUser;
