@@ -959,9 +959,7 @@
 #pragma mark - UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        // Process delete WITHOUT data export
-        
-        [self.tbl_profile setContentOffset:CGPointMake(0, 0) animated:YES];
+        // Process delete WITHOUT data export 
         
         // Prompt user to enter their full name as verification before continuing
         self.av_delete = [[UIPromptAlertView alloc]
@@ -977,8 +975,6 @@
     }
     else if (buttonIndex == 1) {
         // Process delete WITH data export
-        
-        [self.tbl_profile setContentOffset:CGPointMake(0, 0) animated:YES];
         
         // Prompt user to enter their full name as verification before continuing
         self.av_delete = [[UIPromptAlertView alloc]
