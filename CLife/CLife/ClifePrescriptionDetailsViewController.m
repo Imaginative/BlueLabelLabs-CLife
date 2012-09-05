@@ -20,7 +20,12 @@
 
 @implementation ClifePrescriptionDetailsViewController
 @synthesize tbl_prescriptionDetails = m_tbl_prescriptionDetails;
+
+@synthesize av_edit             = m_av_edit;
+@synthesize av_delete           = m_av_delete;
+
 @synthesize sectionsArray           = m_sectionsArray;
+
 @synthesize prescriptionID          = m_prescriptionID;
 
 @synthesize tf_medicationName       = m_tf_medicationName;
@@ -218,6 +223,8 @@
     // e.g. self.myOutlet = nil;
     
     self.tbl_prescriptionDetails = nil;
+    self.av_edit = nil;
+    self.av_delete = nil;
     self.tf_medicationName = nil;
     self.gestureRecognizer = nil;
     self.tf_scheduleStartDate = nil;
@@ -1899,14 +1906,14 @@
 
 - (void)onEditPrescriptionButtonPressed:(id)sender {
     // Promt user to backup data before editing profile information
-    UIAlertView* alert = [[UIAlertView alloc]
+    self.av_edit = [[UIAlertView alloc]
                           initWithTitle:NSLocalizedString(@"EDIT PRESCRIPTION", nil)
                           message:NSLocalizedString(@"EDIT PRESCRIPTION MESSAGE", nil)
                           delegate:self
                           cancelButtonTitle:NSLocalizedString(@"YES", nil)
                           otherButtonTitles:NSLocalizedString(@"NO", nil), nil];
-    [alert show];
-    [alert release];
+    [self.av_edit show];
+    [self.av_edit release];
 }
 
 - (void)onDeletePrescriptionButtonPressed:(id)sender {
@@ -1980,12 +1987,23 @@
 
 #pragma mark - UIAlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        // Backup data
-        NSLog(@"Backup data");
+    if (alertView == self.av_edit) {
+        if (buttonIndex == 0) {
+            // Backup data
+            NSLog(@"Backup data");
+        }
+        else {
+            [self editPrescription];
+        }
     }
-    else {
-        [self editPrescription];
+    else if (alertView == self.av_delete) {
+        if (buttonIndex == 0) {
+            // Cancel
+            NSLog(@"Canceled delete");
+        }
+        else {
+            [self deletePrescription];
+        }
     }
 }
 
@@ -1993,11 +2011,31 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         // Process delete WITHOUT data export
-        [self deletePrescription];
+        
+        // Prompt user to enter their full name as verification before continuing
+        self.av_delete = [[UIPromptAlertView alloc]
+                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
+                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
+                          delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+        self.av_delete.verificationText = self.loggedInUser.username;
+        [self.av_delete show];
+        [self.av_delete release];
     }
     else if (buttonIndex == 1) {
         // Process delete WITH data export
-        [self deletePrescription];
+        
+        // Prompt user to enter their full name as verification before continuing
+        self.av_delete = [[UIPromptAlertView alloc]
+                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
+                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
+                          delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+        self.av_delete.verificationText = self.loggedInUser.username;
+        [self.av_delete show];
+        [self.av_delete release];
     }
     else {
         // Cancel

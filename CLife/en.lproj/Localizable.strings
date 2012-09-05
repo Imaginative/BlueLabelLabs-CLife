@@ -12,12 +12,16 @@
 "NO" = "No";
 "DELETE" = "Delete";
 "CANCEL" = "Cancel";
+"CONFIRM" = "Confirm";
 "NONE" = "None";
 "DELETE WITH DATA EXPORT" = "Delete with data export";
 "DELETE WITHOUT DATA EXPORT" = "Delete without data export";
 
 "INCOMPLETE" = "Incomplete";
 "INCOMPLETE MESSAGE" = "Please complete all required fields before saving.";
+
+"CONFIRM DELETE" = "Confirm Delete";
+"CONFIRM DELETE MESSAGE" = "Please enter your name as it appears in your profile.";
 
 // Tab Bar
 "PROFILE" = "Profile";

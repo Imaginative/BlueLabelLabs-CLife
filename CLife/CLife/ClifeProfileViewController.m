@@ -35,6 +35,8 @@
 @synthesize birthday            = m_birthday;
 @synthesize gender              = m_gender;
 @synthesize bloodType           = m_bloodType;
+@synthesize av_edit             = m_av_edit;
+@synthesize av_delete           = m_av_delete;
 
 
 #pragma mark - Initialization
@@ -150,6 +152,8 @@
     self.pv_gender = nil;
     self.pv_bloodType = nil;
     self.v_disabledBackground = nil;
+    self.av_edit = nil;
+    self.av_delete = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -882,7 +886,6 @@
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
         
         // remove the "Delete" button
-        //    self.navigationItem.leftBarButtonItem = nil;
         self.tbl_profile.tableFooterView = nil;
     }
 }
@@ -901,23 +904,26 @@
     self.isEditing = YES;
     self.isNewUser = YES;
     
+    // remove the "Delete" button
+    self.tbl_profile.tableFooterView = nil;
+    
     [self.tbl_profile reloadData];
 }
 
 - (void)onEditProfileButtonPressed:(id)sender {
     // Promt user to backup data before editing profile information
-    UIAlertView* alert = [[UIAlertView alloc]
+    self.av_edit = [[UIAlertView alloc]
                           initWithTitle:NSLocalizedString(@"EDIT PROFILE", nil)
                           message:NSLocalizedString(@"EDIT PROFILE MESSAGE", nil)
                           delegate:self
                           cancelButtonTitle:NSLocalizedString(@"YES", nil)
                           otherButtonTitles:NSLocalizedString(@"NO", nil), nil];
-    [alert show];
-    [alert release];
+    [self.av_edit show];
+    [self.av_edit release];
 }
 
-- (void)onDeleteProfileButtonPressed:(id)sender {
-    // Promt user to backup data before editing profile information
+- (void)onDeleteProfileButtonPressed:(id)sender {    
+    // Prompt user to backup data before editing profile information
     UIActionSheet* actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:NSLocalizedString(@"DELETE PROFILE MESSAGE", nil)
                                   delegate:self
@@ -930,12 +936,23 @@
 
 #pragma mark - UIAlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        // Backup data
-        NSLog(@"Backup data");
+    if (alertView == self.av_edit) {
+        if (buttonIndex == 0) {
+            // Backup data
+            NSLog(@"Backup data");
+        }
+        else {
+            [self editProfile];
+        }
     }
-    else {
-        [self editProfile];
+    else if (alertView == self.av_delete) {
+        if (buttonIndex == 0) {
+            // Cancel
+            NSLog(@"Canceled delete");
+        }
+        else {
+            [self deleteProfile];
+        }
     }
 }
 
@@ -943,11 +960,37 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         // Process delete WITHOUT data export
-        [self deleteProfile];
+        
+        [self.tbl_profile setContentOffset:CGPointMake(0, 0) animated:YES];
+        
+        // Prompt user to enter their full name as verification before continuing
+        self.av_delete = [[UIPromptAlertView alloc]
+                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
+                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
+                          delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+        self.av_delete.verificationText = self.name;
+        [self.av_delete show];
+        [self.av_delete release];
+        
     }
     else if (buttonIndex == 1) {
         // Process delete WITH data export
-        [self deleteProfile];
+        
+        [self.tbl_profile setContentOffset:CGPointMake(0, 0) animated:YES];
+        
+        // Prompt user to enter their full name as verification before continuing
+        self.av_delete = [[UIPromptAlertView alloc]
+                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
+                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
+                          delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+        self.av_delete.verificationText = self.name;
+        [self.av_delete show];
+        [self.av_delete release];
+        
     }
     else {
         // Cancel

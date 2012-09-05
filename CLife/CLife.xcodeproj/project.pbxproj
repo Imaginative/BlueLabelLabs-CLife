@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		523A6BD815F6DC1400D60461 /* UIPromptAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */; };
 		5277E7DE15DD4D48003A1DCF /* icon-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DC15DD4D48003A1DCF /* icon-profile.png */; };
 		5277E7DF15DD4D48003A1DCF /* icon-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */; };
 		5277E7E215DD4F7E003A1DCF /* icon-medical.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7E015DD4F7E003A1DCF /* icon-medical.png */; };
@@ -178,6 +179,8 @@
 
 /* Begin PBXFileReference section */
 		523A6BD115F6815900D60461 /* ScheduleUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleUnits.h; sourceTree = "<group>"; };
+		523A6BD615F6DC1400D60461 /* UIPromptAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPromptAlertView.h; sourceTree = "<group>"; };
+		523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPromptAlertView.m; sourceTree = "<group>"; };
 		5277E7DC15DD4D48003A1DCF /* icon-profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile.png"; sourceTree = "<group>"; };
 		5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile@2x.png"; sourceTree = "<group>"; };
 		5277E7E015DD4F7E003A1DCF /* icon-medical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-medical.png"; sourceTree = "<group>"; };
@@ -1132,6 +1135,8 @@
 				5277E84815DFE349003A1DCF /* UILoginView.m */,
 				5277E80915DD6EF0003A1DCF /* UICustomAlertView.h */,
 				5277E80A15DD6EF0003A1DCF /* UICustomAlertView.m */,
+				523A6BD615F6DC1400D60461 /* UIPromptAlertView.h */,
+				523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */,
 				C53DC87615D4416A00CC7D14 /* UIProgressHUDView.h */,
 				C53DC87715D4416A00CC7D14 /* UIProgressHUDView.m */,
 				C53DC87815D4416A00CC7D14 /* UIProgressHUDView.xib */,
@@ -1392,6 +1397,7 @@
 				5277E84515DFE303003A1DCF /* ClifePrescriptionDetailsViewController.m in Sources */,
 				5277E84915DFE349003A1DCF /* UILoginView.m in Sources */,
 				C5D45C0815F3A1BD00FB5A49 /* LocalNotificationManager.m in Sources */,
+				523A6BD815F6DC1400D60461 /* UIPromptAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "UIPromptAlertView.h"
 
 @interface ClifePrescriptionDetailsViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate, UITextViewDelegate > {
     
     UITableView             *m_tbl_prescriptionDetails;
+    
+    UIAlertView             *m_av_edit;
+    UIPromptAlertView       *m_av_delete;
+    
     NSArray                 *m_sectionsArray;
     
     NSNumber                *m_prescriptionID;
@@ -74,6 +79,10 @@
 }
 
 @property (nonatomic, retain) IBOutlet  UITableView             *tbl_prescriptionDetails;
+
+@property (nonatomic, retain)           UIAlertView             *av_edit;
+@property (nonatomic, retain)           UIPromptAlertView       *av_delete;
+
 @property (nonatomic, retain)           NSArray                 *sectionsArray;
 
 @property (nonatomic, retain)           NSNumber                *prescriptionID;

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "UIPromptAlertView.h"
 
 @interface ClifeProfileViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate > {
     
@@ -39,6 +40,9 @@
     NSString                *m_gender;
     NSString                *m_bloodType;
     
+    UIAlertView             *m_av_edit;
+    UIPromptAlertView       *m_av_delete;
+    
 }
 
 @property (nonatomic, retain) IBOutlet  UITableView             *tbl_profile;
@@ -68,6 +72,9 @@
 @property (nonatomic, retain)           NSNumber                *birthday;
 @property (nonatomic, retain)           NSString                *gender;
 @property (nonatomic, retain)           NSString                *bloodType;
+
+@property (nonatomic, retain)           UIAlertView             *av_edit;
+@property (nonatomic, retain)           UIPromptAlertView       *av_delete;
 
 #pragma mark - Static Initializers
 + (ClifeProfileViewController *)createInstance;
