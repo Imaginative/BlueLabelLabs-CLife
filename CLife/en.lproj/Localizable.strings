@@ -51,27 +51,33 @@
 
 // Prescriptions
 "MEDICATION" = "Medication";
-"ENTER MEDICATION NAME" = "Enter medication name";
+"ENTER MEDICATION NAME" = "the name of this medication";
 
 "METHOD" = "Method";
-"SELECT METHOD" = "Select administration method";
+"SELECT METHOD" = "how is this medication administered";
 
 "DOSAGE" = "Dosage";
-"AMOUNT" = "Amount";
-"ENTER AMOUNT" = "Enter amount";
+"STRENGTH" = "Strength";
+"ENTER STRENGTH" = "ex. 100";
 "UNIT" = "Unit";
-"SELECT UNIT" = "Select unit";
+"SELECT UNIT" = "ex. mg";
 
 "SCHEDULE" = "Schedule";
-"ENTER START DATE" = "Enter start date";
+"ENTER START DATE" = "when will you begin taking this medication";
 "STARTS" = "Starts";
-"TAKE" = "Take";
+"AMOUNT" = "Amount";
+"ENTER AMOUNT" = "ex. 2 doses";
 "DOSE" = "dose";
 "DOSES" = "doses";
+"ENDS" = "Ends";
+"NO END DATE" = "No end date";
+"REPEATS" = "Repeats";
+"ENTER REPEATS" = "ex. Every 4 hours";
 "EVERY" = "Every";
-"FOR" = "For";
-"REMINDER" = "Reminder";
-"BEFORE" = "before";
+"OCCURS" = "Occurs";
+"ENTER OCCURS" = "how many times that day";
+"TIME THAT DAY" = "time that day";
+"TIMES THAT DAY" = "times that day";
 
 "MINUTE" = "minute";
 "MINUTES" = "minutes";
@@ -86,8 +92,8 @@
 "YEAR" = "year";
 "YEARS" = "years";
 
-"REASON" = "Reason (optional)";
-"ENTER REASON" = "Enter the reason for this medication";
+"REASON AND NOTES" = "Reason and Notes (optional)";
+"ENTER REASON" = "enter the reason for this medication and any other notes";
 
 "PILL" = "Pill";
 "LIQUID" = "Liquid";

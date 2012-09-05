@@ -177,6 +177,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		523A6BD115F6815900D60461 /* ScheduleUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleUnits.h; sourceTree = "<group>"; };
 		5277E7DC15DD4D48003A1DCF /* icon-profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile.png"; sourceTree = "<group>"; };
 		5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile@2x.png"; sourceTree = "<group>"; };
 		5277E7E015DD4F7E003A1DCF /* icon-medical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-medical.png"; sourceTree = "<group>"; };
@@ -534,6 +535,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		523A6BCF15F6813700D60461 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				523A6BD115F6815900D60461 /* ScheduleUnits.h */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
 		5277E7D915DD4BD6003A1DCF /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,6 +638,7 @@
 		C53DC6A115D4378300CC7D14 /* CLife */ = {
 			isa = PBXGroup;
 			children = (
+				523A6BCF15F6813700D60461 /* Constants */,
 				C5D45C0415F3A1A500FB5A49 /* Singletons */,
 				C53DC87415D4415300CC7D14 /* Views */,
 				5277E7D915DD4BD6003A1DCF /* Controllers */,

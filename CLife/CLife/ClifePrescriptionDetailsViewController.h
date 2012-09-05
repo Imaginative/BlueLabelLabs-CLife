@@ -29,18 +29,27 @@
     UIPickerView            *m_pv_dosageUnit;
     NSArray                 *m_dosageUnitArray;
     
+    NSDateFormatter         *m_dateOnlyFormatter;
+    NSDateFormatter         *m_dateAndTimeFormatter;
+    
     UITextField             *m_tf_scheduleStartDate;
-    UIDatePicker            *m_pv_startDate;
-    NSDateFormatter         *m_dateFormatter;
-    NSArray                 *m_numberArray;
+    UIDatePicker            *m_pv_scheduleStartDate;
+    
+    NSArray                 *m_scheduleAmountArray;
     UITextField             *m_tf_scheduleAmount;
     UIPickerView            *m_pv_scheduleAmount;
+    
+    NSArray                 *m_scheduleSingularUnitsArray;
+    NSArray                 *m_schedulePluralUnitsArray;
+    
     UITextField             *m_tf_scheduleRepeat;
     UIPickerView            *m_pv_scheduleRepeat;
+    
     UITextField             *m_tf_scheduleDuration;
     UIPickerView            *m_pv_scheduleDuration;
-    UITextField             *m_tf_scheduleReminder;
-    UIPickerView            *m_pv_scheduleReminder;
+    
+    UITextField             *m_tf_scheduleEndDate;
+    UIDatePicker            *m_pv_scheduleEndDate;
     
     UITextView              *m_tv_reason;
     
@@ -49,15 +58,18 @@
     BOOL                    m_isEditing;
     
     NSString                *m_medicationName;
-    NSNumber                *m_scheduleStartDate;
-    NSString                *m_scheduleAmount;
-    NSString                *m_scheduleRepeat;
-    NSString                *m_scheduleDuration;
-    NSString                *m_scheduleReminder;
     NSString                *m_method;
     NSString                *m_dosageAmount;
     NSString                *m_dosageUnit;
     NSString                *m_reason;
+    
+    NSNumber                *m_scheduleStartDate;
+    NSNumber                *m_scheduleAmount;
+    NSNumber                *m_scheduleRepeatNumber;
+    NSString                *m_scheduleRepeatUnit;
+    NSNumber                *m_scheduleOccurenceNumber;
+    NSString                *m_scheduleOccurenceUnit;
+    NSNumber                *m_scheduleEndDate;
     
 }
 
@@ -79,18 +91,27 @@
 @property (nonatomic, retain)           UIPickerView            *pv_dosageUnit;
 @property (nonatomic, retain)           NSArray                 *dosageUnitArray;
 
+@property (nonatomic, retain)           NSDateFormatter         *dateOnlyFormatter;
+@property (nonatomic, retain)           NSDateFormatter         *dateAndTimeFormatter;
+
 @property (nonatomic, retain)           UITextField             *tf_scheduleStartDate;
-@property (nonatomic, retain)           UIDatePicker            *pv_startDate;
-@property (nonatomic, retain)           NSDateFormatter         *dateFormatter;
-@property (nonatomic, retain)           NSArray                 *numberArray;
+@property (nonatomic, retain)           UIDatePicker            *pv_scheduleStartDate;
+
 @property (nonatomic, retain)           UITextField             *tf_scheduleAmount;
+@property (nonatomic, retain)           NSArray                 *scheduleAmountArray;
 @property (nonatomic, retain)           UIPickerView            *pv_scheduleAmount;
+
+@property (nonatomic, retain)           NSArray                 *scheduleSingularUnitsArray;
+@property (nonatomic, retain)           NSArray                 *schedulePluralUnitsArray;
+
 @property (nonatomic, retain)           UITextField             *tf_scheduleRepeat;
 @property (nonatomic, retain)           UIPickerView            *pv_scheduleRepeat;
-@property (nonatomic, retain)           UITextField             *tf_scheduleDuration;
-@property (nonatomic, retain)           UIPickerView            *pv_scheduleDuration;
-@property (nonatomic, retain)           UITextField             *tf_scheduleReminder;
-@property (nonatomic, retain)           UIPickerView            *pv_scheduleReminder;
+
+@property (nonatomic, retain)           UITextField             *tf_scheduleOccurences;
+@property (nonatomic, retain)           UIPickerView            *pv_scheduleOccurences;
+
+@property (nonatomic, retain)           UITextField             *tf_scheduleEndDate;
+@property (nonatomic, retain)           UIDatePicker            *pv_scheduleEndDate;
 
 @property (nonatomic, retain)           UITextView              *tv_reason;
 
@@ -99,11 +120,18 @@
 @property (nonatomic, assign)           BOOL                    isEditing;
 
 @property (nonatomic, retain)           NSString                *medicationName;
-@property (nonatomic, retain)           NSNumber                *sheduleStartDate;
 @property (nonatomic, retain)           NSString                *method;
 @property (nonatomic, retain)           NSString                *dosageAmount;
 @property (nonatomic, retain)           NSString                *dosageUnit;
 @property (nonatomic, retain)           NSString                *reason;
+
+@property (nonatomic, retain)           NSNumber                *scheduleStartDate;
+@property (nonatomic, retain)           NSNumber                *scheduleAmount;
+@property (nonatomic, retain)           NSNumber                *scheduleRepeatNumber;
+@property (nonatomic, retain)           NSString                *scheduleRepeatUnit;
+@property (nonatomic, retain)           NSNumber                *scheduleOccurenceNumber;
+@property (nonatomic, retain)           NSString                *scheduleOccurenceUnit;
+@property (nonatomic, retain)           NSNumber                *scheduleEndDate;
 
 #pragma mark - Static Initializers
 + (ClifePrescriptionDetailsViewController *)createInstanceForPrescriptionWithID:(NSNumber *)prescriptionID;
