@@ -12,22 +12,26 @@
 {
     
 }
-
-@property (nonatomic,retain) NSString* name;
 @property (nonatomic,retain) NSNumber* alert;
 @property (nonatomic,retain) NSNumber* datestart;
-@property (nonatomic,retain) NSString* dosageamount;
-@property (nonatomic,retain) NSString* dosageunit;
-@property (nonatomic,retain) NSNumber* duration;
-@property (nonatomic,retain) NSNumber* frequency;
+@property (nonatomic,retain) NSNumber* dateend;
+@property (nonatomic,retain) NSString* name;
+
+
+@property (nonatomic,retain) NSString* strength;
+@property (nonatomic,retain) NSString* unit;
 @property (nonatomic,retain) NSString* method;
-@property (nonatomic,retain) NSNumber* repeat;
+@property (nonatomic,retain) NSNumber* numberofdoses;
+
+@property (nonatomic,retain) NSNumber* repeatmultiple;
+@property (nonatomic,retain) NSNumber* repeatperiod;
+
 @property (nonatomic,retain) NSNumber* userid;
 @property (nonatomic,retain) NSString* notes;
 
 + (Prescription*) createPrescriptionWithName:(NSString *)name 
                                   withMethod:(NSString *)method 
-                            withDosageAmount:(NSString *)dosage 
-                              withDosageUnit:(NSString *)dosageUnit 
+                                withStrength:(NSString *)strength 
+                                    withUnit:(NSString *)unit 
                                    withNotes:(NSString *)notes;
 @end

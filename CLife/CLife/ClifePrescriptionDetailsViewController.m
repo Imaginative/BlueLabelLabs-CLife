@@ -183,8 +183,8 @@
         
         self.medicationName = prescription.name;
         self.method = prescription.method;
-        self.dosageAmount = prescription.dosageamount;
-        self.dosageUnit = prescription.dosageunit;
+        self.dosageAmount = prescription.strength;
+        self.dosageUnit = prescription.unit;
         self.reason = prescription.notes;
     }
     else {
@@ -1878,8 +1878,8 @@
         
         prescription.name = self.medicationName;
         prescription.method = self.method;
-        prescription.dosageamount = self.dosageAmount;
-        prescription.dosageunit = self.dosageUnit;
+        prescription.strength = self.dosageAmount;
+        prescription.unit = self.dosageUnit;
         prescription.notes = self.reason;
         
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
@@ -1957,7 +1957,8 @@
         // Exit editing and save changes
         ResourceContext* resourceContext = [ResourceContext instance];
         
-        Prescription *prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withDosageAmount:self.dosageAmount withDosageUnit:self.dosageUnit withNotes:self.reason];   
+               
+        Prescription* prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withStrength:self.dosageAmount withUnit:self.dosageUnit withNotes:self.reason];
         
         //we need to then create an array of prescription objects corresponding to this
         //particular prescription

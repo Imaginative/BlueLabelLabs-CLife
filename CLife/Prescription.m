@@ -13,25 +13,32 @@
 #import "IDGenerator.h"
 
 @implementation Prescription
-@dynamic name;
+
+
+
+
 @dynamic alert;
-@dynamic dosageamount;
-@dynamic dosageunit;
-@dynamic duration;
-@dynamic frequency;
-@dynamic method;
-@dynamic repeat;
 @dynamic datestart;
-@dynamic notes;
+@dynamic dateend;
+@dynamic name;
+@dynamic strength;
+@dynamic unit;
+
+@dynamic numberofdoses;
+@dynamic method;
+@dynamic repeatmultiple;
+@dynamic repeatperiod;
 @dynamic userid;
+@dynamic notes;
+
 
 
 
 #pragma mark - Static Initializers
 + (Prescription *) createPrescriptionWithName:(NSString *)name 
                                    withMethod:(NSString *)method 
-                             withDosageAmount:(NSString *)dosage 
-                               withDosageUnit:(NSString *)dosageUnit 
+                                 withStrength:(NSString *)strength 
+                                     withUnit:(NSString *)unit 
                                     withNotes:(NSString *)notes
 {
     
@@ -48,8 +55,8 @@
     prescription.objectid = prescriptionID;
     prescription.name = name;
     prescription.method = method;
-    prescription.dosageamount = dosage;
-    prescription.dosageunit = dosageUnit;
+    prescription.strength = strength;
+    prescription.unit = unit;
     prescription.notes = notes;
     prescription.userid = user.objectid;
     
@@ -59,9 +66,10 @@
     double doubleDate = [currentDate timeIntervalSince1970];
     prescription.datestart = [NSNumber numberWithDouble:doubleDate];
     
-    prescription.repeat = [NSNumber numberWithInt:0];
-    prescription.duration = [NSNumber numberWithInt:0];
-    prescription.frequency = [NSNumber numberWithInt:0];
+    prescription.repeatmultiple = nil;
+    prescription.repeatperiod = nil;
+    prescription.dateend = nil;
+    prescription.numberofdoses = nil;
     
     return prescription;
     
