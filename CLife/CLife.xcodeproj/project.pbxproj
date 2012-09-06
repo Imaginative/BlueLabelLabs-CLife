@@ -178,7 +178,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		523A6BD115F6815900D60461 /* ScheduleUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduleUnits.h; sourceTree = "<group>"; };
+		523A6BD115F6815900D60461 /* SchedulePeriods.h */ = {isa = PBXFileReference; fileEncoding = 4; path = SchedulePeriods.h; sourceTree = "<group>"; };
 		523A6BD615F6DC1400D60461 /* UIPromptAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPromptAlertView.h; sourceTree = "<group>"; };
 		523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPromptAlertView.m; sourceTree = "<group>"; };
 		5277E7DC15DD4D48003A1DCF /* icon-profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile.png"; sourceTree = "<group>"; };
@@ -541,7 +541,7 @@
 		523A6BCF15F6813700D60461 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				523A6BD115F6815900D60461 /* ScheduleUnits.h */,
+				523A6BD115F6815900D60461 /* SchedulePeriods.h */,
 			);
 			name = Constants;
 			sourceTree = "<group>";

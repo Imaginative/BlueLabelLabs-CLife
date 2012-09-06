@@ -789,7 +789,8 @@
     // cannot move forward unitl editing is complete.
     if (self.lbl_disableTabBar == nil) {
         UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(0.0f, 0.0f, tabBarFrame.size.width, tabBarFrame.size.height)] autorelease];
-        label.text = @"Please complete your profile to continue";
+        label.text = NSLocalizedString(@"COMPLETE PROFILE WARNING", nil);
+        label.numberOfLines = 0;
         label.textAlignment = UITextAlignmentCenter;
         label.backgroundColor = [UIColor redColor];
         label.textColor = [UIColor whiteColor];
@@ -945,6 +946,24 @@
         self.navigationItem.rightBarButtonItem = rightButton;
         [rightButton release];
         
+        //lets check if a user is currently logged in
+        AuthenticationManager* authenticationManager = [AuthenticationManager instance];
+        if (![authenticationManager isUserAuthenticated])
+        {   
+            //there is no user object currently logged in,
+            //we instruct the authenticatoin manager to create a new user object and log that in
+            User* newUser = [authenticationManager createNewUserAndLogin];
+            if (newUser != nil)
+            {
+                //success everything workedJordan
+                
+            }
+            else {
+                //error condition
+                
+            }
+        }
+        
         //now we update the user object iwth the changed properties
         self.loggedInUser.username = self.name;
         self.loggedInUser.dateborn = self.birthday;
@@ -964,6 +983,10 @@
 }
 
 - (void)deleteProfile {
+    // Log the user off
+    AuthenticationManager* authenticationManager = [AuthenticationManager instance];
+    [authenticationManager logoff];
+    
     // Delete the profile object
     ResourceContext *resourceContext = [ResourceContext instance];
     [resourceContext delete:self.loggedInUser.objectid withType:USER];

@@ -12,7 +12,7 @@
 #import "DateTimeHelper.h"
 #import "PrescriptionInstance.h"
 #import "LocalNotificationManager.h"
-#import "ScheduleUnits.h"
+#import "SchedulePeriods.h"
 
 @interface ClifePrescriptionDetailsViewController ()
 
@@ -21,8 +21,8 @@
 @implementation ClifePrescriptionDetailsViewController
 @synthesize tbl_prescriptionDetails = m_tbl_prescriptionDetails;
 
-@synthesize av_edit             = m_av_edit;
-@synthesize av_delete           = m_av_delete;
+@synthesize av_edit                 = m_av_edit;
+@synthesize av_delete               = m_av_delete;
 
 @synthesize sectionsArray           = m_sectionsArray;
 
@@ -49,8 +49,8 @@
 @synthesize tf_scheduleAmount       = m_tf_scheduleAmount;
 @synthesize pv_scheduleAmount       = m_pv_scheduleAmount;
 
-@synthesize scheduleSingularUnitsArray = m_scheduleSingularUnitsArray;
-@synthesize schedulePluralUnitsArray = m_schedulePluralUnitsArray;
+@synthesize schedulePeriodSingularArray = m_schedulePeriodSingularArray;
+@synthesize schedulePeriodPluralArray = m_schedulePeriodPluralArray;
 
 @synthesize tf_scheduleRepeat       = m_tf_scheduleRepeat;
 @synthesize pv_scheduleRepeat       = m_pv_scheduleRepeat;
@@ -75,9 +75,8 @@
 @synthesize scheduleStartDate        = m_scheduleStartDate;
 @synthesize scheduleAmount          = m_scheduleAmount;
 @synthesize scheduleRepeatNumber    = m_scheduleRepeatNumber;
-@synthesize scheduleRepeatUnit      = m_scheduleRepeatUnit;
+@synthesize scheduleRepeatPeriod      = m_scheduleRepeatPeriod;
 @synthesize scheduleOccurenceNumber = m_scheduleOccurenceNumber;
-@synthesize scheduleOccurenceUnit   = m_scheduleOccurenceUnit;
 @synthesize scheduleEndDate         = m_scheduleEndDate;
 
 #pragma mark - Initialization
@@ -114,7 +113,7 @@
                           NSLocalizedString(@"REASON AND NOTES", nil),
                           nil];
     
-    // Setup arrays for gender and blood type pickers
+    // Setup arrays for pickers
     self.methodArray = [NSArray arrayWithObjects:
                         NSLocalizedString(@"PILL", nil),
                         NSLocalizedString(@"LIQUID", nil),
@@ -131,14 +130,7 @@
                             NSLocalizedString(@"l", nil),
                            nil];
     
-    self.methodArray = [NSArray arrayWithObjects:
-                        NSLocalizedString(@"PILL", nil),
-                        NSLocalizedString(@"LIQUID", nil),
-                        NSLocalizedString(@"TOPICAL", nil),
-                        NSLocalizedString(@"SYRINGE", nil),
-                        nil];
-    
-    self.scheduleSingularUnitsArray = [NSArray arrayWithObjects:
+    self.schedulePeriodSingularArray = [NSArray arrayWithObjects:
                                      NSLocalizedString(@"HOUR", nil),
                                      NSLocalizedString(@"DAY", nil),
                                      NSLocalizedString(@"WEEK", nil),
@@ -146,20 +138,13 @@
                                      NSLocalizedString(@"YEAR", nil),
                                      nil];
     
-    self.schedulePluralUnitsArray = [NSArray arrayWithObjects:
+    self.schedulePeriodPluralArray = [NSArray arrayWithObjects:
                             NSLocalizedString(@"HOURS", nil),
                             NSLocalizedString(@"DAYS", nil),
                             NSLocalizedString(@"WEEKS", nil),
                             NSLocalizedString(@"MONTHS", nil),
                             NSLocalizedString(@"YEARS", nil),
                             nil];
-    
-//    // Setup array for schedule amount picker
-//    NSMutableArray *mtblScheduleAmountArray = [[NSMutableArray alloc] initWithObjects:[NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"DOSE", nil)], nil];
-//    for (int i = 2; i <= 30; i++) {
-//        [mtblScheduleAmountArray addObject:[NSString stringWithFormat:@"%d %@", i, NSLocalizedString(@"DOSES", nil)]];
-//    }
-//    self.scheduleAmountArray = [NSArray arrayWithArray:mtblScheduleAmountArray];
     
     // Setup tap gesture recognizer to capture touches on the tableview when the keyboard is visible
     self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputView)];
@@ -183,8 +168,17 @@
         
         self.medicationName = prescription.name;
         self.method = prescription.method;
+        
         self.dosageAmount = prescription.strength;
         self.dosageUnit = prescription.unit;
+        
+        self.scheduleStartDate = prescription.datestart;
+        self.scheduleAmount = prescription.numberofdoses;
+        self.scheduleRepeatNumber = prescription.repeatmultiple;
+        self.scheduleRepeatPeriod = prescription.repeatperiod;
+        self.scheduleOccurenceNumber = prescription.occurmultiple;
+        self.scheduleEndDate = prescription.dateend;
+        
         self.reason = prescription.notes;
     }
     else {
@@ -209,8 +203,17 @@
         
         self.medicationName = nil;
         self.method = nil;
+        
         self.dosageAmount = nil;
         self.dosageUnit = nil;
+        
+        self.scheduleStartDate = nil;
+        self.scheduleAmount = nil;
+        self.scheduleRepeatNumber = nil;
+        self.scheduleRepeatPeriod = nil;
+        self.scheduleOccurenceNumber = nil;
+        self.scheduleEndDate = nil;
+        
         self.reason = nil;
     }
     
@@ -429,7 +432,7 @@
             }
             
             if (self.dosageAmount != nil) {
-                self.tf_dosageAmount.text = self.dosageAmount;
+                self.tf_dosageAmount.text = [self.dosageAmount stringValue];
             }
             else {
                 self.tf_dosageAmount.text = nil;
@@ -549,6 +552,9 @@
             else {
                 NSDate *startDate = [NSDate date];
                 self.tf_scheduleStartDate.text = [self.dateAndTimeFormatter stringFromDate:startDate];
+                
+                double doubleDate = [startDate timeIntervalSince1970];
+                self.scheduleStartDate = [NSNumber numberWithDouble:doubleDate];
             }
             
             // disable the cell until the "Edit" button is pressed
@@ -661,9 +667,18 @@
                 }
             }
             
-            if (self.scheduleRepeatNumber != nil && self.scheduleRepeatUnit != nil) {
-                self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %d %@", NSLocalizedString(@"EVERY", nil),
-                                               [self.scheduleRepeatNumber intValue], self.scheduleRepeatUnit];
+            if (self.scheduleRepeatNumber != nil && self.scheduleRepeatPeriod != nil) {
+                if ([self.scheduleRepeatNumber intValue] == 1) {
+                    self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %@",
+                                                   NSLocalizedString(@"EVERY", nil),
+                                                   [self.schedulePeriodSingularArray objectAtIndex:[self.scheduleRepeatPeriod intValue]]];
+                }
+                else {
+                    self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %d %@",
+                                                   NSLocalizedString(@"EVERY", nil),
+                                                   [self.scheduleRepeatNumber intValue],
+                                                   [self.schedulePeriodPluralArray objectAtIndex:[self.scheduleRepeatPeriod intValue]]];
+                }
             }
             else {
                 self.tf_scheduleRepeat.text = nil;
@@ -1033,7 +1048,7 @@
             }
         }
         else {
-            return [self.schedulePluralUnitsArray count];
+            return [self.schedulePeriodPluralArray count];
         }
     }
     else if (pickerView == self.pv_scheduleOccurences) {
@@ -1069,10 +1084,10 @@
                 break;
             case 1:
                 if ([pickerView selectedRowInComponent:0] == 0) {
-                    title = [self.scheduleSingularUnitsArray objectAtIndex:row];
+                    title = [self.schedulePeriodSingularArray objectAtIndex:row];
                 }
                 else {
-                    title = [self.schedulePluralUnitsArray objectAtIndex:row];
+                    title = [self.schedulePeriodPluralArray objectAtIndex:row];
                 }
                 break;
             default:
@@ -1118,12 +1133,7 @@
     else if (pickerView == self.pv_scheduleRepeat) {
         switch (component) {
             case 1:
-                if ([pickerView selectedRowInComponent:0] == 0) {
-                    self.scheduleRepeatUnit = [self.scheduleSingularUnitsArray objectAtIndex:row];
-                }
-                else {
-                    self.scheduleRepeatUnit = [self.schedulePluralUnitsArray objectAtIndex:row];
-                }
+                self.scheduleRepeatPeriod = [NSNumber numberWithInt:row];
                 [pickerView reloadComponent:0];
                 break;
             case 0:
@@ -1135,24 +1145,25 @@
         }
         
         if ([pickerView selectedRowInComponent:0] == 0) {
-            self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %d %@", NSLocalizedString(@"EVERY", nil),
-                                           [pickerView selectedRowInComponent:0] + 1, [self.scheduleSingularUnitsArray objectAtIndex:[pickerView selectedRowInComponent:1]]];
+            self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %@",
+                                           NSLocalizedString(@"EVERY", nil),
+                                           [self.schedulePeriodSingularArray objectAtIndex:[pickerView selectedRowInComponent:1]]];
         }
         else {
-            self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %d %@", NSLocalizedString(@"EVERY", nil),
-                                           [pickerView selectedRowInComponent:0] + 1, [self.schedulePluralUnitsArray objectAtIndex:[pickerView selectedRowInComponent:1]]];
+            self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %d %@",
+                                           NSLocalizedString(@"EVERY", nil),
+                                           [pickerView selectedRowInComponent:0] + 1,
+                                           [self.schedulePeriodPluralArray objectAtIndex:[pickerView selectedRowInComponent:1]]];
         }
     }
     else if (pickerView == self.pv_scheduleOccurences) {
         if (row == 0) {
             self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"TIME THAT DAY", nil)];
             self.scheduleOccurenceNumber = [NSNumber numberWithInt:(row + 1)];
-            self.scheduleOccurenceUnit = NSLocalizedString(@"DAY", nil);
         }
         else {
             self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", row + 1, NSLocalizedString(@"TIMES THAT DAY", nil)];
             self.scheduleOccurenceNumber = [NSNumber numberWithInt:(row + 1)];
-            self.scheduleOccurenceUnit = NSLocalizedString(@"DAYS", nil);
         }
     }
 }
@@ -1322,7 +1333,7 @@
         else {
             self.tf_dosageUnit.text = [self.dosageUnitArray objectAtIndex:0];
             
-            self.method = [self.dosageUnitArray objectAtIndex:0];
+            self.dosageUnit = [self.dosageUnitArray objectAtIndex:0];
         }
         
     }
@@ -1388,26 +1399,28 @@
         if ([self.tf_scheduleRepeat.text isEqualToString:@""] == NO &&
             [self.tf_scheduleRepeat.text isEqualToString:@" "] == NO)
         {
-            int repeatsNumber = [self.scheduleRepeatNumber intValue];
-            if (repeatsNumber == 1) {
-                [self.pv_scheduleRepeat selectRow:0 inComponent:0 animated:YES];
-                
-                int row = [self.scheduleSingularUnitsArray indexOfObject:self.scheduleRepeatUnit];
-                [self.pv_scheduleRepeat selectRow:row inComponent:1 animated:YES];
+            int repeatNumber = [self.scheduleRepeatNumber intValue];
+            if (repeatNumber > 0) {
+                [self.pv_scheduleRepeat selectRow:(repeatNumber - 1) inComponent:0 animated:YES];
             }
             else {
-                [self.pv_scheduleRepeat selectRow:(repeatsNumber - 1) inComponent:0 animated:YES];
-                
-                int row = [self.schedulePluralUnitsArray indexOfObject:self.scheduleRepeatUnit];
-                [self.pv_scheduleRepeat selectRow:row inComponent:1 animated:YES];
+                [self.pv_scheduleRepeat selectRow:0 inComponent:0 animated:YES];
+            }
+            
+            int repeatPeriod = [self.scheduleRepeatPeriod intValue];
+            if (repeatPeriod >= 0) {
+                [self.pv_scheduleRepeat selectRow:repeatPeriod inComponent:1 animated:YES];
+            }
+            else {
+                [self.pv_scheduleRepeat selectRow:0 inComponent:1 animated:YES];
             }
         }
         else {
-            self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %d %@", NSLocalizedString(@"EVERY", nil),
-                                           1, [self.scheduleSingularUnitsArray objectAtIndex:0]];
+            self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"EVERY", nil),
+                                           [self.schedulePeriodSingularArray objectAtIndex:0]];
             
             self.scheduleRepeatNumber = [NSNumber numberWithInt:1];
-            self.scheduleRepeatUnit = [self.scheduleSingularUnitsArray objectAtIndex:0];
+            self.scheduleRepeatPeriod = [NSNumber numberWithInt:kHOUR];
         }
         
     }
@@ -1431,7 +1444,6 @@
 //            self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"TIME THAT DAY", nil)];
 //            
 //            self.scheduleOccurenceNumber = [NSNumber numberWithInt:1];
-//            self.scheduleOccurenceUnit = NSLocalizedString(@"DAY", nil);
         }
         
     }
@@ -1551,7 +1563,7 @@
             self.dosageAmount = nil;
         }
         else {
-            self.dosageAmount = enteredText;
+            self.dosageAmount = [NSNumber numberWithDouble:[enteredText doubleValue]];
         }
     }
     else if (textField == self.tf_dosageUnit) {
@@ -1608,7 +1620,7 @@
             [enteredText isEqualToString:@" "] == YES)
         {
             self.scheduleRepeatNumber = nil;
-            self.scheduleRepeatUnit = nil;
+            self.scheduleRepeatPeriod = nil;
         }
         else {
             int repeats = [self.pv_scheduleRepeat selectedRowInComponent:0] + 1;
@@ -1616,12 +1628,7 @@
             self.scheduleRepeatNumber = [NSNumber numberWithInt:repeats];
             
             int row = [self.pv_scheduleRepeat selectedRowInComponent:1];
-            if (repeats == 1) {
-                self.scheduleRepeatUnit = [self.scheduleSingularUnitsArray objectAtIndex:row];
-            }
-            else {
-                self.scheduleRepeatUnit = [self.schedulePluralUnitsArray objectAtIndex:row];
-            }
+            self.scheduleRepeatPeriod = [NSNumber numberWithInt:row];
         }
     }
     else if (textField == self.tf_scheduleOccurences) {
@@ -1632,19 +1639,11 @@
             [enteredText isEqualToString:@" "] == YES)
         {
             self.scheduleOccurenceNumber = nil;
-            self.scheduleOccurenceUnit = nil;
         }
         else {
             int occurences = [self.pv_scheduleOccurences selectedRowInComponent:0] + 1;
             
             self.scheduleOccurenceNumber = [NSNumber numberWithInt:occurences];
-            
-            if (occurences == 1) {
-                self.scheduleOccurenceUnit = NSLocalizedString(@"DAY", nil);
-            }
-            else {
-                self.scheduleOccurenceUnit = NSLocalizedString(@"DAYS", nil);
-            }
         }
     }
     else if (textField == self.tf_scheduleEndDate) {
@@ -1840,9 +1839,12 @@
         self.method == nil ||
         self.dosageAmount == nil ||
         self.dosageUnit == nil ||
+        self.scheduleStartDate == nil ||
+        self.scheduleAmount == nil ||
+        self.scheduleRepeatNumber == nil ||
+        self.scheduleRepeatPeriod == nil ||
         [self.medicationName isEqualToString:@""] ||
         [self.method isEqualToString:@""] ||
-        [self.dosageAmount isEqualToString:@""] ||
         [self.dosageUnit isEqualToString:@""])
     {
         // Promt user to complete all fields
@@ -1883,8 +1885,17 @@
         
         prescription.name = self.medicationName;
         prescription.method = self.method;
+        
         prescription.strength = self.dosageAmount;
         prescription.unit = self.dosageUnit;
+        
+        prescription.datestart = self.scheduleStartDate;
+        prescription.numberofdoses = self.scheduleAmount;
+        prescription.repeatmultiple = self.scheduleRepeatNumber;
+        prescription.repeatperiod = self.scheduleRepeatPeriod;
+        prescription.occurmultiple = self.scheduleOccurenceNumber;
+        prescription.dateend = self.scheduleEndDate;
+        
         prescription.notes = self.reason;
         
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
@@ -1938,9 +1949,12 @@
         self.method == nil ||
         self.dosageAmount == nil ||
         self.dosageUnit == nil ||
+        self.scheduleStartDate == nil ||
+        self.scheduleAmount == nil ||
+        self.scheduleRepeatNumber == nil ||
+        self.scheduleRepeatPeriod == nil ||
         [self.medicationName isEqualToString:@""] ||
         [self.method isEqualToString:@""] ||
-        [self.dosageAmount isEqualToString:@""] ||
         [self.dosageUnit isEqualToString:@""])
     {
         // Promt user to complete all fields
@@ -1955,15 +1969,12 @@
     }
     else {
         // Schedule the reminders
-        // We dont need this method in the final version, you can uncomment it for now
-        // since the real method doesn work
-        //[self scheduleReminders];
         
         // Exit editing and save changes
         ResourceContext* resourceContext = [ResourceContext instance];
         
                
-        Prescription* prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withStrength:self.dosageAmount withUnit:self.dosageUnit withNotes:self.reason];
+        Prescription* prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withStrength:self.dosageAmount withUnit:self.dosageUnit withDateStart:self.scheduleStartDate withNumberOfDoses:self.scheduleAmount withRepeatMultiple:self.scheduleRepeatNumber withRepeatPeriod:self.scheduleRepeatPeriod withOccurMultiple:self.scheduleOccurenceNumber withDateEnd:self.scheduleEndDate withNotes:self.reason];
         
         //we need to then create an array of prescription objects corresponding to this
         //particular prescription
@@ -1974,10 +1985,6 @@
         //notifications as appropriate
         LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
         [localNotificationManager scheduleNotificationsFor:prescriptionInstances];
-        
-        
-        
-        
         
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
         

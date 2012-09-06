@@ -51,6 +51,8 @@
 "EDIT PROFILE" = "Edit Profile";
 "EDIT PROFILE MESSAGE" = "Would you like to back up your history before editing your profile?";
 
+"COMPLETE PROFILE WARNING" = "Please complete your profile to continue";
+
 "DELETE PROFILE" = "Delete profile";
 "DELETE PROFILE MESSAGE" = "Deleting your profile will erase all data ￼and history. Would you like to export your data and history before deleting your profile?";
 

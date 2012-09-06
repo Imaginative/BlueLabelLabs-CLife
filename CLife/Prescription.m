@@ -14,31 +14,34 @@
 
 @implementation Prescription
 
+@dynamic userid;
 
-
-
-@dynamic alert;
-@dynamic datestart;
-@dynamic dateend;
 @dynamic name;
 @dynamic strength;
 @dynamic unit;
 
+@dynamic datestart;
 @dynamic numberofdoses;
 @dynamic method;
 @dynamic repeatmultiple;
 @dynamic repeatperiod;
-@dynamic userid;
+@dynamic occurmultiple;
+@dynamic dateend;
+
 @dynamic notes;
-
-
 
 
 #pragma mark - Static Initializers
 + (Prescription *) createPrescriptionWithName:(NSString *)name 
                                    withMethod:(NSString *)method 
-                                 withStrength:(NSString *)strength 
-                                     withUnit:(NSString *)unit 
+                                 withStrength:(NSNumber *)strength 
+                                     withUnit:(NSString *)unit
+                                withDateStart:(NSNumber *)dateStart
+                            withNumberOfDoses:(NSNumber *)numberOfDoses
+                           withRepeatMultiple:(NSNumber *)repeatMultiple
+                             withRepeatPeriod:(NSNumber *)repeatPeriod
+                            withOccurMultiple:(NSNumber *)occurMultiple
+                                  withDateEnd:(NSNumber *)dateEnd
                                     withNotes:(NSString *)notes
 {
     
@@ -53,23 +56,23 @@
     NSNumber* prescriptionID = [idGenerator generateNewId:PRESCRIPTION];
     
     prescription.objectid = prescriptionID;
-    prescription.name = name;
-    prescription.method = method;
-    prescription.strength = strength;
-    prescription.unit = unit;
-    prescription.notes = notes;
+    
     prescription.userid = user.objectid;
     
-    prescription.alert = [NSNumber numberWithInt:0];
+    prescription.name = name;
+    prescription.method = method;
     
-    NSDate* currentDate = [NSDate date];
-    double doubleDate = [currentDate timeIntervalSince1970];
-    prescription.datestart = [NSNumber numberWithDouble:doubleDate];
+    prescription.strength = strength;
+    prescription.unit = unit;
     
-    prescription.repeatmultiple = nil;
-    prescription.repeatperiod = nil;
-    prescription.dateend = nil;
-    prescription.numberofdoses = nil;
+    prescription.datestart = dateStart;
+    prescription.numberofdoses = numberOfDoses;
+    prescription.repeatmultiple = repeatMultiple;
+    prescription.repeatperiod = repeatPeriod;
+    prescription.occurmultiple = occurMultiple;
+    prescription.dateend = dateEnd;
+    
+    prescription.notes = notes;
     
     return prescription;
     

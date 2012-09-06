@@ -44,8 +44,8 @@
     UITextField             *m_tf_scheduleAmount;
     UIPickerView            *m_pv_scheduleAmount;
     
-    NSArray                 *m_scheduleSingularUnitsArray;
-    NSArray                 *m_schedulePluralUnitsArray;
+    NSArray                 *m_schedulePeriodSingularArray;
+    NSArray                 *m_schedulePeriodPluralArray;
     
     UITextField             *m_tf_scheduleRepeat;
     UIPickerView            *m_pv_scheduleRepeat;
@@ -64,16 +64,15 @@
     
     NSString                *m_medicationName;
     NSString                *m_method;
-    NSString                *m_dosageAmount;
+    NSNumber                *m_dosageAmount;
     NSString                *m_dosageUnit;
     NSString                *m_reason;
     
     NSNumber                *m_scheduleStartDate;
     NSNumber                *m_scheduleAmount;
     NSNumber                *m_scheduleRepeatNumber;
-    NSString                *m_scheduleRepeatUnit;
+    NSNumber                *m_scheduleRepeatPeriod;
     NSNumber                *m_scheduleOccurenceNumber;
-    NSString                *m_scheduleOccurenceUnit;
     NSNumber                *m_scheduleEndDate;
     
 }
@@ -110,8 +109,8 @@
 @property (nonatomic, retain)           NSArray                 *scheduleAmountArray;
 @property (nonatomic, retain)           UIPickerView            *pv_scheduleAmount;
 
-@property (nonatomic, retain)           NSArray                 *scheduleSingularUnitsArray;
-@property (nonatomic, retain)           NSArray                 *schedulePluralUnitsArray;
+@property (nonatomic, retain)           NSArray                 *schedulePeriodSingularArray;
+@property (nonatomic, retain)           NSArray                 *schedulePeriodPluralArray;
 
 @property (nonatomic, retain)           UITextField             *tf_scheduleRepeat;
 @property (nonatomic, retain)           UIPickerView            *pv_scheduleRepeat;
@@ -130,16 +129,15 @@
 
 @property (nonatomic, retain)           NSString                *medicationName;
 @property (nonatomic, retain)           NSString                *method;
-@property (nonatomic, retain)           NSString                *dosageAmount;
+@property (nonatomic, retain)           NSNumber                *dosageAmount;
 @property (nonatomic, retain)           NSString                *dosageUnit;
 @property (nonatomic, retain)           NSString                *reason;
 
 @property (nonatomic, retain)           NSNumber                *scheduleStartDate;
 @property (nonatomic, retain)           NSNumber                *scheduleAmount;
 @property (nonatomic, retain)           NSNumber                *scheduleRepeatNumber;
-@property (nonatomic, retain)           NSString                *scheduleRepeatUnit;
+@property (nonatomic, retain)           NSNumber                *scheduleRepeatPeriod;
 @property (nonatomic, retain)           NSNumber                *scheduleOccurenceNumber;
-@property (nonatomic, retain)           NSString                *scheduleOccurenceUnit;
 @property (nonatomic, retain)           NSNumber                *scheduleEndDate;
 
 #pragma mark - Static Initializers

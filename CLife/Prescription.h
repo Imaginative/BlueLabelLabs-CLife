@@ -12,26 +12,33 @@
 {
     
 }
-@property (nonatomic,retain) NSNumber* alert;
-@property (nonatomic,retain) NSNumber* datestart;
-@property (nonatomic,retain) NSNumber* dateend;
-@property (nonatomic,retain) NSString* name;
-
-
-@property (nonatomic,retain) NSString* strength;
-@property (nonatomic,retain) NSString* unit;
-@property (nonatomic,retain) NSString* method;
-@property (nonatomic,retain) NSNumber* numberofdoses;
-
-@property (nonatomic,retain) NSNumber* repeatmultiple;
-@property (nonatomic,retain) NSNumber* repeatperiod;
 
 @property (nonatomic,retain) NSNumber* userid;
+
+@property (nonatomic,retain) NSString* name;
+@property (nonatomic,retain) NSString* method;
+
+@property (nonatomic,retain) NSNumber* strength;
+@property (nonatomic,retain) NSString* unit;
+
+@property (nonatomic,retain) NSNumber* datestart;
+@property (nonatomic,retain) NSNumber* numberofdoses;
+@property (nonatomic,retain) NSNumber* repeatmultiple;
+@property (nonatomic,retain) NSNumber* repeatperiod;
+@property (nonatomic,retain) NSNumber* occurmultiple;
+@property (nonatomic,retain) NSNumber* dateend;
+
 @property (nonatomic,retain) NSString* notes;
 
-+ (Prescription*) createPrescriptionWithName:(NSString *)name 
-                                  withMethod:(NSString *)method 
-                                withStrength:(NSString *)strength 
-                                    withUnit:(NSString *)unit 
-                                   withNotes:(NSString *)notes;
++ (Prescription *) createPrescriptionWithName:(NSString *)name 
+                                   withMethod:(NSString *)method 
+                                 withStrength:(NSNumber *)strength 
+                                     withUnit:(NSString *)unit
+                                withDateStart:(NSNumber *)dateStart
+                            withNumberOfDoses:(NSNumber *)numberOfDoses
+                           withRepeatMultiple:(NSNumber *)repeatMultiple
+                             withRepeatPeriod:(NSNumber *)repeatPeriod
+                            withOccurMultiple:(NSNumber *)occurMultiple
+                                  withDateEnd:(NSNumber *)dateEnd
+                                    withNotes:(NSString *)notes;
 @end

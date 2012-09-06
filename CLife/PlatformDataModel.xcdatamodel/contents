@@ -59,16 +59,16 @@
         <attribute name="userid" optional="YES" attributeType="Integer 64" defaultValueString="0"/>
     </entity>
     <entity name="Prescription" representedClassName="Prescription" parentEntity="resource" syncable="YES">
-        <attribute name="alert" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="dateend" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="datestart" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="method" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="numberofdoses" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="occurmultiple" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="repeatmultiple" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="repeatperiod" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="strength" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="strength" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <attribute name="unit" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>

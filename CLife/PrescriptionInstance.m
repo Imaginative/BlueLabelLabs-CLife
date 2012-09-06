@@ -42,15 +42,12 @@
     //the prescription alert time is the seconds before the scheduled time that
     //the user should be reminded
     double dbl_dateScheduled = [self.datescheduled doubleValue];
-    double dbl_alert = [self.prescription.alert doubleValue];
     
     //this is the date to remind the user
-    double dbl_dateToRemind = dbl_dateScheduled - dbl_alert;
+    double dbl_dateToRemind = dbl_dateScheduled;
     
     NSDate* fireDate = [NSDate dateWithTimeIntervalSince1970:dbl_dateToRemind];
     return fireDate;
-    
-    
 }
 
 //Converts this Prescription Instance object into a 
@@ -73,9 +70,6 @@
     
     [retVal autorelease];
     return retVal;
-   
-    
-    
 }
 
 //creates an array of prescription instance objects based off the details

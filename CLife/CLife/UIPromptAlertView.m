@@ -54,13 +54,15 @@
         // try to find and disable "Confirm" button until text has been verified
         for (UIView *view in [self subviews]) 
         {
-            if ([[[view class] description] isEqualToString:@"UIAlertButton"])
+            if ([[[view class] description] rangeOfString:@"Button"].location != NSNotFound)
             {                
-                UIButton *button = (UIButton *)view;
-                if ([button.titleLabel.text isEqualToString:NSLocalizedString(@"CONFIRM", nil)]) 
-                {
-                    button.enabled = NO;
-                }                
+                if ([view respondsToSelector:@selector(title)]) {
+                    NSString* title = [view performSelector:@selector(title)];
+                    if ([title isEqualToString:NSLocalizedString(@"CONFIRM", nil)] && [view respondsToSelector:@selector(setEnabled:)]) {
+                        [view performSelector:@selector(setEnabled:) withObject:NO];
+                    }
+                }
+
             }
         }
     }
@@ -111,22 +113,23 @@
         }
     }
     
-    // try to find and enable "Confirm" button if the verification text has been entered
     for (UIView *view in [self subviews]) 
     {
-        if ([[[view class] description] isEqualToString:@"UIAlertButton"])
+        if ([[[view class] description] rangeOfString:@"Button"].location != NSNotFound)
         {                
-            UIButton *button = (UIButton *)view;
-            if ([button.titleLabel.text isEqualToString:NSLocalizedString(@"CONFIRM", nil)]) 
-            {
-                if ([newString isEqualToString:self.verificationText]) {
-                    // text matches verification
-                    button.enabled = YES;
+            if ([view respondsToSelector:@selector(title)]) {
+                NSString* title = [view performSelector:@selector(title)];
+                if ([title isEqualToString:NSLocalizedString(@"CONFIRM", nil)] && [view respondsToSelector:@selector(setEnabled:)]) {
+                    if ([newString isEqualToString:self.verificationText]) {
+                        // text matches verification
+                        [view performSelector:@selector(setEnabled:) withObject:YES];
+                    }
+                    else {
+                        [view performSelector:@selector(setEnabled:) withObject:NO];
+                    }
                 }
-                else {
-                    button.enabled = NO;
-                }
-            }                
+            }
+            
         }
     }
     
