@@ -121,4 +121,8 @@
 "DELETE PRESCRIPTION" = "Delete prescription";
 "DELETE PRESCRIPTION MESSAGE" = "Would you like to export your data and history before deleting this prescription?";
 
+// Notifications
+"REMINDER ACTION" = "Confirm";
+"REMINDER MESSAGE" = "Take your next dosage of";
+
 

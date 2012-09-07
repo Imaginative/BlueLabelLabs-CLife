@@ -26,4 +26,5 @@
 - (NSDate*) fireDate;
 - (UILocalNotification*) createLocalNotification;
 + (NSArray*) createPrescriptionInstancesFor:(Prescription*)prescription;
+
 @end
