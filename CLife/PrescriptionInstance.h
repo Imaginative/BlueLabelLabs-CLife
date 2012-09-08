@@ -21,10 +21,13 @@
 @property (nonatomic,retain) NSNumber* state;
 @property (nonatomic,retain) NSString* notes;
 @property (nonatomic,retain) NSNumber* hasnotificationbeenscheduled;
+//@property (nonatomic,retain) NSNumber* notificationid;
 @property (nonatomic,retain) Prescription* prescription;
 
 - (NSDate*) fireDate;
-- (UILocalNotification*) createLocalNotification;
-+ (NSArray*) createPrescriptionInstancesFor:(Prescription*)prescription;
+- (UILocalNotification *) createLocalNotification;
+
++ (PrescriptionInstance *) createPrescriptionInstanceForPrescription:(Prescription *)prescription withReminderDate:(NSDate *)reminderDate;
++ (NSArray *) createPrescriptionInstancesFor:(Prescription *)prescription;
 
 @end

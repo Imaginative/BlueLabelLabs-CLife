@@ -123,6 +123,7 @@
 
 // Notifications
 "REMINDER ACTION" = "Confirm";
-"REMINDER MESSAGE" = "Take your next dosage of";
+"REMINDER ACTION PART 1" = "Time to take your next dose of";
+"REMINDER ACTION PART 2" = "Please open CLife to confirm.";
 
 

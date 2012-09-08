@@ -23,6 +23,7 @@
 @dynamic state;
 @dynamic notes;
 @dynamic hasnotificationbeenscheduled;
+//@dynamic notificationid;
 @synthesize prescription = __prescription;
 
 
@@ -59,8 +60,9 @@
     UILocalNotification* retVal = [[UILocalNotification alloc]init];
     retVal.fireDate = [self fireDate];
     retVal.soundName = UILocalNotificationDefaultSoundName;
+//    retVal.alertAction = [NSString stringWithFormat:NSLocalizedString(@"REMINDER ACTION", nil)];
     retVal.alertAction = [NSString stringWithFormat:NSLocalizedString(@"REMINDER ACTION", nil)];
-    retVal.alertBody = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"REMINDER ACTION", nil), self.prescription.name];
+    retVal.alertBody = [NSString stringWithFormat:@"%@ %@. %@", NSLocalizedString(@"REMINDER ACTION PART 1", nil), self.prescription.name, NSLocalizedString(@"REMINDER ACTION PART 2", nil)];
     retVal.hasAction = YES;
     
     //we also create a user dictionary to add information about the prescription and prescription instance
@@ -72,6 +74,31 @@
     
     [retVal autorelease];
     return retVal;
+}
+
++ (PrescriptionInstance *) createPrescriptionInstanceForPrescription:(Prescription *)prescription withReminderDate:(NSDate *)reminderDate
+{
+    ResourceContext* resourceContext = [ResourceContext instance];
+    
+    PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+    
+    IDGenerator* idGenerator = [IDGenerator instance];
+    NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
+    instance.objectid = instanceID;
+    
+    instance.prescriptionid = prescription.objectid;
+    instance.prescriptionname = prescription.name;
+    
+    double doubleDate = [reminderDate timeIntervalSince1970];
+    instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
+    
+    instance.state = [NSNumber numberWithInt:kNOTTAKEN];
+    instance.datetaken = nil;
+    instance.notes = nil;
+    instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
+//    instance.notificationid = nil;
+    
+    return instance;
 }
 
 //creates an array of prescription instance objects based off the details
@@ -146,7 +173,7 @@
     recurrances = recurrances / recurranceMultiple;
     
     // Now we create PrescriptionInstances for each occurance of the schedule
-    ResourceContext* resourceContext = [ResourceContext instance];
+//    ResourceContext* resourceContext = [ResourceContext instance];
     
     NSMutableArray *prescriptionInstances = [[NSMutableArray alloc] init];
     
@@ -191,22 +218,24 @@
             
             if ([reminderDate compare:endDate] == NSOrderedAscending) {
                 // reminder date is earlier than the end date, we can create the reminder
-                PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+                PrescriptionInstance *instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                 
-                IDGenerator* idGenerator = [IDGenerator instance];
-                NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
-                prescription.objectid = instanceID;
-                
-                instance.prescriptionid = prescription.objectid;
-                instance.prescriptionname = prescription.name;
-                
-                double doubleDate = [reminderDate timeIntervalSince1970];
-                instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
-                
-                instance.state = [NSNumber numberWithInt:kNOTTAKEN];
-                instance.datetaken = nil;
-                instance.notes = nil;
-                instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
+//                PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+//                
+//                IDGenerator* idGenerator = [IDGenerator instance];
+//                NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
+//                prescription.objectid = instanceID;
+//                
+//                instance.prescriptionid = prescription.objectid;
+//                instance.prescriptionname = prescription.name;
+//                
+//                double doubleDate = [reminderDate timeIntervalSince1970];
+//                instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
+//                
+//                instance.state = [NSNumber numberWithInt:kNOTTAKEN];
+//                instance.datetaken = nil;
+//                instance.notes = nil;
+//                instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
                 
                 [prescriptionInstances addObject:instance];
                 
@@ -231,21 +260,23 @@
                         if ([reminderDate compare:endDate] == NSOrderedAscending) {
                             // reminder date is earlier than the end date, we can create the reminder
                             
-                            instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+                            instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                             
-                            instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
-                            prescription.objectid = instanceID;
-                            
-                            instance.prescriptionid = prescription.objectid;
-                            instance.prescriptionname = prescription.name;
-                            
-                            double doubleDate = [reminderDate timeIntervalSince1970];
-                            instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
-                            
-                            instance.state = [NSNumber numberWithInt:kNOTTAKEN];
-                            instance.datetaken = nil;
-                            instance.notes = nil;
-                            instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
+//                            instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+//                            
+//                            instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
+//                            prescription.objectid = instanceID;
+//                            
+//                            instance.prescriptionid = prescription.objectid;
+//                            instance.prescriptionname = prescription.name;
+//                            
+//                            double doubleDate = [reminderDate timeIntervalSince1970];
+//                            instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
+//                            
+//                            instance.state = [NSNumber numberWithInt:kNOTTAKEN];
+//                            instance.datetaken = nil;
+//                            instance.notes = nil;
+//                            instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
                             
                             [prescriptionInstances addObject:instance];
                             
@@ -280,22 +311,24 @@
                     
                     if ([reminderDate compare:endDate] == NSOrderedAscending) {
                         // reminder date is earlier than the end date, we can create the reminder
-                        PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+                        PrescriptionInstance *instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                         
-                        IDGenerator* idGenerator = [IDGenerator instance];
-                        NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
-                        prescription.objectid = instanceID;
-                        
-                        instance.prescriptionid = prescription.objectid;
-                        instance.prescriptionname = prescription.name;
-                        
-                        double doubleDate = [reminderDate timeIntervalSince1970];
-                        instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
-                        
-                        instance.state = [NSNumber numberWithInt:kNOTTAKEN];
-                        instance.datetaken = nil;
-                        instance.notes = nil;
-                        instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
+//                        PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+//                        
+//                        IDGenerator* idGenerator = [IDGenerator instance];
+//                        NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
+//                        prescription.objectid = instanceID;
+//                        
+//                        instance.prescriptionid = prescription.objectid;
+//                        instance.prescriptionname = prescription.name;
+//                        
+//                        double doubleDate = [reminderDate timeIntervalSince1970];
+//                        instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
+//                        
+//                        instance.state = [NSNumber numberWithInt:kNOTTAKEN];
+//                        instance.datetaken = nil;
+//                        instance.notes = nil;
+//                        instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
                         
                         [prescriptionInstances addObject:instance];
                         
@@ -326,22 +359,24 @@
                 
                 if ([reminderDate compare:endDate] == NSOrderedAscending) {
                     // reminder date is earlier than the end date, we can create the reminder
-                    PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+                    PrescriptionInstance *instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                     
-                    IDGenerator* idGenerator = [IDGenerator instance];
-                    NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
-                    prescription.objectid = instanceID;
-                    
-                    instance.prescriptionid = prescription.objectid;
-                    instance.prescriptionname = prescription.name;
-                    
-                    double doubleDate = [reminderDate timeIntervalSince1970];
-                    instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
-                    
-                    instance.state = [NSNumber numberWithInt:kNOTTAKEN];
-                    instance.datetaken = nil;
-                    instance.notes = nil;
-                    instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
+//                    PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+//                    
+//                    IDGenerator* idGenerator = [IDGenerator instance];
+//                    NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
+//                    prescription.objectid = instanceID;
+//                    
+//                    instance.prescriptionid = prescription.objectid;
+//                    instance.prescriptionname = prescription.name;
+//                    
+//                    double doubleDate = [reminderDate timeIntervalSince1970];
+//                    instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
+//                    
+//                    instance.state = [NSNumber numberWithInt:kNOTTAKEN];
+//                    instance.datetaken = nil;
+//                    instance.notes = nil;
+//                    instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
                     
                     [prescriptionInstances addObject:instance];
                     

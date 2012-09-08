@@ -597,16 +597,18 @@
                     [pickerView addTarget:self action:@selector(startDateChanged:) forControlEvents:UIControlEventValueChanged];
                     pickerView.datePickerMode = UIDatePickerModeDateAndTime;
                     
-                    NSCalendar *calendar = [NSCalendar currentCalendar];
-                    NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
-                    components.year = [[calendar components:NSYearCalendarUnit fromDate:[NSDate date]] year];
-                    components.month = [[calendar components:NSMonthCalendarUnit fromDate:[NSDate date]] month];
-                    components.day = [[calendar components:NSDayCalendarUnit fromDate:[NSDate date]] day] + 1; 
-                    components.hour = 8;
-                    components.minute = 0;
-                    components.second = 0;
-                    NSDate* defaultStartDate = [calendar dateFromComponents:components];
-                    pickerView.minimumDate = defaultStartDate;
+//                    NSCalendar *calendar = [NSCalendar currentCalendar];
+//                    NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
+//                    components.year = [[calendar components:NSYearCalendarUnit fromDate:[NSDate date]] year];
+//                    components.month = [[calendar components:NSMonthCalendarUnit fromDate:[NSDate date]] month];
+//                    components.day = [[calendar components:NSDayCalendarUnit fromDate:[NSDate date]] day] + 1; 
+//                    components.hour = 8;
+//                    components.minute = 0;
+//                    components.second = 0;
+//                    NSDate* defaultStartDate = [calendar dateFromComponents:components];
+//                    pickerView.minimumDate = defaultStartDate;
+                    
+                    pickerView.minimumDate = [NSDate date];
                     
                     self.pv_scheduleStartDate = pickerView;
                     
@@ -1191,10 +1193,10 @@
         if ([self.scheduleRepeatPeriod intValue] == kHOUR) {
             int repeats = [self.scheduleRepeatNumber intValue];
             
-            return (((24 - hours) + repeats - 1) / repeats);    // always round up (A+B-1)/B
+            return (((24 - hours) + repeats - 1) / repeats) + 1;    // always round up (A+B-1)/B, +1 for blank row
         }
         else {
-            return (24 - hours);    // always round down
+            return (24 - hours) + 1;    // always round down, +1 for blank row
         }
     }
     else {
@@ -1244,10 +1246,13 @@
     }
     else if (pickerView == self.pv_scheduleOccurences) {
         if (row == 0) {
+            title = nil;
+        }
+        else if (row == 1) {
             title = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"TIME THAT DAY", nil)];
         }
         else {
-            title = [NSString stringWithFormat:@"%d %@", row + 1, NSLocalizedString(@"TIMES THAT DAY", nil)];
+            title = [NSString stringWithFormat:@"%d %@", row, NSLocalizedString(@"TIMES THAT DAY", nil)];
         }
     }
     else {
@@ -1311,8 +1316,12 @@
     }
     else if (pickerView == self.pv_scheduleOccurences) {
         if (row == 0) {
+            self.tf_scheduleOccurences.text = nil;
+            self.scheduleOccurenceNumber = nil;
+        }
+        else if (row == 1) {
             self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"TIME THAT DAY", nil)];
-            self.scheduleOccurenceNumber = [NSNumber numberWithInt:(row + 1)];
+            self.scheduleOccurenceNumber = [NSNumber numberWithInt:row];
         }
         else {
             self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", row + 1, NSLocalizedString(@"TIMES THAT DAY", nil)];
@@ -1508,6 +1517,17 @@
             self.scheduleStartDate = [NSNumber numberWithDouble:doubleDate];
         }
         else {
+            NSCalendar *calendar = [NSCalendar currentCalendar];
+            NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
+            components.year = [[calendar components:NSYearCalendarUnit fromDate:[NSDate date]] year];
+            components.month = [[calendar components:NSMonthCalendarUnit fromDate:[NSDate date]] month];
+            components.day = [[calendar components:NSDayCalendarUnit fromDate:[NSDate date]] day] + 1; 
+            components.hour = 8;
+            components.minute = 0;
+            components.second = 0;
+            NSDate* defaultStartDate = [calendar dateFromComponents:components];
+            self.pv_scheduleStartDate.date = defaultStartDate;
+            
             self.tf_scheduleStartDate.text = [self.dateAndTimeFormatter stringFromDate:self.pv_scheduleStartDate.date];
             
             NSDate* startDate = self.pv_scheduleStartDate.date;
@@ -1591,11 +1611,11 @@
             [self.tf_scheduleOccurences.text isEqualToString:@" "] == NO)
         {
             int occurences = [self.scheduleOccurenceNumber intValue];
-            [self.pv_scheduleOccurences selectRow:(occurences - 1) inComponent:0 animated:YES];
+            [self.pv_scheduleOccurences selectRow:occurences inComponent:0 animated:YES];
         }
         else {
-//            self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"TIME THAT DAY", nil)];
-//            
+//            self.tf_scheduleOccurences.text = nil;
+            
 //            self.scheduleOccurenceNumber = [NSNumber numberWithInt:1];
         }
         
@@ -1814,7 +1834,7 @@
             self.scheduleOccurenceNumber = nil;
         }
         else {
-            int occurences = [self.pv_scheduleOccurences selectedRowInComponent:0] + 1;
+            int occurences = [self.pv_scheduleOccurences selectedRowInComponent:0];
             
             self.scheduleOccurenceNumber = [NSNumber numberWithInt:occurences];
         }
@@ -2164,10 +2184,10 @@
         
         //we pass this to the local notification manager which will schedule them for
         //notifications as appropriate
-        LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
-        [localNotificationManager scheduleNotificationsFor:prescriptionInstances];
-        
-        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+//        LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
+//        [localNotificationManager scheduleNotificationsFor:prescriptionInstances];
+//        
+//        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
         
         self.prescriptionID = prescription.objectid;
         
