@@ -13,6 +13,7 @@
 #import "DateTimeHelper.h"
 #import "Attributes.h"
 #import "SchedulePeriods.h"
+#import "PrescriptionInstanceState.h"
 
 @implementation PrescriptionInstance
 @dynamic prescriptionid;
@@ -84,16 +85,23 @@
     
     NSDate *endDate;
     if (prescription.dateend == nil) {
-        // If the end date is not set we set it to 1 year from now
-        components.year = 1;
+        // If the end date is not set we set it to 2 days from now
+//        components.year = 1;
+        components.day = 2;
+        components.second = -1; // sets the date to the last second on that day
         endDate = [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
-        components.year = 0;
+        
+        // reset the date components
+//        components.year = 0;
+        components.day = 0;
+        components.second = 0;
     }
     else {
         endDate = [DateTimeHelper parseWebServiceDateDouble:prescription.dateend];
     }
     
     int recurrances = 0;
+    int recurranceMultiple = [prescription.repeatmultiple intValue];
     int period = [prescription.repeatperiod intValue];
     
     switch (period) {
@@ -135,6 +143,7 @@
         default:
             break;
     }
+    recurrances = recurrances / recurranceMultiple;
     
     // Now we create PrescriptionInstances for each occurance of the schedule
     ResourceContext* resourceContext = [ResourceContext instance];
@@ -142,63 +151,46 @@
     NSMutableArray *prescriptionInstances = [[NSMutableArray alloc] init];
     
     int occurances = [prescription.occurmultiple intValue];
+    // overwrite the default case of nil daily occurances
+    if (occurances == 0) {
+        occurances = 1;
+    }
     
     if (period != kHOUR) {
-        for (int i = 1; i <= recurrances; i++) {
+        for (int i = 0; i <= recurrances; i++) {
             // first skip ahead the appropriate period
             switch (period) {
                 case kDAY:
-                    components.day = i;
+                    components.day = i * recurranceMultiple;
                     break;
                     
                 case kWEEK:
-                    components.week = i;
+                    components.week = i * recurranceMultiple;
                     break;
                     
                 case kMONTH:
-                    components.month = i;
+                    components.month = i * recurranceMultiple;
                     break;
                     
                 case kYEAR:
-                    components.year = i;
+                    components.year = i * recurranceMultiple;
                     break;
                     
                 default:
                     break;
             }
             
-            if (occurances > 0) {
-                for (int j = 1; j <= occurances; j++) {
-                    // next create an instance for each occurance that day
-                    
-                    components.hour = (24 / occurances) * j;
-                    
-                    NSDate *reminderDate = [calendar dateByAddingComponents:components toDate:startDate options:0];
-                    
-                    PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
-                    
-                    IDGenerator* idGenerator = [IDGenerator instance];
-                    NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
-                    prescription.objectid = instanceID;
-                    
-                    instance.prescriptionid = prescription.objectid;
-                    instance.prescriptionname = prescription.name;
-                    
-                    double doubleDate = [reminderDate timeIntervalSince1970];
-                    instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
-                    
-                    instance.state = nil;
-                    instance.datetaken = nil;
-                    instance.notes = nil;
-                    instance.hasnotificationbeenscheduled = NO;
-                    
-                    [prescriptionInstances addObject:instance];
-                }
-            }
-            else {
-                // create the single instance for that day
-                NSDate *reminderDate = [calendar dateByAddingComponents:components toDate:startDate options:0];
-                
+            // create the first instance for that day
+            NSDate *reminderDate = [calendar dateByAddingComponents:components toDate:startDate options:0];
+            
+            // reset the components
+            components.day = 0;
+            components.week = 0;
+            components.month = 0;
+            components.year = 0;
+            
+            if ([reminderDate compare:endDate] == NSOrderedAscending) {
+                // reminder date is earlier than the end date, we can create the reminder
                 PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
                 
                 IDGenerator* idGenerator = [IDGenerator instance];
@@ -211,13 +203,158 @@
                 double doubleDate = [reminderDate timeIntervalSince1970];
                 instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
                 
-                instance.state = nil;
+                instance.state = [NSNumber numberWithInt:kNOTTAKEN];
                 instance.datetaken = nil;
                 instance.notes = nil;
-                instance.hasnotificationbeenscheduled = NO;
+                instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
                 
                 [prescriptionInstances addObject:instance];
+                
+                NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+                [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
+                [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+                NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [prescription.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
+                
+                
+                // next create an instance for each remaining occurance that day if more than 1
+                if (occurances > 1) {
+                    
+                    // Grab the hour compoennt from the start day so we can deterine the time between occurances
+                    NSDateComponents *startHourComponent = [calendar components:(NSHourCalendarUnit) fromDate:startDate];
+                    NSInteger hours = [startHourComponent hour];
+                    
+                    components.hour = (((24 - hours) + occurances - 1) / occurances);    // round up (A+B-1)/B
+                    
+                    for (int j = 1; j < occurances; j++) {
+                        reminderDate = [calendar dateByAddingComponents:components toDate:reminderDate options:0];
+                        
+                        if ([reminderDate compare:endDate] == NSOrderedAscending) {
+                            // reminder date is earlier than the end date, we can create the reminder
+                            
+                            instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+                            
+                            instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
+                            prescription.objectid = instanceID;
+                            
+                            instance.prescriptionid = prescription.objectid;
+                            instance.prescriptionname = prescription.name;
+                            
+                            double doubleDate = [reminderDate timeIntervalSince1970];
+                            instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
+                            
+                            instance.state = [NSNumber numberWithInt:kNOTTAKEN];
+                            instance.datetaken = nil;
+                            instance.notes = nil;
+                            instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
+                            
+                            [prescriptionInstances addObject:instance];
+                            
+                            NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+                            [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
+                            [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+                            NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [prescription.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
+                        }
+                    }
+                    
+                    // reset the components
+                    components.hour = 0;
+                }
             }
+        }
+    }
+    else {
+        // Handle the HOURLY case
+        
+        // If specified, limit the reminders to the number of daily occurances specified by the user
+        if (occurances > 1) {
+            for (int i = 0; i < recurrances; i++) {
+                
+                components.day = i;
+                
+                for (int j = 0; j < occurances; j++ ) {
+                    
+                    components.hour = j * recurranceMultiple;
+                    
+                    // create the first instance for that day
+                    NSDate *reminderDate = [calendar dateByAddingComponents:components toDate:startDate options:0];
+                    
+                    if ([reminderDate compare:endDate] == NSOrderedAscending) {
+                        // reminder date is earlier than the end date, we can create the reminder
+                        PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+                        
+                        IDGenerator* idGenerator = [IDGenerator instance];
+                        NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
+                        prescription.objectid = instanceID;
+                        
+                        instance.prescriptionid = prescription.objectid;
+                        instance.prescriptionname = prescription.name;
+                        
+                        double doubleDate = [reminderDate timeIntervalSince1970];
+                        instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
+                        
+                        instance.state = [NSNumber numberWithInt:kNOTTAKEN];
+                        instance.datetaken = nil;
+                        instance.notes = nil;
+                        instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
+                        
+                        [prescriptionInstances addObject:instance];
+                        
+                        NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+                        [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
+                        [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+                        NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [prescription.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
+                    }
+                    
+                    // reset the components
+                    components.hour = 0;
+                }
+                
+                // reset the components
+                components.day = 0;
+            }
+        }
+        else {
+            // Create a reminder for every interval of hours specificed
+            
+            NSDate *reminderDate;
+            
+            for (int i = 0; i <= recurrances; i++) {
+                
+                components.hour = i * recurranceMultiple;
+                
+                reminderDate = [calendar dateByAddingComponents:components toDate:startDate options:0];
+                
+                if ([reminderDate compare:endDate] == NSOrderedAscending) {
+                    // reminder date is earlier than the end date, we can create the reminder
+                    PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
+                    
+                    IDGenerator* idGenerator = [IDGenerator instance];
+                    NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
+                    prescription.objectid = instanceID;
+                    
+                    instance.prescriptionid = prescription.objectid;
+                    instance.prescriptionname = prescription.name;
+                    
+                    double doubleDate = [reminderDate timeIntervalSince1970];
+                    instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
+                    
+                    instance.state = [NSNumber numberWithInt:kNOTTAKEN];
+                    instance.datetaken = nil;
+                    instance.notes = nil;
+                    instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
+                    
+                    [prescriptionInstances addObject:instance];
+                    
+                    NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+                    [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
+                    [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+                    NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [prescription.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
+                }
+                
+                // reset the components
+                components.hour = 0;
+            }
+            
         }
     }
     

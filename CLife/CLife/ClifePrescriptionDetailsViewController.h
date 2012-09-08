@@ -61,6 +61,7 @@
     UIView                  *m_v_disabledBackground;
     
     BOOL                    m_isEditing;
+    BOOL                    m_occurancesRowIsShown;
     
     NSString                *m_medicationName;
     NSString                *m_method;
@@ -126,6 +127,7 @@
 @property (nonatomic, retain) IBOutlet  UIView                  *v_disabledBackground;
 
 @property (nonatomic, assign)           BOOL                    isEditing;
+@property (nonatomic, assign)           BOOL                    occurancesRowIsShown;
 
 @property (nonatomic, retain)           NSString                *medicationName;
 @property (nonatomic, retain)           NSString                *method;

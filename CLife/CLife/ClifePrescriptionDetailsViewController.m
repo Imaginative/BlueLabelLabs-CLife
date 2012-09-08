@@ -65,6 +65,7 @@
 @synthesize v_disabledBackground    = m_v_disabledBackground;
 
 @synthesize isEditing               = m_isEditing;
+@synthesize occurancesRowIsShown    = m_occurancesRowIsShown;
 
 @synthesize medicationName          = m_medicationName;
 @synthesize method                  = m_method;
@@ -122,11 +123,11 @@
                         nil];
     
     self.dosageUnitArray = [NSArray arrayWithObjects:
-                            NSLocalizedString(@"ug", nil),
                             NSLocalizedString(@"mg", nil),
+                            NSLocalizedString(@"ug", nil),
                             NSLocalizedString(@"g", nil),
-                            NSLocalizedString(@"ul", nil),
                             NSLocalizedString(@"ml", nil),
+                            NSLocalizedString(@"ul", nil),
                             NSLocalizedString(@"l", nil),
                            nil];
     
@@ -281,7 +282,13 @@
     }
     if (section == 3) {
         // Schedule section
-        return 5;
+        if ([self.scheduleRepeatPeriod intValue] == kHOUR) {
+            // Hide the number of daily occurances row
+            return 4;
+        }
+        else {
+            return 5;
+        }
     }
     else {
         return 1;
@@ -528,6 +535,7 @@
                     pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
                     [pickerView addTarget:self action:@selector(startDateChanged:) forControlEvents:UIControlEventValueChanged];
                     pickerView.datePickerMode = UIDatePickerModeDateAndTime;
+                    pickerView.minimumDate = [NSDate date];
                     
                     self.pv_scheduleStartDate = pickerView;
                     
@@ -696,64 +704,122 @@
             }
         }
         else if (indexPath.row == 3) {
-            // Schedule Occurences row
-            
-            CellIdentifier = @"ScheduleOccurences";
-            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            
-            if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            if ([self.scheduleRepeatPeriod intValue] != kHOUR) {
+                // Schedule Occurences row
                 
-                [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+                CellIdentifier = @"ScheduleOccurences";
+                cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
                 
-                cell.textLabel.text = NSLocalizedString(@"OCCURS", nil);
-                
-                // Initialize the schedule repeat picker view
-                if (self.pv_scheduleOccurences == nil) {
-                    UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
-                    [pickerView sizeToFit];
-                    pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-                    pickerView.dataSource = self;
-                    pickerView.delegate = self;
-                    pickerView.showsSelectionIndicator = YES;
+                if (cell == nil) {
+                    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
                     
-                    self.pv_scheduleOccurences = pickerView;
+                    [cell setSelectionStyle:UITableViewCellEditingStyleNone];
                     
-                    self.tf_scheduleOccurences = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
-                    self.tf_scheduleOccurences.adjustsFontSizeToFitWidth = YES;
-                    self.tf_scheduleOccurences.placeholder = NSLocalizedString(@"ENTER OCCURS", nil);
-                    self.tf_scheduleOccurences.textColor = [UIColor darkGrayColor];
-                    self.tf_scheduleOccurences.backgroundColor = [UIColor clearColor];
-                    self.tf_scheduleOccurences.textAlignment = UITextAlignmentRight;
-                    self.tf_scheduleOccurences.delegate = self;
-                    [self.tf_scheduleOccurences setEnabled:YES];
+                    cell.textLabel.text = NSLocalizedString(@"OCCURS", nil);
                     
-                    self.tf_scheduleOccurences.inputView = self.pv_scheduleOccurences;
-                    
-                    cell.accessoryView = self.tf_scheduleOccurences;
+                    // Initialize the schedule repeat picker view
+                    if (self.pv_scheduleOccurences == nil) {
+                        UIPickerView* pickerView = [[[UIPickerView alloc] init] autorelease];
+                        [pickerView sizeToFit];
+                        pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                        pickerView.dataSource = self;
+                        pickerView.delegate = self;
+                        pickerView.showsSelectionIndicator = YES;
+                        
+                        self.pv_scheduleOccurences = pickerView;
+                        
+                        self.tf_scheduleOccurences = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                        self.tf_scheduleOccurences.adjustsFontSizeToFitWidth = YES;
+                        self.tf_scheduleOccurences.placeholder = NSLocalizedString(@"ENTER OCCURS", nil);
+                        self.tf_scheduleOccurences.textColor = [UIColor darkGrayColor];
+                        self.tf_scheduleOccurences.backgroundColor = [UIColor clearColor];
+                        self.tf_scheduleOccurences.textAlignment = UITextAlignmentRight;
+                        self.tf_scheduleOccurences.delegate = self;
+                        [self.tf_scheduleOccurences setEnabled:YES];
+                        
+                        self.tf_scheduleOccurences.inputView = self.pv_scheduleOccurences;
+                        
+                        cell.accessoryView = self.tf_scheduleOccurences;
+                    }
                 }
-            }
-            
-            if (self.scheduleOccurenceNumber != nil) {
-                if ([self.scheduleAmount intValue] == 1) {
-                    self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"TIME THAT DAY", nil)];
+                
+                if (self.scheduleOccurenceNumber != nil) {
+                    if ([self.scheduleAmount intValue] == 1) {
+                        self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"TIME THAT DAY", nil)];
+                    }
+                    else {
+                        self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", [self.scheduleOccurenceNumber intValue], NSLocalizedString(@"TIMES THAT DAY", nil)];
+                    }
                 }
                 else {
-                    self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", [self.scheduleOccurenceNumber intValue], NSLocalizedString(@"TIMES THAT DAY", nil)];
+                    self.tf_scheduleOccurences.text = nil;
+                }
+                
+                // disable the cell until the "Edit" button is pressed
+                if (self.isEditing == YES) {
+                    [cell setUserInteractionEnabled:YES];
+                    [self.tf_scheduleOccurences setClearButtonMode:UITextFieldViewModeAlways];
+                }
+                else {
+                    [cell setUserInteractionEnabled:NO];
+                    [self.tf_scheduleOccurences setClearButtonMode:UITextFieldViewModeNever];
                 }
             }
             else {
-                self.tf_scheduleOccurences.text = nil;
-            }
-            
-            // disable the cell until the "Edit" button is pressed
-            if (self.isEditing == YES) {
-                [cell setUserInteractionEnabled:YES];
-                [self.tf_scheduleOccurences setClearButtonMode:UITextFieldViewModeAlways];
-            }
-            else {
-                [cell setUserInteractionEnabled:NO];
-                [self.tf_scheduleOccurences setClearButtonMode:UITextFieldViewModeNever];
+                // Schedule End Date row
+                
+                CellIdentifier = @"ScheduleEndDate";
+                cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                
+                if (cell == nil) {
+                    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                    
+                    [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+                    
+                    cell.textLabel.text = NSLocalizedString(@"ENDS", nil);
+                    
+                    // Initialize the end date picker view
+                    if (self.pv_scheduleEndDate == nil) {
+                        UIDatePicker* pickerView = [[[UIDatePicker alloc] init] autorelease];
+                        [pickerView sizeToFit];
+                        pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
+                        [pickerView addTarget:self action:@selector(endDateChanged:) forControlEvents:UIControlEventValueChanged];
+                        pickerView.datePickerMode = UIDatePickerModeDate;
+                        
+                        self.pv_scheduleEndDate = pickerView;
+                        
+                        self.tf_scheduleEndDate = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                        self.tf_scheduleEndDate.adjustsFontSizeToFitWidth = YES;
+                        self.tf_scheduleEndDate.placeholder = NSLocalizedString(@"ENTER ENDS", nil);
+                        self.tf_scheduleEndDate.textColor = [UIColor darkGrayColor];
+                        self.tf_scheduleEndDate.backgroundColor = [UIColor clearColor];
+                        self.tf_scheduleEndDate.textAlignment = UITextAlignmentRight;
+                        self.tf_scheduleEndDate.delegate = self;
+                        [self.tf_scheduleEndDate setEnabled:YES];
+                        
+                        self.tf_scheduleEndDate.inputView = self.pv_scheduleEndDate;
+                        
+                        cell.accessoryView = self.tf_scheduleEndDate;
+                    }
+                }
+                
+                if (self.scheduleEndDate != nil) {
+                    NSDate *endDate = [DateTimeHelper parseWebServiceDateDouble:self.scheduleEndDate];
+                    self.tf_scheduleEndDate.text = [self.dateOnlyFormatter stringFromDate:endDate];
+                }
+                else {
+                    self.tf_scheduleEndDate.text = nil;
+                }
+                
+                // disable the cell until the "Edit" button is pressed
+                if (self.isEditing == YES) {
+                    [cell setUserInteractionEnabled:YES];
+                    [self.tf_scheduleEndDate setClearButtonMode:UITextFieldViewModeAlways];
+                }
+                else {
+                    [cell setUserInteractionEnabled:NO];
+                    [self.tf_scheduleEndDate setClearButtonMode:UITextFieldViewModeNever];
+                }
             }
         }
         else if (indexPath.row == 4) {
@@ -799,13 +865,6 @@
                 self.tf_scheduleEndDate.text = [self.dateOnlyFormatter stringFromDate:endDate];
             }
             else {
-//                NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-//                NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
-//                components.day = 1;
-//                NSDate* endDate = [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
-//                
-//                self.tf_scheduleEndDate.text = [self.dateOnlyFormatter stringFromDate:endDate];
-                
                 self.tf_scheduleEndDate.text = nil;
             }
             
@@ -980,6 +1039,62 @@
             [self.tf_dosageUnit becomeFirstResponder];
         }
     }
+    else if (indexPath.section == 3) {
+        // Schedule section
+        
+        if (indexPath.row == 0) {
+            // Start Date row
+            
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            
+            // Set the dosage amount text field as active
+            [self.tf_scheduleStartDate becomeFirstResponder];
+            
+        }
+        else if (indexPath.row == 1) {
+            // Amount row
+            
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            
+            // Set the dosage amount text field as active
+            [self.tf_scheduleAmount becomeFirstResponder];
+        }
+        else if (indexPath.row == 2) {
+            // Repeats row
+            
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            
+            // Set the dosage amount text field as active
+            [self.tf_scheduleRepeat becomeFirstResponder];
+        }
+        else if (indexPath.row == 3) {
+            if ([self.scheduleRepeatPeriod intValue] != kHOUR) {
+                // Occurances row
+                
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                
+                // Set the dosage amount text field as active
+                [self.tf_scheduleOccurences becomeFirstResponder];
+            }
+            else{
+                // End Date row
+                
+                [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                
+                // Set the dosage amount text field as active
+                [self.tf_scheduleEndDate becomeFirstResponder];
+            }
+            
+        }
+        else if (indexPath.row == 4) {
+            // End Date row
+            
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            
+            // Set the dosage amount text field as active
+            [self.tf_scheduleEndDate becomeFirstResponder];
+        }
+    }
     else if (indexPath.section == 4) {
         // Reason selected
         
@@ -997,15 +1112,18 @@
     NSDate* startDate = self.pv_scheduleStartDate.date;
     double doubleDate = [startDate timeIntervalSince1970];
     self.scheduleStartDate = [NSNumber numberWithDouble:doubleDate];
+    
+    // We need to reset the occurances everytime this value changes
+    self.tf_scheduleOccurences.text = nil;
+    self.scheduleOccurenceNumber = nil;
+    [self.pv_scheduleOccurences reloadComponent:0];
 }
 
 - (void)endDateChanged:(id)sender
 {
     self.tf_scheduleEndDate.text = [self.dateOnlyFormatter stringFromDate:self.pv_scheduleEndDate.date];
     
-    NSDate* endDate = self.pv_scheduleEndDate.date;
-    double doubleDate = [endDate timeIntervalSince1970];
-    self.scheduleStartDate = [NSNumber numberWithDouble:doubleDate];
+    self.scheduleEndDate = [self processEndDateWithDate:self.pv_scheduleEndDate.date];
 }
 
 #pragma mark UIPickerView Data Source
@@ -1052,7 +1170,19 @@
         }
     }
     else if (pickerView == self.pv_scheduleOccurences) {
-        return 24;
+        NSDate *startDate = [DateTimeHelper parseWebServiceDateDouble:self.scheduleStartDate];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components:(NSHourCalendarUnit) fromDate:startDate];
+        NSInteger hours = [components hour];
+        
+        if ([self.scheduleRepeatPeriod intValue] == kHOUR) {
+            int repeats = [self.scheduleRepeatNumber intValue];
+            
+            return (((24 - hours) + repeats - 1) / repeats);    // always round up (A+B-1)/B
+        }
+        else {
+            return (24 - hours);    // always round down
+        }
     }
     else {
         return 0;
@@ -1080,7 +1210,12 @@
     else if (pickerView == self.pv_scheduleRepeat) {
         switch (component) {
             case 0:
-                title = [NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"EVERY", nil), row + 1];
+                if (row == 0) {
+                    title = [NSString stringWithFormat:@"%@", NSLocalizedString(@"EVERY", nil)];
+                }
+                else {
+                    title = [NSString stringWithFormat:@"%@ %d", NSLocalizedString(@"EVERY", nil), row + 1];
+                }
                 break;
             case 1:
                 if ([pickerView selectedRowInComponent:0] == 0) {
@@ -1155,6 +1290,11 @@
                                            [pickerView selectedRowInComponent:0] + 1,
                                            [self.schedulePeriodPluralArray objectAtIndex:[pickerView selectedRowInComponent:1]]];
         }
+        
+        // We need to reset the occurances everytime this value changes
+        self.tf_scheduleOccurences.text = nil;
+        self.scheduleOccurenceNumber = nil;
+        [self.pv_scheduleOccurences reloadComponent:0];
     }
     else if (pickerView == self.pv_scheduleOccurences) {
         if (row == 0) {
@@ -1460,16 +1600,20 @@
         if ([self.dateOnlyFormatter dateFromString:self.tf_scheduleEndDate.text]) {
             self.pv_scheduleEndDate.date = [self.dateOnlyFormatter dateFromString:self.tf_scheduleEndDate.text];
             
-            NSDate* endDate = [self.dateOnlyFormatter dateFromString:self.tf_scheduleEndDate.text];
-            double doubleDate = [endDate timeIntervalSince1970];
-            self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
+//            NSDate* endDate = [self.dateOnlyFormatter dateFromString:self.tf_scheduleEndDate.text];
+//            double doubleDate = [endDate timeIntervalSince1970];
+//            self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
+            
+            self.scheduleEndDate = [self processEndDateWithDate:[self.dateOnlyFormatter dateFromString:self.tf_scheduleEndDate.text]];
         }
         else {
             self.tf_scheduleEndDate.text = [self.dateOnlyFormatter stringFromDate:self.pv_scheduleEndDate.date];
             
-            NSDate* endDate = self.pv_scheduleEndDate.date;
-            double doubleDate = [endDate timeIntervalSince1970];
-            self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
+//            NSDate* endDate = self.pv_scheduleEndDate.date;
+//            double doubleDate = [endDate timeIntervalSince1970];
+//            self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
+            
+            self.scheduleEndDate = [self processEndDateWithDate:self.pv_scheduleEndDate.date];
         }
         
     }
@@ -1630,6 +1774,22 @@
             int row = [self.pv_scheduleRepeat selectedRowInComponent:1];
             self.scheduleRepeatPeriod = [NSNumber numberWithInt:row];
         }
+        
+        if ([self.scheduleRepeatPeriod intValue] != kHOUR &&
+            self.occurancesRowIsShown == NO)
+        {
+            // We need to add the occurances row
+            [self.tbl_prescriptionDetails insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:3]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            self.occurancesRowIsShown = YES;
+        }
+        else if ([self.scheduleRepeatPeriod intValue] == kHOUR && 
+                 self.occurancesRowIsShown == YES)
+        {
+            // We need to remove the occurances row
+            [self.tbl_prescriptionDetails deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:3]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            self.occurancesRowIsShown = NO;
+            self.scheduleOccurenceNumber = nil;
+        }
     }
     else if (textField == self.tf_scheduleOccurences) {
         
@@ -1653,16 +1813,20 @@
         if ([self.dateOnlyFormatter dateFromString:enteredText]) {
             self.pv_scheduleEndDate.date = [self.dateOnlyFormatter dateFromString:enteredText];
             
-            NSDate* endDate = [self.dateOnlyFormatter dateFromString:enteredText];
-            double doubleDate = [endDate timeIntervalSince1970];
-            self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
+//            NSDate* endDate = [self.dateOnlyFormatter dateFromString:enteredText];
+//            double doubleDate = [endDate timeIntervalSince1970];
+//            self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
+            
+            self.scheduleEndDate = [self processEndDateWithDate:[self.dateOnlyFormatter dateFromString:enteredText]];
         }
         else {
             self.tf_scheduleEndDate.text = [self.dateOnlyFormatter stringFromDate:self.pv_scheduleEndDate.date];
             
-            NSDate* endDate = self.pv_scheduleEndDate.date;
-            double doubleDate = [endDate timeIntervalSince1970];
-            self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
+//            NSDate* endDate = self.pv_scheduleEndDate.date;
+//            double doubleDate = [endDate timeIntervalSince1970];
+//            self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
+            
+            self.scheduleEndDate = [self processEndDateWithDate:self.pv_scheduleEndDate.date];
         }
     }
     
@@ -1738,14 +1902,21 @@
     [localNotif release];
 }
 
+- (NSNumber *)processEndDateWithDate:(NSDate *)date {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
+    components.day = 1;
+    components.second = -1; // sets the date to the last second on the desired end day
+    NSDate* endDate = [calendar dateByAddingComponents:components toDate:date options:0];;
+    
+    double doubleDate = [endDate timeIntervalSince1970];
+    return [NSNumber numberWithDouble:doubleDate];
+}
+
 - (void)onNoEndDateButtonPressed {
     [self.tf_scheduleEndDate resignFirstResponder];
     
     self.tf_scheduleEndDate.text = NSLocalizedString(@"NO END DATE", nil);
-    
-//    NSDate* endDate = [NSDate distantFuture];
-//    double doubleDate = [endDate timeIntervalSince1970];
-//    self.scheduleEndDate = [NSNumber numberWithDouble:doubleDate];
     
     self.scheduleEndDate = nil;
 }
@@ -1968,11 +2139,8 @@
         [alert release];
     }
     else {
-        // Schedule the reminders
-        
         // Exit editing and save changes
         ResourceContext* resourceContext = [ResourceContext instance];
-        
                
         Prescription* prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withStrength:self.dosageAmount withUnit:self.dosageUnit withDateStart:self.scheduleStartDate withNumberOfDoses:self.scheduleAmount withRepeatMultiple:self.scheduleRepeatNumber withRepeatPeriod:self.scheduleRepeatPeriod withOccurMultiple:self.scheduleOccurenceNumber withDateEnd:self.scheduleEndDate withNotes:self.reason];
         
@@ -1983,11 +2151,11 @@
         
         //we pass this to the local notification manager which will schedule them for
         //notifications as appropriate
-        LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
-        [localNotificationManager scheduleNotificationsFor:prescriptionInstances];
-        
-        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-        
+//        LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
+//        [localNotificationManager scheduleNotificationsFor:prescriptionInstances];
+//        
+//        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+//        
         self.prescriptionID = prescription.objectid;
         
         [self.navigationController dismissModalViewControllerAnimated:YES];

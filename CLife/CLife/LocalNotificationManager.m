@@ -84,6 +84,8 @@ static LocalNotificationManager* sharedManager;
             //now we have a local notification object, we now schedule it
             [applicationObj scheduleLocalNotification:localNotificationForPrescriptionInstance];
             
+            prescriptionInstance.hasnotificationbeenscheduled = [NSNumber numberWithBool:YES];
+            
             LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Scheduled local notification for prescriptionInstance %@",activityName, prescriptionInstance.objectid);
         }
         else {
