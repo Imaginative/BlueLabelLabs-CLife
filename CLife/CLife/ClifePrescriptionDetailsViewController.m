@@ -595,19 +595,7 @@
                     [pickerView sizeToFit];
                     pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
                     [pickerView addTarget:self action:@selector(startDateChanged:) forControlEvents:UIControlEventValueChanged];
-                    pickerView.datePickerMode = UIDatePickerModeDateAndTime;
-                    
-//                    NSCalendar *calendar = [NSCalendar currentCalendar];
-//                    NSDateComponents* components = [[[NSDateComponents alloc] init] autorelease];
-//                    components.year = [[calendar components:NSYearCalendarUnit fromDate:[NSDate date]] year];
-//                    components.month = [[calendar components:NSMonthCalendarUnit fromDate:[NSDate date]] month];
-//                    components.day = [[calendar components:NSDayCalendarUnit fromDate:[NSDate date]] day] + 1; 
-//                    components.hour = 8;
-//                    components.minute = 0;
-//                    components.second = 0;
-//                    NSDate* defaultStartDate = [calendar dateFromComponents:components];
-//                    pickerView.minimumDate = defaultStartDate;
-                    
+                    pickerView.datePickerMode = UIDatePickerModeDateAndTime;        
                     pickerView.minimumDate = [NSDate date];
                     
                     self.pv_scheduleStartDate = pickerView;
@@ -2184,10 +2172,10 @@
         
         //we pass this to the local notification manager which will schedule them for
         //notifications as appropriate
-//        LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
-//        [localNotificationManager scheduleNotificationsFor:prescriptionInstances];
-//        
-//        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
+        [localNotificationManager scheduleNotificationsFor:prescriptionInstances];
+        
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
         
         self.prescriptionID = prescription.objectid;
         

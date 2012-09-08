@@ -53,6 +53,21 @@
     return fireDate;
 }
 
+- (NSString *) scheduleDateString {
+    [self willAccessValueForKey:@"scheduleDateString"];
+    NSDate *scheduleDate = [DateTimeHelper parseWebServiceDateDouble:self.datescheduled];
+    [self didAccessValueForKey:@"scheduleDateString"];
+    
+    // Setup date formatter
+    NSDateFormatter *dateOnlyFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [dateOnlyFormatter setDateStyle:NSDateFormatterLongStyle];
+    [dateOnlyFormatter setTimeStyle:NSDateFormatterNoStyle];
+    
+    NSString* scheduleDateStr = [dateOnlyFormatter stringFromDate:scheduleDate];
+    
+    return scheduleDateStr;
+}
+
 //Converts this Prescription Instance object into a 
 //UILocalNotification instance, does not schedule the notification
 - (UILocalNotification*) createLocalNotification
@@ -172,9 +187,7 @@
     }
     recurrances = recurrances / recurranceMultiple;
     
-    // Now we create PrescriptionInstances for each occurance of the schedule
-//    ResourceContext* resourceContext = [ResourceContext instance];
-    
+    // Now we create PrescriptionInstances for each occurance of the schedule and add them to the array
     NSMutableArray *prescriptionInstances = [[NSMutableArray alloc] init];
     
     int occurances = [prescription.occurmultiple intValue];
@@ -220,25 +233,9 @@
                 // reminder date is earlier than the end date, we can create the reminder
                 PrescriptionInstance *instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                 
-//                PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
-//                
-//                IDGenerator* idGenerator = [IDGenerator instance];
-//                NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
-//                prescription.objectid = instanceID;
-//                
-//                instance.prescriptionid = prescription.objectid;
-//                instance.prescriptionname = prescription.name;
-//                
-//                double doubleDate = [reminderDate timeIntervalSince1970];
-//                instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
-//                
-//                instance.state = [NSNumber numberWithInt:kNOTTAKEN];
-//                instance.datetaken = nil;
-//                instance.notes = nil;
-//                instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
-                
                 [prescriptionInstances addObject:instance];
                 
+                /* NSLog */
                 NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
                 [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
                 [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -262,24 +259,9 @@
                             
                             instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                             
-//                            instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
-//                            
-//                            instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
-//                            prescription.objectid = instanceID;
-//                            
-//                            instance.prescriptionid = prescription.objectid;
-//                            instance.prescriptionname = prescription.name;
-//                            
-//                            double doubleDate = [reminderDate timeIntervalSince1970];
-//                            instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
-//                            
-//                            instance.state = [NSNumber numberWithInt:kNOTTAKEN];
-//                            instance.datetaken = nil;
-//                            instance.notes = nil;
-//                            instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
-                            
                             [prescriptionInstances addObject:instance];
                             
+                            /* NSLog */
                             NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
                             [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
                             [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -313,25 +295,9 @@
                         // reminder date is earlier than the end date, we can create the reminder
                         PrescriptionInstance *instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                         
-//                        PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
-//                        
-//                        IDGenerator* idGenerator = [IDGenerator instance];
-//                        NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
-//                        prescription.objectid = instanceID;
-//                        
-//                        instance.prescriptionid = prescription.objectid;
-//                        instance.prescriptionname = prescription.name;
-//                        
-//                        double doubleDate = [reminderDate timeIntervalSince1970];
-//                        instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
-//                        
-//                        instance.state = [NSNumber numberWithInt:kNOTTAKEN];
-//                        instance.datetaken = nil;
-//                        instance.notes = nil;
-//                        instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
-                        
                         [prescriptionInstances addObject:instance];
                         
+                        /* NSLog */
                         NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
                         [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
                         [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -361,25 +327,9 @@
                     // reminder date is earlier than the end date, we can create the reminder
                     PrescriptionInstance *instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                     
-//                    PrescriptionInstance *instance = (PrescriptionInstance*)[Resource createInstanceOfType:PRESCRIPTIONINSTANCE withResourceContext:resourceContext];
-//                    
-//                    IDGenerator* idGenerator = [IDGenerator instance];
-//                    NSNumber* instanceID = [idGenerator generateNewId:PRESCRIPTIONINSTANCE];
-//                    prescription.objectid = instanceID;
-//                    
-//                    instance.prescriptionid = prescription.objectid;
-//                    instance.prescriptionname = prescription.name;
-//                    
-//                    double doubleDate = [reminderDate timeIntervalSince1970];
-//                    instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
-//                    
-//                    instance.state = [NSNumber numberWithInt:kNOTTAKEN];
-//                    instance.datetaken = nil;
-//                    instance.notes = nil;
-//                    instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
-                    
                     [prescriptionInstances addObject:instance];
                     
+                    /* NSLog */
                     NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
                     [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
                     [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];

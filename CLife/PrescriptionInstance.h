@@ -25,6 +25,7 @@
 @property (nonatomic,retain) Prescription* prescription;
 
 - (NSDate*) fireDate;
+- (NSString *) scheduleDateString;
 - (UILocalNotification *) createLocalNotification;
 
 + (PrescriptionInstance *) createPrescriptionInstanceForPrescription:(Prescription *)prescription withReminderDate:(NSDate *)reminderDate;

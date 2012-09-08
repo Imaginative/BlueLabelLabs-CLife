@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface ClifeHistoryViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate > {
+@interface ClifeHistoryViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate > {
     
     UITableView             *m_tbl_history;
 }
 
-@property (nonatomic, retain) IBOutlet  UITableView             *tbl_history;
+@property (nonatomic, retain)           NSFetchedResultsController  *frc_prescriptionInstances;
+
+@property (nonatomic, retain) IBOutlet  UITableView                 *tbl_history;
 
 #pragma mark - Static Initializers
 + (ClifeHistoryViewController *)createInstance;

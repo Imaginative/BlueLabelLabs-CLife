@@ -7,14 +7,62 @@
 //
 
 #import "ClifeHistoryViewController.h"
+#import "ClifeAppDelegate.h"
+#import "Attributes.h"
+#import "PrescriptionInstance.h"
+#import "PrescriptionInstanceState.h"
+#import "DateTimeHelper.h"
 
 @interface ClifeHistoryViewController ()
 
 @end
 
 @implementation ClifeHistoryViewController
-@synthesize tbl_history     = m_tbl_history;
+@synthesize frc_prescriptionInstances   = __frc_prescriptionInstances;
+@synthesize tbl_history                 = m_tbl_history;
 
+
+#pragma mark - Properties
+- (NSFetchedResultsController*)frc_prescriptionInstances {
+    NSString* activityName = @"ClifeHistoryViewController.frc_prescriptionInstances:";
+    if (__frc_prescriptionInstances != nil) {
+        return __frc_prescriptionInstances;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    ResourceContext* resourceContext = [ResourceContext instance];
+    ClifeAppDelegate* app = (ClifeAppDelegate*)[[UIApplication sharedApplication]delegate];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:PRESCRIPTIONINSTANCE inManagedObjectContext:app.managedObjectContext];
+    
+    NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc] initWithKey:DATESCHEDULED ascending:NO];
+    
+//    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K!=%d", STATE, kSCHEDULED];
+    
+//    [fetchRequest setPredicate:predicate];
+    [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [fetchRequest setEntity:entityDescription];
+    [fetchRequest setReturnsDistinctResults:YES];
+    
+//    [fetchRequest setFetchBatchSize:100];
+    
+    NSFetchedResultsController* controller = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:resourceContext.managedObjectContext sectionNameKeyPath:@"scheduleDateString" cacheName:@"Root"];
+    
+    controller.delegate = self;
+    self.frc_prescriptionInstances = controller;
+    
+    NSError* error = nil;
+    [controller performFetch:&error];
+  	if (error != nil)
+    {
+        NSLog(@"%@ Could not create instance of NSFetchedResultsController due to %@", activityName, [error userInfo]);
+    }
+    
+    [controller release];
+    [fetchRequest release];
+    [sortDescriptor release];
+    return __frc_prescriptionInstances;
+    
+}
 
 #pragma mark - Initialization
 
@@ -52,24 +100,99 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    
+    NSInteger sections = [[self.frc_prescriptionInstances sections] count];
+    
+    return sections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    
+    NSInteger rows = 0;
+    
+    if ([[self.frc_prescriptionInstances sections] count] > 0) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.frc_prescriptionInstances sections] objectAtIndex:section];
+        rows = [sectionInfo numberOfObjects];
+    }
+    
+    return rows;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSInteger sections = [[self.frc_prescriptionInstances sections] count];
+    
+    if (sections == 0) {
+        return nil;
+    }
+    else {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.frc_prescriptionInstances sections] objectAtIndex:section];
+        NSString* date = [sectionInfo name];
+        return date;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NSString *CellIdentifier;
+    UITableViewCell *cell;
     
-    // Configure the cell...
+    NSInteger sections = [[self.frc_prescriptionInstances sections] count];
+    
+    NSInteger rows = 0;
+    if (sections > 0) {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.frc_prescriptionInstances sections] objectAtIndex:indexPath.section];
+        rows = [sectionInfo numberOfObjects];
+    }
+    
+    if (sections > 0 && rows > 0 && indexPath.section < sections && indexPath.row < rows) {
+        // Set prescriptionInstance
+        
+        CellIdentifier = @"PrescriptionIndex";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+        }
+        
+        PrescriptionInstance *prescriptionInstance = [self.frc_prescriptionInstances objectAtIndexPath:indexPath];
+        
+        cell.textLabel.text = prescriptionInstance.prescriptionname;
+        
+        // Setup date formatter
+        NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+        [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+        
+        NSDate *scheduleDate = [DateTimeHelper parseWebServiceDateDouble:prescriptionInstance.datescheduled];
+        cell.detailTextLabel.text = [dateAndTimeFormatter stringFromDate:scheduleDate];
+        
+        cell.imageView.image = [UIImage imageNamed:@"icon-pill.png"];
+    }
+    else {
+        // Set None row
+        CellIdentifier = @"NoPrescriptionInstance";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            
+            cell.textLabel.text = @"No reminders";
+            
+            cell.textLabel.textAlignment = UITextAlignmentCenter;
+            cell.textLabel.shadowColor = [UIColor whiteColor];
+            cell.textLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+            
+            cell.userInteractionEnabled = NO;
+        }
+    }
     
     return cell;
 }
@@ -117,6 +240,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -125,6 +250,33 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate methods
+//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+//{
+//    [self.tbl_history beginUpdates];
+//}
+//
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//{
+//    [self.tbl_history endUpdates];
+//}
+
+- (void) controller:(NSFetchedResultsController *)controller 
+    didChangeObject:(id)anObject
+        atIndexPath:(NSIndexPath *)indexPath 
+      forChangeType:(NSFetchedResultsChangeType)type 
+       newIndexPath:(NSIndexPath *)newIndexPath {
+    
+    NSString* activityName = @"ClifeHistoryViewController.controller.didChangeObject:";
+    
+    if (controller == self.frc_prescriptionInstances) {
+        [self.tbl_history reloadData];
+    }
+    else {
+        NSLog(@"%@Received a didChange message from a NSFetchedResultsController that isnt mine. %p", activityName, &controller);
+    }
 }
 
 #pragma mark - Static Initializers
