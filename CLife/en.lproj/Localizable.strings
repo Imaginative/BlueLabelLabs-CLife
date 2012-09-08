@@ -65,12 +65,12 @@
 
 "DOSAGE" = "Dosage";
 "STRENGTH" = "Strength";
-"ENTER STRENGTH" = "ex. 100";
+"ENTER STRENGTH" = "ex. 100 mg";
 "UNIT" = "Unit";
 "SELECT UNIT" = "ex. mg";
 
-"SCHEDULE" = "Schedule";
-"ENTER START DATE" = "when will you begin taking this medication";
+"REMINDER SCHEDULE" = "Reminder Schedule";
+"ENTER START DATE" = "ex. Tomorrow 8:00 AM";
 "STARTS" = "Starts";
 "AMOUNT" = "Amount";
 "ENTER AMOUNT" = "ex. 2 doses";

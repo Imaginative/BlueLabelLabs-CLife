@@ -219,7 +219,7 @@
                 // next create an instance for each remaining occurance that day if more than 1
                 if (occurances > 1) {
                     
-                    // Grab the hour compoennt from the start day so we can deterine the time between occurances
+                    // Grab the hour component from the start day so we can determine the time between occurances
                     NSDateComponents *startHourComponent = [calendar components:(NSHourCalendarUnit) fromDate:startDate];
                     NSInteger hours = [startHourComponent hour];
                     
