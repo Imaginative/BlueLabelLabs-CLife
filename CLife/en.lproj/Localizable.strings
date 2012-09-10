@@ -121,6 +121,16 @@
 "DELETE PRESCRIPTION" = "Delete prescription";
 "DELETE PRESCRIPTION MESSAGE" = "Would you like to export your data and history before deleting this prescription?";
 
+// History Details
+"CONFIRMATION" = "Confirmation";
+"DAY AND TIME TAKEN" = "Day and time taken";
+"NOTES" = "Notes";
+
+"TAKEN" = "Taken";
+"NOT TAKEN" = "Not Taken";
+"UNCONFIRMED" = "Unconfirmed";
+
+
 // Notifications
 "REMINDER ACTION" = "Confirm";
 "REMINDER ACTION PART 1" = "Time to take your next dose of";

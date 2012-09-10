@@ -12,6 +12,9 @@
 #import "PrescriptionInstance.h"
 #import "PrescriptionInstanceState.h"
 #import "DateTimeHelper.h"
+#import "ClifeHistoryDetailsViewController.h"
+
+#define kTABLEVIEWCELLHEIGHT 50.0
 
 @interface ClifeHistoryViewController ()
 
@@ -237,19 +240,20 @@
  */
 
 #pragma mark - Table view delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return kTABLEVIEWCELLHEIGHT;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    PrescriptionInstance *prescriptionInstance = [[self.frc_prescriptionInstances fetchedObjects] objectAtIndex:indexPath.row];
+    
+    ClifeHistoryDetailsViewController *historyDetailsVC = [ClifeHistoryDetailsViewController createInstanceForPrescriptionInstanceWithID:prescriptionInstance.objectid];
+    
+    [historyDetailsVC setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:historyDetailsVC animated:YES];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate methods

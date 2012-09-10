@@ -214,6 +214,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     Prescription *prescription = [[self.frc_prescriptions fetchedObjects] objectAtIndex:indexPath.row];
     
