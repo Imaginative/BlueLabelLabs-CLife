@@ -11,7 +11,7 @@
 @interface LocalNotificationManager : NSObject
 
 - (BOOL) isScheduledForLocalNotification:(PrescriptionInstance*)prescriptionInstance;
-- (void) scheduleNotificationsFor:(NSArray*)prescriptionInstances;
+- (void) scheduleNotifications;
 
 
 + (LocalNotificationManager*)instance;

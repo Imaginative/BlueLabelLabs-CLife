@@ -103,10 +103,15 @@
     instance.prescriptionid = prescription.objectid;
     instance.prescriptionname = prescription.name;
     
+    NSDate* currentDate = [NSDate date];
+    NSNumber* createdDateDouble = [NSNumber numberWithDouble:[currentDate timeIntervalSince1970]];
+    instance.datemodified = createdDateDouble;
+    instance.datecreated = createdDateDouble;
+    
     double doubleDate = [reminderDate timeIntervalSince1970];
     instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
     
-    instance.state = [NSNumber numberWithInt:kSCHEDULED];
+    instance.state = [NSNumber numberWithInt:kUNCONFIRMED];
     instance.datetaken = nil;
     instance.notes = nil;
     instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];

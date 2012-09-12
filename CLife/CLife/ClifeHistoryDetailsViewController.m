@@ -76,7 +76,7 @@
         self.prescriptionInstanceState = [prescriptionInstance.state intValue];
         self.notes = prescriptionInstance.notes;
         
-        if (self.prescriptionInstanceState == kSCHEDULED ||
+        if (/*self.prescriptionInstanceState == kSCHEDULED ||*/
             self.prescriptionInstanceState == kUNCONFIRMED)
         {
             // We have an unconfirmed instance
@@ -174,8 +174,8 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section == 1 &&
-        (self.prescriptionInstanceState == kUNCONFIRMED ||
-        self.prescriptionInstanceState == kSCHEDULED))
+        (self.prescriptionInstanceState == kUNCONFIRMED /*||
+        self.prescriptionInstanceState == kSCHEDULED*/))
     {
         UIView *v_header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 47)];
         v_header.backgroundColor = [UIColor clearColor];
@@ -208,8 +208,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 1 &&
-        (self.prescriptionInstanceState == kUNCONFIRMED ||
-         self.prescriptionInstanceState == kSCHEDULED))
+        (self.prescriptionInstanceState == kUNCONFIRMED /*||
+         self.prescriptionInstanceState == kSCHEDULED*/))
     {        
         return 47.0f;
     }
@@ -255,7 +255,7 @@
                 break;
         }
         
-        if (self.prescriptionInstanceState == kSCHEDULED ||
+        if (/*self.prescriptionInstanceState == kSCHEDULED || */
             self.prescriptionInstanceState == kUNCONFIRMED)
         {
             // We have an unconfirmed instance

@@ -1090,6 +1090,38 @@ static ResourceContext* sharedInstance;
     return retVal; 
 }
 
+- (NSArray*) resourcesWithType:(NSString *)typeName sortBy:(NSArray *)sortDescriptorArray
+{
+    NSString* activityName = @"ResourceContext.resourcesWithType:";
+    NSArray* retVal = nil;
+    
+    NSManagedObjectContext *appContext = self.managedObjectContext;
+    
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:typeName inManagedObjectContext:appContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+
+    if (sortDescriptorArray != nil) {
+        [request setSortDescriptors:sortDescriptorArray];
+    }
+    
+    NSError* error = nil;
+    NSArray* results = [appContext executeFetchRequest:request error:&error];
+    
+    if (error != nil) {
+        
+        LOG_RESOURCECONTEXT(1, @"%@Error fetching results from data layer for type:%@ with error:%@",activityName,typeName,error);
+    }
+    
+    else {
+        
+        retVal = results;
+    }
+    [request release];
+    
+    return retVal; 
+}
 
 - (NSArray*)  resourcesWithType:(NSString*)typeName 
                  withValueEqual:(NSString*)value 

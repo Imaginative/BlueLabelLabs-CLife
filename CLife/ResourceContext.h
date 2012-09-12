@@ -121,6 +121,9 @@ shouldEnumerateSinglePage:(BOOL) shouldEnumerateSinglePage
                  forAttributes:(NSArray*)attributeNames 
                         sortBy:(NSArray*)sortDescriptors;
 
+- (NSArray*) resourcesWithType:(NSString*)typeName 
+                        sortBy:(NSArray*)sortDescriptorArray;
+
 //- (NSArray*)  resourcesWithType:(NSString*)typeName 
 //                 withValueEqual:(NSString*)value 
 //                   forAttribute:(NSString*)attribute 

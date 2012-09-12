@@ -145,3 +145,4 @@ NSString* const MIMEID                  =@"mimeid";
 //CLIfe attributes
 NSString* const PRESCRIPTIONINSTANCEID  =@"prescriptioninstanceid";
 NSString* const PRESCRIPTIONID          =@"prescriptionid";
+NSString* const HASNOTIFICATIONBEENSCHEDULED = @"hasnotificationbeenscheduled";

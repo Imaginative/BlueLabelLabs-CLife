@@ -155,3 +155,4 @@ extern NSString* const MIMEID;
 //CLife attributes
 extern NSString* const PRESCRIPTIONINSTANCEID;
 extern NSString* const PRESCRIPTIONID;
+extern NSString* const HASNOTIFICATIONBEENSCHEDULED;

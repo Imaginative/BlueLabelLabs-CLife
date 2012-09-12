@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef enum {
-    kSCHEDULED,
+   
     kUNCONFIRMED,
     kNOTTAKEN,
     kTAKEN

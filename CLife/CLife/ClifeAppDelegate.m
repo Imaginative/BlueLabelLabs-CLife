@@ -10,7 +10,7 @@
 #import "ClifeProfileViewController.h"
 #import "ClifePrescriptionsViewController.h"
 #import "ClifeHistoryViewController.h"
-
+#import "LocalNotificationManager.h"
 @implementation ClifeAppDelegate
 
 @synthesize window = _window;
@@ -96,6 +96,8 @@
     
     AuthenticationManager* authenticationManager = [AuthenticationManager instance];
     
+    
+    
     //lets check if a user is currently logged in 
     if (![authenticationManager isUserAuthenticated])
     {   
@@ -127,7 +129,8 @@
         }
     }
     
-    
+    //we grab the local notification manager so it can be instantiated and process itself
+    [LocalNotificationManager instance];
     [self.window makeKeyAndVisible];
     return YES;
 }

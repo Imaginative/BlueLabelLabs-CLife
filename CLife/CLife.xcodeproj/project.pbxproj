@@ -169,6 +169,7 @@
 		C5A4887315DAB1C10023180C /* Prescription.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4887215DAB1C10023180C /* Prescription.m */; };
 		C5A4887615DABFFE0023180C /* PrescriptionInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4887515DABFFE0023180C /* PrescriptionInstance.m */; };
 		C5D45C0815F3A1BD00FB5A49 /* LocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D45C0715F3A1BD00FB5A49 /* LocalNotificationManager.m */; };
+		C5D671BF1600D50F00071AEE /* PrescriptionInstanceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D671BE1600D50F00071AEE /* PrescriptionInstanceManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -510,6 +511,8 @@
 		C5A4887515DABFFE0023180C /* PrescriptionInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrescriptionInstance.m; sourceTree = "<group>"; };
 		C5D45C0615F3A1BD00FB5A49 /* LocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalNotificationManager.h; sourceTree = "<group>"; };
 		C5D45C0715F3A1BD00FB5A49 /* LocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalNotificationManager.m; sourceTree = "<group>"; };
+		C5D671BD1600D50F00071AEE /* PrescriptionInstanceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrescriptionInstanceManager.h; sourceTree = "<group>"; };
+		C5D671BE1600D50F00071AEE /* PrescriptionInstanceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrescriptionInstanceManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1165,6 +1168,8 @@
 			children = (
 				C5D45C0615F3A1BD00FB5A49 /* LocalNotificationManager.h */,
 				C5D45C0715F3A1BD00FB5A49 /* LocalNotificationManager.m */,
+				C5D671BD1600D50F00071AEE /* PrescriptionInstanceManager.h */,
+				C5D671BE1600D50F00071AEE /* PrescriptionInstanceManager.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";
@@ -1418,6 +1423,7 @@
 				C5D45C0815F3A1BD00FB5A49 /* LocalNotificationManager.m in Sources */,
 				523A6BD815F6DC1400D60461 /* UIPromptAlertView.m in Sources */,
 				528D629415FD6710006BD80A /* ClifeHistoryDetailsViewController.m in Sources */,
+				C5D671BF1600D50F00071AEE /* PrescriptionInstanceManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

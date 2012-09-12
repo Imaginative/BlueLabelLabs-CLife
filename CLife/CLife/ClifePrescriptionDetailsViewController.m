@@ -2176,12 +2176,16 @@
         NSArray* prescriptionInstances = [PrescriptionInstance createPrescriptionInstancesFor:prescription];
         //now we have an array of prescription instances corresponding to the prescription
         
+        
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        
+        
         //we pass this to the local notification manager which will schedule them for
         //notifications as appropriate
         LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
-        [localNotificationManager scheduleNotificationsFor:prescriptionInstances];
+        [localNotificationManager scheduleNotifications];
         
-        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        
         
         self.prescriptionID = prescription.objectid;
         
