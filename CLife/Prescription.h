@@ -30,6 +30,8 @@
 
 @property (nonatomic,retain) NSString* notes;
 
+- (NSArray*) unconfirmedPrescriptionInstancesAfter:(NSDate*)date;
+
 + (Prescription *) createPrescriptionWithName:(NSString *)name 
                                    withMethod:(NSString *)method 
                                  withStrength:(NSNumber *)strength 

@@ -60,7 +60,8 @@
 #define LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"clifeprescriptionsviewvontroller",level,__VA_ARGS__)
 #define LOG_LOCALNOTIFICATIONMANAGER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"localnotificationmanager",level,__VA_ARGS__)
 #define LOG_PRESCRIPTIONINSTANCEMANAGER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"prescriptioninstancemanager",level,__VA_ARGS__)
-
+#define LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"prescriptiondetailviewcontroller",level,__VA_ARGS__)
+#define LOG_PRESCRIPTION(level, ...)   LogMessageF(__FILE__,__LINE__,__FUNCTION__,@"prescription",level,__VA_ARGS__)
 #else
 #define LOG_NETWORK(...)    do{}while(0)
 #define LOG_GENERAL(...)    do{}while(0)

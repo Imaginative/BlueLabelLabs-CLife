@@ -8,6 +8,9 @@
 
 #import "PrescriptionInstanceManager.h"
 #import "Macros.h"
+#import "Prescription.h"
+#import "PrescriptionInstance.h"
+
 
 @implementation PrescriptionInstanceManager
 
@@ -38,9 +41,32 @@ static PrescriptionInstanceManager* sharedManager;
 }
 
 //When a prescription is 'finished' by the user, we need to clean up the store and eliminate
-//all unused unconfirmed prescriptioninstance objects
-- (void) deleteUnconfirmedPrescriotionInstanceObjectsFor:(Prescription *)prescription
-{
+//all unused unconfirmed prescriptioninstance objects in the future
+- (void) deleteUnconfirmedPrescriptionInstanceObjectsFor:(Prescription *)prescription shouldSave:(BOOL)shouldSave
+{   
+    NSString* activityName = @"PrescriptionInstanceManager.deleteUnconfirmedPrescriptionInstanceObjectsFor:";
+    
+    NSDate* todaysDate = [NSDate date];
+    
+    //we grab a list of all unconfirmed prescription instances which are scheduled after today
+    NSArray* unconfirmedPrescriptionInstances = [prescription unconfirmedPrescriptionInstancesAfter:todaysDate];
+   
+    ResourceContext* resourceContext = [ResourceContext instance];
+    LOG_PRESCRIPTIONINSTANCEMANAGER(0,@"%@Deleting %d unconfirmed prescription instance objects associated with Prescription:%@ (%@)",activityName,[unconfirmedPrescriptionInstances count],prescription.objectid,prescription.name);
+    
+    //now that we have these objects, we can go ahead and delete them
+    for (PrescriptionInstance* prescriptionInstance in unconfirmedPrescriptionInstances) {
+        
+        [resourceContext delete:prescriptionInstance.objectid withType:PRESCRIPTIONINSTANCE];
+        
+    }
+    
+    if (shouldSave)
+    {
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
+    }
+    
     
 }
 //this method will iterate through all of the Prescriptions and depending on its end

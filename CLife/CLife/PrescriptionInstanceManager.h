@@ -11,6 +11,6 @@
 @interface PrescriptionInstanceManager : NSObject
 
 - (void) createMissingPrescriptionInstanceObjects;
-- (void) deleteUnconfirmedPrescriotionInstanceObjectsFor:(Prescription*)prescription;
+- (void) deleteUnconfirmedPrescriptionInstanceObjectsFor:(Prescription*)prescription shouldSave:(BOOL)shouldSave;
 + (PrescriptionInstanceManager*) instance;
 @end

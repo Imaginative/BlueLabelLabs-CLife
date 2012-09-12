@@ -13,7 +13,8 @@
 #import "PrescriptionInstance.h"
 #import "LocalNotificationManager.h"
 #import "SchedulePeriods.h"
-
+#import "Macros.h"
+#import "PrescriptionInstanceManager.h"
 @interface ClifePrescriptionDetailsViewController ()
 
 @end
@@ -2032,7 +2033,9 @@
     
 }
 
-- (void)doneEditingPrescription:(id)sender {
+- (void)doneEditingPrescription:(id)sender 
+{
+    NSString* activityName = @"PrescriptionDetailsViewController.doneEditingPrescription:";
     if (self.medicationName == nil ||
         self.method == nil ||
         self.dosageAmount == nil ||
@@ -2077,26 +2080,134 @@
         // remove the "Delete" button
         self.tbl_prescriptionDetails.tableFooterView = nil;
         
-        // Update the prescription properties and save
-        ResourceContext *resourceContext = [ResourceContext instance];
-        Prescription *prescription = (Prescription *)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
+
         
-        prescription.name = self.medicationName;
-        prescription.method = self.method;
         
-        prescription.strength = self.dosageAmount;
-        prescription.unit = self.dosageUnit;
+        //we need to save the changes to the prescription object to the local database 
+        NSString* newMedicationName = self.medicationName;
+        NSString* newMethod = self.method;
+        NSNumber* newStrength = self.dosageAmount;
+        NSString* newUnit = self.dosageUnit;
+        NSNumber* newScheduledStartDate = self.scheduleStartDate;
+        NSNumber* newScheduledAmount = self.scheduleAmount;
+        NSNumber* newScheduledRepeatNumber = self.scheduleRepeatNumber;
+        NSNumber* newRepeatPeriod = self.scheduleRepeatPeriod;
+        NSNumber* newOccurenceMultiple = self.scheduleOccurenceNumber;
+        NSNumber* newScheduledEndDate = self.scheduleEndDate;
+        NSString* newNotes = self.reason;
         
-        prescription.datestart = self.scheduleStartDate;
-        prescription.numberofdoses = self.scheduleAmount;
-        prescription.repeatmultiple = self.scheduleRepeatNumber;
-        prescription.repeatperiod = self.scheduleRepeatPeriod;
-        prescription.occurmultiple = self.scheduleOccurenceNumber;
-        prescription.dateend = self.scheduleEndDate;
+        ResourceContext* resourceContext = [ResourceContext instance];
+        Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
         
-        prescription.notes = self.reason;
+        BOOL shouldRecreatePrescriptionInstances = NO;
         
+        //now we have the current prescription object we then need to compare new and old
+        //values and change them accordingly
+        if (newMedicationName != nil &&
+            ![newMedicationName isEqualToString:prescription.name])
+        {
+            //the medication name changed
+            prescription.name    = newMedicationName;
+        }
+        
+        if (newMethod != nil &&
+            ![newMethod isEqualToString:prescription.method])
+        {
+            //the method has changed
+            prescription.method = newMethod;
+        }
+        
+        if (newStrength != nil &&
+            ![newStrength isEqualToNumber:prescription.strength])
+        {
+            prescription.strength = newStrength;
+        }
+        
+        if (newUnit != nil &&
+            ![newUnit isEqualToString:prescription.unit])
+        {
+            prescription.unit = newUnit;
+        }
+        
+        if (newScheduledStartDate != nil &&
+            ![newScheduledStartDate isEqualToNumber:prescription.datestart])
+        {
+            prescription.datestart = newScheduledStartDate;
+            shouldRecreatePrescriptionInstances = YES;
+        }
+        
+        if (newScheduledAmount != nil &&
+            ![newScheduledAmount isEqualToNumber:prescription.numberofdoses])
+        {
+            prescription.numberofdoses = newScheduledAmount;
+        }
+        
+        if ( newScheduledRepeatNumber != nil
+            && ![newScheduledRepeatNumber isEqualToNumber:prescription.repeatmultiple])
+        {
+            prescription.repeatmultiple = newScheduledRepeatNumber;
+            shouldRecreatePrescriptionInstances = YES;
+        }
+        
+        if (newRepeatPeriod != nil &&
+            ![newRepeatPeriod isEqualToNumber:prescription.repeatperiod])
+        {
+            prescription.repeatperiod = newRepeatPeriod;
+            shouldRecreatePrescriptionInstances = YES;
+            
+        }
+        
+        if (newOccurenceMultiple != nil &&
+            ![newOccurenceMultiple isEqualToNumber:prescription.occurmultiple])
+        {
+            prescription.occurmultiple = newOccurenceMultiple;
+            shouldRecreatePrescriptionInstances = YES;
+        }
+        
+        if (newScheduledEndDate != nil &&
+            ![newScheduledEndDate isEqualToNumber:prescription.dateend])
+        {
+            prescription.dateend = newScheduledEndDate;
+            shouldRecreatePrescriptionInstances = YES;
+        }
+        
+        if (newNotes != nil &&
+            ![newNotes isEqualToString:prescription.notes])
+        {
+            prescription.notes = newNotes;
+        }
+        
+        if (shouldRecreatePrescriptionInstances)
+        {
+            //if we fall into here, we need to delete all outstanding, unconfirmed prescription instance objects
+            PrescriptionInstanceManager* pim = [PrescriptionInstanceManager instance];
+            
+            //delete them
+            [pim deleteUnconfirmedPrescriptionInstanceObjectsFor:prescription shouldSave:NO];
+            
+            //and then recreate a new set of prescription instance objects
+             NSArray* prescriptionInstances = [PrescriptionInstance createPrescriptionInstancesFor:prescription];
+            LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Created %d new PrescriptionInstance objects for Prescription:%@ (%@)",activityName, [prescriptionInstances count], prescription.objectid,prescription.name);
+        }
+        
+        //we save the changes to the database
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Committed all changes to Prescription: %@ (@%) to the local store",activityName,prescription.objectid,prescription.name);
+        
+        //now we need to call the notification manager to reschedule all the new notifications
+        LocalNotificationManager* lim = [LocalNotificationManager instance];
+        [lim scheduleNotifications];
+        
+        LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Rescheduled new local notifications due to changes made to Prescription: %@ (%@)",activityName,prescription.objectid,prescription.name);
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         // Reload the table view to disable user interaction and accessory views on the tableview cells
         [self.tbl_prescriptionDetails reloadData];
@@ -2118,7 +2229,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)onEditPrescriptionButtonPressed:(id)sender {
+- (void)onEditPrescriptionButtonPressed:(id)sender 
+{
+    NSString* activityName = @"CLifePrescriptionDetailsViewController.onEditPrescriptionButtonPressed:";
+    
     // Promt user to backup data before editing profile information
     self.av_edit = [[UIAlertView alloc]
                           initWithTitle:NSLocalizedString(@"EDIT PRESCRIPTION", nil)
@@ -2128,6 +2242,9 @@
                           otherButtonTitles:NSLocalizedString(@"NO", nil), nil];
     [self.av_edit show];
     [self.av_edit release];
+    
+    
+    
 }
 
 - (void)onDeletePrescriptionButtonPressed:(id)sender {
