@@ -30,6 +30,11 @@
     
     NSNumber                *m_dateTaken;
     NSString                *m_notes;
+    int                     m_prescriptionInstanceState;
+    
+    BOOL                    m_dateTakenIsShown;
+    
+    UIAlertView             *m_av_edit;
 }
 
 @property (nonatomic, retain) IBOutlet  UITableView             *tbl_historyDetails;
@@ -52,6 +57,11 @@
 
 @property (nonatomic, retain)           NSNumber                *dateTaken;
 @property (nonatomic, retain)           NSString                *notes;
+@property (nonatomic, assign)           int                     prescriptionInstanceState;
+
+@property (nonatomic, assign)           BOOL                    dateTakenIsShown;
+
+@property (nonatomic, retain)           UIAlertView             *av_edit;
 
 #pragma mark - Static Initializers
 + (ClifeHistoryDetailsViewController *)createInstanceForPrescriptionInstanceWithID:(NSNumber *)prescriptionInstanceID;

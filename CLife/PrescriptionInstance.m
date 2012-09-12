@@ -23,7 +23,6 @@
 @dynamic state;
 @dynamic notes;
 @dynamic hasnotificationbeenscheduled;
-//@dynamic notificationid;
 @synthesize prescription = __prescription;
 
 
@@ -107,11 +106,10 @@
     double doubleDate = [reminderDate timeIntervalSince1970];
     instance.datescheduled = [NSNumber numberWithDouble:doubleDate];
     
-    instance.state = [NSNumber numberWithInt:kNOTTAKEN];
+    instance.state = [NSNumber numberWithInt:kSCHEDULED];
     instance.datetaken = nil;
     instance.notes = nil;
     instance.hasnotificationbeenscheduled = [NSNumber numberWithBool:NO];
-//    instance.notificationid = nil;
     
     return instance;
 }

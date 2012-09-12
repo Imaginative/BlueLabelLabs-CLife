@@ -1327,6 +1327,12 @@
     // Scroll tableview to this row
     [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 610) animated:YES];
     
+    // Disable the table view scrolling
+    [self.tbl_prescriptionDetails setScrollEnabled:NO];
+    
+    // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+    [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
+    
     // Mark this row selected
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
     [self.tbl_prescriptionDetails selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
@@ -1347,9 +1353,6 @@
         [self.tv_reason setText:@""];
         self.tv_reason.textColor = [UIColor blackColor];
     }
-    
-    // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
-    [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
     
     // create a done view + done button, attach to it a doneClicked action, and place it in a toolbar as an accessory input view.
     // Prepare done button
@@ -1410,6 +1413,9 @@
     
     // remove the tap gesture recognizer so it does not interfere with other table view touches
     [self.tbl_prescriptionDetails removeGestureRecognizer:self.gestureRecognizer];
+    
+    // Re-enable the table view scrolling
+    [self.tbl_prescriptionDetails setScrollEnabled:YES];
     
 }
 

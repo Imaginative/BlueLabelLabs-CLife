@@ -92,7 +92,7 @@
 {
     [super viewWillAppear:YES];
 
-    // Are we opening an existing prescription or adding a new one?
+    // Are we opening an existing profile or adding a new one?
     if (self.loggedInUser.username != nil &&
         ![self.loggedInUser.displayname isEqualToString:@""])
     {

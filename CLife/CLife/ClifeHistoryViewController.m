@@ -248,7 +248,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    PrescriptionInstance *prescriptionInstance = [[self.frc_prescriptionInstances fetchedObjects] objectAtIndex:indexPath.row];
+    PrescriptionInstance *prescriptionInstance = [self.frc_prescriptionInstances objectAtIndexPath:indexPath];
     
     ClifeHistoryDetailsViewController *historyDetailsVC = [ClifeHistoryDetailsViewController createInstanceForPrescriptionInstanceWithID:prescriptionInstance.objectid];
     

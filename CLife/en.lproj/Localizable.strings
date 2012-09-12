@@ -7,6 +7,7 @@
   Copyright (c) 2012 Blue Label Solutions LLC. All rights reserved.
 */
 
+
 // General
 "YES" = "Yes";
 "NO" = "No";
@@ -24,10 +25,12 @@
 "CONFIRM DELETE" = "Confirm Delete";
 "CONFIRM DELETE MESSAGE" = "Please enter your name as it appears in your profile.";
 
+
 // Tab Bar
 "PROFILE" = "Profile";
 "PRESCRIPTIONS" = "Prescriptions";
 "HISTORY" = "History";
+
 
 // Profile
 "NAME" = "Name";
@@ -49,12 +52,13 @@
 "O" = "O";
 
 "EDIT PROFILE" = "Edit Profile";
-"EDIT PROFILE MESSAGE" = "Would you like to back up your history before editing your profile?";
+"EDIT PROFILE MESSAGE" = "Would you like to backup your history before editing your profile?";
 
 "COMPLETE PROFILE WARNING" = "Please complete your profile to continue";
 
 "DELETE PROFILE" = "Delete profile";
 "DELETE PROFILE MESSAGE" = "Deleting your profile will erase all data ￼and history. Would you like to export your data and history before deleting your profile?";
+
 
 // Prescriptions
 "MEDICATION" = "Medication";
@@ -116,19 +120,26 @@
 "L" = "l";
 
 "EDIT PRESCRIPTION" = "Edit Prescription";
-"EDIT PRESCRIPTION MESSAGE" = "Would you like to back up your history before editing this prescription?";
+"EDIT PRESCRIPTION MESSAGE" = "Would you like to backup your history before editing this prescription?";
 
 "DELETE PRESCRIPTION" = "Delete prescription";
 "DELETE PRESCRIPTION MESSAGE" = "Would you like to export your data and history before deleting this prescription?";
 
+
 // History Details
 "CONFIRMATION" = "Confirmation";
-"DAY AND TIME TAKEN" = "Day and time taken";
-"NOTES" = "Notes";
+"DAY AND TIME" = "Day and Time";
+"NOTES" = "Notes (optional)";
 
+"WARNING" = "Please confirm if and when this prescription was taken";
 "TAKEN" = "Taken";
 "NOT TAKEN" = "Not Taken";
 "UNCONFIRMED" = "Unconfirmed";
+"SCHEDULED" = "Scheduled";
+"ENTER DATE AND TIME" = "enter date and time";
+
+"EDIT HISTORY" = "Edit History";
+"EDIT HISTORY MESSAGE" = "Would you like to backup your data and history before editing?";
 
 
 // Notifications

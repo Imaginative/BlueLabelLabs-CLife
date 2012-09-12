@@ -21,7 +21,6 @@
 @property (nonatomic,retain) NSNumber* state;
 @property (nonatomic,retain) NSString* notes;
 @property (nonatomic,retain) NSNumber* hasnotificationbeenscheduled;
-//@property (nonatomic,retain) NSNumber* notificationid;
 @property (nonatomic,retain) Prescription* prescription;
 
 - (NSDate*) fireDate;
