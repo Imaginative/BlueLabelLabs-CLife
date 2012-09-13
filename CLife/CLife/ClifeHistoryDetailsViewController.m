@@ -33,6 +33,9 @@
 @synthesize prescriptionInstanceState = m_prescriptionInstanceState;
 @synthesize dateTakenIsShown        = m_dateTakenIsShown;
 @synthesize av_edit                 = m_av_edit;
+@synthesize presentedAsModal        = m_presentedAsModal;
+@synthesize doneButton              = m_doneButton;
+@synthesize editButton              = m_editButton;
 
 #pragma mark - Initialization
 
@@ -65,6 +68,18 @@
     // Setup tap gesture recognizer to capture touches on the tableview when the keyboard is visible
     self.gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideInputView)];
     
+    // Initalize done and edit nave bar buttons
+    self.doneButton = [[UIBarButtonItem alloc]
+                                    initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                    target:self
+                                    action:@selector(doneEditingPrescriptionInstance:)];
+
+    self.editButton = [[UIBarButtonItem alloc]
+                                    initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                    target:self
+                                    action:@selector(onEditPrescriptionInstanceButtonPressed:)];
+    
+    // Determine if we are in an editing state or not
     if (self.prescriptionInstanceID != nil) {
         // Existing prescription instance
         
@@ -76,8 +91,7 @@
         self.prescriptionInstanceState = [prescriptionInstance.state intValue];
         self.notes = prescriptionInstance.notes;
         
-        if (/*self.prescriptionInstanceState == kSCHEDULED ||*/
-            self.prescriptionInstanceState == kUNCONFIRMED)
+        if (self.prescriptionInstanceState == kUNCONFIRMED)
         {
             // We have an unconfirmed instance
             
@@ -91,18 +105,20 @@
             pickerView.date = [NSDate date];
             
             self.pv_dateTaken = pickerView;
+            
+            if (self.presentedAsModal == YES) {
+                self.isEditing = YES;
+                
+                // add the "Done" button to the nav bar
+                self.navigationItem.rightBarButtonItem = self.doneButton;
+            }
 
         }
         else {
             self.isEditing = NO;
             
             // add the "Edit" button to the nav bar
-            UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                            initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                            target:self
-                                            action:@selector(onEditPrescriptionInstanceButtonPressed:)];
-            self.navigationItem.rightBarButtonItem = rightButton;
-            [rightButton release];
+            self.navigationItem.rightBarButtonItem = self.editButton;
 
         }
         
@@ -133,6 +149,8 @@
     self.v_disabledBackground = nil;
     self.gestureRecognizer = nil;
     self.av_edit = nil;
+    self.doneButton = nil;
+    self.editButton = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -174,8 +192,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section == 1 &&
-        (self.prescriptionInstanceState == kUNCONFIRMED /*||
-        self.prescriptionInstanceState == kSCHEDULED*/))
+        (self.prescriptionInstanceState == kUNCONFIRMED))
     {
         UIView *v_header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 47)];
         v_header.backgroundColor = [UIColor clearColor];
@@ -208,8 +225,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (section == 1 &&
-        (self.prescriptionInstanceState == kUNCONFIRMED /*||
-         self.prescriptionInstanceState == kSCHEDULED*/))
+        (self.prescriptionInstanceState == kUNCONFIRMED))
     {        
         return 47.0f;
     }
@@ -255,8 +271,7 @@
                 break;
         }
         
-        if (/*self.prescriptionInstanceState == kSCHEDULED || */
-            self.prescriptionInstanceState == kUNCONFIRMED)
+        if (self.prescriptionInstanceState == kUNCONFIRMED)
         {
             // We have an unconfirmed instance
             self.sc_confirmation.enabled = YES;
@@ -741,12 +756,7 @@
         [self.navigationItem setHidesBackButton:YES animated:YES];
         
         // add the "Done" button to the nav bar
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                        target:self
-                                        action:@selector(doneEditingPrescriptionInstance:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
+        self.navigationItem.rightBarButtonItem = self.doneButton;
         
         
     }
@@ -819,12 +829,7 @@
     [self.tbl_historyDetails reloadData];
     
     // add the "Done" button to the nav bar
-    UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                    initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                    target:self
-                                    action:@selector(doneEditingPrescriptionInstance:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
-    [rightButton release];
+    self.navigationItem.rightBarButtonItem = self.doneButton;
     
 }
 
@@ -853,12 +858,7 @@
         [self.navigationItem setHidesBackButton:NO animated:YES];
         
         // add the "Edit" button back to the nav bar
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                        target:self
-                                        action:@selector(onEditPrescriptionInstanceButtonPressed:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
+        self.navigationItem.rightBarButtonItem = self.editButton;
         
         // Update the prescription instance properties and save
         ResourceContext *resourceContext = [ResourceContext instance];
@@ -880,6 +880,11 @@
         
         // Scroll tableview back to the top
         [self.tbl_historyDetails setContentOffset:CGPointMake(0, 0) animated:YES];
+        
+        if (self.presentedAsModal == YES) {
+            // This is the case that we have launched the History Details View Controller from a notification
+            [self dismissModalViewControllerAnimated:YES];
+        }
     }
 }
 

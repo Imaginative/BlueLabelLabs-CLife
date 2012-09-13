@@ -1,33 +1,31 @@
 //
-//  ClifeHistoryViewController.m
+//  ClifeRemindersViewController.m
 //  CLife
 //
-//  Created by Jordan Gurrieri on 8/16/12.
+//  Created by Jordan Gurrieri on 9/13/12.
 //  Copyright (c) 2012 Blue Label Solutions LLC. All rights reserved.
 //
 
-#import "ClifeHistoryViewController.h"
+#import "ClifeRemindersViewController.h"
 #import "ClifeAppDelegate.h"
 #import "Attributes.h"
 #import "PrescriptionInstance.h"
 #import "PrescriptionInstanceState.h"
 #import "DateTimeHelper.h"
-#import "ClifeHistoryDetailsViewController.h"
 
 #define kTABLEVIEWCELLHEIGHT 50.0
 
-@interface ClifeHistoryViewController ()
+@interface ClifeRemindersViewController ()
 
 @end
 
-@implementation ClifeHistoryViewController
-@synthesize frc_prescriptionInstances   = __frc_prescriptionInstances;
-@synthesize tbl_history                 = m_tbl_history;
-
+@implementation ClifeRemindersViewController
+@synthesize frc_prescriptionInstances      = __frc_prescriptionInstances;
+@synthesize tbl_reminders                  = m_tbl_reminders;
 
 #pragma mark - Properties
 - (NSFetchedResultsController*)frc_prescriptionInstances {
-    NSString* activityName = @"ClifeHistoryViewController.frc_prescriptionInstances:";
+    NSString* activityName = @"ClifeRemindersViewController.frc_prescriptionInstances:";
     if (__frc_prescriptionInstances != nil) {
         return __frc_prescriptionInstances;
     }
@@ -37,19 +35,19 @@
     ClifeAppDelegate* app = (ClifeAppDelegate*)[[UIApplication sharedApplication]delegate];
     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:PRESCRIPTIONINSTANCE inManagedObjectContext:app.managedObjectContext];
     
-    NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc] initWithKey:DATESCHEDULED ascending:NO];
+    NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc] initWithKey:DATESCHEDULED ascending:YES];
     
     double doubleDate = [[NSDate date] timeIntervalSince1970];
     NSNumber *today = [NSNumber numberWithDouble:doubleDate];
     
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K<=%@", DATESCHEDULED, today];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K>%@", DATESCHEDULED, today];
     
     [fetchRequest setPredicate:predicate];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     [fetchRequest setEntity:entityDescription];
     [fetchRequest setReturnsDistinctResults:YES];
     
-    NSFetchedResultsController* controller = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:resourceContext.managedObjectContext sectionNameKeyPath:@"scheduleDateString" cacheName:@"History"];
+    NSFetchedResultsController* controller = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:resourceContext.managedObjectContext sectionNameKeyPath:@"scheduleDateString" cacheName:@"Reminders"];
     
     controller.delegate = self;
     self.frc_prescriptionInstances = controller;
@@ -74,8 +72,9 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"HISTORY", nil);
-        self.tabBarItem.image = [UIImage imageNamed:@"icon-clock.png"];
+        // Custom initialization
+        self.title = NSLocalizedString(@"REMINDERS", nil);
+        self.tabBarItem.image = [UIImage imageNamed:@"icon-calendar.png"];
     }
     return self;
 }
@@ -92,7 +91,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     
-    self.tbl_history = nil;
+    self.tbl_reminders = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -181,7 +180,9 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
             
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            
+            [cell setSelectionStyle:UITableViewCellEditingStyleNone];
             
         }
         
@@ -269,23 +270,23 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    PrescriptionInstance *prescriptionInstance = [self.frc_prescriptionInstances objectAtIndexPath:indexPath];
-    
-    ClifeHistoryDetailsViewController *historyDetailsVC = [ClifeHistoryDetailsViewController createInstanceForPrescriptionInstanceWithID:prescriptionInstance.objectid];
-    
-    [historyDetailsVC setHidesBottomBarWhenPushed:YES];
-    [self.navigationController pushViewController:historyDetailsVC animated:YES];
+//    PrescriptionInstance *prescriptionInstance = [self.frc_prescriptionInstances objectAtIndexPath:indexPath];
+//    
+//    ClifeHistoryDetailsViewController *historyDetailsVC = [ClifeHistoryDetailsViewController createInstanceForPrescriptionInstanceWithID:prescriptionInstance.objectid];
+//    
+//    [historyDetailsVC setHidesBottomBarWhenPushed:YES];
+//    [self.navigationController pushViewController:historyDetailsVC animated:YES];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate methods
 //- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 //{
-//    [self.tbl_history beginUpdates];
+//    [self.tbl_reminders beginUpdates];
 //}
 //
 //- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 //{
-//    [self.tbl_history endUpdates];
+//    [self.tbl_reminders endUpdates];
 //}
 
 - (void) controller:(NSFetchedResultsController *)controller 
@@ -294,10 +295,10 @@
       forChangeType:(NSFetchedResultsChangeType)type 
        newIndexPath:(NSIndexPath *)newIndexPath {
     
-    NSString* activityName = @"ClifeHistoryViewController.controller.didChangeObject:";
+    NSString* activityName = @"ClifeRemindersViewController.controller.didChangeObject:";
     
     if (controller == self.frc_prescriptionInstances) {
-        [self.tbl_history reloadData];
+        [self.tbl_reminders reloadData];
     }
     else {
         NSLog(@"%@Received a didChange message from a NSFetchedResultsController that isnt mine. %p", activityName, &controller);
@@ -305,8 +306,8 @@
 }
 
 #pragma mark - Static Initializers
-+ (ClifeHistoryViewController *)createInstance {
-    ClifeHistoryViewController *instance = [[ClifeHistoryViewController alloc] initWithNibName:@"ClifeHistoryViewController" bundle:nil];
++ (ClifeRemindersViewController *)createInstance {
+    ClifeRemindersViewController *instance = [[ClifeRemindersViewController alloc] initWithNibName:@"ClifeRemindersViewController" bundle:nil];
     [instance autorelease];
     return instance;
 }

@@ -9,6 +9,7 @@
 
 
 // General
+"TODAY" = "Today";
 "YES" = "Yes";
 "NO" = "No";
 "DELETE" = "Delete";
@@ -16,8 +17,8 @@
 "CONFIRM" = "Confirm";
 "NONE" = "None";
 "OPTIONAL" = "optional";
-"DELETE WITH DATA EXPORT" = "Delete with data export";
-"DELETE WITHOUT DATA EXPORT" = "Delete without data export";
+"DELETE WITH DATA EXPORT" = "Export data and delete";
+"DELETE WITHOUT DATA EXPORT" = "Delete";
 
 "INCOMPLETE" = "Incomplete";
 "INCOMPLETE MESSAGE" = "Please complete all required fields before saving.";
@@ -29,6 +30,7 @@
 // Tab Bar
 "PROFILE" = "Profile";
 "PRESCRIPTIONS" = "Prescriptions";
+"REMINDERS" = "Reminders";
 "HISTORY" = "History";
 
 
@@ -143,8 +145,10 @@
 
 
 // Notifications
+"PRESCRIPTION REMINDER" = "Prescription Reminder";
 "REMINDER ACTION" = "Confirm";
 "REMINDER ACTION PART 1" = "Time to take your next dose of";
 "REMINDER ACTION PART 2" = "Please open CLife to confirm.";
+"REMINDER ACTION PART 2 TYPE 2" = "Please confirm.";
 
 

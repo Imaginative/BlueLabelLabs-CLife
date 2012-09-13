@@ -12,9 +12,12 @@
 #import "ApplicationSettingsManager.h"
 #import "UIProgressHUDView.h"
 
-@interface ClifeAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
+@interface ClifeAppDelegate : UIResponder < UIApplicationDelegate, UITabBarControllerDelegate, UIAlertViewDelegate >
 {
-     NSString*               m_deviceToken;
+     NSString*                  m_deviceToken;
+    
+    UIAlertView                 *m_av_reminder;
+    NSNumber                    *m_prescriptionInstanceID;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -27,6 +30,8 @@
 @property (nonatomic, retain)           UIProgressHUDView*              progressView;
 @property (nonatomic, retain)           NSString*                       deviceToken;
 @property (strong, nonatomic) UITabBarController *tabBarController;
+@property (nonatomic, retain)           UIAlertView                     *av_reminder;
+@property (nonatomic, retain)           NSNumber                        *prescriptionInstanceID;
 
 
 - (void)saveContext;

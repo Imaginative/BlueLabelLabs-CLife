@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		522D88F41602460800B5C615 /* ClifeRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522D88F21602460800B5C615 /* ClifeRemindersViewController.m */; };
+		522D88F51602460800B5C615 /* ClifeRemindersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */; };
+		522D88F916024AAE00B5C615 /* icon-calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F716024AAE00B5C615 /* icon-calendar.png */; };
+		522D88FA16024AAE00B5C615 /* icon-calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F816024AAE00B5C615 /* icon-calendar@2x.png */; };
 		523A6BD815F6DC1400D60461 /* UIPromptAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */; };
 		5277E7DE15DD4D48003A1DCF /* icon-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DC15DD4D48003A1DCF /* icon-profile.png */; };
 		5277E7DF15DD4D48003A1DCF /* icon-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */; };
@@ -183,6 +187,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		522D88F11602460800B5C615 /* ClifeRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeRemindersViewController.h; sourceTree = "<group>"; };
+		522D88F21602460800B5C615 /* ClifeRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeRemindersViewController.m; sourceTree = "<group>"; };
+		522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeRemindersViewController.xib; sourceTree = "<group>"; };
+		522D88F716024AAE00B5C615 /* icon-calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-calendar.png"; sourceTree = "<group>"; };
+		522D88F816024AAE00B5C615 /* icon-calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-calendar@2x.png"; sourceTree = "<group>"; };
 		523A6BD115F6815900D60461 /* SchedulePeriods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchedulePeriods.h; sourceTree = "<group>"; };
 		523A6BD615F6DC1400D60461 /* UIPromptAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPromptAlertView.h; sourceTree = "<group>"; };
 		523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPromptAlertView.m; sourceTree = "<group>"; };
@@ -573,6 +582,9 @@
 				5277E84215DFE303003A1DCF /* ClifePrescriptionDetailsViewController.h */,
 				5277E84315DFE303003A1DCF /* ClifePrescriptionDetailsViewController.m */,
 				5277E84415DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib */,
+				522D88F11602460800B5C615 /* ClifeRemindersViewController.h */,
+				522D88F21602460800B5C615 /* ClifeRemindersViewController.m */,
+				522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */,
 				5277E83015DFE25E003A1DCF /* ClifeHistoryViewController.h */,
 				5277E83115DFE25F003A1DCF /* ClifeHistoryViewController.m */,
 				5277E83215DFE260003A1DCF /* ClifeHistoryViewController.xib */,
@@ -598,6 +610,8 @@
 				5277E7FA15DD6B67003A1DCF /* icon-clock.png */,
 				5277E7FB15DD6B67003A1DCF /* icon-clock@2x.png */,
 				52B3E7E715E67F75004E9C4A /* icon-pill.png */,
+				522D88F716024AAE00B5C615 /* icon-calendar.png */,
+				522D88F816024AAE00B5C615 /* icon-calendar@2x.png */,
 				52D7871415FFF15E00630551 /* warning.png */,
 				52D7871515FFF15E00630551 /* warning@2x.png */,
 				5277E7F815DD62F1003A1DCF /* Localizable.strings */,
@@ -1270,6 +1284,9 @@
 				528D629515FD6710006BD80A /* ClifeHistoryDetailsViewController.xib in Resources */,
 				52D7871615FFF15E00630551 /* warning.png in Resources */,
 				52D7871715FFF15E00630551 /* warning@2x.png in Resources */,
+				522D88F51602460800B5C615 /* ClifeRemindersViewController.xib in Resources */,
+				522D88F916024AAE00B5C615 /* icon-calendar.png in Resources */,
+				522D88FA16024AAE00B5C615 /* icon-calendar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1424,6 +1441,7 @@
 				523A6BD815F6DC1400D60461 /* UIPromptAlertView.m in Sources */,
 				528D629415FD6710006BD80A /* ClifeHistoryDetailsViewController.m in Sources */,
 				C5D671BF1600D50F00071AEE /* PrescriptionInstanceManager.m in Sources */,
+				522D88F41602460800B5C615 /* ClifeRemindersViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

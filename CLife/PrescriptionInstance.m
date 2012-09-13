@@ -130,15 +130,15 @@
     
     NSDate *endDate;
     if (prescription.dateend == nil) {
-        // If the end date is not set we set it to 2 days from now
-//        components.year = 1;
-        components.day = 2;
+        // If the end date is not set we set it to 1 year from now
+        components.year = 1;
+//        components.day = 2;
         components.second = -1; // sets the date to the last second on that day
         endDate = [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
         
         // reset the date components
-//        components.year = 0;
-        components.day = 0;
+        components.year = 0;
+//        components.day = 0;
         components.second = 0;
     }
     else {

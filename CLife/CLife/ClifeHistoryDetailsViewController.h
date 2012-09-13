@@ -35,6 +35,11 @@
     BOOL                    m_dateTakenIsShown;
     
     UIAlertView             *m_av_edit;
+    
+    BOOL                    m_presentedAsModal;
+    
+    UIBarButtonItem*        m_doneButton;
+    UIBarButtonItem*        m_editButton;
 }
 
 @property (nonatomic, retain) IBOutlet  UITableView             *tbl_historyDetails;
@@ -62,6 +67,11 @@
 @property (nonatomic, assign)           BOOL                    dateTakenIsShown;
 
 @property (nonatomic, retain)           UIAlertView             *av_edit;
+
+@property (nonatomic, assign)           BOOL                    presentedAsModal;
+
+@property (nonatomic, retain)           UIBarButtonItem         *doneButton;
+@property (nonatomic, retain)           UIBarButtonItem         *editButton;
 
 #pragma mark - Static Initializers
 + (ClifeHistoryDetailsViewController *)createInstanceForPrescriptionInstanceWithID:(NSNumber *)prescriptionInstanceID;

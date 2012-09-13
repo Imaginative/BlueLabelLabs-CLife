@@ -9,8 +9,12 @@
 #import "ClifeAppDelegate.h"
 #import "ClifeProfileViewController.h"
 #import "ClifePrescriptionsViewController.h"
+#import "ClifeRemindersViewController.h"
 #import "ClifeHistoryViewController.h"
 #import "LocalNotificationManager.h"
+#import "Attributes.h"
+#import "ClifeHistoryDetailsViewController.h"
+
 @implementation ClifeAppDelegate
 
 @synthesize window = _window;
@@ -23,6 +27,9 @@
 @synthesize facebook = __facebook;
 @synthesize progressView = __progressView;
 @synthesize deviceToken = m_deviceToken;
+@synthesize av_reminder = m_av_reminder;
+@synthesize prescriptionInstanceID = m_prescriptionInstanceID;
+
 #define     kFACEBOOKAPPID  @""
 
 - (UIProgressHUDView*)progressView {
@@ -86,17 +93,18 @@
     UIViewController *viewController2 = [ClifePrescriptionsViewController createInstance];
     UINavigationController *navigationcontroller2 = [[[UINavigationController alloc] initWithRootViewController:viewController2] autorelease];
     
-    UIViewController *viewController3 = [ClifeHistoryViewController createInstance];
+    UIViewController *viewController3 = [ClifeRemindersViewController createInstance];
     UINavigationController *navigationcontroller3 = [[[UINavigationController alloc] initWithRootViewController:viewController3] autorelease];
     
+    UIViewController *viewController4 = [ClifeHistoryViewController createInstance];
+    UINavigationController *navigationcontroller4 = [[[UINavigationController alloc] initWithRootViewController:viewController4] autorelease];
+    
     self.tabBarController = [[[UITabBarController alloc] init] autorelease];
-    self.tabBarController.viewControllers = [NSArray arrayWithObjects:navigationcontroller1, navigationcontroller2, navigationcontroller3, nil];
+    self.tabBarController.viewControllers = [NSArray arrayWithObjects:navigationcontroller1, navigationcontroller2, navigationcontroller3, navigationcontroller4, nil];
     
     self.window.rootViewController = self.tabBarController;
     
     AuthenticationManager* authenticationManager = [AuthenticationManager instance];
-    
-    
     
     //lets check if a user is currently logged in 
     if (![authenticationManager isUserAuthenticated])
@@ -122,11 +130,20 @@
         if (loggedInUser.username != nil &&
             ![loggedInUser.displayname isEqualToString:@""])
         {
-            [self.tabBarController setSelectedIndex:1];
+            [self.tabBarController setSelectedIndex:3];
         }
         else {
             [self.tabBarController setSelectedIndex:0];
         }
+    }
+    
+    // Determine if we have opened from a reminder notification
+    UILocalNotification *localNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (localNotification) {
+        self.prescriptionInstanceID = [localNotification.userInfo objectForKey:PRESCRIPTIONINSTANCEID];
+        [self showHistoryDetailsVC];
+//        application.applicationIconBadgeNumber = localNotification.applicationIconBadgeNumber-1;
+        application.applicationIconBadgeNumber = 0;
     }
     
     //we grab the local notification manager so it can be instantiated and process itself
@@ -199,6 +216,56 @@
         path = [[paths objectAtIndex:0]stringByAppendingPathComponent:bundleName];
     }
     return path;
+}
+
+#pragma mark - Local Notification Handlers
+- (void)showHistoryDetailsVC {
+    ClifeHistoryDetailsViewController *historyDetailsVC = [ClifeHistoryDetailsViewController createInstanceForPrescriptionInstanceWithID:self.prescriptionInstanceID];
+    historyDetailsVC.presentedAsModal = YES;
+    [historyDetailsVC setHidesBottomBarWhenPushed:YES];
+    
+    UINavigationController *navigationcontroller = [[[UINavigationController alloc] initWithRootViewController:historyDetailsVC] autorelease];
+    
+    [self.tabBarController presentModalViewController:navigationcontroller animated:YES];
+}
+
+- (void) application:(UIApplication*)application didReceiveLocalNotification:(UILocalNotification *)notification  {
+
+    // Get the prescription instance object associated with this notification
+    self.prescriptionInstanceID = [notification.userInfo objectForKey:PRESCRIPTIONINSTANCEID];
+    
+    if (self.prescriptionInstanceID != nil) {
+        ResourceContext *resourceContext = [ResourceContext instance];
+        PrescriptionInstance *prescriptionInstance = (PrescriptionInstance *)[resourceContext resourceWithType:PRESCRIPTIONINSTANCE withID:self.prescriptionInstanceID];
+        
+        // Show alert for reminder
+        // Promt user to backup data before editing profile information
+        self.av_reminder = [[UIAlertView alloc]
+                        initWithTitle:NSLocalizedString(@"PRESCRIPTION REMINDER", nil)
+                        message:[NSString stringWithFormat:@"%@ %@. %@", NSLocalizedString(@"REMINDER ACTION PART 1", nil), prescriptionInstance.prescriptionname, NSLocalizedString(@"REMINDER ACTION PART 2 TYPE 2", nil)]
+                        delegate:self
+                        cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                        otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+        [self.av_reminder show];
+        [self.av_reminder release];
+    }
+}
+
+#pragma mark - UIAlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView == self.av_reminder) {
+        if (buttonIndex == 0) {
+            // Do nothing, user canceled. Prescription Intance will remain in state kUNCONFIRMED
+            
+        }
+        else {
+            // Launch Prescription INstance Details VC so user can confirm
+            UIApplication *application = [UIApplication sharedApplication];
+            application.applicationIconBadgeNumber = 0;
+            
+            [self showHistoryDetailsVC];
+        }
+    }
 }
 
 #pragma mark - Core Data stack
