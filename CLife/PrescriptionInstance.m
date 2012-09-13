@@ -14,6 +14,7 @@
 #import "Attributes.h"
 #import "SchedulePeriods.h"
 #import "PrescriptionInstanceState.h"
+#import "Macros.h"
 
 @implementation PrescriptionInstance
 @dynamic prescriptionid;
@@ -88,6 +89,53 @@
     
     [retVal autorelease];
     return retVal;
+}
+
+//Returns an array of PrescriptionInstance objects which are unconfirmed, and which are scheduled
+//for after the date passed in
++ (NSArray*)unconfirmedPrescriptionInstancesAfter:(NSDate *)date
+{
+    NSString* activityName = @"PrescriptionInstance.unconfirmedPrescriptionInstancesAfter:";
+    NSArray* retVal = nil;
+    
+  
+    
+    ResourceContext* resourceContext = [ResourceContext instance];
+    NSManagedObjectContext *appContext = resourceContext.managedObjectContext;
+    
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:PRESCRIPTIONINSTANCE inManagedObjectContext:appContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    
+    double doubleDate = [date timeIntervalSince1970];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K=%d AND %K >%f",STATE,kUNCONFIRMED, DATESCHEDULED,doubleDate];
+    
+    [request setPredicate:predicate];
+    
+    NSSortDescriptor* sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:DATESCHEDULED ascending:YES];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    NSError* error = nil;
+    NSArray* results = [appContext executeFetchRequest:request error:&error];
+    
+    if (error != nil) {
+        
+        LOG_PRESCRIPTIONINSTANCE(1, @"%@Error due to:%@",activityName, error);
+    }
+    
+    else 
+    {
+        LOG_PRESCRIPTIONINSTANCE(0,@"%@Successfully retrieved %d PrescriptionInstance objects",activityName,[results count]);
+        retVal = results;
+    }
+    [request release];
+    
+    return retVal; 
+
+    
+    
 }
 
 + (PrescriptionInstance *) createPrescriptionInstanceForPrescription:(Prescription *)prescription withReminderDate:(NSDate *)reminderDate

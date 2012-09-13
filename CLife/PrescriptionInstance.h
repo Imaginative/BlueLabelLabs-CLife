@@ -26,7 +26,7 @@
 - (NSDate*) fireDate;
 - (NSString *) scheduleDateString;
 - (UILocalNotification *) createLocalNotification;
-
++ (NSArray*) unconfirmedPrescriptionInstancesAfter:(NSDate*)date;
 + (PrescriptionInstance *) createPrescriptionInstanceForPrescription:(Prescription *)prescription withReminderDate:(NSDate *)reminderDate;
 + (NSArray *) createPrescriptionInstancesFor:(Prescription *)prescription;
 

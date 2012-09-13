@@ -117,10 +117,11 @@ static LocalNotificationManager* sharedManager;
     
     //we need to create a sorted list of all unconfirmed PrescriptionInstances
     ResourceContext* resourceContext = [ResourceContext instance];
-    NSSortDescriptor* sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:DATESCHEDULED ascending:YES];
+    
     
     //grab all unconfirmed prescription instance objects sorted by date ascending
-    NSArray* allPrescriptionInstanceObjects = [resourceContext resourcesWithType:PRESCRIPTIONINSTANCE withValueEqual:[NSString stringWithFormat:@"%d",kUNCONFIRMED] forAttribute:STATE sortBy:[NSArray arrayWithObject:sortDescriptor]];
+    NSDate* date = [NSDate date];
+    NSArray* allPrescriptionInstanceObjects = [PrescriptionInstance unconfirmedPrescriptionInstancesAfter:date];
     
     //now we have a list of all unconfirmed prescription instance objects sorted by datescheduled
     //ascending
