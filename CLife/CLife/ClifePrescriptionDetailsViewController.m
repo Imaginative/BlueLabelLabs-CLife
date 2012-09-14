@@ -680,7 +680,10 @@
             }
             
             if (self.scheduleRepeatNumber != nil && self.scheduleRepeatPeriod != nil) {
-                if ([self.scheduleRepeatNumber intValue] == 1) {
+                if ([self.scheduleRepeatNumber intValue] == 0) {
+                    self.tf_scheduleRepeat.text = NSLocalizedString(@"DOES NOT REPEAT", nil);
+                }
+                else if ([self.scheduleRepeatNumber intValue] == 1) {
                     self.tf_scheduleRepeat.text = [NSString stringWithFormat:@"%@ %@",
                                                    NSLocalizedString(@"EVERY", nil),
                                                    [self.schedulePeriodSingularArray objectAtIndex:[self.scheduleRepeatPeriod intValue]]];
@@ -789,6 +792,7 @@
                         pickerView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
                         [pickerView addTarget:self action:@selector(endDateChanged:) forControlEvents:UIControlEventValueChanged];
                         pickerView.datePickerMode = UIDatePickerModeDate;
+                        pickerView.minimumDate = [NSDate date];
                         
                         self.pv_scheduleEndDate = pickerView;
                         
@@ -1680,6 +1684,15 @@
         
         [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:neverButton, flexSpace, doneButton, nil]];
     }
+    else if (textField == self.tf_scheduleRepeat) {
+        // Add a button for does not repeat
+        UIBarButtonItem* noRepeatButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"DOES NOT REPEAT", nil)
+                                                                         style:UIBarButtonItemStyleBordered
+                                                                        target:self
+                                                                        action:@selector(onNoRepeatButtonPressed)] autorelease];
+        
+        [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:noRepeatButton, flexSpace, doneButton, nil]];
+    }
     else {
         [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:flexSpace, doneButton, nil]];
     }
@@ -1949,6 +1962,15 @@
     self.scheduleEndDate = nil;
 }
 
+- (void)onNoRepeatButtonPressed {
+    [self.tf_scheduleRepeat resignFirstResponder];
+    
+    self.tf_scheduleRepeat.text = NSLocalizedString(@"DOES NOT REPEAT", nil);
+    
+    self.scheduleRepeatNumber = [NSNumber numberWithInt:0];
+    self.scheduleRepeatPeriod = [NSNumber numberWithInt:0];
+}
+
 - (void)showDisabledBackgroundView {
     // Show the disabled background so user cannot touch into the tableview while picker is shown
     [self.v_disabledBackground setAlpha:0.0];
@@ -2107,7 +2129,7 @@
             ![newMedicationName isEqualToString:prescription.name])
         {
             //the medication name changed
-            prescription.name    = newMedicationName;
+            prescription.name = newMedicationName;
         }
         
         if (newMethod != nil &&

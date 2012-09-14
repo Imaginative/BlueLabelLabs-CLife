@@ -88,6 +88,7 @@
 "NO END DATE" = "No end date";
 "REPEATS" = "Repeats";
 "ENTER REPEATS" = "ex. Every 4 hours";
+"DOES NOT REPEAT" = "Does not repeat";
 "EVERY" = "Every";
 "OCCURS" = "Occurs";
 "ENTER OCCURS" = "optional: times that day";

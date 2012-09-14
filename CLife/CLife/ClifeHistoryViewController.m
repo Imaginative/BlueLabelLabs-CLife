@@ -96,6 +96,25 @@
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // Reload the tableview to process any changes
+    [self.tbl_history reloadData];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // Delete the cache file that's created from for the frc.
+    [NSFetchedResultsController deleteCacheWithName:@"History"];
+    
+    // We nil the frc to ensure it is reloaded next time the view appears
+    self.frc_prescriptionInstances = nil;
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -204,24 +223,28 @@
         [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
         [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
         
-        NSDate *scheduleDate = [DateTimeHelper parseWebServiceDateDouble:prescriptionInstance.datescheduled];
-        cell.detailTextLabel.text = [dateAndTimeFormatter stringFromDate:scheduleDate];
+        NSDate *date;
         
         int state = [prescriptionInstance.state intValue];
         
         switch (state) {
             case kUNCONFIRMED:
                 cell.imageView.image = [UIImage imageNamed:@"warning.png"];
+                date = [DateTimeHelper parseWebServiceDateDouble:prescriptionInstance.datescheduled];
                 break;
                 
             case kNOTTAKEN:
                 cell.imageView.image = [UIImage imageNamed:@"redX.png"];
+                date = [DateTimeHelper parseWebServiceDateDouble:prescriptionInstance.datescheduled];
                 break;
                 
             default:
+                // TAKEN state
                 cell.imageView.image = [UIImage imageNamed:@"greenCheckmark.png"];
+                date = [DateTimeHelper parseWebServiceDateDouble:prescriptionInstance.datetaken];
                 break;
         }
+        cell.detailTextLabel.text = [dateAndTimeFormatter stringFromDate:date];
         
     }
     else {

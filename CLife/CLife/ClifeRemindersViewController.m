@@ -85,6 +85,25 @@
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // Reload the tableview to process any changes
+    [self.tbl_reminders reloadData];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // Delete the cache file that's created from for the frc.
+    [NSFetchedResultsController deleteCacheWithName:@"Reminders"];
+    
+    // We nil the frc to ensure it is reloaded next time the view appears
+    self.frc_prescriptionInstances = nil;
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];

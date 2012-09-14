@@ -75,7 +75,6 @@
     UILocalNotification* retVal = [[UILocalNotification alloc]init];
     retVal.fireDate = [self fireDate];
     retVal.soundName = UILocalNotificationDefaultSoundName;
-//    retVal.alertAction = [NSString stringWithFormat:NSLocalizedString(@"REMINDER ACTION", nil)];
     retVal.alertAction = [NSString stringWithFormat:NSLocalizedString(@"REMINDER ACTION", nil)];
     retVal.alertBody = [NSString stringWithFormat:@"%@ %@. %@", NSLocalizedString(@"REMINDER ACTION PART 1", nil), self.prescription.name, NSLocalizedString(@"REMINDER ACTION PART 2", nil)];
     retVal.hasAction = YES;
