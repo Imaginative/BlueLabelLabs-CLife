@@ -72,11 +72,16 @@
 //UILocalNotification instance, does not schedule the notification
 - (UILocalNotification*) createLocalNotification
 {
+    // Get the prescription object
+    ResourceContext* resourceContext = [ResourceContext instance];
+    Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionid];
+    
     UILocalNotification* retVal = [[UILocalNotification alloc]init];
     retVal.fireDate = [self fireDate];
     retVal.soundName = UILocalNotificationDefaultSoundName;
     retVal.alertAction = [NSString stringWithFormat:NSLocalizedString(@"REMINDER ACTION", nil)];
-    retVal.alertBody = [NSString stringWithFormat:@"%@ %@. %@", NSLocalizedString(@"REMINDER ACTION PART 1", nil), self.prescription.name, NSLocalizedString(@"REMINDER ACTION PART 2", nil)];
+//    retVal.alertBody = [NSString stringWithFormat:@"%@ %@. %@", NSLocalizedString(@"REMINDER ACTION PART 1", nil), self.prescription.name, NSLocalizedString(@"REMINDER ACTION PART 2", nil)];
+    retVal.alertBody = [NSString stringWithFormat:@"%@ %@. %@", NSLocalizedString(@"REMINDER ACTION PART 1", nil), prescription.name, NSLocalizedString(@"REMINDER ACTION PART 2", nil)];
     retVal.hasAction = YES;
     
     //we also create a user dictionary to add information about the prescription and prescription instance
