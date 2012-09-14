@@ -731,6 +731,12 @@
     // Update the prescription instance state
     self.isEditing = YES;
     
+    // Hide the back button
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    
+    // add the "Done" button to the nav bar
+    self.navigationItem.rightBarButtonItem = self.doneButton;
+    
     switch (self.sc_confirmation.selectedSegmentIndex) {
         case 0:
             self.prescriptionInstanceState = kTAKEN;
@@ -751,14 +757,6 @@
         // We need to add the date taken row
         [self.tbl_historyDetails insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:2]] withRowAnimation:UITableViewRowAnimationTop];
         self.dateTakenIsShown = YES;
-        
-        // Hide the back button
-        [self.navigationItem setHidesBackButton:YES animated:YES];
-        
-        // add the "Done" button to the nav bar
-        self.navigationItem.rightBarButtonItem = self.doneButton;
-        
-        
     }
     else if (self.sc_confirmation.selectedSegmentIndex == 1 && 
              self.dateTakenIsShown == YES)
