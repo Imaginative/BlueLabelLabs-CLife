@@ -10,6 +10,7 @@
 
 // General
 "TODAY" = "Today";
+"EXPORT" = "Export";
 "YES" = "Yes";
 "NO" = "No";
 "DELETE" = "Delete";

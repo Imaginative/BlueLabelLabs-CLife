@@ -11,6 +11,14 @@
 		522D88F51602460800B5C615 /* ClifeRemindersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */; };
 		522D88F916024AAE00B5C615 /* icon-calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F716024AAE00B5C615 /* icon-calendar.png */; };
 		522D88FA16024AAE00B5C615 /* icon-calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F816024AAE00B5C615 /* icon-calendar@2x.png */; };
+		522D890C1602A77000B5C615 /* warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89081602A77000B5C615 /* warning.png */; };
+		522D890D1602A77000B5C615 /* warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89091602A77000B5C615 /* warning@2x.png */; };
+		522D890E1602A77000B5C615 /* warningLarge.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D890A1602A77000B5C615 /* warningLarge.png */; };
+		522D890F1602A77000B5C615 /* warningLarge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D890B1602A77000B5C615 /* warningLarge@2x.png */; };
+		522D89141602A83900B5C615 /* greenCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89101602A83800B5C615 /* greenCheckmark.png */; };
+		522D89151602A83900B5C615 /* greenCheckmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89111602A83800B5C615 /* greenCheckmark@2x.png */; };
+		522D89161602A83900B5C615 /* redX.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89121602A83900B5C615 /* redX.png */; };
+		522D89171602A83900B5C615 /* redX@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89131602A83900B5C615 /* redX@2x.png */; };
 		523A6BD815F6DC1400D60461 /* UIPromptAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */; };
 		5277E7DE15DD4D48003A1DCF /* icon-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DC15DD4D48003A1DCF /* icon-profile.png */; };
 		5277E7DF15DD4D48003A1DCF /* icon-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */; };
@@ -35,8 +43,6 @@
 		528D629415FD6710006BD80A /* ClifeHistoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */; };
 		528D629515FD6710006BD80A /* ClifeHistoryDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528D629315FD670F006BD80A /* ClifeHistoryDetailsViewController.xib */; };
 		52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B3E7E715E67F75004E9C4A /* icon-pill.png */; };
-		52D7871615FFF15E00630551 /* warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 52D7871415FFF15E00630551 /* warning.png */; };
-		52D7871715FFF15E00630551 /* warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52D7871515FFF15E00630551 /* warning@2x.png */; };
 		C53DC69C15D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
 		C53DC69E15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
 		C53DC6A015D4378300CC7D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */; };
@@ -192,6 +198,14 @@
 		522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeRemindersViewController.xib; sourceTree = "<group>"; };
 		522D88F716024AAE00B5C615 /* icon-calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-calendar.png"; sourceTree = "<group>"; };
 		522D88F816024AAE00B5C615 /* icon-calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-calendar@2x.png"; sourceTree = "<group>"; };
+		522D89081602A77000B5C615 /* warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warning.png; sourceTree = "<group>"; };
+		522D89091602A77000B5C615 /* warning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "warning@2x.png"; sourceTree = "<group>"; };
+		522D890A1602A77000B5C615 /* warningLarge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warningLarge.png; sourceTree = "<group>"; };
+		522D890B1602A77000B5C615 /* warningLarge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "warningLarge@2x.png"; sourceTree = "<group>"; };
+		522D89101602A83800B5C615 /* greenCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenCheckmark.png; sourceTree = "<group>"; };
+		522D89111602A83800B5C615 /* greenCheckmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenCheckmark@2x.png"; sourceTree = "<group>"; };
+		522D89121602A83900B5C615 /* redX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redX.png; sourceTree = "<group>"; };
+		522D89131602A83900B5C615 /* redX@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redX@2x.png"; sourceTree = "<group>"; };
 		523A6BD115F6815900D60461 /* SchedulePeriods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchedulePeriods.h; sourceTree = "<group>"; };
 		523A6BD615F6DC1400D60461 /* UIPromptAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPromptAlertView.h; sourceTree = "<group>"; };
 		523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPromptAlertView.m; sourceTree = "<group>"; };
@@ -231,8 +245,6 @@
 		528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeHistoryDetailsViewController.m; sourceTree = "<group>"; };
 		528D629315FD670F006BD80A /* ClifeHistoryDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeHistoryDetailsViewController.xib; sourceTree = "<group>"; };
 		52B3E7E715E67F75004E9C4A /* icon-pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-pill.png"; sourceTree = "<group>"; };
-		52D7871415FFF15E00630551 /* warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warning.png; sourceTree = "<group>"; };
-		52D7871515FFF15E00630551 /* warning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "warning@2x.png"; sourceTree = "<group>"; };
 		C53DC69715D4378300CC7D14 /* CLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53DC69B15D4378300CC7D14 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C53DC69D15D4378300CC7D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -612,8 +624,14 @@
 				52B3E7E715E67F75004E9C4A /* icon-pill.png */,
 				522D88F716024AAE00B5C615 /* icon-calendar.png */,
 				522D88F816024AAE00B5C615 /* icon-calendar@2x.png */,
-				52D7871415FFF15E00630551 /* warning.png */,
-				52D7871515FFF15E00630551 /* warning@2x.png */,
+				522D89081602A77000B5C615 /* warning.png */,
+				522D89091602A77000B5C615 /* warning@2x.png */,
+				522D890A1602A77000B5C615 /* warningLarge.png */,
+				522D890B1602A77000B5C615 /* warningLarge@2x.png */,
+				522D89101602A83800B5C615 /* greenCheckmark.png */,
+				522D89111602A83800B5C615 /* greenCheckmark@2x.png */,
+				522D89121602A83900B5C615 /* redX.png */,
+				522D89131602A83900B5C615 /* redX@2x.png */,
 				5277E7F815DD62F1003A1DCF /* Localizable.strings */,
 			);
 			name = Resources;
@@ -1282,11 +1300,17 @@
 				5277E84615DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib in Resources */,
 				52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */,
 				528D629515FD6710006BD80A /* ClifeHistoryDetailsViewController.xib in Resources */,
-				52D7871615FFF15E00630551 /* warning.png in Resources */,
-				52D7871715FFF15E00630551 /* warning@2x.png in Resources */,
 				522D88F51602460800B5C615 /* ClifeRemindersViewController.xib in Resources */,
 				522D88F916024AAE00B5C615 /* icon-calendar.png in Resources */,
 				522D88FA16024AAE00B5C615 /* icon-calendar@2x.png in Resources */,
+				522D890C1602A77000B5C615 /* warning.png in Resources */,
+				522D890D1602A77000B5C615 /* warning@2x.png in Resources */,
+				522D890E1602A77000B5C615 /* warningLarge.png in Resources */,
+				522D890F1602A77000B5C615 /* warningLarge@2x.png in Resources */,
+				522D89141602A83900B5C615 /* greenCheckmark.png in Resources */,
+				522D89151602A83900B5C615 /* greenCheckmark@2x.png in Resources */,
+				522D89161602A83900B5C615 /* redX.png in Resources */,
+				522D89171602A83900B5C615 /* redX@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

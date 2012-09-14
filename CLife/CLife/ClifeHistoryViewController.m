@@ -84,6 +84,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // add the "Export" button to the nav bar
+    UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:NSLocalizedString(@"EXPORT", nil)
+                                    style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(onExportButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = rightButton;
+    [rightButton release];
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
 }
 
 - (void)viewDidUnload
@@ -197,7 +207,22 @@
         NSDate *scheduleDate = [DateTimeHelper parseWebServiceDateDouble:prescriptionInstance.datescheduled];
         cell.detailTextLabel.text = [dateAndTimeFormatter stringFromDate:scheduleDate];
         
-        cell.imageView.image = [UIImage imageNamed:@"icon-pill.png"];
+        int state = [prescriptionInstance.state intValue];
+        
+        switch (state) {
+            case kUNCONFIRMED:
+                cell.imageView.image = [UIImage imageNamed:@"warning.png"];
+                break;
+                
+            case kNOTTAKEN:
+                cell.imageView.image = [UIImage imageNamed:@"redX.png"];
+                break;
+                
+            default:
+                cell.imageView.image = [UIImage imageNamed:@"greenCheckmark.png"];
+                break;
+        }
+        
     }
     else {
         // Set None row
@@ -275,6 +300,11 @@
     
     [historyDetailsVC setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:historyDetailsVC animated:YES];
+}
+
+#pragma mark - UI Action Methods
+- (void)onExportButtonPressed:(id)sender {
+    
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate methods

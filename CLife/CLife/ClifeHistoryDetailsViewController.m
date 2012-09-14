@@ -198,7 +198,7 @@
         v_header.backgroundColor = [UIColor clearColor];
         
         UIImageView *iv_badge = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 53, 45)];
-        iv_badge.image = [UIImage imageNamed:@"warning.png"];
+        iv_badge.image = [UIImage imageNamed:@"warningLarge.png"];
         
         // Show confirmation warning label
         UILabel *lbl_warning = [[UILabel alloc] initWithFrame:CGRectMake(53, 0, 267, 45)];
@@ -766,6 +766,11 @@
         // We need to remove the date taken row
         [self.tbl_historyDetails deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:2]] withRowAnimation:UITableViewRowAnimationTop];
         self.dateTakenIsShown = NO;
+    }
+    else if (self.sc_confirmation.selectedSegmentIndex == 1 && 
+             self.dateTakenIsShown == NO)
+    {
+        [self.tbl_historyDetails reloadData];
     }
     
     if (self.sc_confirmation.selectedSegmentIndex == 0) {
