@@ -91,9 +91,10 @@
         self.prescriptionInstanceState = [prescriptionInstance.state intValue];
         self.notes = prescriptionInstance.notes;
         
-        if (self.prescriptionInstanceState == kUNCONFIRMED)
+        if (self.prescriptionInstanceState == kUNCONFIRMED ||
+            self.presentedAsModal == YES)
         {
-            // We have an unconfirmed instance
+            // We have an unconfirmed instance, or we've opened from a notification
             
             // we load up the date picker since it will likely be shown when the user confirms the state
             UIDatePicker* pickerView = [[[UIDatePicker alloc] init] autorelease];

@@ -141,9 +141,11 @@
     UILocalNotification *localNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (localNotification) {
         self.prescriptionInstanceID = [localNotification.userInfo objectForKey:PRESCRIPTIONINSTANCEID];
-        [self showHistoryDetailsVC];
+        
 //        application.applicationIconBadgeNumber = localNotification.applicationIconBadgeNumber-1;
         application.applicationIconBadgeNumber = 0;
+        
+        [self showHistoryDetailsVC];
     }
     
     //we grab the local notification manager so it can be instantiated and process itself
@@ -249,6 +251,9 @@
         [self.av_reminder show];
         [self.av_reminder release];
     }
+    
+    // Clear the notification
+    [[UIApplication sharedApplication] cancelLocalNotification:notification];
 }
 
 #pragma mark - UIAlertView Delegate

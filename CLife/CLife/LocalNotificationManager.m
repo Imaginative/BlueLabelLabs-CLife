@@ -40,7 +40,7 @@ static LocalNotificationManager* sharedManager;
     return self;
 }
 
-///returns a boolean indicating whether this particular prescriptionInstance is scheduled
+//returns a boolean indicating whether this particular prescriptionInstance is scheduled
 //for a local notificaton
 - (BOOL) isScheduledForLocalNotification:(PrescriptionInstance*)prescriptionInstance
 {
@@ -66,6 +66,34 @@ static LocalNotificationManager* sharedManager;
                 //this notification corresponds to the passed in prescription instance;
                 retVal = YES;
                 break;
+            }
+        }
+    }
+    return retVal;
+}
+
+//returns an array of Local Notification objects accociated to a particular prescriptionInstance
+- (NSArray *) localNotificationsForPrescriptionInstance:(PrescriptionInstance*)prescriptionInstance
+{
+    NSMutableArray *retVal = nil;
+    
+    //get all scheduled local notifications for this application
+    UIApplication* applicationObject = [UIApplication sharedApplication];
+    NSArray* scheduledNotifications = applicationObject.scheduledLocalNotifications;
+    
+    for (UILocalNotification* notification in scheduledNotifications)
+    {
+        //we check the user info property to see if the prescription instance id
+        //matches the one passed in
+        NSDictionary* userInfo = notification.userInfo;
+        NSNumber* prescriptionInstanceID = [userInfo valueForKey:PRESCRIPTIONINSTANCEID];
+        
+        if (prescriptionInstanceID != nil)
+        {
+            if ([prescriptionInstanceID isEqualToNumber:prescriptionInstance.objectid])
+            {
+                //this notification corresponds to the passed in prescription instance, add it to the array
+                [retVal addObject:notification];
             }
         }
     }

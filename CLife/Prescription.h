@@ -31,6 +31,9 @@
 @property (nonatomic,retain) NSString* notes;
 
 - (NSArray*) unconfirmedPrescriptionInstancesAfter:(NSDate*)date;
+- (NSArray*) prescriptionInstances;
+
++ (void) deletePrescriptionWithID:(NSNumber *)prescriptionID;
 
 + (Prescription *) createPrescriptionWithName:(NSString *)name 
                                    withMethod:(NSString *)method 

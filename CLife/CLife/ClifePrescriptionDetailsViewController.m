@@ -2208,7 +2208,7 @@
             [pim deleteUnconfirmedPrescriptionInstanceObjectsFor:prescription shouldSave:NO];
             
             //and then recreate a new set of prescription instance objects
-             NSArray* prescriptionInstances = [PrescriptionInstance createPrescriptionInstancesFor:prescription];
+            NSArray* prescriptionInstances = [PrescriptionInstance createPrescriptionInstancesFor:prescription];
             LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Created %d new PrescriptionInstance objects for Prescription:%@ (%@)",activityName, [prescriptionInstances count], prescription.objectid,prescription.name);
         }
         
@@ -2238,8 +2238,9 @@
 
 - (void)deletePrescription {
     // Delete the prescription object
-    ResourceContext *resourceContext = [ResourceContext instance];
-    [resourceContext delete:self.prescriptionID withType:PRESCRIPTION];
+//    ResourceContext *resourceContext = [ResourceContext instance];
+//    [resourceContext delete:self.prescriptionID withType:PRESCRIPTION];
+    [Prescription deletePrescriptionWithID:self.prescriptionID];
     
     self.prescriptionID = nil;
     self.medicationName = nil;

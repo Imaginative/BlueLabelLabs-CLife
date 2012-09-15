@@ -10,6 +10,7 @@
 #import "PrescriptionInstance.h"
 @interface LocalNotificationManager : NSObject
 
+- (NSArray *) localNotificationsForPrescriptionInstance:(PrescriptionInstance*)prescriptionInstance;
 - (BOOL) isScheduledForLocalNotification:(PrescriptionInstance*)prescriptionInstance;
 - (void) scheduleNotifications;
 

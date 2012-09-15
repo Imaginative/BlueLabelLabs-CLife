@@ -756,6 +756,9 @@
     // Re-enable "Done" and "Delete" buttons
     self.navigationItem.rightBarButtonItem.enabled = YES;
     
+    // Scroll tableview back to the top
+    [self.tbl_profile setContentOffset:CGPointMake(0, 0) animated:YES];
+    
 }
 
 //- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)text {

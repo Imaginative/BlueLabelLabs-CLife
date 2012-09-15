@@ -14,6 +14,8 @@
 #import "Attributes.h"
 #import "PrescriptionInstanceState.h"
 #import "Macros.h"
+#import "PrescriptionInstanceManager.h"
+
 @implementation Prescription
 
 @dynamic userid;
@@ -32,6 +34,7 @@
 
 @dynamic notes;
 
+#pragma mark - Methods
 //returns an array of all unconfirmed prescription instances
 //which are scheduled past the date passed in
 - (NSArray*) unconfirmedPrescriptionInstancesAfter:(NSDate*)date
@@ -72,6 +75,60 @@
     
     return retVal; 
 
+}
+
+//returns an array of all  prescription instances
+//associated with this prescription
+- (NSArray*) prescriptionInstances
+{
+    NSString* activityName = @"Prescription.prescriptionInstances:";
+    NSArray* retVal = nil;
+    
+    ResourceContext* resourceContext = [ResourceContext instance];
+    NSManagedObjectContext *appContext = resourceContext.managedObjectContext;
+    
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:PRESCRIPTIONINSTANCE inManagedObjectContext:appContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:entityDescription];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K=%@",PRESCRIPTIONID,self.objectid];
+    [request setPredicate:predicate];
+    
+    NSSortDescriptor* sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:DATESCHEDULED ascending:YES];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
+    NSError* error = nil;
+    NSArray* results = [appContext executeFetchRequest:request error:&error];
+    
+    if (error != nil) {
+        
+        LOG_PRESCRIPTION(1, @"%@Error PrescriptionInstance objects for Prescription:%@ (%@) due to:%@",activityName,self.objectid,self.name, error);
+    }
+    
+    else 
+    {
+        LOG_PRESCRIPTION(0,@"%@Successfully retrieved %d PrescriptionInstance objects for Prescription:%@ (%@)",activityName,[results count],self.objectid,self.name);
+        retVal = results;
+    }
+    [request release];
+    
+    return retVal;
+    
+}
+
+#pragma mark - Static Methods
++ (void) deletePrescriptionWithID:(NSNumber *)prescriptionID {
+    // Get the presciption object
+    ResourceContext *resourceContext = [ResourceContext instance];
+    Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:prescriptionID];
+    
+    // First delete all associated prescription instance objects and their local notifications
+    PrescriptionInstanceManager* prescriptionInstanceManager = [PrescriptionInstanceManager instance];
+    [prescriptionInstanceManager deletePrescriptionInstanceObjectsFor:prescription shouldSave:YES];
+    
+    // Now delete the prescription object
+    [resourceContext delete:prescriptionID withType:PRESCRIPTION];
 }
 
 #pragma mark - Static Initializers

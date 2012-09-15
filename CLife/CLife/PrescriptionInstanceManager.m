@@ -10,6 +10,7 @@
 #import "Macros.h"
 #import "Prescription.h"
 #import "PrescriptionInstance.h"
+#import "LocalNotificationManager.h"
 
 
 @implementation PrescriptionInstanceManager
@@ -65,10 +66,46 @@ static PrescriptionInstanceManager* sharedManager;
     {
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
         LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
-    }
-    
+    }    
     
 }
+
+//When a prescription is 'deleted' by the user, we need to clean up the store and eliminate
+//all prescriptioninstance objects releated to this prescription, past, present and future.
+- (void) deletePrescriptionInstanceObjectsFor:(Prescription *)prescription shouldSave:(BOOL)shouldSave
+{   
+    NSString* activityName = @"PrescriptionInstanceManager.deletePrescriptionInstanceObjectsFor:";
+    
+    //we grab a list of all prescription instances for this prescription
+    NSArray* prescriptionInstances = [prescription prescriptionInstances];
+    
+    ResourceContext* resourceContext = [ResourceContext instance];
+    LOG_PRESCRIPTIONINSTANCEMANAGER(0,@"%@Deleting %d prescription instance objects associated with Prescription:%@ (%@)", activityName, [prescriptionInstances count], prescription.objectid, prescription.name);
+    
+    //now that we have these objects, we can go ahead and delete them
+    for (PrescriptionInstance* prescriptionInstance in prescriptionInstances) {
+        
+        // Delete the object
+        [resourceContext delete:prescriptionInstance.objectid withType:PRESCRIPTIONINSTANCE];
+        
+        // Cancel any associated Local Notifications
+        LocalNotificationManager* notificationManager = [LocalNotificationManager instance];
+        
+        NSArray *notifications = [notificationManager localNotificationsForPrescriptionInstance:prescriptionInstance];
+        
+        for (UILocalNotification *notification in notifications) {
+            [[UIApplication sharedApplication] cancelLocalNotification:notification];
+        }
+    }
+    
+    if (shouldSave)
+    {
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
+    }    
+    
+}
+
 //this method will iterate through all of the Prescriptions and depending on its end
 //date and how many prescription instance objects remain will create additional ones as needed
 - (void) createMissingPrescriptionInstanceObjects

@@ -12,5 +12,6 @@
 
 - (void) createMissingPrescriptionInstanceObjects;
 - (void) deleteUnconfirmedPrescriptionInstanceObjectsFor:(Prescription*)prescription shouldSave:(BOOL)shouldSave;
+- (void) deletePrescriptionInstanceObjectsFor:(Prescription *)prescription shouldSave:(BOOL)shouldSave;
 + (PrescriptionInstanceManager*) instance;
 @end
