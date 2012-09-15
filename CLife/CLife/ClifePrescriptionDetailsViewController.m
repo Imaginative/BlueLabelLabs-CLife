@@ -1317,8 +1317,8 @@
             self.scheduleOccurenceNumber = [NSNumber numberWithInt:row];
         }
         else {
-            self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", row + 1, NSLocalizedString(@"TIMES THAT DAY", nil)];
-            self.scheduleOccurenceNumber = [NSNumber numberWithInt:(row + 1)];
+            self.tf_scheduleOccurences.text = [NSString stringWithFormat:@"%d %@", row, NSLocalizedString(@"TIMES THAT DAY", nil)];
+            self.scheduleOccurenceNumber = [NSNumber numberWithInt:(row)];
         }
     }
 }
