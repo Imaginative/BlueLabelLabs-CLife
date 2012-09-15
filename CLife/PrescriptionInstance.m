@@ -294,7 +294,7 @@
                 NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
                 [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
                 [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
-                NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [prescription.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
+                NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [instance.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
                 
                 
                 // next create an instance for each remaining occurance that day if more than 1
@@ -320,7 +320,7 @@
                             NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
                             [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
                             [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
-                            NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [prescription.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
+                            NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [instance.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
                         }
                     }
                     
@@ -356,7 +356,7 @@
                         NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
                         [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
                         [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
-                        NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [prescription.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
+                        NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [instance.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
                     }
                     
                     // reset the components
@@ -388,7 +388,7 @@
                     NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
                     [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
                     [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
-                    NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [prescription.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
+                    NSLog([NSString stringWithFormat:@"PrescriptionInstanceID:%@, RedminderDate:%@", [instance.objectid stringValue], [dateAndTimeFormatter stringFromDate:reminderDate]]);
                 }
                 
                 // reset the components

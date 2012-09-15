@@ -92,7 +92,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entityDescription];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K=%@",PRESCRIPTIONID,self.objectid];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"%K=%@", PRESCRIPTIONID, self.objectid];
     [request setPredicate:predicate];
     
     NSSortDescriptor* sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:DATESCHEDULED ascending:YES];
@@ -102,7 +102,6 @@
     NSArray* results = [appContext executeFetchRequest:request error:&error];
     
     if (error != nil) {
-        
         LOG_PRESCRIPTION(1, @"%@Error PrescriptionInstance objects for Prescription:%@ (%@) due to:%@",activityName,self.objectid,self.name, error);
     }
     

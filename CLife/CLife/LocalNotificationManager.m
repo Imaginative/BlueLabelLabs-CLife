@@ -75,7 +75,7 @@ static LocalNotificationManager* sharedManager;
 //returns an array of Local Notification objects accociated to a particular prescriptionInstance
 - (NSArray *) localNotificationsForPrescriptionInstance:(PrescriptionInstance*)prescriptionInstance
 {
-    NSMutableArray *retVal = nil;
+    NSMutableArray *retVal = [[NSMutableArray alloc] init];
     
     //get all scheduled local notifications for this application
     UIApplication* applicationObject = [UIApplication sharedApplication];
