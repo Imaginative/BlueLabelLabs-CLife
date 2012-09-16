@@ -84,20 +84,20 @@ static PrescriptionInstanceManager* sharedManager;
     
     //now that we have these objects, we can go ahead and delete them
     for (PrescriptionInstance* prescriptionInstance in prescriptionInstances) {
-        // First, cancel any associated Local Notifications
-        LocalNotificationManager* notificationManager = [LocalNotificationManager instance];
-        
-        NSArray *notifications = [notificationManager localNotificationsForPrescriptionInstance:prescriptionInstance];
-        
-        for (UILocalNotification *notification in notifications) {
-            /* NSLog */
-            NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
-            [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
-            [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
-            NSLog([NSString stringWithFormat:@"Canceled Local Notification for PrescriptionInstanceID:%@, with FireDate:%@", [prescriptionInstance.objectid stringValue], [dateAndTimeFormatter stringFromDate:notification.fireDate]]);
-            
-            [[UIApplication sharedApplication] cancelLocalNotification:notification];
-        }
+//        // First, cancel any associated Local Notifications
+//        LocalNotificationManager* notificationManager = [LocalNotificationManager instance];
+//        
+//        NSArray *notifications = [notificationManager localNotificationsForPrescriptionInstance:prescriptionInstance];
+//        
+//        for (UILocalNotification *notification in notifications) {
+//            /* NSLog */
+//            NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+//            [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
+//            [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+//            NSLog([NSString stringWithFormat:@"Canceled Local Notification for PrescriptionInstanceID:%@, with FireDate:%@", [prescriptionInstance.objectid stringValue], [dateAndTimeFormatter stringFromDate:notification.fireDate]]);
+//            
+//            [[UIApplication sharedApplication] cancelLocalNotification:notification];
+//        }
         
         // Now delete the object
         [resourceContext delete:prescriptionInstance.objectid withType:PRESCRIPTIONINSTANCE];
@@ -107,7 +107,7 @@ static PrescriptionInstanceManager* sharedManager;
     if (shouldSave)
     {
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-        LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
+        LOG_PRESCRIPTIONINSTANCE(0,@"%@ Committed deletions to the local store",activityName);
     }    
     
 }

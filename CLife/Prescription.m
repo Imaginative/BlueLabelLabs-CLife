@@ -15,6 +15,7 @@
 #import "PrescriptionInstanceState.h"
 #import "Macros.h"
 #import "PrescriptionInstanceManager.h"
+#import "LocalNotificationManager.h"
 
 @implementation Prescription
 
@@ -118,6 +119,8 @@
 
 #pragma mark - Static Methods
 + (void) deletePrescriptionWithID:(NSNumber *)prescriptionID {
+    NSString* activityName = @"Prescription.deletePrescriptionWithID:";
+    
     // Get the presciption object
     ResourceContext *resourceContext = [ResourceContext instance];
     Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:prescriptionID];
@@ -128,6 +131,14 @@
     
     // Now delete the prescription object
     [resourceContext delete:prescriptionID withType:PRESCRIPTION];
+    
+    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+    LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
+    
+    // Now clean up and cancel any local notifications associated with this prescription object
+    LocalNotificationManager* notificationManager = [LocalNotificationManager instance];
+    [notificationManager scheduleNotifications];
+
 }
 
 #pragma mark - Static Initializers
