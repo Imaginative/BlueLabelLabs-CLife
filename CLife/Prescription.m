@@ -64,12 +64,12 @@
     
     if (error != nil) {
         
-        LOG_PRESCRIPTION(1, @"%@Error PrescriptionInstance objects for Prescription:%@ (%@) due to:%@",activityName,self.objectid,self.name, error);
+//        LOG_PRESCRIPTION(1, @"%@Error PrescriptionInstance objects for Prescription:%@ (%@) due to:%@",activityName,self.objectid,self.name, error);
     }
     
     else 
     {
-        LOG_PRESCRIPTION(0,@"%@Successfully retrieved %d PrescriptionInstance objects for Prescription:%@ (%@)",activityName,[results count],self.objectid,self.name);
+//        LOG_PRESCRIPTION(0,@"%@Successfully retrieved %d PrescriptionInstance objects for Prescription:%@ (%@)",activityName,[results count],self.objectid,self.name);
         retVal = results;
     }
     [request release];
@@ -103,12 +103,12 @@
     NSArray* results = [appContext executeFetchRequest:request error:&error];
     
     if (error != nil) {
-        LOG_PRESCRIPTION(1, @"%@Error PrescriptionInstance objects for Prescription:%@ (%@) due to:%@",activityName,self.objectid,self.name, error);
+//        LOG_PRESCRIPTION(1, @"%@Error PrescriptionInstance objects for Prescription:%@ (%@) due to:%@",activityName,self.objectid,self.name, error);
     }
     
     else 
     {
-        LOG_PRESCRIPTION(0,@"%@Successfully retrieved %d PrescriptionInstance objects for Prescription:%@ (%@)",activityName,[results count],self.objectid,self.name);
+//        LOG_PRESCRIPTION(0,@"%@Successfully retrieved %d PrescriptionInstance objects for Prescription:%@ (%@)",activityName,[results count],self.objectid,self.name);
         retVal = results;
     }
     [request release];
@@ -133,7 +133,7 @@
     [resourceContext delete:prescriptionID withType:PRESCRIPTION];
     
     [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-    LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
+//    LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
     
     // Now clean up and cancel any local notifications associated with this prescription object
     LocalNotificationManager* notificationManager = [LocalNotificationManager instance];

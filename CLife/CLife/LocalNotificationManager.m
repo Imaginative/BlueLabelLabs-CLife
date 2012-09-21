@@ -137,11 +137,11 @@ static LocalNotificationManager* sharedManager;
     //we need to grab all existing notifications for this app
     NSArray* scheduledLocalNotifications = [applicationObj scheduledLocalNotifications];
     
-    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Detected %d existing notifications scheduled",activityName,[scheduledLocalNotifications count]);
+//    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Detected %d existing notifications scheduled",activityName,[scheduledLocalNotifications count]);
     
     //now we cancel all of the outstanding local notifications
     [applicationObj cancelAllLocalNotifications];
-    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Cancelled all outstanding notifications for this app",activityName);
+//    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Cancelled all outstanding notifications for this app",activityName);
     
     //we need to create a sorted list of all unconfirmed PrescriptionInstances
     ResourceContext* resourceContext = [ResourceContext instance];
@@ -153,7 +153,7 @@ static LocalNotificationManager* sharedManager;
     
     //now we have a list of all unconfirmed prescription instance objects sorted by datescheduled
     //ascending
-    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Retrieved %d existing unconfirmed PrescriptionInstances",activityName,[allPrescriptionInstanceObjects count]);
+//    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Retrieved %d existing unconfirmed PrescriptionInstances",activityName,[allPrescriptionInstanceObjects count]);
     
     
     //we iterate through all of them and mark them as being not scheduled
@@ -168,7 +168,7 @@ static LocalNotificationManager* sharedManager;
     //we take the first X of these prescription instance objects
     NSArray* prescriptionInstanceObjectsToBeScheduled = [self getFirst:kMAXNUMBEROFLOCALNOTIFICATIONS from:allPrescriptionInstanceObjects];
     
-    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Scheduling %d local notifications for prescription instances",activityName,[prescriptionInstanceObjectsToBeScheduled count]);
+//    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Scheduling %d local notifications for prescription instances",activityName,[prescriptionInstanceObjectsToBeScheduled count]);
     
     //we now loop through and schedule these notifications
     int numberOfPrescriptionInstancesScheduled = 0;
@@ -181,14 +181,14 @@ static LocalNotificationManager* sharedManager;
         prescriptionInstance.hasnotificationbeenscheduled = [NSNumber numberWithBool:YES];
         
         
-        LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Scheduled local notification for Prescription: %@  (instance:%@) at %@",activityName, prescriptionInstance.prescriptionid, prescriptionInstance.objectid,localNotificationForPrescriptionInstance.fireDate);
+//        LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Scheduled local notification for Prescription: %@  (instance:%@) at %@",activityName, prescriptionInstance.prescriptionid, prescriptionInstance.objectid,localNotificationForPrescriptionInstance.fireDate);
         
         numberOfPrescriptionInstancesScheduled++;
     }
     
     //we now save all of our changes to the resource context
     [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Finished scheduling %d notifications",activityName,numberOfPrescriptionInstancesScheduled);
+//    LOG_LOCALNOTIFICATIONMANAGER(0,@"%@Finished scheduling %d notifications",activityName,numberOfPrescriptionInstancesScheduled);
     
 //  
 //    for (PrescriptionInstance* prescriptionInstance in prescriptionInstances) {

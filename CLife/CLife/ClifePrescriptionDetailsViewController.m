@@ -2209,18 +2209,18 @@
             
             //and then recreate a new set of prescription instance objects
             NSArray* prescriptionInstances = [PrescriptionInstance createPrescriptionInstancesFor:prescription];
-            LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Created %d new PrescriptionInstance objects for Prescription:%@ (%@)",activityName, [prescriptionInstances count], prescription.objectid,prescription.name);
+//            LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Created %d new PrescriptionInstance objects for Prescription:%@ (%@)",activityName, [prescriptionInstances count], prescription.objectid,prescription.name);
         }
         
         //we save the changes to the database
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-        LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Committed all changes to Prescription: %@ (@%) to the local store",activityName,prescription.objectid,prescription.name);
+//        LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Committed all changes to Prescription: %@ (@%) to the local store",activityName,prescription.objectid,prescription.name);
         
         //now we need to call the notification manager to reschedule all the new notifications
         LocalNotificationManager* lim = [LocalNotificationManager instance];
         [lim scheduleNotifications];
         
-        LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Rescheduled new local notifications due to changes made to Prescription: %@ (%@)",activityName,prescription.objectid,prescription.name);
+//        LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Rescheduled new local notifications due to changes made to Prescription: %@ (%@)",activityName,prescription.objectid,prescription.name);
         
         
         

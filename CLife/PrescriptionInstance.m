@@ -126,12 +126,12 @@
     
     if (error != nil) {
         
-        LOG_PRESCRIPTIONINSTANCE(1, @"%@Error due to:%@",activityName, error);
+//        LOG_PRESCRIPTIONINSTANCE(1, @"%@Error due to:%@",activityName, error);
     }
     
     else 
     {
-        LOG_PRESCRIPTIONINSTANCE(0,@"%@Successfully retrieved %d PrescriptionInstance objects",activityName,[results count]);
+//        LOG_PRESCRIPTIONINSTANCE(0,@"%@Successfully retrieved %d PrescriptionInstance objects",activityName,[results count]);
         retVal = results;
     }
     [request release];

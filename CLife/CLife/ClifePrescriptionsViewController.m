@@ -53,7 +53,7 @@
     [controller performFetch:&error];
   	if (error != nil)
     {
-        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(1, @"%@Could not create instance of NSFetchedResultsController due to %@", activityName, [error userInfo]);
+//        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(1, @"%@Could not create instance of NSFetchedResultsController due to %@", activityName, [error userInfo]);
     }
     
     [controller release];
@@ -253,18 +253,18 @@
     
     if (type == NSFetchedResultsChangeDelete)
     {
-        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(0,@"%@ Received NSFetechedResultsChangeDelete notification",activityName);
+//        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(0,@"%@ Received NSFetechedResultsChangeDelete notification",activityName);
     }
     
     if (controller == self.frc_prescriptions) {
-        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(0, @"%@Received a didChange message from a NSFetchedResultsController. %p", activityName, &controller);
+//        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(0, @"%@Received a didChange message from a NSFetchedResultsController. %p", activityName, &controller);
         
         if (indexPath.row < kMAXROWS) {
             [self.tbl_prescriptions reloadData];
         }
     }
     else {
-        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(1, @"%@Received a didChange message from a NSFetchedResultsController that isnt mine. %p", activityName, &controller);
+//        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(1, @"%@Received a didChange message from a NSFetchedResultsController that isnt mine. %p", activityName, &controller);
     }
 }
 

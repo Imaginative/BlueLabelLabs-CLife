@@ -53,7 +53,7 @@ static PrescriptionInstanceManager* sharedManager;
     NSArray* unconfirmedPrescriptionInstances = [prescription unconfirmedPrescriptionInstancesAfter:todaysDate];
    
     ResourceContext* resourceContext = [ResourceContext instance];
-    LOG_PRESCRIPTIONINSTANCEMANAGER(0,@"%@Deleting %d unconfirmed prescription instance objects associated with Prescription:%@ (%@)",activityName,[unconfirmedPrescriptionInstances count],prescription.objectid,prescription.name);
+//    LOG_PRESCRIPTIONINSTANCEMANAGER(0,@"%@Deleting %d unconfirmed prescription instance objects associated with Prescription:%@ (%@)",activityName,[unconfirmedPrescriptionInstances count],prescription.objectid,prescription.name);
     
     //now that we have these objects, we can go ahead and delete them
     for (PrescriptionInstance* prescriptionInstance in unconfirmedPrescriptionInstances) {
@@ -65,7 +65,7 @@ static PrescriptionInstanceManager* sharedManager;
     if (shouldSave)
     {
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-        LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
+//        LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
     }    
     
 }
@@ -80,7 +80,7 @@ static PrescriptionInstanceManager* sharedManager;
     NSArray* prescriptionInstances = [prescription prescriptionInstances];
     
     ResourceContext* resourceContext = [ResourceContext instance];
-    LOG_PRESCRIPTIONINSTANCEMANAGER(0,@"%@Deleting %d prescription instance objects associated with Prescription:%@ (%@)", activityName, [prescriptionInstances count], prescription.objectid, prescription.name);
+//    LOG_PRESCRIPTIONINSTANCEMANAGER(0,@"%@Deleting %d prescription instance objects associated with Prescription:%@ (%@)", activityName, [prescriptionInstances count], prescription.objectid, prescription.name);
     
     //now that we have these objects, we can go ahead and delete them
     for (PrescriptionInstance* prescriptionInstance in prescriptionInstances) {
@@ -107,7 +107,7 @@ static PrescriptionInstanceManager* sharedManager;
     if (shouldSave)
     {
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-        LOG_PRESCRIPTIONINSTANCE(0,@"%@ Committed deletions to the local store",activityName);
+//        LOG_PRESCRIPTIONINSTANCE(0,@"%@ Committed deletions to the local store",activityName);
     }    
     
 }
