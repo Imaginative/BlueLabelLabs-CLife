@@ -24,7 +24,6 @@
 		5277E7DF15DD4D48003A1DCF /* icon-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */; };
 		5277E7E215DD4F7E003A1DCF /* icon-medical.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7E015DD4F7E003A1DCF /* icon-medical.png */; };
 		5277E7E315DD4F7E003A1DCF /* icon-medical@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7E115DD4F7E003A1DCF /* icon-medical@2x.png */; };
-		5277E7E815DD5209003A1DCF /* ClifeTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7E615DD5209003A1DCF /* ClifeTableViewController.xib */; };
 		5277E7F615DD62F1003A1DCF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7F815DD62F1003A1DCF /* Localizable.strings */; };
 		5277E7FC15DD6B67003A1DCF /* icon-clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7FA15DD6B67003A1DCF /* icon-clock.png */; };
 		5277E7FD15DD6B67003A1DCF /* icon-clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7FB15DD6B67003A1DCF /* icon-clock@2x.png */; };
@@ -43,6 +42,14 @@
 		528D629415FD6710006BD80A /* ClifeHistoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */; };
 		528D629515FD6710006BD80A /* ClifeHistoryDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528D629315FD670F006BD80A /* ClifeHistoryDetailsViewController.xib */; };
 		52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B3E7E715E67F75004E9C4A /* icon-pill.png */; };
+		52F007B9160CF6A90003CF2C /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007B2160CF6A90003CF2C /* CHCSVParser.m */; };
+		52F007BA160CF6A90003CF2C /* CHCSVWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007B4160CF6A90003CF2C /* CHCSVWriter.m */; };
+		52F007BB160CF6A90003CF2C /* NSArray+CHCSVAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007B6160CF6A90003CF2C /* NSArray+CHCSVAdditions.m */; };
+		52F007BC160CF6A90003CF2C /* NSString+CHCSVAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007B8160CF6A90003CF2C /* NSString+CHCSVAdditions.m */; };
+		52F007C0160D2DF60003CF2C /* ExportManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007BF160D2DF60003CF2C /* ExportManager.m */; };
+		52F007C8160D3E410003CF2C /* ClifeFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007C6160D3E410003CF2C /* ClifeFilterViewController.m */; };
+		52F007C9160D3E410003CF2C /* ClifeFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F007C7160D3E410003CF2C /* ClifeFilterViewController.xib */; };
+		52FC0504160CE9A80083DB3C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52FC0503160CE9A80083DB3C /* Default-568h@2x.png */; };
 		C53DC69C15D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
 		C53DC69E15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
 		C53DC6A015D4378300CC7D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */; };
@@ -213,9 +220,6 @@
 		5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile@2x.png"; sourceTree = "<group>"; };
 		5277E7E015DD4F7E003A1DCF /* icon-medical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-medical.png"; sourceTree = "<group>"; };
 		5277E7E115DD4F7E003A1DCF /* icon-medical@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-medical@2x.png"; sourceTree = "<group>"; };
-		5277E7E415DD5209003A1DCF /* ClifeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeTableViewController.h; sourceTree = "<group>"; };
-		5277E7E515DD5209003A1DCF /* ClifeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeTableViewController.m; sourceTree = "<group>"; };
-		5277E7E615DD5209003A1DCF /* ClifeTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeTableViewController.xib; sourceTree = "<group>"; };
 		5277E7F715DD62F1003A1DCF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5277E7F915DD6304003A1DCF /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5277E7FA15DD6B67003A1DCF /* icon-clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-clock.png"; sourceTree = "<group>"; };
@@ -245,6 +249,21 @@
 		528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeHistoryDetailsViewController.m; sourceTree = "<group>"; };
 		528D629315FD670F006BD80A /* ClifeHistoryDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeHistoryDetailsViewController.xib; sourceTree = "<group>"; };
 		52B3E7E715E67F75004E9C4A /* icon-pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-pill.png"; sourceTree = "<group>"; };
+		52F007B0160CF6A90003CF2C /* CHCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSV.h; sourceTree = "<group>"; };
+		52F007B1160CF6A90003CF2C /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
+		52F007B2160CF6A90003CF2C /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
+		52F007B3160CF6A90003CF2C /* CHCSVWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVWriter.h; sourceTree = "<group>"; };
+		52F007B4160CF6A90003CF2C /* CHCSVWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVWriter.m; sourceTree = "<group>"; };
+		52F007B5160CF6A90003CF2C /* NSArray+CHCSVAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+CHCSVAdditions.h"; sourceTree = "<group>"; };
+		52F007B6160CF6A90003CF2C /* NSArray+CHCSVAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+CHCSVAdditions.m"; sourceTree = "<group>"; };
+		52F007B7160CF6A90003CF2C /* NSString+CHCSVAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CHCSVAdditions.h"; sourceTree = "<group>"; };
+		52F007B8160CF6A90003CF2C /* NSString+CHCSVAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CHCSVAdditions.m"; sourceTree = "<group>"; };
+		52F007BE160D2DBC0003CF2C /* ExportManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExportManager.h; sourceTree = "<group>"; };
+		52F007BF160D2DF60003CF2C /* ExportManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExportManager.m; sourceTree = "<group>"; };
+		52F007C5160D3E410003CF2C /* ClifeFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeFilterViewController.h; sourceTree = "<group>"; };
+		52F007C6160D3E410003CF2C /* ClifeFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeFilterViewController.m; sourceTree = "<group>"; };
+		52F007C7160D3E410003CF2C /* ClifeFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeFilterViewController.xib; sourceTree = "<group>"; };
+		52FC0503160CE9A80083DB3C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		C53DC69715D4378300CC7D14 /* CLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53DC69B15D4378300CC7D14 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C53DC69D15D4378300CC7D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -603,9 +622,9 @@
 				528D629115FD670F006BD80A /* ClifeHistoryDetailsViewController.h */,
 				528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */,
 				528D629315FD670F006BD80A /* ClifeHistoryDetailsViewController.xib */,
-				5277E7E415DD5209003A1DCF /* ClifeTableViewController.h */,
-				5277E7E515DD5209003A1DCF /* ClifeTableViewController.m */,
-				5277E7E615DD5209003A1DCF /* ClifeTableViewController.xib */,
+				52F007C5160D3E410003CF2C /* ClifeFilterViewController.h */,
+				52F007C6160D3E410003CF2C /* ClifeFilterViewController.m */,
+				52F007C7160D3E410003CF2C /* ClifeFilterViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -646,9 +665,43 @@
 			name = Abstract;
 			sourceTree = "<group>";
 		};
+		52F0077C160CF5720003CF2C /* Externals */ = {
+			isa = PBXGroup;
+			children = (
+				52F007AF160CF6450003CF2C /* CHCSVParser */,
+			);
+			name = Externals;
+			sourceTree = "<group>";
+		};
+		52F007AF160CF6450003CF2C /* CHCSVParser */ = {
+			isa = PBXGroup;
+			children = (
+				52F007B0160CF6A90003CF2C /* CHCSV.h */,
+				52F007B1160CF6A90003CF2C /* CHCSVParser.h */,
+				52F007B2160CF6A90003CF2C /* CHCSVParser.m */,
+				52F007B3160CF6A90003CF2C /* CHCSVWriter.h */,
+				52F007B4160CF6A90003CF2C /* CHCSVWriter.m */,
+				52F007B5160CF6A90003CF2C /* NSArray+CHCSVAdditions.h */,
+				52F007B6160CF6A90003CF2C /* NSArray+CHCSVAdditions.m */,
+				52F007B7160CF6A90003CF2C /* NSString+CHCSVAdditions.h */,
+				52F007B8160CF6A90003CF2C /* NSString+CHCSVAdditions.m */,
+			);
+			name = CHCSVParser;
+			sourceTree = "<group>";
+		};
+		52F007BD160D2D920003CF2C /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				52F007BE160D2DBC0003CF2C /* ExportManager.h */,
+				52F007BF160D2DF60003CF2C /* ExportManager.m */,
+			);
+			name = Singletons;
+			sourceTree = "<group>";
+		};
 		C53DC68C15D4378300CC7D14 = {
 			isa = PBXGroup;
 			children = (
+				52FC0503160CE9A80083DB3C /* Default-568h@2x.png */,
 				C53DC87D15D441AE00CC7D14 /* QuartzCore.framework */,
 				C53DC87B15D4417D00CC7D14 /* CoreData.framework */,
 				C53DC74915D43BD700CC7D14 /* MobileCoreServices.framework */,
@@ -692,6 +745,8 @@
 		C53DC6A115D4378300CC7D14 /* CLife */ = {
 			isa = PBXGroup;
 			children = (
+				52F007BD160D2D920003CF2C /* Singletons */,
+				52F0077C160CF5720003CF2C /* Externals */,
 				523A6BCF15F6813700D60461 /* Constants */,
 				C5D45C0415F3A1A500FB5A49 /* Singletons */,
 				C53DC87415D4415300CC7D14 /* Views */,
@@ -1288,7 +1343,6 @@
 				5277E7DF15DD4D48003A1DCF /* icon-profile@2x.png in Resources */,
 				5277E7E215DD4F7E003A1DCF /* icon-medical.png in Resources */,
 				5277E7E315DD4F7E003A1DCF /* icon-medical@2x.png in Resources */,
-				5277E7E815DD5209003A1DCF /* ClifeTableViewController.xib in Resources */,
 				5277E7F615DD62F1003A1DCF /* Localizable.strings in Resources */,
 				5277E7FC15DD6B67003A1DCF /* icon-clock.png in Resources */,
 				5277E7FD15DD6B67003A1DCF /* icon-clock@2x.png in Resources */,
@@ -1311,6 +1365,8 @@
 				522D89151602A83900B5C615 /* greenCheckmark@2x.png in Resources */,
 				522D89161602A83900B5C615 /* redX.png in Resources */,
 				522D89171602A83900B5C615 /* redX@2x.png in Resources */,
+				52FC0504160CE9A80083DB3C /* Default-568h@2x.png in Resources */,
+				52F007C9160D3E410003CF2C /* ClifeFilterViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1466,6 +1522,12 @@
 				528D629415FD6710006BD80A /* ClifeHistoryDetailsViewController.m in Sources */,
 				C5D671BF1600D50F00071AEE /* PrescriptionInstanceManager.m in Sources */,
 				522D88F41602460800B5C615 /* ClifeRemindersViewController.m in Sources */,
+				52F007B9160CF6A90003CF2C /* CHCSVParser.m in Sources */,
+				52F007BA160CF6A90003CF2C /* CHCSVWriter.m in Sources */,
+				52F007BB160CF6A90003CF2C /* NSArray+CHCSVAdditions.m in Sources */,
+				52F007BC160CF6A90003CF2C /* NSString+CHCSVAdditions.m in Sources */,
+				52F007C0160D2DF60003CF2C /* ExportManager.m in Sources */,
+				52F007C8160D3E410003CF2C /* ClifeFilterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1538,6 +1600,7 @@
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -1559,6 +1622,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A8FEF7C2-19D8-460C-8C41-D35EADC385E8";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};

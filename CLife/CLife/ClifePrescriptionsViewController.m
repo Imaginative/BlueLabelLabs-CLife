@@ -13,7 +13,7 @@
 #import "Attributes.h"
 #import "Macros.h"
 
-#define kMAXROWS 1000
+//#define kMAXROWS 1000
 
 @interface ClifePrescriptionsViewController ()
 
@@ -26,7 +26,7 @@
 
 #pragma mark - Properties
 - (NSFetchedResultsController*)frc_prescriptions {
-    NSString* activityName = @"ClifePrescriptionsViewController.frc_prescriptions:";
+//    NSString* activityName = @"ClifePrescriptionsViewController.frc_prescriptions:";
     if (__frc_prescriptions != nil) {
         return __frc_prescriptions;
     }
@@ -42,7 +42,7 @@
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     [fetchRequest setEntity:entityDescription];
     
-    [fetchRequest setFetchBatchSize:kMAXROWS];
+//    [fetchRequest setFetchBatchSize:kMAXROWS];
     
     NSFetchedResultsController* controller = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest managedObjectContext:resourceContext.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     
@@ -259,9 +259,9 @@
     if (controller == self.frc_prescriptions) {
 //        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(0, @"%@Received a didChange message from a NSFetchedResultsController. %p", activityName, &controller);
         
-        if (indexPath.row < kMAXROWS) {
+//        if (indexPath.row < kMAXROWS) {
             [self.tbl_prescriptions reloadData];
-        }
+//        }
     }
     else {
 //        LOG_CLIFEPRESCRIPTIONSVIEWCONTROLLER(1, @"%@Received a didChange message from a NSFetchedResultsController that isnt mine. %p", activityName, &controller);

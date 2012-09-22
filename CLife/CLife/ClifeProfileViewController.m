@@ -77,10 +77,14 @@
                         nil];
     
     self.bloodTypeArray = [NSArray arrayWithObjects:
-                           NSLocalizedString(@"A", nil), 
-                           NSLocalizedString(@"B", nil), 
-                           NSLocalizedString(@"AB", nil), 
-                           NSLocalizedString(@"O", nil), 
+                           NSLocalizedString(@"A POSITIVE", nil), 
+                           NSLocalizedString(@"A NEGATIVE", nil), 
+                           NSLocalizedString(@"B POSITIVE", nil), 
+                           NSLocalizedString(@"B NEGATIVE", nil),
+                           NSLocalizedString(@"AB POSITIVE", nil),
+                           NSLocalizedString(@"AB NEGATIVE", nil),
+                           NSLocalizedString(@"O POSITIVE", nil),
+                           NSLocalizedString(@"O NEGATIVE", nil),
                            nil];
     
     // Setup tap gesture recognizer to capture touches on the tableview when the keyboard is visible

@@ -9,6 +9,7 @@
 
 
 // General
+"ITEM" = "Item";
 "TODAY" = "Today";
 "EXPORT" = "Export";
 "YES" = "Yes";
@@ -31,6 +32,7 @@
 // Tab Bar
 "PROFILE" = "Profile";
 "PRESCRIPTIONS" = "Prescriptions";
+"PRESCRIPTION" = "Prescription";
 "REMINDERS" = "Reminders";
 "HISTORY" = "History";
 
@@ -49,10 +51,14 @@
 
 "BLOOD TYPE" = "Blood Type";
 "SELECT BLOOD TYPE" = "Select blood type";
-"A" = "A";
-"B" = "B";
-"AB" = "AB";
-"O" = "O";
+"A POSITIVE" = "A Positive";
+"A NEGATIVE" = "A Negative";
+"B POSITIVE" = "B Positive";
+"B NEGATIVE" = "B Negative";
+"AB POSITIVE" = "AB Positive";
+"AB NEGATIVE" = "AB Negative";
+"O POSITIVE" = "O Positive";
+"O NEGATIVE" = "O Negative";
 
 "EDIT PROFILE" = "Edit Profile";
 "EDIT PROFILE MESSAGE" = "Would you like to backup your history before editing your profile?";
@@ -136,9 +142,9 @@
 "NOTES" = "Notes (optional)";
 
 "WARNING" = "Please confirm if and when this prescription was taken";
-"TAKEN" = "Taken";
-"NOT TAKEN" = "Not Taken";
 "UNCONFIRMED" = "Unconfirmed";
+"NOT TAKEN" = "Not Taken";
+"TAKEN" = "Taken";
 "SCHEDULED" = "Scheduled";
 "ENTER DATE AND TIME" = "enter date and time";
 
@@ -152,5 +158,15 @@
 "REMINDER ACTION PART 1" = "Time to take your next dose of";
 "REMINDER ACTION PART 2" = "Please open CLife to confirm.";
 "REMINDER ACTION PART 2 TYPE 2" = "Please confirm.";
+
+
+//Filter
+"CLEAR" = "Clear";
+"FILTER" = "Filter";
+
+"PERIOD" = "Period";
+"CHOOSE PRESCRIPTIONS" = "Choose prescriptions";
+"CHOOSE PERIOD" = "Choose period";
+
 
 

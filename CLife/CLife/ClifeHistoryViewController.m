@@ -13,6 +13,8 @@
 #import "PrescriptionInstanceState.h"
 #import "DateTimeHelper.h"
 #import "ClifeHistoryDetailsViewController.h"
+#import "ExportManager.h"
+#import "ClifeFilterViewController.h"
 
 #define kTABLEVIEWCELLHEIGHT 50.0
 
@@ -93,7 +95,15 @@
                                     action:@selector(onExportButtonPressed:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     [rightButton release];
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    
+    // add the "Filter" button to the nav bar
+    UIBarButtonItem* leftButton = [[UIBarButtonItem alloc]
+                                    initWithTitle:NSLocalizedString(@"FILTER", nil)
+                                    style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(onFilterButtonPressed:)];
+    self.navigationItem.leftBarButtonItem = leftButton;
+    [leftButton release];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -327,7 +337,16 @@
 
 #pragma mark - UI Action Methods
 - (void)onExportButtonPressed:(id)sender {
+    ExportManager *exportManager = [ExportManager instance];
+    [exportManager exportData];
+}
+
+- (void)onFilterButtonPressed:(id)sender {
+    ClifeFilterViewController *filterViewController = [ClifeFilterViewController createInstance];
     
+    UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease];
+    
+    [self.navigationController presentModalViewController:navigationController animated:YES];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate methods
