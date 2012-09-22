@@ -2222,15 +2222,6 @@
         
 //        LOG_PRESCRIPTIONDETAILVIEWCONTROLLER(0,@"%@Rescheduled new local notifications due to changes made to Prescription: %@ (%@)",activityName,prescription.objectid,prescription.name);
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
         // Reload the table view to disable user interaction and accessory views on the tableview cells
         [self.tbl_prescriptionDetails reloadData];
     }
