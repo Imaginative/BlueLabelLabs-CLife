@@ -13,7 +13,6 @@
 #import "PrescriptionInstanceState.h"
 #import "DateTimeHelper.h"
 #import "ClifeHistoryDetailsViewController.h"
-#import "ExportManager.h"
 #import "ClifeFilterViewController.h"
 
 #define kTABLEVIEWCELLHEIGHT 50.0
@@ -338,6 +337,7 @@
 #pragma mark - UI Action Methods
 - (void)onExportButtonPressed:(id)sender {
     ExportManager *exportManager = [ExportManager instance];
+    exportManager.delegate = self;
     [exportManager exportData];
 }
 

@@ -39,6 +39,7 @@
 		5277E84515DFE303003A1DCF /* ClifePrescriptionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E84315DFE303003A1DCF /* ClifePrescriptionDetailsViewController.m */; };
 		5277E84615DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5277E84415DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib */; };
 		5277E84915DFE349003A1DCF /* UILoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E84815DFE349003A1DCF /* UILoginView.m */; };
+		528085F9160E4B8D00EB515A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528085F8160E4B8D00EB515A /* MessageUI.framework */; };
 		528D629415FD6710006BD80A /* ClifeHistoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */; };
 		528D629515FD6710006BD80A /* ClifeHistoryDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528D629315FD670F006BD80A /* ClifeHistoryDetailsViewController.xib */; };
 		52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B3E7E715E67F75004E9C4A /* icon-pill.png */; };
@@ -244,6 +245,7 @@
 		5277E84415DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifePrescriptionDetailsViewController.xib; sourceTree = "<group>"; };
 		5277E84715DFE349003A1DCF /* UILoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoginView.h; sourceTree = "<group>"; };
 		5277E84815DFE349003A1DCF /* UILoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILoginView.m; sourceTree = "<group>"; };
+		528085F8160E4B8D00EB515A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		528D628415FA746B006BD80A /* PrescriptionInstanceState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrescriptionInstanceState.h; sourceTree = "<group>"; };
 		528D629115FD670F006BD80A /* ClifeHistoryDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeHistoryDetailsViewController.h; sourceTree = "<group>"; };
 		528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeHistoryDetailsViewController.m; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				528085F9160E4B8D00EB515A /* MessageUI.framework in Frameworks */,
 				C53DC87E15D441AE00CC7D14 /* QuartzCore.framework in Frameworks */,
 				C53DC87C15D4417D00CC7D14 /* CoreData.framework in Frameworks */,
 				C53DC74A15D43BD700CC7D14 /* MobileCoreServices.framework in Frameworks */,
@@ -689,18 +692,10 @@
 			name = CHCSVParser;
 			sourceTree = "<group>";
 		};
-		52F007BD160D2D920003CF2C /* Singletons */ = {
-			isa = PBXGroup;
-			children = (
-				52F007BE160D2DBC0003CF2C /* ExportManager.h */,
-				52F007BF160D2DF60003CF2C /* ExportManager.m */,
-			);
-			name = Singletons;
-			sourceTree = "<group>";
-		};
 		C53DC68C15D4378300CC7D14 = {
 			isa = PBXGroup;
 			children = (
+				528085F8160E4B8D00EB515A /* MessageUI.framework */,
 				52FC0503160CE9A80083DB3C /* Default-568h@2x.png */,
 				C53DC87D15D441AE00CC7D14 /* QuartzCore.framework */,
 				C53DC87B15D4417D00CC7D14 /* CoreData.framework */,
@@ -745,7 +740,6 @@
 		C53DC6A115D4378300CC7D14 /* CLife */ = {
 			isa = PBXGroup;
 			children = (
-				52F007BD160D2D920003CF2C /* Singletons */,
 				52F0077C160CF5720003CF2C /* Externals */,
 				523A6BCF15F6813700D60461 /* Constants */,
 				C5D45C0415F3A1A500FB5A49 /* Singletons */,
@@ -1257,6 +1251,8 @@
 				C5D45C0715F3A1BD00FB5A49 /* LocalNotificationManager.m */,
 				C5D671BD1600D50F00071AEE /* PrescriptionInstanceManager.h */,
 				C5D671BE1600D50F00071AEE /* PrescriptionInstanceManager.m */,
+				52F007BE160D2DBC0003CF2C /* ExportManager.h */,
+				52F007BF160D2DF60003CF2C /* ExportManager.m */,
 			);
 			name = Singletons;
 			sourceTree = "<group>";

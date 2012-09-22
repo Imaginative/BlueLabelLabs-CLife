@@ -8,13 +8,24 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <MessageUI/MessageUI.h>
 
-@interface ExportManager : NSObject < NSFetchedResultsControllerDelegate > {
+@protocol ExportManagerDelegate < NSObject >
+
+@end
+
+@interface ExportManager : NSObject < NSFetchedResultsControllerDelegate, MFMailComposeViewControllerDelegate > {
+    id<ExportManagerDelegate> m_delegate;
     
+    NSDateFormatter     *m_dateAndTimeFormatter;
 }
+
+@property (nonatomic, assign)           id<ExportManagerDelegate> delegate;
 
 @property (nonatomic, retain)           NSFetchedResultsController  *frc_prescriptions;
 @property (nonatomic, retain)           NSFetchedResultsController  *frc_prescriptionInstances;
+
+@property (nonatomic, retain)           NSDateFormatter             *dateAndTimeFormatter;
 
 //- (void)exportDataFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate;
 - (void)exportData;
