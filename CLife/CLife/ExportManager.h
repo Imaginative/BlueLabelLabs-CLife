@@ -12,6 +12,12 @@
 
 @protocol ExportManagerDelegate < NSObject >
 
+@required
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error;
+
 @end
 
 @interface ExportManager : NSObject < NSFetchedResultsControllerDelegate, MFMailComposeViewControllerDelegate > {

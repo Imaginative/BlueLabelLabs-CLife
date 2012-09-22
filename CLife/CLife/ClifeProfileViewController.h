@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "UIPromptAlertView.h"
+#import "ExportManager.h"
 
-@interface ClifeProfileViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate > {
+@interface ClifeProfileViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate, ExportManagerDelegate > {
     
     UITableView             *m_tbl_profile;
     NSArray                 *m_sectionsArray;
@@ -33,6 +34,8 @@
     UIView                  *m_v_disabledBackground;
     UILabel                 *m_lbl_disableTabBar;
     
+    BOOL                    m_didRequestEdit;
+    BOOL                    m_didRequestDelete;
     BOOL                    m_isEditing;
     BOOL                    m_isNewUser;
     
@@ -67,6 +70,8 @@
 @property (nonatomic, retain) IBOutlet  UIView                  *v_disabledBackground;
 @property (nonatomic, retain)           UILabel                 *lbl_disableTabBar;
 
+@property (nonatomic, assign)           BOOL                    didRequestEdit;
+@property (nonatomic, assign)           BOOL                    didRequestDelete;
 @property (nonatomic, assign)           BOOL                    isEditing;
 @property (nonatomic, assign)           BOOL                    isNewUser;
 

@@ -364,8 +364,7 @@ static ExportManager *sharedManager;
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError *)error
 {
-    UIViewController *viewController = (UIViewController *)self.delegate;
-    [viewController dismissModalViewControllerAnimated:YES];
+    [self.delegate mailComposeController:controller didFinishWithResult:result error:error];
 }
 
 #pragma mark - Instance methods

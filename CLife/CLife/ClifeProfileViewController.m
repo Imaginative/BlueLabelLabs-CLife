@@ -30,6 +30,8 @@
 @synthesize bloodTypeArray      = m_bloodTypeArray;
 @synthesize v_disabledBackground = m_v_disabledBackground;
 @synthesize lbl_disableTabBar   = m_lbl_disableTabBar;
+@synthesize didRequestEdit      = m_didRequestEdit;
+@synthesize didRequestDelete    = m_didRequestDelete;
 @synthesize isEditing           = m_isEditing;
 @synthesize isNewUser           = m_isNewUser;
 @synthesize name                = m_name;
@@ -101,7 +103,7 @@
         ![self.loggedInUser.displayname isEqualToString:@""])
     {
         // Existing user
-        self.isEditing = NO;
+//        self.isEditing = NO;
         self.isNewUser = NO;
         
         // add the "Edit" button to the nav bar
@@ -123,14 +125,6 @@
         self.isEditing = YES;
         self.isNewUser = YES;
         
-        // add the "Done" button to the nav bar
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                        target:self
-                                        action:@selector(doneEditingProfile:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
-        
         // Set profile values to nil
         self.name = nil;
         self.birthday = nil;
@@ -146,6 +140,14 @@
     
     if (self.isEditing == YES) {
         [self hideTabBar];
+        
+        // add the "Done" button to the nav bar
+        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                        target:self
+                                        action:@selector(doneEditingProfile:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+        [rightButton release];
     }
 }
 
@@ -1019,7 +1021,7 @@
     self.tbl_profile.tableFooterView = nil;
 }
 
-- (void)onEditProfileButtonPressed:(id)sender {
+- (void)onEditProfileButtonPressed:(id)sender {    
     // Promt user to backup data before editing profile information
     self.av_edit = [[UIAlertView alloc]
                           initWithTitle:NSLocalizedString(@"EDIT PROFILE", nil)
@@ -1043,20 +1045,58 @@
     [actionSheet release];
 }
 
+#pragma mark MailComposeController Delegate
+// The mail compose view controller delegate method
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error
+{
+    if (result == MFMailComposeResultSent) {
+        if (self.didRequestDelete == YES) {
+            // Prompt user to enter their full name as verification before continuing
+            self.av_delete = [[UIPromptAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
+                              message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
+                              delegate:self
+                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                              otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+            self.av_delete.verificationText = self.name;
+//            [self.av_delete show];
+            [self.av_delete performSelector:@selector(show) withObject:nil afterDelay:1];
+            [self.av_delete release];
+        }
+        else if (self.didRequestEdit == YES) {
+            // Allow editing
+            [self editProfile];
+        }
+    }
+    
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark - UIAlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView == self.av_edit) {
+        self.didRequestDelete = NO;
+        
         if (buttonIndex == 0) {
-            // Backup data
-            NSLog(@"Backup data");
+            self.didRequestEdit = YES;
+            
+            // Export data
+            ExportManager *exportManager = [ExportManager instance];
+            exportManager.delegate = self;
+            [exportManager exportData];
         }
         else {
+            // Skip export
             [self editProfile];
         }
     }
     else if (alertView == self.av_delete) {
         if (buttonIndex == 0) {
             // Cancel
+            self.didRequestDelete = NO;
+            
             NSLog(@"Canceled delete");
         }
         else {
@@ -1068,7 +1108,8 @@
 #pragma mark - UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        // Process delete WITHOUT data export 
+        // Process delete WITHOUT data export
+        self.didRequestDelete = YES;
         
         // Prompt user to enter their full name as verification before continuing
         self.av_delete = [[UIPromptAlertView alloc]
@@ -1084,17 +1125,12 @@
     }
     else if (buttonIndex == 1) {
         // Process delete WITH data export
+        self.didRequestDelete = YES;
         
-        // Prompt user to enter their full name as verification before continuing
-        self.av_delete = [[UIPromptAlertView alloc]
-                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
-                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
-                          delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
-        self.av_delete.verificationText = self.name;
-        [self.av_delete show];
-        [self.av_delete release];
+        // Export data
+        ExportManager *exportManager = [ExportManager instance];
+        exportManager.delegate = self;
+        [exportManager exportData];
         
     }
     else {
