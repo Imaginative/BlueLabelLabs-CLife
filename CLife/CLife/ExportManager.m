@@ -318,7 +318,7 @@ static ExportManager *sharedManager;
 }
 
 #pragma mark - Mail composition methods
-- (void)composeExportEmail {
+- (void)composeExportEmailWithFileName:(NSString *)fileName {
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* appVersionNum = [infoDict objectForKey:@"CFBundleShortVersionString"];
     NSString* appBundleVersionNum = [infoDict objectForKey:@"CFBundleVersion"];
@@ -328,7 +328,7 @@ static ExportManager *sharedManager;
     mailComposer.mailComposeDelegate = self;
     
     // Set the email subject
-    [mailComposer setSubject:[NSString stringWithFormat:@"%@: Exported Data", appName]];
+    [mailComposer setSubject:[NSString stringWithFormat:@"%@: %@", appName, NSLocalizedString(@"EXPORTED DATA", nil)]];
     
     // Setup date formatter
     NSDateFormatter *dateAndTimeFormatter = [[NSDateFormatter alloc] init];
@@ -337,7 +337,7 @@ static ExportManager *sharedManager;
     NSString *dateExported = [dateAndTimeFormatter stringFromDate:[NSDate date]];
     
     // Set email message header
-    NSString *messageHeader = [NSString stringWithFormat:@"Data exported on: %@<br>%@ v%@ (%@)<br><br>", dateExported, appName, appVersionNum, appBundleVersionNum];
+    NSString *messageHeader = [NSString stringWithFormat:@"%@: %@<br>%@ v%@ (%@)<br><br>", NSLocalizedString(@"DATA EXPORTED ON", nil), dateExported, appName, appVersionNum, appBundleVersionNum];
     [mailComposer setMessageBody:messageHeader isHTML:YES];
     
     // Set attachment of CSV file
@@ -345,12 +345,12 @@ static ExportManager *sharedManager;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
-    // the path to write file
-    NSString *fileName = [documentsDirectory stringByAppendingPathComponent:@"clife_export"];
+    // the path of the export file
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:fileName];
     
-    NSData *attachment = [NSData dataWithContentsOfFile:fileName];
+    NSData *attachment = [NSData dataWithContentsOfFile:path];
     
-    [mailComposer addAttachmentData:attachment mimeType:@"text/csv" fileName:@"clife_export.csv"];
+    [mailComposer addAttachmentData:attachment mimeType:@"text/csv" fileName:fileName];
     
     // Present the mail composition interface
     UIViewController *viewController = (UIViewController *)self.delegate;
@@ -498,13 +498,17 @@ static ExportManager *sharedManager;
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
     // the path to write file
-    NSString *fileName = [documentsDirectory stringByAppendingPathComponent:@"clife_export.csv"];
+    NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
+    NSString* appName = [infoDict objectForKey:@"CFBundleDisplayName"];
+    
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@.csv", appName, NSLocalizedString(@"EXPORT", nil)];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:fileName];
     
     // now write to file
     NSError* error = nil;
     NSArray *csvArray = [writer.stringValue CSVComponents];
     
-    BOOL writeDidSucceed = [csvArray writeToCSVFile:fileName atomically:YES error:&error];
+    BOOL writeDidSucceed = [csvArray writeToCSVFile:path atomically:YES error:&error];
     
     if (writeDidSucceed == YES) {
         NSLog(@"CSV file successfully created.");
@@ -514,7 +518,7 @@ static ExportManager *sharedManager;
     }
     
     /* Finally, setup the email to send the exported file */
-    [self composeExportEmail];
+    [self composeExportEmailWithFileName:fileName];
 }
 
 @end

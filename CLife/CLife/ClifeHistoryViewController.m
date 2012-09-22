@@ -24,6 +24,7 @@
 @implementation ClifeHistoryViewController
 @synthesize frc_prescriptionInstances   = __frc_prescriptionInstances;
 @synthesize tbl_history                 = m_tbl_history;
+@synthesize av_export                   = m_av_export;
 
 
 #pragma mark - Properties
@@ -131,6 +132,7 @@
     // e.g. self.myOutlet = nil;
     
     self.tbl_history = nil;
+    self.av_export = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -336,9 +338,15 @@
 
 #pragma mark - UI Action Methods
 - (void)onExportButtonPressed:(id)sender {
-    ExportManager *exportManager = [ExportManager instance];
-    exportManager.delegate = self;
-    [exportManager exportData];
+    // If no filters are set prompt the user to warn that all data will be exported
+    self.av_export = [[UIAlertView alloc]
+                      initWithTitle:NSLocalizedString(@"EXPORT TITLE", nil)
+                      message:NSLocalizedString(@"EXPORT MESSAGE", nil)
+                      delegate:self
+                      cancelButtonTitle:NSLocalizedString(@"EXPORT", nil)
+                      otherButtonTitles:NSLocalizedString(@"FILTER", nil), nil];
+    [self.av_export show];
+    [self.av_export release];
 }
 
 - (void)onFilterButtonPressed:(id)sender {
@@ -347,6 +355,22 @@
     UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease];
     
     [self.navigationController presentModalViewController:navigationController animated:YES];
+}
+
+#pragma mark - UIAlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView == self.av_export) {
+        if (buttonIndex == 0) {
+            // Export data
+            ExportManager *exportManager = [ExportManager instance];
+            exportManager.delegate = self;
+            [exportManager exportData];
+        }
+        else {
+            // Filter first
+            [self onFilterButtonPressed:alertView];
+        }
+    }
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate methods

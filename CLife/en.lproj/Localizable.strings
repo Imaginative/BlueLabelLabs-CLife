@@ -11,7 +11,6 @@
 // General
 "ITEM" = "Item";
 "TODAY" = "Today";
-"EXPORT" = "Export";
 "YES" = "Yes";
 "NO" = "No";
 "DELETE" = "Delete";
@@ -167,6 +166,14 @@
 "PERIOD" = "Period";
 "CHOOSE PRESCRIPTIONS" = "Choose prescriptions";
 "CHOOSE PERIOD" = "Choose period";
+
+
+//Export
+"EXPORT" = "Export";
+"EXPORT TITLE" = "Export History";
+"EXPORT MESSAGE" = "All items currently visible in your history will be exported. Do you want to apply filters on your history before exporting?";
+"EXPORTED DATA" = "Exported Data";
+"DATA EXPORTED ON" = "Data exported on";
 
 
 
