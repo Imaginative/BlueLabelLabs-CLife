@@ -23,7 +23,9 @@
 @interface ExportManager : NSObject < NSFetchedResultsControllerDelegate, MFMailComposeViewControllerDelegate > {
     id<ExportManagerDelegate> m_delegate;
     
-    NSDateFormatter     *m_dateAndTimeFormatter;
+    NSDateFormatter         *m_dateAndTimeFormatter;
+    
+    NSArray                 *m_filteredPrescriptions;
 }
 
 @property (nonatomic, assign)           id<ExportManagerDelegate> delegate;
@@ -33,10 +35,12 @@
 
 @property (nonatomic, retain)           NSDateFormatter             *dateAndTimeFormatter;
 
+@property (nonatomic, retain)           NSArray                     *filteredPrescriptions;
+
 //- (void)exportDataFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate;
 - (void)exportData;
 
 // Static initializer
-+ (ExportManager*) instance;
++ (ExportManager *) instanceWithDelegate:(id)delegate forPrescriptions:(NSArray *)prescriptions;
 
 @end

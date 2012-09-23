@@ -247,16 +247,6 @@
         else {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
-        
-//        // Add or remove the prescription from the list of selected prescriptions
-//        Prescription *prescription = [[self.frc_prescriptions fetchedObjects] objectAtIndex:i];
-//        
-//        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
-//            [filterViewController.filteredPrescriptions addObject:prescription];
-//        }
-//        else {
-//            [filterViewController.filteredPrescriptions removeObject:prescription];
-//        }
     }
 }
 

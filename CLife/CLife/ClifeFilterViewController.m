@@ -51,8 +51,10 @@
                           NSLocalizedString(@"PERIOD", nil),
                           nil];
     
-    // Initialize the array of filtered prescriptions friends
-    self.filteredPrescriptions = [[NSMutableArray alloc] init];
+    if (self.filteredPrescriptions == nil) {
+        // Initialize the array of filtered prescriptions
+        self.filteredPrescriptions = [[NSMutableArray alloc] init];
+    }
     
     // add the "Done" button to the nav bar
     UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
@@ -215,9 +217,15 @@
     ClifeHistoryViewController *historyViewController = (ClifeHistoryViewController *)self.delegate;
     if ([self.filteredPrescriptions count] > 0) {
         historyViewController.filteredPrescriptions = self.filteredPrescriptions;
+        
+        // Put the History view controller in the filtered state
+        historyViewController.isFiltered = YES;
     }
     else {
         historyViewController.filteredPrescriptions = nil;
+        
+        // Make sure the history view controller is not marked as ahaving any filters
+        historyViewController.isFiltered = NO;
     }
     
     [self.navigationController dismissModalViewControllerAnimated:YES];
@@ -226,6 +234,10 @@
 - (void)onClearButtonPressed:(id)sender {
     // clear the filtered items
     [self.filteredPrescriptions removeAllObjects];
+    
+    // Make sure the history view controller is not marked as ahaving any filters
+    ClifeHistoryViewController *historyViewController = (ClifeHistoryViewController *)self.delegate;
+    historyViewController.isFiltered = NO;
     
     [self.tableView reloadData];
 }

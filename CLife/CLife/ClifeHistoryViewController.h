@@ -19,6 +19,8 @@
     UIAlertView             *m_av_export;
     
     NSMutableArray          *m_filteredPrescriptions;
+    
+    BOOL                    m_isFiltered;
 }
 
 @property (nonatomic, retain)           NSFetchedResultsController  *frc_prescriptionInstances;
@@ -27,7 +29,9 @@
 
 @property (nonatomic, retain)           UIAlertView                 *av_export;
 
-@property (nonatomic, retain)           NSMutableArray          *filteredPrescriptions;
+@property (nonatomic, retain)           NSMutableArray              *filteredPrescriptions;
+
+@property (nonatomic, assign)           BOOL                        isFiltered;
 
 #pragma mark - Static Initializers
 + (ClifeHistoryViewController *)createInstance;

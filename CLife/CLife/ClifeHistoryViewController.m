@@ -25,6 +25,7 @@
 @synthesize tbl_history                 = m_tbl_history;
 @synthesize av_export                   = m_av_export;
 @synthesize filteredPrescriptions       = m_filteredPrescriptions;
+@synthesize isFiltered                  = m_isFiltered;
 
 
 #pragma mark - Properties
@@ -123,6 +124,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if (self.isFiltered == YES) {
+        [self.navigationItem.leftBarButtonItem setTintColor:[UIColor blueColor]];
+    }
+    else {
+        [self.navigationItem.leftBarButtonItem setTintColor:nil];
+    }
     
     // Reload the tableview to process any changes
     [self.tbl_history reloadData];
@@ -366,6 +374,7 @@
 - (void)onFilterButtonPressed:(id)sender {
     ClifeFilterViewController *filterViewController = [ClifeFilterViewController createInstance];
     filterViewController.delegate = self;
+    filterViewController.filteredPrescriptions = self.filteredPrescriptions;
     
     UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease];
     
@@ -386,7 +395,7 @@
     if (alertView == self.av_export) {
         if (buttonIndex == 0) {
             // Export data
-            ExportManager *exportManager = [ExportManager instance];
+            ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:self.filteredPrescriptions];
             exportManager.delegate = self;
             [exportManager exportData];
         }

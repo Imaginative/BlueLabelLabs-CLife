@@ -23,14 +23,19 @@
 @synthesize frc_prescriptions           = __frc_prescriptions;
 @synthesize frc_prescriptionInstances   = __frc_prescriptionInstances;
 @synthesize dateAndTimeFormatter        = m_dateAndTimeFormatter;
+@synthesize filteredPrescriptions       = m_filteredPrescriptions;
 
 static ExportManager *sharedManager;
 
-+ (ExportManager *) instance {
++ (ExportManager *) instanceWithDelegate:(id)delegate forPrescriptions:(NSArray *)prescriptions {
     @synchronized (self) {
         if (!sharedManager) {
             sharedManager = [[ExportManager alloc] init];
         }
+        
+        sharedManager.delegate = delegate;
+        sharedManager.filteredPrescriptions = prescriptions;
+        
         return sharedManager;
     }
 }
@@ -54,9 +59,9 @@ static ExportManager *sharedManager;
 
 - (NSFetchedResultsController *)frc_prescriptions {
 //    NSString* activityName = @"ExportManager.frc_prescriptions:";
-    if (__frc_prescriptions != nil) {
-        return __frc_prescriptions;
-    }
+//    if (__frc_prescriptions != nil) {
+//        return __frc_prescriptions;
+//    }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     ResourceContext* resourceContext = [ResourceContext instance];
@@ -66,6 +71,20 @@ static ExportManager *sharedManager;
     
     NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NAME ascending:YES];
     
+    NSPredicate* predicate;
+    if (self.filteredPrescriptions != nil && [self.filteredPrescriptions count] > 0) {
+        // Get filtered prescription ids if filters are set and add them to the predicate
+        NSMutableArray *prescriptionIDs = [[NSMutableArray alloc] initWithCapacity:[self.filteredPrescriptions count]];
+        for (Prescription *prescription in self.filteredPrescriptions) {
+            [prescriptionIDs addObject:prescription.objectid];
+        }
+        predicate = [NSPredicate predicateWithFormat:@"%K IN %@", OBJECTID, prescriptionIDs];
+    }
+    else {
+        predicate = nil;
+    }
+    
+    [fetchRequest setPredicate:predicate];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
     [fetchRequest setEntity:entityDescription];
     
@@ -90,9 +109,9 @@ static ExportManager *sharedManager;
 
 - (NSFetchedResultsController*)frc_prescriptionInstances {
 //    NSString* activityName = @"ClifeHistoryViewController.frc_prescriptionInstances:";
-    if (__frc_prescriptionInstances != nil) {
-        return __frc_prescriptionInstances;
-    }
+//    if (__frc_prescriptionInstances != nil) {
+//        return __frc_prescriptionInstances;
+//    }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     ResourceContext* resourceContext = [ResourceContext instance];
@@ -104,7 +123,18 @@ static ExportManager *sharedManager;
     double doubleDate = [[NSDate date] timeIntervalSince1970];
     NSNumber *today = [NSNumber numberWithDouble:doubleDate];
     
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K<=%@", DATESCHEDULED, today];
+    NSPredicate* predicate;
+    if (self.filteredPrescriptions != nil && [self.filteredPrescriptions count] > 0) {
+        // Get filtered prescription ids if filters are set and add them to the predicate
+        NSMutableArray *prescriptionIDs = [[NSMutableArray alloc] initWithCapacity:[self.filteredPrescriptions count]];
+        for (Prescription *prescription in self.filteredPrescriptions) {
+            [prescriptionIDs addObject:prescription.objectid];
+        }
+        predicate = [NSPredicate predicateWithFormat:@"%K<=%@ && %K IN %@", DATESCHEDULED, today, PRESCRIPTIONID, prescriptionIDs];
+    }
+    else {
+        predicate = [NSPredicate predicateWithFormat:@"%K<=%@", DATESCHEDULED, today];
+    }
     
     [fetchRequest setPredicate:predicate];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];

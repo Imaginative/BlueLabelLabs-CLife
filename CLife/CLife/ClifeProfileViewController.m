@@ -1083,8 +1083,7 @@
             self.didRequestEdit = YES;
             
             // Export data
-            ExportManager *exportManager = [ExportManager instance];
-            exportManager.delegate = self;
+            ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:nil];
             [exportManager exportData];
         }
         else {
@@ -1128,7 +1127,7 @@
         self.didRequestDelete = YES;
         
         // Export data
-        ExportManager *exportManager = [ExportManager instance];
+        ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:nil];
         exportManager.delegate = self;
         [exportManager exportData];
         
