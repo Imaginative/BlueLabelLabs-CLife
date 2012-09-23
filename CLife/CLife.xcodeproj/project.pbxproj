@@ -40,6 +40,8 @@
 		5277E84615DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5277E84415DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib */; };
 		5277E84915DFE349003A1DCF /* UILoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5277E84815DFE349003A1DCF /* UILoginView.m */; };
 		528085F9160E4B8D00EB515A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 528085F8160E4B8D00EB515A /* MessageUI.framework */; };
+		52808602160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52808600160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.m */; };
+		52808603160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52808601160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.xib */; };
 		528D629415FD6710006BD80A /* ClifeHistoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */; };
 		528D629515FD6710006BD80A /* ClifeHistoryDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528D629315FD670F006BD80A /* ClifeHistoryDetailsViewController.xib */; };
 		52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B3E7E715E67F75004E9C4A /* icon-pill.png */; };
@@ -246,6 +248,9 @@
 		5277E84715DFE349003A1DCF /* UILoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILoginView.h; sourceTree = "<group>"; };
 		5277E84815DFE349003A1DCF /* UILoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILoginView.m; sourceTree = "<group>"; };
 		528085F8160E4B8D00EB515A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		528085FF160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeFilterPrescriptionsViewController.h; sourceTree = "<group>"; };
+		52808600160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeFilterPrescriptionsViewController.m; sourceTree = "<group>"; };
+		52808601160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeFilterPrescriptionsViewController.xib; sourceTree = "<group>"; };
 		528D628415FA746B006BD80A /* PrescriptionInstanceState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrescriptionInstanceState.h; sourceTree = "<group>"; };
 		528D629115FD670F006BD80A /* ClifeHistoryDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeHistoryDetailsViewController.h; sourceTree = "<group>"; };
 		528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeHistoryDetailsViewController.m; sourceTree = "<group>"; };
@@ -628,6 +633,9 @@
 				52F007C5160D3E410003CF2C /* ClifeFilterViewController.h */,
 				52F007C6160D3E410003CF2C /* ClifeFilterViewController.m */,
 				52F007C7160D3E410003CF2C /* ClifeFilterViewController.xib */,
+				528085FF160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.h */,
+				52808600160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.m */,
+				52808601160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1363,6 +1371,7 @@
 				522D89171602A83900B5C615 /* redX@2x.png in Resources */,
 				52FC0504160CE9A80083DB3C /* Default-568h@2x.png in Resources */,
 				52F007C9160D3E410003CF2C /* ClifeFilterViewController.xib in Resources */,
+				52808603160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1524,6 +1533,7 @@
 				52F007BC160CF6A90003CF2C /* NSString+CHCSVAdditions.m in Sources */,
 				52F007C0160D2DF60003CF2C /* ExportManager.m in Sources */,
 				52F007C8160D3E410003CF2C /* ClifeFilterViewController.m in Sources */,
+				52808602160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

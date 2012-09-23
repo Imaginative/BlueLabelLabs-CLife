@@ -13,7 +13,6 @@
 #import "PrescriptionInstanceState.h"
 #import "DateTimeHelper.h"
 #import "ClifeHistoryDetailsViewController.h"
-#import "ClifeFilterViewController.h"
 
 #define kTABLEVIEWCELLHEIGHT 50.0
 
@@ -25,6 +24,7 @@
 @synthesize frc_prescriptionInstances   = __frc_prescriptionInstances;
 @synthesize tbl_history                 = m_tbl_history;
 @synthesize av_export                   = m_av_export;
+@synthesize filteredPrescriptions       = m_filteredPrescriptions;
 
 
 #pragma mark - Properties
@@ -44,7 +44,18 @@
     double doubleDate = [[NSDate date] timeIntervalSince1970];
     NSNumber *today = [NSNumber numberWithDouble:doubleDate];
     
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"%K<=%@", DATESCHEDULED, today];
+    NSPredicate* predicate;
+    if (self.filteredPrescriptions != nil && [self.filteredPrescriptions count] > 0) {
+        // Get filtered prescription ids if filters are set and add them to the predicate
+        NSMutableArray *prescriptionIDs = [[NSMutableArray alloc] initWithCapacity:[self.filteredPrescriptions count]];
+        for (Prescription *prescription in self.filteredPrescriptions) {
+            [prescriptionIDs addObject:prescription.objectid];
+        }
+        predicate = [NSPredicate predicateWithFormat:@"%K<=%@ && %K IN %@", DATESCHEDULED, today, PRESCRIPTIONID, prescriptionIDs];
+    }
+    else {
+        predicate = [NSPredicate predicateWithFormat:@"%K<=%@", DATESCHEDULED, today];
+    }
     
     [fetchRequest setPredicate:predicate];
     [fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -86,6 +97,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    // Initialize the array of filtered prescriptions friends
+    self.filteredPrescriptions = [[NSMutableArray alloc] init];
     
     // add the "Export" button to the nav bar
     UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
@@ -351,6 +365,7 @@
 
 - (void)onFilterButtonPressed:(id)sender {
     ClifeFilterViewController *filterViewController = [ClifeFilterViewController createInstance];
+    filterViewController.delegate = self;
     
     UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease];
     

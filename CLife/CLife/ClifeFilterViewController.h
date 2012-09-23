@@ -7,12 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ClifeFilterPrescriptionsViewController.h"
 
-@interface ClifeFilterViewController : UITableViewController {
+@protocol ClifeFilterViewControllerDelegate <NSObject>
+
+@end
+
+@interface ClifeFilterViewController : UITableViewController < ClifeFilterPrescriptionsViewControllerDelegate > {
+    id<ClifeFilterViewControllerDelegate> m_delegate;
+    
     NSArray                 *m_sectionsArray;
+    NSMutableArray          *m_filteredPrescriptions;
 }
 
+@property (nonatomic, assign) id<ClifeFilterViewControllerDelegate>  delegate;
+
 @property (nonatomic, retain)           NSArray                 *sectionsArray;
+@property (nonatomic, retain)           NSMutableArray          *filteredPrescriptions;
 
 + (ClifeFilterViewController *)createInstance;
 

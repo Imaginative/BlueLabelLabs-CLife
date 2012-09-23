@@ -7,13 +7,29 @@
 //
 
 #import "ClifeFilterViewController.h"
+#import "Prescription.h"
+#import "ClifeHistoryViewController.h"
 
 @interface ClifeFilterViewController ()
 
 @end
 
 @implementation ClifeFilterViewController
+@synthesize sectionsArray           = m_sectionsArray;
+@synthesize filteredPrescriptions   = m_filteredPrescriptions;
 
+#pragma mark - Properties
+- (id)delegate {
+    return m_delegate;
+}
+
+- (void)setDelegate:(id<ClifeFilterViewControllerDelegate>)del
+{
+    m_delegate = del;
+}
+
+
+#pragma mark - Initialization
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -34,6 +50,9 @@
                           NSLocalizedString(@"PRESCRIPTIONS", nil),
                           NSLocalizedString(@"PERIOD", nil),
                           nil];
+    
+    // Initialize the array of filtered prescriptions friends
+    self.filteredPrescriptions = [[NSMutableArray alloc] init];
     
     // add the "Done" button to the nav bar
     UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
@@ -57,6 +76,14 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,17 +118,34 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         
-        cell.textLabel.textColor = [UIColor lightGrayColor];
-        
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
     if (indexPath.section == 0) {
         // Prescriptions section
-        cell.textLabel.text = NSLocalizedString(@"CHOOSE PRESCRIPTIONS", nil);
+        if ([self.filteredPrescriptions count] > 0) {
+            cell.textLabel.textColor = [UIColor blackColor];
+            
+            int count = [self.filteredPrescriptions count];
+            
+            // Add the first prescription
+            Prescription *prescription = [self.filteredPrescriptions objectAtIndex:0];
+            cell.textLabel.text = prescription.name;
+            
+            // Now, if more than 1 exist, add the rest ot the string
+            for (int i = 1; i < count; i++) {
+                prescription = [self.filteredPrescriptions objectAtIndex:i];
+                cell.textLabel.text = [NSString stringWithFormat:@"%@, %@", cell.textLabel.text, prescription.name];
+            }
+        }
+        else {
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+            cell.textLabel.text = NSLocalizedString(@"CHOOSE PRESCRIPTIONS", nil);
+        }
     }
     else if (indexPath.section == 1) {
         // Period section
+        cell.textLabel.textColor = [UIColor lightGrayColor];
         cell.textLabel.text = NSLocalizedString(@"CHOOSE PERIOD", nil);
     }
     
@@ -153,23 +197,37 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    if (indexPath.section == 0) {
+        // Prescriptions selected
+        ClifeFilterPrescriptionsViewController *filterPrescriptionsViewController = [ClifeFilterPrescriptionsViewController createInstance];
+        filterPrescriptionsViewController.delegate = self;
+        
+        [self.navigationController pushViewController:filterPrescriptionsViewController animated:YES];
+    }
+    else if (indexPath.section == 1) {
+        
+    }
 }
 
 #pragma mark - UI Action Methods
 - (void)onDoneButtonPressed:(id)sender {
+    // Pass the filtered items to the History view controller
+    ClifeHistoryViewController *historyViewController = (ClifeHistoryViewController *)self.delegate;
+    if ([self.filteredPrescriptions count] > 0) {
+        historyViewController.filteredPrescriptions = self.filteredPrescriptions;
+    }
+    else {
+        historyViewController.filteredPrescriptions = nil;
+    }
+    
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)onClearButtonPressed:(id)sender {
+    // clear the filtered items
+    [self.filteredPrescriptions removeAllObjects];
     
+    [self.tableView reloadData];
 }
 
 #pragma mark - Static Initializers
