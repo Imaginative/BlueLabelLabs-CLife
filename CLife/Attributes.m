@@ -146,3 +146,5 @@ NSString* const MIMEID                  =@"mimeid";
 NSString* const PRESCRIPTIONINSTANCEID  =@"prescriptioninstanceid";
 NSString* const PRESCRIPTIONID          =@"prescriptionid";
 NSString* const HASNOTIFICATIONBEENSCHEDULED = @"hasnotificationbeenscheduled";
+NSString* const DATESTART               =@"datestart";
+NSString* const DATEEND                 =@"dateend";

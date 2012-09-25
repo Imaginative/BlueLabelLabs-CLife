@@ -24,10 +24,12 @@
 @synthesize frc_prescriptionInstances   = __frc_prescriptionInstances;
 @synthesize dateAndTimeFormatter        = m_dateAndTimeFormatter;
 @synthesize filteredPrescriptions       = m_filteredPrescriptions;
+@synthesize filterDateStart             = m_filterDateStart;
+@synthesize filterDateEnd               = m_filterDateEnd;
 
 static ExportManager *sharedManager;
 
-+ (ExportManager *) instanceWithDelegate:(id)delegate forPrescriptions:(NSArray *)prescriptions {
++ (ExportManager *) instanceWithDelegate:(id)delegate forPrescriptions:(NSArray *)prescriptions withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate {
     @synchronized (self) {
         if (!sharedManager) {
             sharedManager = [[ExportManager alloc] init];
@@ -35,6 +37,8 @@ static ExportManager *sharedManager;
         
         sharedManager.delegate = delegate;
         sharedManager.filteredPrescriptions = prescriptions;
+        sharedManager.filterDateStart = startDate;
+        sharedManager.filterDateEnd = endDate;
         
         return sharedManager;
     }
@@ -120,8 +124,22 @@ static ExportManager *sharedManager;
     
     NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc] initWithKey:DATESCHEDULED ascending:NO];
     
-    double doubleDate = [[NSDate date] timeIntervalSince1970];
-    NSNumber *today = [NSNumber numberWithDouble:doubleDate];
+    // Setup filter start and end dates, start with defaults
+    NSDate *startDate = [NSDate distantPast];
+    NSDate *endDate = [NSDate date];
+    if (self.filterDateStart != nil) {
+        startDate = self.filterDateStart;
+    }
+    
+    if (self.filterDateEnd != nil) {
+        endDate = self.filterDateEnd;
+    }
+    
+    double doubleDateStart = [startDate timeIntervalSince1970];
+    NSNumber *dateStartNSNum = [NSNumber numberWithDouble:doubleDateStart];
+    
+    double doubleDateEnd = [endDate timeIntervalSince1970];
+    NSNumber *dateEndNSNum = [NSNumber numberWithDouble:doubleDateEnd];
     
     NSPredicate* predicate;
     if (self.filteredPrescriptions != nil && [self.filteredPrescriptions count] > 0) {
@@ -130,10 +148,10 @@ static ExportManager *sharedManager;
         for (Prescription *prescription in self.filteredPrescriptions) {
             [prescriptionIDs addObject:prescription.objectid];
         }
-        predicate = [NSPredicate predicateWithFormat:@"%K<=%@ && %K IN %@", DATESCHEDULED, today, PRESCRIPTIONID, prescriptionIDs];
+        predicate = [NSPredicate predicateWithFormat:@"%K>=%@ && %K<=%@ && %K IN %@", DATESCHEDULED, dateStartNSNum, DATESCHEDULED, dateEndNSNum, PRESCRIPTIONID, prescriptionIDs];
     }
     else {
-        predicate = [NSPredicate predicateWithFormat:@"%K<=%@", DATESCHEDULED, today];
+        predicate = [NSPredicate predicateWithFormat:@"%K>=%@ && %K<=%@", DATESCHEDULED, dateStartNSNum, DATESCHEDULED, dateEndNSNum];
     }
     
     [fetchRequest setPredicate:predicate];
@@ -409,6 +427,7 @@ static ExportManager *sharedManager;
     
     [writer writeLineOfFields:
      NSLocalizedString(@"ITEM", nil),
+     NSLocalizedString(@"ID", nil),
      NSLocalizedString(@"NAME", nil),
      NSLocalizedString(@"BIRTHDAY", nil),
      NSLocalizedString(@"GENDER", nil),
@@ -439,6 +458,7 @@ static ExportManager *sharedManager;
     NSDate *dateBorn = [DateTimeHelper parseWebServiceDateDouble:user.dateborn];
     [writer writeLineOfFields:
      NSLocalizedString(@"PROFILE", nil),
+     [user.objectid stringValue],
      user.username,
      [self.dateAndTimeFormatter stringFromDate:dateBorn],
      user.sex,
@@ -458,37 +478,43 @@ static ExportManager *sharedManager;
      @"",
      nil];
     
-    
-    /* Next write the prescription info */
-    
     // Update the date time formatter to include time
     [self.dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
     
-    for (Prescription *prescription in [self.frc_prescriptions fetchedObjects]) {
-        
-        [writer writeLineOfFields:
-         NSLocalizedString(@"PRESCRIPTION", nil),
-         prescription.name,
-         @"",
-         @"",
-         @"",
-         prescription.method,
-         prescription.strength,
-         prescription.unit,
-         [self getDosageStringForPrescription:prescription],
-         [self getStartDateStringForPrescription:prescription],
-         [self getRepeatsStringForPrescription:prescription],
-         [self getOccursStringForPrescription:prescription],
-         [self getEndDateStringForPrescription:prescription],
-         [self getReasonAndNotesStringForPrescription:prescription],
-         @"",
-         @"",
-         @"",
-         @"",
-         nil];
-        
-    }
+    /* Next write the prescription info */
     
+    // We only include the prescription items if we are exporting all data
+    if (self.filterDateEnd == nil &&
+        self.filterDateStart == nil &&
+        self.filteredPrescriptions == nil &&
+        [self.filteredPrescriptions count] == 0)
+    {
+        for (Prescription *prescription in [self.frc_prescriptions fetchedObjects]) {
+            
+            [writer writeLineOfFields:
+             NSLocalizedString(@"PRESCRIPTION", nil),
+             [prescription.objectid stringValue],
+             prescription.name,
+             @"",
+             @"",
+             @"",
+             prescription.method,
+             prescription.strength,
+             prescription.unit,
+             [self getDosageStringForPrescription:prescription],
+             [self getStartDateStringForPrescription:prescription],
+             [self getRepeatsStringForPrescription:prescription],
+             [self getOccursStringForPrescription:prescription],
+             [self getEndDateStringForPrescription:prescription],
+             [self getReasonAndNotesStringForPrescription:prescription],
+             @"",
+             @"",
+             @"",
+             @"",
+             nil];
+            
+        }
+    }
     
     /* Finally write the history info */
     
@@ -498,6 +524,7 @@ static ExportManager *sharedManager;
         
         [writer writeLineOfFields:
          NSLocalizedString(@"HISTORY", nil),
+         [prescriptionInstance.objectid stringValue],
          prescriptionInstance.prescriptionname,
          @"",
          @"",

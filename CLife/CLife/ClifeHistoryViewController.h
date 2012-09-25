@@ -19,6 +19,10 @@
     UIAlertView             *m_av_export;
     
     NSMutableArray          *m_filteredPrescriptions;
+    NSDate                  *m_filterDateStart;
+    NSDate                  *m_filterDateEnd;
+    NSString                *m_periodTextLabel;
+    int                     m_selectedPeriodIndex;
     
     BOOL                    m_isFiltered;
 }
@@ -30,6 +34,10 @@
 @property (nonatomic, retain)           UIAlertView                 *av_export;
 
 @property (nonatomic, retain)           NSMutableArray              *filteredPrescriptions;
+@property (nonatomic, retain)           NSDate                      *filterDateStart;
+@property (nonatomic, retain)           NSDate                      *filterDateEnd;
+@property (nonatomic, retain)           NSString                    *periodTextLabel;
+@property (nonatomic, assign)           int                         selectedPeriodIndex;
 
 @property (nonatomic, assign)           BOOL                        isFiltered;
 

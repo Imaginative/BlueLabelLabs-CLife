@@ -15,8 +15,12 @@
 @end
 
 @implementation ClifeFilterViewController
-@synthesize sectionsArray           = m_sectionsArray;
-@synthesize filteredPrescriptions   = m_filteredPrescriptions;
+@synthesize sectionsArray               = m_sectionsArray;
+@synthesize filteredPrescriptions       = m_filteredPrescriptions;
+@synthesize filterDateStart             = m_filterDateStart;
+@synthesize filterDateEnd               = m_filterDateEnd;
+@synthesize periodTextLabel             = m_periodTextLabel;
+@synthesize selectedPeriodIndex         = m_selectedPeriodIndex;
 
 #pragma mark - Properties
 - (id)delegate {
@@ -35,6 +39,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+
     }
     return self;
 }
@@ -72,7 +77,12 @@
                                     action:@selector(onClearButtonPressed:)];
     self.navigationItem.leftBarButtonItem = leftButton;
     [leftButton release];
-
+    
+    // Setup date formatter
+    self.dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [self.dateFormatter setDateStyle:NSDateFormatterShortStyle];
+    [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -127,6 +137,8 @@
         // Prescriptions section
         if ([self.filteredPrescriptions count] > 0) {
             cell.textLabel.textColor = [UIColor blackColor];
+            cell.textLabel.minimumFontSize = 10.0f;
+            cell.textLabel.adjustsFontSizeToFitWidth = YES;
             
             int count = [self.filteredPrescriptions count];
             
@@ -147,8 +159,14 @@
     }
     else if (indexPath.section == 1) {
         // Period section
-        cell.textLabel.textColor = [UIColor lightGrayColor];
-        cell.textLabel.text = NSLocalizedString(@"CHOOSE PERIOD", nil);
+        if (self.filterDateStart != nil && self.filterDateEnd != nil) {            
+            cell.textLabel.textColor = [UIColor blackColor];
+            cell.textLabel.text = self.periodTextLabel;
+        }
+        else {
+            cell.textLabel.textColor = [UIColor lightGrayColor];
+            cell.textLabel.text = NSLocalizedString(@"CHOOSE PERIOD", nil);
+        }
     }
     
     return cell;
@@ -207,13 +225,25 @@
         [self.navigationController pushViewController:filterPrescriptionsViewController animated:YES];
     }
     else if (indexPath.section == 1) {
+        // Period selected
+        ClifeFilterPeriodViewController *filterPeriodViewController = [ClifeFilterPeriodViewController createInstance];
+        filterPeriodViewController.delegate = self;
         
+        [self.navigationController pushViewController:filterPeriodViewController animated:YES];
     }
+}
+
+#pragma mark - Helper Methods
+- (void)updatePeriodTextLabel {
+    NSString *startStr = [self.dateFormatter stringFromDate:self.filterDateStart];
+    NSString *endStr = [self.dateFormatter stringFromDate:self.filterDateEnd];
+    
+    self.periodTextLabel = [NSString stringWithFormat:@"%@ %@ %@", startStr, NSLocalizedString(@"TO", nil), endStr];
 }
 
 #pragma mark - UI Action Methods
 - (void)onDoneButtonPressed:(id)sender {
-    // Pass the filtered items to the History view controller
+    // Pass the filtered prescriptions to the History view controller
     ClifeHistoryViewController *historyViewController = (ClifeHistoryViewController *)self.delegate;
     if ([self.filteredPrescriptions count] > 0) {
         historyViewController.filteredPrescriptions = self.filteredPrescriptions;
@@ -228,14 +258,39 @@
         historyViewController.isFiltered = NO;
     }
     
+    // Now pass the filtered period
+    if (self.filterDateStart != nil || self.filterDateEnd != nil) {
+        historyViewController.filterDateStart = self.filterDateStart;
+        historyViewController.filterDateEnd = self.filterDateEnd;
+        
+        // Put the History view controller in the filtered state
+        historyViewController.isFiltered = YES;
+    }
+    else {
+        historyViewController.filterDateStart = nil;
+        historyViewController.filterDateEnd = nil;
+        
+        // Make sure the history view controller is not marked as ahaving any filters
+        historyViewController.isFiltered = NO;
+    }
+    
+    // Finally update the period text label and selected index
+    historyViewController.periodTextLabel = self.periodTextLabel;
+    historyViewController.selectedPeriodIndex = self.selectedPeriodIndex;
+    
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)onClearButtonPressed:(id)sender {
     // clear the filtered items
     [self.filteredPrescriptions removeAllObjects];
+    self.filterDateStart = nil;
+    self.filterDateEnd = nil;
+    self.periodTextLabel = nil;
+    self.selectedPeriodIndex = 99;
     
-    // Make sure the history view controller is not marked as ahaving any filters
+    
+    // Make sure the history view controller is not marked as having any filters
     ClifeHistoryViewController *historyViewController = (ClifeHistoryViewController *)self.delegate;
     historyViewController.isFiltered = NO;
     

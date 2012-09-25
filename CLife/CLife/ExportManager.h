@@ -26,6 +26,8 @@
     NSDateFormatter         *m_dateAndTimeFormatter;
     
     NSArray                 *m_filteredPrescriptions;
+    NSDate                  *m_filterDateStart;
+    NSDate                  *m_filterDateEnd;
 }
 
 @property (nonatomic, assign)           id<ExportManagerDelegate> delegate;
@@ -36,11 +38,12 @@
 @property (nonatomic, retain)           NSDateFormatter             *dateAndTimeFormatter;
 
 @property (nonatomic, retain)           NSArray                     *filteredPrescriptions;
+@property (nonatomic, retain)           NSDate                      *filterDateStart;
+@property (nonatomic, retain)           NSDate                      *filterDateEnd;
 
-//- (void)exportDataFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate;
 - (void)exportData;
 
 // Static initializer
-+ (ExportManager *) instanceWithDelegate:(id)delegate forPrescriptions:(NSArray *)prescriptions;
++ (ExportManager *) instanceWithDelegate:(id)delegate forPrescriptions:(NSArray *)prescriptions withStartDate:(NSDate *)startDate withEndDate:(NSDate *)endDate;
 
 @end

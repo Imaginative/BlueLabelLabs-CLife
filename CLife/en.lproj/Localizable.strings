@@ -82,7 +82,7 @@
 "SELECT UNIT" = "ex. mg";
 
 "REMINDER SCHEDULE" = "Reminder Schedule";
-"ENTER START DATE" = "ex. Tomorrow 8:00 AM";
+"EX. TOMORROW 8:00 AM" = "ex. Tomorrow 8:00 AM";
 "STARTS" = "Starts";
 "AMOUNT" = "Amount";
 "ENTER AMOUNT" = "ex. 2 doses";
@@ -167,6 +167,17 @@
 "CHOOSE PRESCRIPTIONS" = "Choose prescriptions";
 "CHOOSE PERIOD" = "Choose period";
 
+"CUSTOM RANGE" = "Custom Range";
+"START" = "Start";
+"END" = "End";
+"ENTER START DATE" = "Enter start date";
+"ENTER END DATE" = "Enter end date";
+"TO" = "to";
+
+"TODAY" = "Today";
+"YESTERDAY" = "Yesterday";
+"LAST" = "Last";
+
 
 //Export
 "EXPORT" = "Export";
@@ -176,6 +187,7 @@
 "DATA EXPORTED ON" = "Data exported on";
 
 "ALL" = "All";
+"ID" = "ID";
 
 
 

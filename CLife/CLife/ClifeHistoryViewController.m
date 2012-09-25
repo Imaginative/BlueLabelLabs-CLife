@@ -25,8 +25,11 @@
 @synthesize tbl_history                 = m_tbl_history;
 @synthesize av_export                   = m_av_export;
 @synthesize filteredPrescriptions       = m_filteredPrescriptions;
+@synthesize filterDateStart             = m_filterDateStart;
+@synthesize filterDateEnd               = m_filterDateEnd;
+@synthesize periodTextLabel             = m_periodTextLabel;
+@synthesize selectedPeriodIndex         = m_selectedPeriodIndex;
 @synthesize isFiltered                  = m_isFiltered;
-
 
 #pragma mark - Properties
 - (NSFetchedResultsController*)frc_prescriptionInstances {
@@ -42,8 +45,22 @@
     
     NSSortDescriptor* sortDescriptor = [[NSSortDescriptor alloc] initWithKey:DATESCHEDULED ascending:NO];
     
-    double doubleDate = [[NSDate date] timeIntervalSince1970];
-    NSNumber *today = [NSNumber numberWithDouble:doubleDate];
+    // Setup filter start and end dates, start with defulats
+    NSDate *startDate = [NSDate distantPast];
+    NSDate *endDate = [NSDate date];
+    if (self.filterDateStart != nil) {
+        startDate = self.filterDateStart;
+    }
+    
+    if (self.filterDateEnd != nil && [self.filterDateEnd compare:[NSDate date]] == NSOrderedAscending) {
+        endDate = self.filterDateEnd;
+    }
+    
+    double doubleDateStart = [startDate timeIntervalSince1970];
+    NSNumber *dateStartNSNum = [NSNumber numberWithDouble:doubleDateStart];
+    
+    double doubleDateEnd = [endDate timeIntervalSince1970];
+    NSNumber *dateEndNSNum = [NSNumber numberWithDouble:doubleDateEnd];
     
     NSPredicate* predicate;
     if (self.filteredPrescriptions != nil && [self.filteredPrescriptions count] > 0) {
@@ -52,10 +69,10 @@
         for (Prescription *prescription in self.filteredPrescriptions) {
             [prescriptionIDs addObject:prescription.objectid];
         }
-        predicate = [NSPredicate predicateWithFormat:@"%K<=%@ && %K IN %@", DATESCHEDULED, today, PRESCRIPTIONID, prescriptionIDs];
+        predicate = [NSPredicate predicateWithFormat:@"%K>=%@ && %K<=%@ && %K IN %@", DATESCHEDULED, dateStartNSNum, DATESCHEDULED, dateEndNSNum, PRESCRIPTIONID, prescriptionIDs];
     }
     else {
-        predicate = [NSPredicate predicateWithFormat:@"%K<=%@", DATESCHEDULED, today];
+        predicate = [NSPredicate predicateWithFormat:@"%K>=%@ && %K<=%@", DATESCHEDULED, dateStartNSNum, DATESCHEDULED, dateEndNSNum];
     }
     
     [fetchRequest setPredicate:predicate];
@@ -119,6 +136,9 @@
                                     action:@selector(onFilterButtonPressed:)];
     self.navigationItem.leftBarButtonItem = leftButton;
     [leftButton release];
+    
+    // Set the default value for the selected period index
+    self.selectedPeriodIndex = 99;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -360,21 +380,33 @@
 
 #pragma mark - UI Action Methods
 - (void)onExportButtonPressed:(id)sender {
-    // If no filters are set prompt the user to warn that all data will be exported
-    self.av_export = [[UIAlertView alloc]
-                      initWithTitle:NSLocalizedString(@"EXPORT TITLE", nil)
-                      message:NSLocalizedString(@"EXPORT MESSAGE", nil)
-                      delegate:self
-                      cancelButtonTitle:NSLocalizedString(@"EXPORT", nil)
-                      otherButtonTitles:NSLocalizedString(@"FILTER", nil), nil];
-    [self.av_export show];
-    [self.av_export release];
+    if (self.isFiltered == NO) {
+        // If no filters are set prompt the user to warn that all data will be exported
+        self.av_export = [[UIAlertView alloc]
+                          initWithTitle:NSLocalizedString(@"EXPORT TITLE", nil)
+                          message:NSLocalizedString(@"EXPORT MESSAGE", nil)
+                          delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"EXPORT", nil)
+                          otherButtonTitles:NSLocalizedString(@"FILTER", nil), nil];
+        [self.av_export show];
+        [self.av_export release];
+    }
+    else {
+        // Export data
+        ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:self.filteredPrescriptions withStartDate:self.filterDateStart withEndDate:self.filterDateEnd];
+        exportManager.delegate = self;
+        [exportManager exportData];
+    }
 }
 
 - (void)onFilterButtonPressed:(id)sender {
     ClifeFilterViewController *filterViewController = [ClifeFilterViewController createInstance];
     filterViewController.delegate = self;
     filterViewController.filteredPrescriptions = self.filteredPrescriptions;
+    filterViewController.filterDateStart = self.filterDateStart;
+    filterViewController.filterDateEnd = self.filterDateEnd;
+    filterViewController.periodTextLabel = self.periodTextLabel;
+    filterViewController.selectedPeriodIndex = self.selectedPeriodIndex;
     
     UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:filterViewController] autorelease];
     
@@ -395,7 +427,7 @@
     if (alertView == self.av_export) {
         if (buttonIndex == 0) {
             // Export data
-            ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:self.filteredPrescriptions];
+            ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:self.filteredPrescriptions withStartDate:self.filterDateStart withEndDate:self.filterDateEnd];
             exportManager.delegate = self;
             [exportManager exportData];
         }

@@ -603,7 +603,7 @@
                     
                     self.tf_scheduleStartDate = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
                     self.tf_scheduleStartDate.adjustsFontSizeToFitWidth = YES;
-                    self.tf_scheduleStartDate.placeholder = NSLocalizedString(@"ENTER START DATE", nil);
+                    self.tf_scheduleStartDate.placeholder = NSLocalizedString(@"EX. TOMORROW 8:00 AM", nil);
                     self.tf_scheduleStartDate.textColor = [UIColor darkGrayColor];
                     self.tf_scheduleStartDate.backgroundColor = [UIColor clearColor];
                     self.tf_scheduleStartDate.textAlignment = UITextAlignmentRight;
@@ -1871,7 +1871,7 @@
         }
     }
     
-    // Re-enable nav bar buttons until text entry complete
+    // Re-enable nav bar buttons
     if (self.prescriptionID == nil) {
         // New prescription
         self.navigationItem.rightBarButtonItem.enabled = YES;

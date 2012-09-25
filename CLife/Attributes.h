@@ -156,3 +156,5 @@ extern NSString* const MIMEID;
 extern NSString* const PRESCRIPTIONINSTANCEID;
 extern NSString* const PRESCRIPTIONID;
 extern NSString* const HASNOTIFICATIONBEENSCHEDULED;
+extern NSString* const DATESTART;
+extern NSString* const DATEEND;
