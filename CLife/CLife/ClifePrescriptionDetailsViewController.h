@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "UIPromptAlertView.h"
+#import "ExportManager.h"
 
-@interface ClifePrescriptionDetailsViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate, UITextViewDelegate > {
+@interface ClifePrescriptionDetailsViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate, UITextViewDelegate, ExportManagerDelegate > {
     
     UITableView             *m_tbl_prescriptionDetails;
     
@@ -60,6 +61,8 @@
     
     UIView                  *m_v_disabledBackground;
     
+    BOOL                    m_didRequestEdit;
+    BOOL                    m_didRequestDelete;
     BOOL                    m_isEditing;
     BOOL                    m_occurancesRowIsShown;
     
@@ -126,6 +129,8 @@
 
 @property (nonatomic, retain) IBOutlet  UIView                  *v_disabledBackground;
 
+@property (nonatomic, assign)           BOOL                    didRequestEdit;
+@property (nonatomic, assign)           BOOL                    didRequestDelete;
 @property (nonatomic, assign)           BOOL                    isEditing;
 @property (nonatomic, assign)           BOOL                    occurancesRowIsShown;
 

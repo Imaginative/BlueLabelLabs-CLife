@@ -1061,7 +1061,6 @@
                               cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
                               otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
             self.av_delete.verificationText = self.name;
-//            [self.av_delete show];
             [self.av_delete performSelector:@selector(show) withObject:nil afterDelay:1];
             [self.av_delete release];
         }

@@ -284,8 +284,8 @@
             components.month = 0;
             components.year = 0;
             
-            if ([reminderDate compare:endDate] == NSOrderedAscending) {
-                // reminder date is earlier than the end date, we can create the reminder
+            if ([reminderDate compare:endDate] == NSOrderedAscending && [reminderDate compare:[NSDate  date]] == NSOrderedDescending) {
+                // reminder date is earlier than the end date AND later than today's date, we can create the reminder
                 PrescriptionInstance *instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                 
                 [prescriptionInstances addObject:instance];
@@ -309,8 +309,8 @@
                     for (int j = 1; j < occurances; j++) {
                         reminderDate = [calendar dateByAddingComponents:components toDate:reminderDate options:0];
                         
-                        if ([reminderDate compare:endDate] == NSOrderedAscending) {
-                            // reminder date is earlier than the end date, we can create the reminder
+                        if ([reminderDate compare:endDate] == NSOrderedAscending && [reminderDate compare:[NSDate  date]] == NSOrderedDescending) {
+                            // reminder date is earlier than the end date AND later than today's date, we can create the reminder
                             
                             instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                             
@@ -346,8 +346,8 @@
                     // create the first instance for that day
                     NSDate *reminderDate = [calendar dateByAddingComponents:components toDate:startDate options:0];
                     
-                    if ([reminderDate compare:endDate] == NSOrderedAscending) {
-                        // reminder date is earlier than the end date, we can create the reminder
+                    if ([reminderDate compare:endDate] == NSOrderedAscending && [reminderDate compare:[NSDate  date]] == NSOrderedDescending) {
+                        // reminder date is earlier than the end date AND later than today's date, we can create the reminder
                         PrescriptionInstance *instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                         
                         [prescriptionInstances addObject:instance];
@@ -378,8 +378,8 @@
                 
                 reminderDate = [calendar dateByAddingComponents:components toDate:startDate options:0];
                 
-                if ([reminderDate compare:endDate] == NSOrderedAscending) {
-                    // reminder date is earlier than the end date, we can create the reminder
+                if ([reminderDate compare:endDate] == NSOrderedAscending && [reminderDate compare:[NSDate  date]] == NSOrderedDescending) {
+                    // reminder date is earlier than the end date AND later than today's date, we can create the reminder
                     PrescriptionInstance *instance = [self createPrescriptionInstanceForPrescription:prescription withReminderDate:reminderDate];
                     
                     [prescriptionInstances addObject:instance];

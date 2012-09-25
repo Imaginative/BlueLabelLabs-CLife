@@ -15,6 +15,7 @@
 #import "SchedulePeriods.h"
 #import "Macros.h"
 #import "PrescriptionInstanceManager.h"
+
 @interface ClifePrescriptionDetailsViewController ()
 
 @end
@@ -65,6 +66,8 @@
 @synthesize gestureRecognizer       = m_gestureRecognizer;
 @synthesize v_disabledBackground    = m_v_disabledBackground;
 
+@synthesize didRequestEdit          = m_didRequestEdit;
+@synthesize didRequestDelete        = m_didRequestDelete;
 @synthesize isEditing               = m_isEditing;
 @synthesize occurancesRowIsShown    = m_occurancesRowIsShown;
 
@@ -2102,9 +2105,6 @@
         // remove the "Delete" button
         self.tbl_prescriptionDetails.tableFooterView = nil;
         
-
-        
-        
         //we need to save the changes to the prescription object to the local database 
         NSString* newMedicationName = self.medicationName;
         NSString* newMethod = self.method;
@@ -2328,20 +2328,56 @@
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
+#pragma mark MailComposeController Delegate
+// The mail compose view controller delegate method
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error
+{
+    if (result == MFMailComposeResultSent) {
+        if (self.didRequestDelete == YES) {
+            // Prompt user to enter their full name as verification before continuing
+            self.av_delete = [[UIPromptAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
+                              message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
+                              delegate:self
+                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                              otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+            self.av_delete.verificationText = self.loggedInUser.username;
+            [self.av_delete performSelector:@selector(show) withObject:nil afterDelay:1];
+            [self.av_delete release];
+        }
+        else if (self.didRequestEdit == YES) {
+            // Allow editing
+            [self editPrescription];
+        }
+    }
+    
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark - UIAlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView == self.av_edit) {
+        self.didRequestDelete = NO;
+        
         if (buttonIndex == 0) {
-            // Backup data
-            NSLog(@"Backup data");
+            self.didRequestEdit = YES;
+            
+            // Export data
+            ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:nil withStartDate:nil withEndDate:nil];
+            [exportManager exportData];
         }
         else {
+            // Skip export
             [self editPrescription];
         }
     }
     else if (alertView == self.av_delete) {
         if (buttonIndex == 0) {
             // Cancel
+            self.didRequestDelete = NO;
+            
             NSLog(@"Canceled delete");
         }
         else {
@@ -2354,6 +2390,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         // Process delete WITHOUT data export
+        self.didRequestDelete = YES;
         
         // Prompt user to enter their full name as verification before continuing
         self.av_delete = [[UIPromptAlertView alloc]
@@ -2368,17 +2405,23 @@
     }
     else if (buttonIndex == 1) {
         // Process delete WITH data export
+        self.didRequestDelete = YES;
         
-        // Prompt user to enter their full name as verification before continuing
-        self.av_delete = [[UIPromptAlertView alloc]
-                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
-                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
-                          delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
-        self.av_delete.verificationText = self.loggedInUser.username;
-        [self.av_delete show];
-        [self.av_delete release];
+        // Export data
+        ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:nil withStartDate:nil withEndDate:nil];
+        exportManager.delegate = self;
+        [exportManager exportData];
+        
+//        // Prompt user to enter their full name as verification before continuing
+//        self.av_delete = [[UIPromptAlertView alloc]
+//                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
+//                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
+//                          delegate:self
+//                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+//                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+//        self.av_delete.verificationText = self.loggedInUser.username;
+//        [self.av_delete show];
+//        [self.av_delete release];
     }
     else {
         // Cancel
