@@ -2229,8 +2229,6 @@
 
 - (void)deletePrescription {
     // Delete the prescription object
-//    ResourceContext *resourceContext = [ResourceContext instance];
-//    [resourceContext delete:self.prescriptionID withType:PRESCRIPTION];
     [Prescription deletePrescriptionWithID:self.prescriptionID];
     
     self.prescriptionID = nil;

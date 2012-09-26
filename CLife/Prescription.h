@@ -33,6 +33,7 @@
 - (NSArray*) unconfirmedPrescriptionInstancesAfter:(NSDate*)date;
 - (NSArray*) prescriptionInstances;
 
++ (void) deleteAllPrescriptions;
 + (void) deletePrescriptionWithID:(NSNumber *)prescriptionID;
 
 + (Prescription *) createPrescriptionWithName:(NSString *)name 

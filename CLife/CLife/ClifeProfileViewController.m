@@ -1001,8 +1001,9 @@
     [authenticationManager logoff];
     
     // Delete the profile object
-    ResourceContext *resourceContext = [ResourceContext instance];
-    [resourceContext delete:self.loggedInUser.objectid withType:USER];
+//    ResourceContext *resourceContext = [ResourceContext instance];
+//    [resourceContext delete:self.loggedInUser.objectid withType:USER];
+    [User deleteUserWithID:self.loggedInUser.objectid];
     
     self.loggedInUser.objectid = nil;
     self.name = nil;

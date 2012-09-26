@@ -118,8 +118,25 @@
 }
 
 #pragma mark - Static Methods
++ (void) deleteAllPrescriptions {
+//    NSString* activityName = @"Prescription.deleteAllPrescriptions";
+    
+    // Get the all the presciption objects
+    ResourceContext *resourceContext = [ResourceContext instance];
+    NSArray* prescriptions = [resourceContext resourcesWithType:PRESCRIPTION];
+    
+    for (Prescription *prescription in prescriptions) {
+        // Delete the prescription object
+        [Prescription deletePrescriptionWithID:prescription.objectid];
+    }
+    
+    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+//    LOG_PRESCRIPTION(0,@"%@ Committed deletions to the local store",activityName);
+    
+}
+
 + (void) deletePrescriptionWithID:(NSNumber *)prescriptionID {
-    NSString* activityName = @"Prescription.deletePrescriptionWithID:";
+//    NSString* activityName = @"Prescription.deletePrescriptionWithID:";
     
     // Get the presciption object
     ResourceContext *resourceContext = [ResourceContext instance];

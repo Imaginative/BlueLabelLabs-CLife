@@ -30,6 +30,9 @@
 @property (nonatomic,retain) NSNumber* dateborn;
 @property (nonatomic,retain) NSString* bloodtype;
 
+
++ (void) deleteUserWithID:(NSNumber *)userID;
+
 + (User*) createNewDefaultUser;
 
 @end

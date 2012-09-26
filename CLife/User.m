@@ -14,6 +14,8 @@
 #import "Attributes.h"
 #import "IDGenerator.h"
 #import "ApplicationSettingsManager.h"
+#import "Prescription.h"
+
 @implementation User
 
 
@@ -39,6 +41,21 @@
     return [super initFromJSONDictionary:jsonDictionary withEntityDescription:entity insertIntoResourceContext:resourceContext];
 }
 
+#pragma mark - Static Methods
++ (void) deleteUserWithID:(NSNumber *)userID {
+//    NSString* activityName = @"User.deleteUserWithID:";
+    
+    // First delete all associated prescription objects
+    [Prescription deleteAllPrescriptions];
+    
+    // Now delete the user object
+    ResourceContext *resourceContext = [ResourceContext instance];
+    [resourceContext delete:userID withType:USER];
+    
+    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+//    LOG_USER(0,@"%@ Committed deletions to the local store", activityName);
+    
+}
 
 + (User*)createNewDefaultUser
 {
