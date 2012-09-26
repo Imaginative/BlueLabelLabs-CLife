@@ -67,11 +67,22 @@
         // Get filtered prescription ids if filters are set and add them to the predicate
         NSMutableArray *prescriptionIDs = [[NSMutableArray alloc] initWithCapacity:[self.filteredPrescriptions count]];
         for (Prescription *prescription in self.filteredPrescriptions) {
-            [prescriptionIDs addObject:prescription.objectid];
+            if (prescription.objectid) {
+                [prescriptionIDs addObject:prescription.objectid];
+            }
         }
-        predicate = [NSPredicate predicateWithFormat:@"%K>=%@ && %K<=%@ && %K IN %@", DATESCHEDULED, dateStartNSNum, DATESCHEDULED, dateEndNSNum, PRESCRIPTIONID, prescriptionIDs];
+        
+        // If the filtered prescription still contains objects then filter on them
+        if ([prescriptionIDs count] > 0) {
+            predicate = [NSPredicate predicateWithFormat:@"%K>=%@ && %K<=%@ && %K IN %@", DATESCHEDULED, dateStartNSNum, DATESCHEDULED, dateEndNSNum, PRESCRIPTIONID, prescriptionIDs];
+        }
+        else {
+            // show everything
+            predicate = [NSPredicate predicateWithFormat:@"%K>=%@ && %K<=%@", DATESCHEDULED, dateStartNSNum, DATESCHEDULED, dateEndNSNum];
+        }
     }
     else {
+        // Show everything
         predicate = [NSPredicate predicateWithFormat:@"%K>=%@ && %K<=%@", DATESCHEDULED, dateStartNSNum, DATESCHEDULED, dateEndNSNum];
     }
     
@@ -150,6 +161,14 @@
     }
     else {
         [self.navigationItem.leftBarButtonItem setTintColor:nil];
+    }
+    
+    // Make sure the array for filtered prescriptions is still valid incase some a prescription has been deleted
+    for (Prescription *prescription in self.filteredPrescriptions) {
+        if (!prescription.objectid) {
+            // Prescription does not exist anymore, remove it
+            [self.filteredPrescriptions removeObject:prescription];
+        }
     }
     
     // Reload the tableview to process any changes

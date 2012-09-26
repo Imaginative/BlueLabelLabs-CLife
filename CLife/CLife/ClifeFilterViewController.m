@@ -244,18 +244,16 @@
 #pragma mark - UI Action Methods
 - (void)onDoneButtonPressed:(id)sender {
     // Pass the filtered prescriptions to the History view controller
+    BOOL isFiltered = NO;
+    
     ClifeHistoryViewController *historyViewController = (ClifeHistoryViewController *)self.delegate;
     if ([self.filteredPrescriptions count] > 0) {
         historyViewController.filteredPrescriptions = self.filteredPrescriptions;
         
-        // Put the History view controller in the filtered state
-        historyViewController.isFiltered = YES;
+        isFiltered = YES;
     }
     else {
         historyViewController.filteredPrescriptions = nil;
-        
-        // Make sure the history view controller is not marked as ahaving any filters
-        historyViewController.isFiltered = NO;
     }
     
     // Now pass the filtered period
@@ -263,14 +261,18 @@
         historyViewController.filterDateStart = self.filterDateStart;
         historyViewController.filterDateEnd = self.filterDateEnd;
         
-        // Put the History view controller in the filtered state
-        historyViewController.isFiltered = YES;
+        isFiltered = YES;
     }
     else {
         historyViewController.filterDateStart = nil;
         historyViewController.filterDateEnd = nil;
-        
-        // Make sure the history view controller is not marked as ahaving any filters
+    }
+    
+    // Now put the History view controller in the filtered state if a filter is applied
+    if (isFiltered == YES) {
+        historyViewController.isFiltered = YES;
+    }
+    else {
         historyViewController.isFiltered = NO;
     }
     
