@@ -1282,6 +1282,7 @@
 			buildPhases = (
 				C53DC69315D4378300CC7D14 /* Sources */,
 				C53DC69415D4378300CC7D14 /* Frameworks */,
+				527609B81613C8610091EC11 /* ShellScript */,
 				C53DC69515D4378300CC7D14 /* Resources */,
 			);
 			buildRules = (
@@ -1395,6 +1396,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		527609B81613C8610091EC11 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\nbuildPlist=${INFOPLIST_FILE}\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $buildPlist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" $buildPlist";
+		};
 		C53DC6C415D4378300CC7D14 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1635,7 +1649,7 @@
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(SDKROOT)/usr/include/libxml2";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A8FEF7C2-19D8-460C-8C41-D35EADC385E8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "24653B56-C7FA-4664-98AF-4C55E5F7E84C";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = armv7;
