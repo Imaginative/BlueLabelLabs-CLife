@@ -73,7 +73,7 @@
 "ENTER MEDICATION NAME" = "the name of this medication";
 
 "METHOD" = "Method";
-"SELECT METHOD" = "how is this medication administered";
+"SELECT METHOD" = "how is this medication administered?";
 
 "DOSAGE" = "Dosage";
 "STRENGTH" = "Strength";
@@ -155,7 +155,7 @@
 "PRESCRIPTION REMINDER" = "Prescription Reminder";
 "REMINDER ACTION" = "Confirm";
 "REMINDER ACTION PART 1" = "Time to take your next dose of";
-"REMINDER ACTION PART 2" = "Please open CLife to confirm.";
+"REMINDER ACTION PART 2" = "Please open C-Life to confirm.";
 "REMINDER ACTION PART 2 TYPE 2" = "Please confirm.";
 
 

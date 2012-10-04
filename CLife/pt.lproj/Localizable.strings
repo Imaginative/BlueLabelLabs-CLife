@@ -10,116 +10,116 @@
 
 // General
 "ITEM" = "Item";
-"TODAY" = "Today";
-"YES" = "Yes";
-"NO" = "No";
-"DELETE" = "Delete";
-"CANCEL" = "Cancel";
-"CONFIRM" = "Confirm";
-"NONE" = "None";
-"OPTIONAL" = "optional";
-"DELETE WITH DATA EXPORT" = "Export data and delete";
-"DELETE WITHOUT DATA EXPORT" = "Delete";
+"TODAY" = "Hoje";
+"YES" = "Sim";
+"NO" = "Não";
+"DELETE" = "Deletar";
+"CANCEL" = "Cancelar";
+"CONFIRM" = "Confirmar";
+"NONE" = "Nenhum";
+"OPTIONAL" = "opcional";
+"DELETE WITH DATA EXPORT" = "Deletar com exportação dos dados";
+"DELETE WITHOUT DATA EXPORT" = "Deletar";
 
-"INCOMPLETE" = "Incomplete";
-"INCOMPLETE MESSAGE" = "Please complete all required fields before saving.";
+"INCOMPLETE" = "Incompleto";
+"INCOMPLETE MESSAGE" = "Favor completar todos os campos requeridos antes de salvar.";
 
-"CONFIRM DELETE" = "Confirm Delete";
-"CONFIRM DELETE MESSAGE" = "Please enter your name as it appears in your profile.";
+"CONFIRM DELETE" = "Confirmar Deletação";
+"CONFIRM DELETE MESSAGE" = "Favor digitar seu nome como aparece no seu perfil.";
 
 
 // Tab Bar
-"PROFILE" = "Profile";
-"PRESCRIPTIONS" = "Prescriptions";
-"PRESCRIPTION" = "Prescription";
-"REMINDERS" = "Reminders";
-"HISTORY" = "History";
+"PROFILE" = "Perfil";
+"PRESCRIPTIONS" = "Prescrições";
+"PRESCRIPTION" = "Prescrição";
+"REMINDERS" = "Lembretes";
+"HISTORY" = "Histórico";
 
 
 // Profile
-"NAME" = "Name";
-"ENTER FULL NAME" = "Enter full name";
+"NAME" = "Nome";
+"ENTER FULL NAME" = "Digite o nome completo";
 
-"ENTER BIRTHDAY" = "Enter birthday";
-"BIRTHDAY" = "Birthday";
+"ENTER BIRTHDAY" = "Digite a data de nascimento";
+"BIRTHDAY" = "Data de nascimento";
 
-"GENDER" = "Gender";
-"SELECT GENDER" = "Select gender";
-"MALE" = "Male";
-"FEMALE" = "Female";
+"GENDER" = "Sexo";
+"SELECT GENDER" = "Selecione o sexo";
+"MALE" = "Masculino";
+"FEMALE" = "Feminino";
 
-"BLOOD TYPE" = "Blood Type";
-"SELECT BLOOD TYPE" = "Select blood type";
-"A POSITIVE" = "A Positive";
-"A NEGATIVE" = "A Negative";
-"B POSITIVE" = "B Positive";
-"B NEGATIVE" = "B Negative";
-"AB POSITIVE" = "AB Positive";
-"AB NEGATIVE" = "AB Negative";
-"O POSITIVE" = "O Positive";
-"O NEGATIVE" = "O Negative";
+"BLOOD TYPE" = "Tipo de sangue";
+"SELECT BLOOD TYPE" = "Selecione o tipo de sangue";
+"A POSITIVE" = "A Positivo";
+"A NEGATIVE" = "A Negativo";
+"B POSITIVE" = "B Positivo";
+"B NEGATIVE" = "B Negativo";
+"AB POSITIVE" = "AB Positivo";
+"AB NEGATIVE" = "AB Negativo";
+"O POSITIVE" = "O Positivo";
+"O NEGATIVE" = "O Negativo";
 
-"EDIT PROFILE" = "Edit Profile";
-"EDIT PROFILE MESSAGE" = "Would you like to backup your history before editing your profile?";
+"EDIT PROFILE" = "Editar o perfil";
+"EDIT PROFILE MESSAGE" = "Gostaria de fazer uma cópia do seu histórico antes de editar o seu perfil?";
 
-"COMPLETE PROFILE WARNING" = "Please complete your profile to continue";
+"COMPLETE PROFILE WARNING" = "Favor completar o seu perfil para continuar";
 
-"DELETE PROFILE" = "Delete profile";
-"DELETE PROFILE MESSAGE" = "Deleting your profile will erase all data ￼and history. Would you like to export your data and history before deleting your profile?";
+"DELETE PROFILE" = "Deletar o perfil";
+"DELETE PROFILE MESSAGE" = "Deletar o seu perfil vai apagar todos os seus dados e histórico. Gostaria de exportar seus dados e histórico antes de deletar seu profile?";
 
 
 // Prescriptions
-"MEDICATION" = "Medication";
-"ENTER MEDICATION NAME" = "the name of this medication";
+"MEDICATION" = "Medicação";
+"ENTER MEDICATION NAME" = "o nome dessa medicação";
 
-"METHOD" = "Method";
-"SELECT METHOD" = "how is this medication administered";
+"METHOD" = "Método";
+"SELECT METHOD" = "como é administrada essa medicação?";
 
-"DOSAGE" = "Dosage";
-"STRENGTH" = "Strength";
+"DOSAGE" = "Dosagem";
+"STRENGTH" = "Potência";
 "ENTER STRENGTH" = "ex. 100 mg";
-"UNIT" = "Unit";
+"UNIT" = "Unidade";
 "SELECT UNIT" = "ex. mg";
 
-"REMINDER SCHEDULE" = "Reminder Schedule";
-"EX. TOMORROW 8:00 AM" = "ex. Tomorrow 8:00 AM";
-"STARTS" = "Starts";
-"AMOUNT" = "Amount";
+"REMINDER SCHEDULE" = "Programa de lembrete";
+"EX. TOMORROW 8:00 AM" = "ex. Amanhã 8:00 AM";
+"STARTS" = "Começa";
+"AMOUNT" = "Quantia";
 "ENTER AMOUNT" = "ex. 2 doses";
 "DOSE" = "dose";
 "DOSES" = "doses";
-"ENDS" = "Ends";
-"ENTER ENDS" = "optional: date to stop";
-"NO END DATE" = "No end date";
-"REPEATS" = "Repeats";
-"ENTER REPEATS" = "ex. Every 4 hours";
-"DOES NOT REPEAT" = "Does not repeat";
-"EVERY" = "Every";
-"OCCURS" = "Occurs";
-"ENTER OCCURS" = "optional: times that day";
-"TIME THAT DAY" = "time that day";
-"TIMES THAT DAY" = "times that day";
+"ENDS" = "Termina";
+"ENTER ENDS" = "opcional: data para término";
+"NO END DATE" = "Sem data de término";
+"REPEATS" = "Repete";
+"ENTER REPEATS" = "ex. A cada 4 horas";
+"DOES NOT REPEAT" = "Não se repete";
+"EVERY" = "Todo";
+"OCCURS" = "Ocorre";
+"ENTER OCCURS" = "opcional: vezes naquele dia";
+"TIME THAT DAY" = "vez por dia";
+"TIMES THAT DAY" = "vezes por dia";
 
-"MINUTE" = "minute";
-"MINUTES" = "minutes";
-"HOUR" = "hour";
-"HOURS" = "hours";
-"DAY" = "day";
-"DAYS" = "days";
-"WEEK" = "week";
-"WEEKS" = "weeks";
-"MONTH" = "month";
-"MONTHS" = "months";
-"YEAR" = "year";
-"YEARS" = "years";
+"MINUTE" = "minuto";
+"MINUTES" = "minutos";
+"HOUR" = "hora";
+"HOURS" = "horas";
+"DAY" = "dia";
+"DAYS" = "dias";
+"WEEK" = "semana";
+"WEEKS" = "semansa";
+"MONTH" = "mês";
+"MONTHS" = "meses";
+"YEAR" = "ano";
+"YEARS" = "anos";
 
-"REASON AND NOTES" = "Reason and Notes (optional)";
-"ENTER REASON" = "enter the reason for this medication and any other notes";
+"REASON AND NOTES" = "Razão e notas (opcional)";
+"ENTER REASON" = "digite a razão para tomar essa medicação e outras notas";
 
-"PILL" = "Pill";
-"LIQUID" = "Liquid";
-"TOPICAL" = "Topical";
-"SYRINGE" = "Syringe";
+"PILL" = "Pílula";
+"LIQUID" = "Líquido";
+"TOPICAL" = "Tópico";
+"SYRINGE" = "Seringa";
 
 "UG" = "ug";
 "MG" = "mg";
@@ -128,63 +128,63 @@
 "ML" = "ml";
 "L" = "l";
 
-"EDIT PRESCRIPTION" = "Edit Prescription";
-"EDIT PRESCRIPTION MESSAGE" = "Would you like to backup your history before editing this prescription?";
+"EDIT PRESCRIPTION" = "Editar prescrição";
+"EDIT PRESCRIPTION MESSAGE" = "Gostaria de fazer uma cópia do seu histórico antes de editar esta prescrição?";
 
-"DELETE PRESCRIPTION" = "Delete prescription";
-"DELETE PRESCRIPTION MESSAGE" = "Would you like to export your data and history before deleting this prescription?";
+"DELETE PRESCRIPTION" = "Deletar prescrição";
+"DELETE PRESCRIPTION MESSAGE" = "Gostaria de fazer uma cópia do seu histórico antes de editar o sua prescrição?";
 
 
 // History Details
-"CONFIRMATION" = "Confirmation";
-"DAY AND TIME" = "Day and Time";
-"NOTES" = "Notes (optional)";
+"CONFIRMATION" = "Confirmação";
+"DAY AND TIME" = "Dia e hora";
+"NOTES" = "Notas (opcional)";
 
-"WARNING" = "Please confirm if and when this prescription was taken";
-"UNCONFIRMED" = "Unconfirmed";
-"NOT TAKEN" = "Not Taken";
-"TAKEN" = "Taken";
-"SCHEDULED" = "Scheduled";
-"ENTER DATE AND TIME" = "enter date and time";
+"WARNING" = "Favor confirmar quando e se essa medicação foi tomada";
+"UNCONFIRMED" = "Não confirmada";
+"NOT TAKEN" = "Não tomada";
+"TAKEN" = "Tomada";
+"SCHEDULED" = "Programado";
+"ENTER DATE AND TIME" = "digite a data e a hora";
 
-"EDIT HISTORY" = "Edit History";
-"EDIT HISTORY MESSAGE" = "Would you like to backup your data and history before editing?";
+"EDIT HISTORY" = "Editar o histórico";
+"EDIT HISTORY MESSAGE" = "Gostaria de fazer uma cópia dos seus dados e histórico antes de editar?";
 
 
 // Notifications
-"PRESCRIPTION REMINDER" = "Prescription Reminder";
-"REMINDER ACTION" = "Confirm";
-"REMINDER ACTION PART 1" = "Time to take your next dose of";
-"REMINDER ACTION PART 2" = "Please open CLife to confirm.";
-"REMINDER ACTION PART 2 TYPE 2" = "Please confirm.";
+"PRESCRIPTION REMINDER" = "Lembrete de medicação";
+"REMINDER ACTION" = "Confirmar";
+"REMINDER ACTION PART 1" = "Hora de tomar sua próxima dose dessa";
+"REMINDER ACTION PART 2" = "Favor abrir o C-Life para confirmar.";
+"REMINDER ACTION PART 2 TYPE 2" = "Favor confirmar.";
 
 
 //Filter
-"CLEAR" = "Clear";
-"FILTER" = "Filter";
+"CLEAR" = "Limpar";
+"FILTER" = "Filtrar";
 
-"PERIOD" = "Period";
-"CHOOSE PRESCRIPTIONS" = "Choose prescriptions";
-"CHOOSE PERIOD" = "Choose period";
+"PERIOD" = "Período";
+"CHOOSE PRESCRIPTIONS" = "Escolha as medicações";
+"CHOOSE PERIOD" = "Escolha o período";
 
-"CUSTOM RANGE" = "Custom Range";
-"START" = "Start";
-"END" = "End";
+"CUSTOM RANGE" = "Distância personalizada";
+"START" = "Começar";
+"END" = "Terminar";
 "ENTER START DATE" = "Enter start date";
 "ENTER END DATE" = "Enter end date";
 "TO" = "to";
 
 "TODAY" = "Today";
 "YESTERDAY" = "Yesterday";
-"LAST" = "Last";
+"LAST" = "Último";
 
 
 //Export
-"EXPORT" = "Export";
-"EXPORT TITLE" = "Export History";
-"EXPORT MESSAGE" = "All items currently visible in your history will be exported. Do you want to apply filters on your history before exporting?";
-"EXPORTED DATA" = "Exported Data";
-"DATA EXPORTED ON" = "Data exported on";
+"EXPORT" = "Exportar";
+"EXPORT TITLE" = "Exportar o histórico";
+"EXPORT MESSAGE" = "Todos os itens visíveis no seu histórico serão exportados. Quer usar filtros no seu histórico antes de exportá-lo?";
+"EXPORTED DATA" = "Dados exportados";
+"DATA EXPORTED ON" = "Dados exportados em";
 
-"ALL" = "All";
-"ID" = "ID";
+"ALL" = "Todos";
+"ID" = "Identidade";

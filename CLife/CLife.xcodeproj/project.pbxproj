@@ -46,6 +46,13 @@
 		528086151610CDB000EB515A /* ClifeFilterPeriodViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528086131610CDAF00EB515A /* ClifeFilterPeriodViewController.xib */; };
 		528D629415FD6710006BD80A /* ClifeHistoryDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */; };
 		528D629515FD6710006BD80A /* ClifeHistoryDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528D629315FD670F006BD80A /* ClifeHistoryDetailsViewController.xib */; };
+		52A27118161E132B00A2763B /* c-life-icon-57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A27117161E132B00A2763B /* c-life-icon-57x57.png */; };
+		52A2711D161E135800A2763B /* c-life-icon-114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A2711C161E135800A2763B /* c-life-icon-114x114.png */; };
+		52A2711F161E136F00A2763B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A2711E161E136F00A2763B /* Default.png */; };
+		52A27121161E137300A2763B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A27120161E137300A2763B /* Default@2x.png */; };
+		52A27122161E139300A2763B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52FC0503160CE9A80083DB3C /* Default-568h@2x.png */; };
+		52A27126161E15A300A2763B /* C-Life-icon-29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A27124161E15A300A2763B /* C-Life-icon-29x29.png */; };
+		52A27127161E15A300A2763B /* C-Life-icon-58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A27125161E15A300A2763B /* C-Life-icon-58x58.png */; };
 		52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B3E7E715E67F75004E9C4A /* icon-pill.png */; };
 		52F007B9160CF6A90003CF2C /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007B2160CF6A90003CF2C /* CHCSVParser.m */; };
 		52F007BA160CF6A90003CF2C /* CHCSVWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007B4160CF6A90003CF2C /* CHCSVWriter.m */; };
@@ -54,7 +61,6 @@
 		52F007C0160D2DF60003CF2C /* ExportManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007BF160D2DF60003CF2C /* ExportManager.m */; };
 		52F007C8160D3E410003CF2C /* ClifeFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007C6160D3E410003CF2C /* ClifeFilterViewController.m */; };
 		52F007C9160D3E410003CF2C /* ClifeFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F007C7160D3E410003CF2C /* ClifeFilterViewController.xib */; };
-		52FC0504160CE9A80083DB3C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52FC0503160CE9A80083DB3C /* Default-568h@2x.png */; };
 		C53DC69C15D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
 		C53DC69E15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
 		C53DC6A015D4378300CC7D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */; };
@@ -260,6 +266,12 @@
 		528D629115FD670F006BD80A /* ClifeHistoryDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeHistoryDetailsViewController.h; sourceTree = "<group>"; };
 		528D629215FD670F006BD80A /* ClifeHistoryDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeHistoryDetailsViewController.m; sourceTree = "<group>"; };
 		528D629315FD670F006BD80A /* ClifeHistoryDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeHistoryDetailsViewController.xib; sourceTree = "<group>"; };
+		52A27117161E132B00A2763B /* c-life-icon-57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c-life-icon-57x57.png"; sourceTree = "<group>"; };
+		52A2711C161E135800A2763B /* c-life-icon-114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "c-life-icon-114x114.png"; sourceTree = "<group>"; };
+		52A2711E161E136F00A2763B /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		52A27120161E137300A2763B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		52A27124161E15A300A2763B /* C-Life-icon-29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "C-Life-icon-29x29.png"; sourceTree = "<group>"; };
+		52A27125161E15A300A2763B /* C-Life-icon-58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "C-Life-icon-58x58.png"; sourceTree = "<group>"; };
 		52B3E7E715E67F75004E9C4A /* icon-pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-pill.png"; sourceTree = "<group>"; };
 		52F007B0160CF6A90003CF2C /* CHCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSV.h; sourceTree = "<group>"; };
 		52F007B1160CF6A90003CF2C /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
@@ -711,6 +723,12 @@
 		C53DC68C15D4378300CC7D14 = {
 			isa = PBXGroup;
 			children = (
+				52A27120161E137300A2763B /* Default@2x.png */,
+				52A2711E161E136F00A2763B /* Default.png */,
+				52A2711C161E135800A2763B /* c-life-icon-114x114.png */,
+				52A27117161E132B00A2763B /* c-life-icon-57x57.png */,
+				52A27124161E15A300A2763B /* C-Life-icon-29x29.png */,
+				52A27125161E15A300A2763B /* C-Life-icon-58x58.png */,
 				528085F8160E4B8D00EB515A /* MessageUI.framework */,
 				52FC0503160CE9A80083DB3C /* Default-568h@2x.png */,
 				C53DC87D15D441AE00CC7D14 /* QuartzCore.framework */,
@@ -1378,10 +1396,16 @@
 				522D89151602A83900B5C615 /* greenCheckmark@2x.png in Resources */,
 				522D89161602A83900B5C615 /* redX.png in Resources */,
 				522D89171602A83900B5C615 /* redX@2x.png in Resources */,
-				52FC0504160CE9A80083DB3C /* Default-568h@2x.png in Resources */,
 				52F007C9160D3E410003CF2C /* ClifeFilterViewController.xib in Resources */,
 				52808603160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.xib in Resources */,
 				528086151610CDB000EB515A /* ClifeFilterPeriodViewController.xib in Resources */,
+				52A27118161E132B00A2763B /* c-life-icon-57x57.png in Resources */,
+				52A2711D161E135800A2763B /* c-life-icon-114x114.png in Resources */,
+				52A2711F161E136F00A2763B /* Default.png in Resources */,
+				52A27121161E137300A2763B /* Default@2x.png in Resources */,
+				52A27122161E139300A2763B /* Default-568h@2x.png in Resources */,
+				52A27126161E15A300A2763B /* C-Life-icon-29x29.png in Resources */,
+				52A27127161E15A300A2763B /* C-Life-icon-58x58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
