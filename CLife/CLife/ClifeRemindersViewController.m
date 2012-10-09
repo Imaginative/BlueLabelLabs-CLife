@@ -12,6 +12,7 @@
 #import "PrescriptionInstance.h"
 #import "PrescriptionInstanceState.h"
 #import "DateTimeHelper.h"
+#import "UIImage+UIImageCategory.h"
 
 #define kTABLEVIEWCELLHEIGHT 50.0
 
@@ -203,6 +204,8 @@
             
             [cell setSelectionStyle:UITableViewCellEditingStyleNone];
             
+            cell.imageView.backgroundColor = [UIColor whiteColor];
+            
         }
         
         PrescriptionInstance *prescriptionInstance = [self.frc_prescriptionInstances objectAtIndexPath:indexPath];
@@ -217,7 +220,21 @@
         NSDate *scheduleDate = [DateTimeHelper parseWebServiceDateDouble:prescriptionInstance.datescheduled];
         cell.detailTextLabel.text = [dateAndTimeFormatter stringFromDate:scheduleDate];
         
-        cell.imageView.image = [UIImage imageNamed:@"icon-pill.png"];
+        if ([prescriptionInstance.prescription.method isEqualToString:NSLocalizedString(@"PILL", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else if ([prescriptionInstance.prescription.method isEqualToString:NSLocalizedString(@"LIQUID", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else if ([prescriptionInstance.prescription.method isEqualToString:NSLocalizedString(@"TOPICAL", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else if ([prescriptionInstance.prescription.method isEqualToString:NSLocalizedString(@"SYRINGE", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-syringe.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
     }
     else {
         // Set None row

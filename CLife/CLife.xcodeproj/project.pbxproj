@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		521603981624897B00EB5266 /* icon-liquid.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603921624897B00EB5266 /* icon-liquid.png */; };
+		521603991624897B00EB5266 /* icon-liquid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603931624897B00EB5266 /* icon-liquid@2x.png */; };
+		5216039A1624897B00EB5266 /* icon-pill.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603941624897B00EB5266 /* icon-pill.png */; };
+		5216039B1624897B00EB5266 /* icon-pill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603951624897B00EB5266 /* icon-pill@2x.png */; };
+		5216039C1624897B00EB5266 /* icon-syringe.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603961624897B00EB5266 /* icon-syringe.png */; };
+		5216039D1624897B00EB5266 /* icon-syringe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603971624897B00EB5266 /* icon-syringe@2x.png */; };
 		522D88F41602460800B5C615 /* ClifeRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522D88F21602460800B5C615 /* ClifeRemindersViewController.m */; };
 		522D88F51602460800B5C615 /* ClifeRemindersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */; };
 		522D88F916024AAE00B5C615 /* icon-calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F716024AAE00B5C615 /* icon-calendar.png */; };
@@ -53,7 +59,6 @@
 		52A27122161E139300A2763B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 52FC0503160CE9A80083DB3C /* Default-568h@2x.png */; };
 		52A27126161E15A300A2763B /* C-Life-icon-29x29.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A27124161E15A300A2763B /* C-Life-icon-29x29.png */; };
 		52A27127161E15A300A2763B /* C-Life-icon-58x58.png in Resources */ = {isa = PBXBuildFile; fileRef = 52A27125161E15A300A2763B /* C-Life-icon-58x58.png */; };
-		52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */ = {isa = PBXBuildFile; fileRef = 52B3E7E715E67F75004E9C4A /* icon-pill.png */; };
 		52F007B9160CF6A90003CF2C /* CHCSVParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007B2160CF6A90003CF2C /* CHCSVParser.m */; };
 		52F007BA160CF6A90003CF2C /* CHCSVWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007B4160CF6A90003CF2C /* CHCSVWriter.m */; };
 		52F007BB160CF6A90003CF2C /* NSArray+CHCSVAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007B6160CF6A90003CF2C /* NSArray+CHCSVAdditions.m */; };
@@ -211,6 +216,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		521603921624897B00EB5266 /* icon-liquid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-liquid.png"; sourceTree = "<group>"; };
+		521603931624897B00EB5266 /* icon-liquid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-liquid@2x.png"; sourceTree = "<group>"; };
+		521603941624897B00EB5266 /* icon-pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-pill.png"; sourceTree = "<group>"; };
+		521603951624897B00EB5266 /* icon-pill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-pill@2x.png"; sourceTree = "<group>"; };
+		521603961624897B00EB5266 /* icon-syringe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-syringe.png"; sourceTree = "<group>"; };
+		521603971624897B00EB5266 /* icon-syringe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-syringe@2x.png"; sourceTree = "<group>"; };
 		522D88F11602460800B5C615 /* ClifeRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeRemindersViewController.h; sourceTree = "<group>"; };
 		522D88F21602460800B5C615 /* ClifeRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeRemindersViewController.m; sourceTree = "<group>"; };
 		522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeRemindersViewController.xib; sourceTree = "<group>"; };
@@ -272,7 +283,6 @@
 		52A27120161E137300A2763B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		52A27124161E15A300A2763B /* C-Life-icon-29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "C-Life-icon-29x29.png"; sourceTree = "<group>"; };
 		52A27125161E15A300A2763B /* C-Life-icon-58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "C-Life-icon-58x58.png"; sourceTree = "<group>"; };
-		52B3E7E715E67F75004E9C4A /* icon-pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-pill.png"; sourceTree = "<group>"; };
 		52F007B0160CF6A90003CF2C /* CHCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSV.h; sourceTree = "<group>"; };
 		52F007B1160CF6A90003CF2C /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
 		52F007B2160CF6A90003CF2C /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
@@ -671,9 +681,14 @@
 				5277E7E115DD4F7E003A1DCF /* icon-medical@2x.png */,
 				5277E7FA15DD6B67003A1DCF /* icon-clock.png */,
 				5277E7FB15DD6B67003A1DCF /* icon-clock@2x.png */,
-				52B3E7E715E67F75004E9C4A /* icon-pill.png */,
 				522D88F716024AAE00B5C615 /* icon-calendar.png */,
 				522D88F816024AAE00B5C615 /* icon-calendar@2x.png */,
+				521603921624897B00EB5266 /* icon-liquid.png */,
+				521603931624897B00EB5266 /* icon-liquid@2x.png */,
+				521603941624897B00EB5266 /* icon-pill.png */,
+				521603951624897B00EB5266 /* icon-pill@2x.png */,
+				521603961624897B00EB5266 /* icon-syringe.png */,
+				521603971624897B00EB5266 /* icon-syringe@2x.png */,
 				522D89081602A77000B5C615 /* warning.png */,
 				522D89091602A77000B5C615 /* warning@2x.png */,
 				522D890A1602A77000B5C615 /* warningLarge.png */,
@@ -1383,7 +1398,6 @@
 				5277E83915DFE29C003A1DCF /* ClifeProfileViewController.xib in Resources */,
 				5277E84115DFE2EE003A1DCF /* ClifePrescriptionsViewController.xib in Resources */,
 				5277E84615DFE303003A1DCF /* ClifePrescriptionDetailsViewController.xib in Resources */,
-				52B3E7E815E67F75004E9C4A /* icon-pill.png in Resources */,
 				528D629515FD6710006BD80A /* ClifeHistoryDetailsViewController.xib in Resources */,
 				522D88F51602460800B5C615 /* ClifeRemindersViewController.xib in Resources */,
 				522D88F916024AAE00B5C615 /* icon-calendar.png in Resources */,
@@ -1406,6 +1420,12 @@
 				52A27122161E139300A2763B /* Default-568h@2x.png in Resources */,
 				52A27126161E15A300A2763B /* C-Life-icon-29x29.png in Resources */,
 				52A27127161E15A300A2763B /* C-Life-icon-58x58.png in Resources */,
+				521603981624897B00EB5266 /* icon-liquid.png in Resources */,
+				521603991624897B00EB5266 /* icon-liquid@2x.png in Resources */,
+				5216039A1624897B00EB5266 /* icon-pill.png in Resources */,
+				5216039B1624897B00EB5266 /* icon-pill@2x.png in Resources */,
+				5216039C1624897B00EB5266 /* icon-syringe.png in Resources */,
+				5216039D1624897B00EB5266 /* icon-syringe@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -154,7 +154,7 @@
 // Notifications
 "PRESCRIPTION REMINDER" = "Lembrete de medicação";
 "REMINDER ACTION" = "Confirmar";
-"REMINDER ACTION PART 1" = "Hora de tomar sua próxima dose dessa";
+"REMINDER ACTION PART 1" = "Hora de tomar sua próxima dose";
 "REMINDER ACTION PART 2" = "Favor abrir o C-Life para confirmar.";
 "REMINDER ACTION PART 2 TYPE 2" = "Favor confirmar.";
 
@@ -170,12 +170,12 @@
 "CUSTOM RANGE" = "Distância personalizada";
 "START" = "Começar";
 "END" = "Terminar";
-"ENTER START DATE" = "Enter start date";
-"ENTER END DATE" = "Enter end date";
-"TO" = "to";
+"ENTER START DATE" = "Digite a data de início";
+"ENTER END DATE" = "Digite a data te término";
+"TO" = "para";
 
-"TODAY" = "Today";
-"YESTERDAY" = "Yesterday";
+"TODAY" = "Hoje";
+"YESTERDAY" = "Ontem";
 "LAST" = "Último";
 
 

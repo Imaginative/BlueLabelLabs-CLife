@@ -12,6 +12,7 @@
 #import "Prescription.h"
 #import "Attributes.h"
 #import "Macros.h"
+#import "UIImage+UIImageCategory.h"
 
 //#define kMAXROWS 1000
 
@@ -139,13 +140,29 @@
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.imageView.backgroundColor = [UIColor whiteColor];
             
         }
         
         Prescription *prescription = [[self.frc_prescriptions fetchedObjects] objectAtIndex:indexPath.row];
         
         cell.textLabel.text = prescription.name;
-        cell.imageView.image = [UIImage imageNamed:@"icon-pill.png"];
+        
+        if ([prescription.method isEqualToString:NSLocalizedString(@"PILL", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else if ([prescription.method isEqualToString:NSLocalizedString(@"LIQUID", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else if ([prescription.method isEqualToString:NSLocalizedString(@"TOPICAL", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else if ([prescription.method isEqualToString:NSLocalizedString(@"SYRINGE", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-syringe.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
         
     }
     else {
