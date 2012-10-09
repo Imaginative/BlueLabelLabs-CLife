@@ -140,7 +140,6 @@
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.imageView.backgroundColor = [UIColor whiteColor];
             
         }
         

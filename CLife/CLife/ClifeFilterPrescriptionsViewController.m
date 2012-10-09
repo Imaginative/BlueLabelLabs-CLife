@@ -12,6 +12,7 @@
 #import "Attributes.h"
 #import "Macros.h"
 #import "ClifeFilterViewController.h"
+#import "UIImage+UIImageCategory.h"
 
 @interface ClifeFilterPrescriptionsViewController ()
 
@@ -131,6 +132,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        
     }
     
     NSInteger count = [[self.frc_prescriptions fetchedObjects]count];
@@ -140,7 +142,22 @@
         Prescription *prescription = [[self.frc_prescriptions fetchedObjects] objectAtIndex:indexPath.row];
         
         cell.textLabel.text = prescription.name;
-        cell.imageView.image = [UIImage imageNamed:@"icon-pill.png"];
+        
+        if ([prescription.method isEqualToString:NSLocalizedString(@"PILL", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else if ([prescription.method isEqualToString:NSLocalizedString(@"LIQUID", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else if ([prescription.method isEqualToString:NSLocalizedString(@"TOPICAL", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else if ([prescription.method isEqualToString:NSLocalizedString(@"SYRINGE", nil)]) {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-syringe.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
+        else {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        }
         
         // Mark the row as selected if this prescription is already in the list of selected prescriptions
         ClifeFilterViewController *filterViewController = (ClifeFilterViewController *)self.delegate;

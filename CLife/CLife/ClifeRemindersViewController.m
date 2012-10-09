@@ -204,8 +204,6 @@
             
             [cell setSelectionStyle:UITableViewCellEditingStyleNone];
             
-            cell.imageView.backgroundColor = [UIColor whiteColor];
-            
         }
         
         PrescriptionInstance *prescriptionInstance = [self.frc_prescriptionInstances objectAtIndexPath:indexPath];
