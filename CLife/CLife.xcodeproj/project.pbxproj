@@ -13,6 +13,8 @@
 		5216039B1624897B00EB5266 /* icon-pill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603951624897B00EB5266 /* icon-pill@2x.png */; };
 		5216039C1624897B00EB5266 /* icon-syringe.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603961624897B00EB5266 /* icon-syringe.png */; };
 		5216039D1624897B00EB5266 /* icon-syringe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603971624897B00EB5266 /* icon-syringe@2x.png */; };
+		521603B31624DABA00EB5266 /* icon-paste.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603B11624DABA00EB5266 /* icon-paste.png */; };
+		521603B41624DABA00EB5266 /* icon-paste@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 521603B21624DABA00EB5266 /* icon-paste@2x.png */; };
 		522D88F41602460800B5C615 /* ClifeRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522D88F21602460800B5C615 /* ClifeRemindersViewController.m */; };
 		522D88F51602460800B5C615 /* ClifeRemindersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */; };
 		522D88F916024AAE00B5C615 /* icon-calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D88F716024AAE00B5C615 /* icon-calendar.png */; };
@@ -222,6 +224,8 @@
 		521603951624897B00EB5266 /* icon-pill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-pill@2x.png"; sourceTree = "<group>"; };
 		521603961624897B00EB5266 /* icon-syringe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-syringe.png"; sourceTree = "<group>"; };
 		521603971624897B00EB5266 /* icon-syringe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-syringe@2x.png"; sourceTree = "<group>"; };
+		521603B11624DABA00EB5266 /* icon-paste.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-paste.png"; sourceTree = "<group>"; };
+		521603B21624DABA00EB5266 /* icon-paste@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-paste@2x.png"; sourceTree = "<group>"; };
 		522D88F11602460800B5C615 /* ClifeRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeRemindersViewController.h; sourceTree = "<group>"; };
 		522D88F21602460800B5C615 /* ClifeRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeRemindersViewController.m; sourceTree = "<group>"; };
 		522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeRemindersViewController.xib; sourceTree = "<group>"; };
@@ -689,6 +693,8 @@
 				521603951624897B00EB5266 /* icon-pill@2x.png */,
 				521603961624897B00EB5266 /* icon-syringe.png */,
 				521603971624897B00EB5266 /* icon-syringe@2x.png */,
+				521603B11624DABA00EB5266 /* icon-paste.png */,
+				521603B21624DABA00EB5266 /* icon-paste@2x.png */,
 				522D89081602A77000B5C615 /* warning.png */,
 				522D89091602A77000B5C615 /* warning@2x.png */,
 				522D890A1602A77000B5C615 /* warningLarge.png */,
@@ -1426,6 +1432,8 @@
 				5216039B1624897B00EB5266 /* icon-pill@2x.png in Resources */,
 				5216039C1624897B00EB5266 /* icon-syringe.png in Resources */,
 				5216039D1624897B00EB5266 /* icon-syringe@2x.png in Resources */,
+				521603B31624DABA00EB5266 /* icon-paste.png in Resources */,
+				521603B41624DABA00EB5266 /* icon-paste@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1739,7 +1747,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "24653B56-C7FA-4664-98AF-4C55E5F7E84C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67457D7F-C8D4-4919-AFF6-AFBC3E01724B";
 				USER_HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "$(SDKROOT)/usr/include/libxml2";
 				WRAPPER_EXTENSION = app;

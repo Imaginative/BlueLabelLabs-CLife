@@ -122,7 +122,7 @@
     self.methodArray = [NSArray arrayWithObjects:
                         NSLocalizedString(@"PILL", nil),
                         NSLocalizedString(@"LIQUID", nil),
-                        NSLocalizedString(@"TOPICAL", nil),
+                        NSLocalizedString(@"CREAM", nil),
                         NSLocalizedString(@"SYRINGE", nil),
                         nil];
     
