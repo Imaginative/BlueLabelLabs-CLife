@@ -1747,7 +1747,7 @@
 				);
 				"OTHER_LDFLAGS[arch=*]" = "-lxml2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "58036B0B-93A0-42E9-898C-F2B9E4ED0AAB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "67457D7F-C8D4-4919-AFF6-AFBC3E01724B";
 				USER_HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "$(SDKROOT)/usr/include/libxml2";
 				WRAPPER_EXTENSION = app;
