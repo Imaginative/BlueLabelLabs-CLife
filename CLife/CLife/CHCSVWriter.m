@@ -122,7 +122,8 @@
 
 - (void)_writeString:(NSString *)string {
 	if (encoding == 0) {
-		encoding = NSUTF8StringEncoding;
+//		encoding = NSUTF8StringEncoding;
+        encoding = NSUTF16StringEncoding;
 	}
     
     if (outputHandle != nil) {

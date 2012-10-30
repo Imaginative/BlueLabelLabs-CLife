@@ -399,6 +399,7 @@ static ExportManager *sharedManager;
     NSData *attachment = [NSData dataWithContentsOfFile:path];
     
     [mailComposer addAttachmentData:attachment mimeType:@"text/csv" fileName:fileName];
+//    [mailComposer addAttachmentData:attachment mimeType:@"text" fileName:fileName];
     
     // Present the mail composition interface
     UIViewController *viewController = (UIViewController *)self.delegate;
@@ -418,6 +419,8 @@ static ExportManager *sharedManager;
 #pragma mark - Instance methods
 - (void)exportData {
     CHCSVWriter *writer = [[CHCSVWriter alloc] initForWritingToString];
+//    writer.encoding = NSUTF16StringEncoding;  // Hardcoded into CHCSVWriter.m method: - (void)_writeString:(NSString *)string
+    writer.delimiter = @"\t";
     
     // Setup date formatter
     [self.dateAndTimeFormatter setDateStyle:NSDateFormatterLongStyle];
