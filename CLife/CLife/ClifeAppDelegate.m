@@ -305,7 +305,12 @@
     //    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Mime_me" withExtension:@"momd"];
     //    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
-    __managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];
+//    __managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];
+//    return __managedObjectModel;
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"PlatformDataModel" ofType:@"momd"];
+    NSURL *momURL = [NSURL fileURLWithPath:path];
+    __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:momURL];
     return __managedObjectModel;
 }
 
@@ -318,6 +323,11 @@
     }
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"CLife.sqlite"];
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+
     
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];

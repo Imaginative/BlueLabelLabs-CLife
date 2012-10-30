@@ -68,6 +68,7 @@
 		52F007C0160D2DF60003CF2C /* ExportManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007BF160D2DF60003CF2C /* ExportManager.m */; };
 		52F007C8160D3E410003CF2C /* ClifeFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007C6160D3E410003CF2C /* ClifeFilterViewController.m */; };
 		52F007C9160D3E410003CF2C /* ClifeFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F007C7160D3E410003CF2C /* ClifeFilterViewController.xib */; };
+		C507A50D1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C507A50A1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld */; };
 		C53DC69C15D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
 		C53DC69E15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
 		C53DC6A015D4378300CC7D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */; };
@@ -200,7 +201,6 @@
 		C53DC87A15D4416A00CC7D14 /* UIProgressHUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53DC87815D4416A00CC7D14 /* UIProgressHUDView.xib */; };
 		C53DC87C15D4417D00CC7D14 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC87B15D4417D00CC7D14 /* CoreData.framework */; };
 		C53DC87E15D441AE00CC7D14 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC87D15D441AE00CC7D14 /* QuartzCore.framework */; };
-		C5A4887015DAA9C50023180C /* PlatformDataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = C5A4886F15DAA9C50023180C /* PlatformDataModel.xcdatamodel */; };
 		C5A4887315DAB1C10023180C /* Prescription.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4887215DAB1C10023180C /* Prescription.m */; };
 		C5A4887615DABFFE0023180C /* PrescriptionInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A4887515DABFFE0023180C /* PrescriptionInstance.m */; };
 		C5D45C0815F3A1BD00FB5A49 /* LocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D45C0715F3A1BD00FB5A49 /* LocalNotificationManager.m */; };
@@ -302,6 +302,8 @@
 		52F007C6160D3E410003CF2C /* ClifeFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeFilterViewController.m; sourceTree = "<group>"; };
 		52F007C7160D3E410003CF2C /* ClifeFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeFilterViewController.xib; sourceTree = "<group>"; };
 		52FC0503160CE9A80083DB3C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C507A50B1640690300DAD3B4 /* PlatformDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		C507A50C1640690300DAD3B4 /* PlatformDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatformDataModel.xcdatamodel; sourceTree = "<group>"; };
 		C53DC69715D4378300CC7D14 /* CLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53DC69B15D4378300CC7D14 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C53DC69D15D4378300CC7D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -582,7 +584,6 @@
 		C53DC87815D4416A00CC7D14 /* UIProgressHUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIProgressHUDView.xib; sourceTree = "<group>"; };
 		C53DC87B15D4417D00CC7D14 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C53DC87D15D441AE00CC7D14 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		C5A4886F15DAA9C50023180C /* PlatformDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatformDataModel.xcdatamodel; sourceTree = "<group>"; };
 		C5A4887115DAB1C10023180C /* Prescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prescription.h; sourceTree = "<group>"; };
 		C5A4887215DAB1C10023180C /* Prescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Prescription.m; sourceTree = "<group>"; };
 		C5A4887415DABFFE0023180C /* PrescriptionInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrescriptionInstance.h; sourceTree = "<group>"; };
@@ -1243,7 +1244,7 @@
 		C53DC80015D43DB800CC7D14 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				C5A4886F15DAA9C50023180C /* PlatformDataModel.xcdatamodel */,
+				C507A50A1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld */,
 				C53DC87115D43FCF00CC7D14 /* User.h */,
 				C53DC87215D43FCF00CC7D14 /* User.m */,
 				C53DC86815D43F0D00CC7D14 /* Feed.h */,
@@ -1588,7 +1589,6 @@
 				C53DC86D15D43F0D00CC7D14 /* FeedData.m in Sources */,
 				C53DC87315D43FCF00CC7D14 /* User.m in Sources */,
 				C53DC87915D4416A00CC7D14 /* UIProgressHUDView.m in Sources */,
-				C5A4887015DAA9C50023180C /* PlatformDataModel.xcdatamodel in Sources */,
 				C5A4887315DAB1C10023180C /* Prescription.m in Sources */,
 				C5A4887615DABFFE0023180C /* PrescriptionInstance.m in Sources */,
 				5277E83315DFE261003A1DCF /* ClifeHistoryViewController.m in Sources */,
@@ -1610,6 +1610,7 @@
 				52F007C8160D3E410003CF2C /* ClifeFilterViewController.m in Sources */,
 				52808602160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.m in Sources */,
 				528086141610CDB000EB515A /* ClifeFilterPeriodViewController.m in Sources */,
+				C507A50D1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1819,6 +1820,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C507A50A1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C507A50B1640690300DAD3B4 /* PlatformDataModel 2.xcdatamodel */,
+				C507A50C1640690300DAD3B4 /* PlatformDataModel.xcdatamodel */,
+			);
+			currentVersion = C507A50B1640690300DAD3B4 /* PlatformDataModel 2.xcdatamodel */;
+			path = PlatformDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C53DC68E15D4378300CC7D14 /* Project object */;
 }
