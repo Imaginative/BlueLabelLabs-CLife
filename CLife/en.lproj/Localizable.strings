@@ -120,6 +120,7 @@
 "LIQUID" = "Liquid";
 "CREAM" = "Cream";
 "SYRINGE" = "Syringe";
+"INJECTION" = "Injection/Injectable";
 
 "UG" = "ug";
 "MG" = "mg";

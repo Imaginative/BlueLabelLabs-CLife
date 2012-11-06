@@ -15,6 +15,7 @@
 #import "SchedulePeriods.h"
 #import "Macros.h"
 #import "PrescriptionInstanceManager.h"
+#import "ClifeAppDelegate.h"
 
 @interface ClifePrescriptionDetailsViewController ()
 
@@ -123,7 +124,7 @@
                         NSLocalizedString(@"PILL", nil),
                         NSLocalizedString(@"LIQUID", nil),
                         NSLocalizedString(@"CREAM", nil),
-                        NSLocalizedString(@"SYRINGE", nil),
+                        NSLocalizedString(@"INJECTION", nil),
                         nil];
     
     self.dosageUnitArray = [NSArray arrayWithObjects:
@@ -172,7 +173,7 @@
         Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
         
         self.medicationName = prescription.name;
-        self.method = prescription.method;
+        self.method = prescription.methodconstant;
         
         self.dosageAmount = prescription.strength;
         self.dosageUnit = prescription.unit;
@@ -394,7 +395,7 @@
         }
         
         if (self.method != nil) {
-            self.tf_method.text = self.method;
+            self.tf_method.text = [self.methodArray objectAtIndex:[self.method intValue]];
         }
         else {
             self.tf_method.text = nil;
@@ -1262,7 +1263,7 @@
     if (pickerView == self.pv_method) {
         self.tf_method.text = [self.methodArray objectAtIndex:row];
         
-        self.method = [self.methodArray objectAtIndex:row];
+        self.method = [NSNumber numberWithInt:row];
     }
     else if (pickerView == self.pv_dosageUnit) {
         self.tf_dosageUnit.text = [self.dosageUnitArray objectAtIndex:row];
@@ -1333,7 +1334,7 @@
     self.tv_reason = textView;
     
     // Scroll tableview to this row
-    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 610) animated:YES];
+    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 600) animated:YES];
     
     // Disable the table view scrolling
     [self.tbl_prescriptionDetails setScrollEnabled:NO];
@@ -1345,16 +1346,16 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
     [self.tbl_prescriptionDetails selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     
-    // disable nav bar buttons until text entry complete
-    if (self.prescriptionID == nil) {
-        // New prescription
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-        self.navigationItem.leftBarButtonItem.enabled = NO;
-    }
-    else {
-        // Editing existing prescription
-        self.navigationItem.rightBarButtonItem.enabled = NO;
-    }
+//    // disable nav bar buttons until text entry complete
+//    if (self.prescriptionID == nil) {
+//        // New prescription
+//        self.navigationItem.rightBarButtonItem.enabled = NO;
+//        self.navigationItem.leftBarButtonItem.enabled = NO;
+//    }
+//    else {
+//        // Editing existing prescription
+//        self.navigationItem.rightBarButtonItem.enabled = NO;
+//    }
     
     // Clear the default text of the caption textview upon startin to edit
     if ([self.tv_reason.text isEqualToString:NSLocalizedString(@"ENTER REASON", nil)]) {
@@ -1387,8 +1388,8 @@
     // reason textview editing has ended
     self.tv_reason = textView;
     
-    // Scroll tableview to this row
-    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 85) animated:YES];
+//    // Scroll tableview to this row
+//    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 85) animated:YES];
     
     // Deselect this row
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
@@ -1454,15 +1455,15 @@
         if ([self.tf_method.text isEqualToString:@""] == NO &&
             [self.tf_method.text isEqualToString:@" "] == NO)
         {
-            int row = [self.methodArray indexOfObject:self.tf_method.text];
+            int row = [self.method intValue];
             [self.pv_method selectRow:row inComponent:0 animated:YES];
             
-            self.method = [self.methodArray objectAtIndex:row];
+            self.method = [NSNumber numberWithInt:row];
         }
         else {
             self.tf_method.text = [self.methodArray objectAtIndex:0];
             
-            self.method = [self.methodArray objectAtIndex:0];
+            self.method = [NSNumber numberWithInt:0];
         }
         
     }
@@ -1735,7 +1736,7 @@
             self.method = nil;
         }
         else {
-            self.method = enteredText;
+            self.method = [NSNumber numberWithInt:[self.methodArray indexOfObject:enteredText]];
         }
     }
     else if (textField == self.tf_dosageAmount) {
@@ -2061,6 +2062,10 @@
 - (void)doneEditingPrescription:(id)sender 
 {
     NSString* activityName = @"PrescriptionDetailsViewController.doneEditingPrescription:";
+    
+    // Exit any text fields or text views being edited
+    [self hideInputView];
+    
     if (self.medicationName == nil ||
         self.method == nil ||
         self.dosageAmount == nil ||
@@ -2070,7 +2075,6 @@
         self.scheduleRepeatNumber == nil ||
         self.scheduleRepeatPeriod == nil ||
         [self.medicationName isEqualToString:@""] ||
-        [self.method isEqualToString:@""] ||
         [self.dosageUnit isEqualToString:@""])
     {
         // Promt user to complete all fields
@@ -2107,7 +2111,7 @@
         
         //we need to save the changes to the prescription object to the local database 
         NSString* newMedicationName = self.medicationName;
-        NSString* newMethod = self.method;
+        NSNumber* newMethod = self.method;
         NSNumber* newStrength = self.dosageAmount;
         NSString* newUnit = self.dosageUnit;
         NSNumber* newScheduledStartDate = self.scheduleStartDate;
@@ -2133,10 +2137,10 @@
         }
         
         if (newMethod != nil &&
-            ![newMethod isEqualToString:prescription.method])
+            ![newMethod isEqualToNumber:prescription.methodconstant])
         {
             //the method has changed
-            prescription.method = newMethod;
+            prescription.methodconstant = newMethod;
         }
         
         if (newStrength != nil &&
@@ -2271,7 +2275,30 @@
     [actionSheet release];
 }
 
+//- (void) createPrescriptionInstancesForPrescription:(Prescription *)prescription {
+//    //we need to then create an array of prescription objects corresponding to this
+//    //particular prescription
+//    NSArray* prescriptionInstances = [PrescriptionInstance createPrescriptionInstancesFor:prescription];
+//    //now we have an array of prescription instances corresponding to the prescription
+//    
+//    ResourceContext* resourceContext = [ResourceContext instance];
+//    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+//    
+//    //we pass this to the local notification manager which will schedule them for
+//    //notifications as appropriate
+//    LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
+//    [localNotificationManager scheduleNotifications];
+//    
+//    self.prescriptionID = prescription.objectid;
+//    
+//    [self hideProgressBar];
+//}
+
 - (void)onDoneAddingPrescriptionButtonPressed:(id)sender {
+    
+    // Exit any text fields or text views being edited
+    [self hideInputView];
+    
     if (self.medicationName == nil ||
         self.method == nil ||
         self.dosageAmount == nil ||
@@ -2281,7 +2308,6 @@
         self.scheduleRepeatNumber == nil ||
         self.scheduleRepeatPeriod == nil ||
         [self.medicationName isEqualToString:@""] ||
-        [self.method isEqualToString:@""] ||
         [self.dosageUnit isEqualToString:@""])
     {
         // Promt user to complete all fields
@@ -2298,23 +2324,30 @@
         // Exit editing and save changes
         ResourceContext* resourceContext = [ResourceContext instance];
                
-        Prescription* prescription = [Prescription createPrescriptionWithName:self.medicationName withMethod:self.method withStrength:self.dosageAmount withUnit:self.dosageUnit withDateStart:self.scheduleStartDate withNumberOfDoses:self.scheduleAmount withRepeatMultiple:self.scheduleRepeatNumber withRepeatPeriod:self.scheduleRepeatPeriod withOccurMultiple:self.scheduleOccurenceNumber withDateEnd:self.scheduleEndDate withNotes:self.reason];
+        Prescription* prescription = [Prescription createPrescriptionWithName:self.medicationName withMethodConstant:self.method withStrength:self.dosageAmount withUnit:self.dosageUnit withDateStart:self.scheduleStartDate withNumberOfDoses:self.scheduleAmount withRepeatMultiple:self.scheduleRepeatNumber withRepeatPeriod:self.scheduleRepeatPeriod withOccurMultiple:self.scheduleOccurenceNumber withDateEnd:self.scheduleEndDate withNotes:self.reason];
+        
+//        // We will show a HUD since it may take a long time to generate all prescription instances
+//        ClifeAppDelegate* appDelegate =(ClifeAppDelegate *)[[UIApplication sharedApplication] delegate];
+//        UIProgressHUDView* progressView = appDelegate.progressView;
+//        ApplicationSettings* settings = [[ApplicationSettingsManager instance] settings];
+//        progressView.delegate = self;
+//        
+//        NSString* message = @"Creating reminders...";
+//        [self showProgressBar:message withCustomView:nil withMaximumDisplayTime:settings.http_timeout_seconds];
+        
+//        [self performSelector:@selector(createPrescriptionInstancesForPrescription:) withObject:prescription];
         
         //we need to then create an array of prescription objects corresponding to this
         //particular prescription
         NSArray* prescriptionInstances = [PrescriptionInstance createPrescriptionInstancesFor:prescription];
         //now we have an array of prescription instances corresponding to the prescription
         
-        
         [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-        
         
         //we pass this to the local notification manager which will schedule them for
         //notifications as appropriate
         LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
         [localNotificationManager scheduleNotifications];
-        
-        
         
         self.prescriptionID = prescription.objectid;
         
@@ -2352,6 +2385,25 @@
     }
     
     [self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark -  MBProgressHUD Delegate
+-(void)hudWasHidden:(MBProgressHUD *)hud {
+    NSString* activityName = @"CLifePrescriptionDetailsViewController.hudWasHidden";
+    [self hideProgressBar];
+    
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+    
+//    UIProgressHUDView* progressView = (UIProgressHUDView*)hud;
+    
+//    for (Request* request in progressView.requests) {
+//        NSArray* changedAttributes = request.changedAttributesList;
+//        //list of all changed attributes
+//        
+//        if ([changedAttributes containsObject:]) {
+//            
+//        }
+//    }
 }
 
 #pragma mark - UIAlertView Delegate

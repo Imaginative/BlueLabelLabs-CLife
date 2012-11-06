@@ -28,6 +28,7 @@
 		522D89161602A83900B5C615 /* redX.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89121602A83900B5C615 /* redX.png */; };
 		522D89171602A83900B5C615 /* redX@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89131602A83900B5C615 /* redX@2x.png */; };
 		523A6BD815F6DC1400D60461 /* UIPromptAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */; };
+		526BA13F1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 526BA13C1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld */; };
 		5277E7DE15DD4D48003A1DCF /* icon-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DC15DD4D48003A1DCF /* icon-profile.png */; };
 		5277E7DF15DD4D48003A1DCF /* icon-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */; };
 		5277E7E215DD4F7E003A1DCF /* icon-medical.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7E015DD4F7E003A1DCF /* icon-medical.png */; };
@@ -68,7 +69,6 @@
 		52F007C0160D2DF60003CF2C /* ExportManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007BF160D2DF60003CF2C /* ExportManager.m */; };
 		52F007C8160D3E410003CF2C /* ClifeFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52F007C6160D3E410003CF2C /* ClifeFilterViewController.m */; };
 		52F007C9160D3E410003CF2C /* ClifeFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52F007C7160D3E410003CF2C /* ClifeFilterViewController.xib */; };
-		C507A50D1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C507A50A1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld */; };
 		C53DC69C15D4378300CC7D14 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69B15D4378300CC7D14 /* UIKit.framework */; };
 		C53DC69E15D4378300CC7D14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69D15D4378300CC7D14 /* Foundation.framework */; };
 		C53DC6A015D4378300CC7D14 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C53DC69F15D4378300CC7D14 /* CoreGraphics.framework */; };
@@ -218,6 +218,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5203DD3716497B03002C26BF /* MethodTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodTypes.h; sourceTree = "<group>"; };
 		521603921624897B00EB5266 /* icon-liquid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-liquid.png"; sourceTree = "<group>"; };
 		521603931624897B00EB5266 /* icon-liquid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-liquid@2x.png"; sourceTree = "<group>"; };
 		521603941624897B00EB5266 /* icon-pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-pill.png"; sourceTree = "<group>"; };
@@ -242,6 +243,9 @@
 		523A6BD115F6815900D60461 /* SchedulePeriods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchedulePeriods.h; sourceTree = "<group>"; };
 		523A6BD615F6DC1400D60461 /* UIPromptAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPromptAlertView.h; sourceTree = "<group>"; };
 		523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPromptAlertView.m; sourceTree = "<group>"; };
+		526BA13D1649AB5700F3D157 /* PlatformDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		526BA13E1649AB5700F3D157 /* PlatformDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatformDataModel.xcdatamodel; sourceTree = "<group>"; };
+		526BA1401649ADCE00F3D157 /* PlatformDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlatformDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		5277E7DC15DD4D48003A1DCF /* icon-profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile.png"; sourceTree = "<group>"; };
 		5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile@2x.png"; sourceTree = "<group>"; };
 		5277E7E015DD4F7E003A1DCF /* icon-medical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-medical.png"; sourceTree = "<group>"; };
@@ -302,8 +306,6 @@
 		52F007C6160D3E410003CF2C /* ClifeFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeFilterViewController.m; sourceTree = "<group>"; };
 		52F007C7160D3E410003CF2C /* ClifeFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeFilterViewController.xib; sourceTree = "<group>"; };
 		52FC0503160CE9A80083DB3C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		C507A50B1640690300DAD3B4 /* PlatformDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
-		C507A50C1640690300DAD3B4 /* PlatformDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatformDataModel.xcdatamodel; sourceTree = "<group>"; };
 		C53DC69715D4378300CC7D14 /* CLife.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CLife.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C53DC69B15D4378300CC7D14 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C53DC69D15D4378300CC7D14 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -636,6 +638,7 @@
 			children = (
 				523A6BD115F6815900D60461 /* SchedulePeriods.h */,
 				528D628415FA746B006BD80A /* PrescriptionInstanceState.h */,
+				5203DD3716497B03002C26BF /* MethodTypes.h */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -1244,7 +1247,7 @@
 		C53DC80015D43DB800CC7D14 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				C507A50A1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld */,
+				526BA13C1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld */,
 				C53DC87115D43FCF00CC7D14 /* User.h */,
 				C53DC87215D43FCF00CC7D14 /* User.m */,
 				C53DC86815D43F0D00CC7D14 /* Feed.h */,
@@ -1610,7 +1613,7 @@
 				52F007C8160D3E410003CF2C /* ClifeFilterViewController.m in Sources */,
 				52808602160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.m in Sources */,
 				528086141610CDB000EB515A /* ClifeFilterPeriodViewController.m in Sources */,
-				C507A50D1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld in Sources */,
+				526BA13F1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1822,13 +1825,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		C507A50A1640690300DAD3B4 /* PlatformDataModel.xcdatamodeld */ = {
+		526BA13C1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C507A50B1640690300DAD3B4 /* PlatformDataModel 2.xcdatamodel */,
-				C507A50C1640690300DAD3B4 /* PlatformDataModel.xcdatamodel */,
+				526BA1401649ADCE00F3D157 /* PlatformDataModel 3.xcdatamodel */,
+				526BA13D1649AB5700F3D157 /* PlatformDataModel 2.xcdatamodel */,
+				526BA13E1649AB5700F3D157 /* PlatformDataModel.xcdatamodel */,
 			);
-			currentVersion = C507A50B1640690300DAD3B4 /* PlatformDataModel 2.xcdatamodel */;
+			currentVersion = 526BA1401649ADCE00F3D157 /* PlatformDataModel 3.xcdatamodel */;
 			path = PlatformDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

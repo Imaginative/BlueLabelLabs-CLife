@@ -118,8 +118,9 @@
 
 "PILL" = "Pílula";
 "LIQUID" = "Líquido";
-"TOPICAL" = "Pomada";
+"CREAM" = "Pomada";
 "SYRINGE" = "Seringa";
+"INJECTION" = "Injecao/Injetavel";
 
 "UG" = "ug";
 "MG" = "mg";

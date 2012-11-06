@@ -13,6 +13,7 @@
 #import "Macros.h"
 #import "ClifeFilterViewController.h"
 #import "UIImage+UIImageCategory.h"
+#import "MethodTypes.h"
 
 @interface ClifeFilterPrescriptionsViewController ()
 
@@ -143,20 +144,26 @@
         
         cell.textLabel.text = prescription.name;
         
-        if ([prescription.method isEqualToString:NSLocalizedString(@"PILL", nil)]) {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-        }
-        else if ([prescription.method isEqualToString:NSLocalizedString(@"LIQUID", nil)]) {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-        }
-        else if ([prescription.method isEqualToString:NSLocalizedString(@"CREAM", nil)]) {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-paste.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-        }
-        else if ([prescription.method isEqualToString:NSLocalizedString(@"SYRINGE", nil)]) {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-syringe.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-        }
-        else {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        switch ([prescription.methodconstant intValue]) {
+            case kPILL:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
+                
+            case kLIQUID:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
+                
+            case kCREAM:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-paste.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
+                
+            case kINJECTION:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-syringe.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
+                
+            default:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
         }
         
         // Mark the row as selected if this prescription is already in the list of selected prescriptions

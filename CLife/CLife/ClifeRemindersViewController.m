@@ -13,6 +13,7 @@
 #import "PrescriptionInstanceState.h"
 #import "DateTimeHelper.h"
 #import "UIImage+UIImageCategory.h"
+#import "MethodTypes.h"
 
 #define kTABLEVIEWCELLHEIGHT 50.0
 
@@ -218,20 +219,26 @@
         NSDate *scheduleDate = [DateTimeHelper parseWebServiceDateDouble:prescriptionInstance.datescheduled];
         cell.detailTextLabel.text = [dateAndTimeFormatter stringFromDate:scheduleDate];
         
-        if ([prescriptionInstance.prescription.method isEqualToString:NSLocalizedString(@"PILL", nil)]) {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-        }
-        else if ([prescriptionInstance.prescription.method isEqualToString:NSLocalizedString(@"LIQUID", nil)]) {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-        }
-        else if ([prescriptionInstance.prescription.method isEqualToString:NSLocalizedString(@"CREAM", nil)]) {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-paste.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-        }
-        else if ([prescriptionInstance.prescription.method isEqualToString:NSLocalizedString(@"SYRINGE", nil)]) {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-syringe.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-        }
-        else {
-            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+        switch ([prescriptionInstance.prescription.methodconstant intValue]) {
+            case kPILL:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
+                
+            case kLIQUID:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
+                
+            case kCREAM:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-paste.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
+                
+            case kINJECTION:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-syringe.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
+                
+            default:
+                cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                break;
         }
     }
     else {

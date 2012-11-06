@@ -14,6 +14,8 @@
 #import "LocalNotificationManager.h"
 #import "Attributes.h"
 #import "ClifeHistoryDetailsViewController.h"
+#import "UserDefaultSettings.h"
+#import "Prescription.h"
 
 @implementation ClifeAppDelegate
 
@@ -71,6 +73,18 @@
     return __authenticationManager;
 }
 
+#pragma mark - Helper Methods
+- (void)updateMethodDataType {
+    // Update the Mehtod data type
+    [Prescription updateMethodDataType];
+    
+    // Now update the user default since we only need to do this once
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[NSNumber numberWithBool:YES] forKey:setting_DIDUPDATEMETHODDATATYPE];
+    [userDefaults synchronize];
+}
+
+#pragma mark - App Lifecycle
 - (void)dealloc
 {
     [_window release];
@@ -141,6 +155,12 @@
         }
     }
     
+    // Check to see if we need to update the Method data type
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults objectForKey:setting_DIDUPDATEMETHODDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEMETHODDATATYPE] == NO) {
+        [self updateMethodDataType];
+    }
+    
     // Determine if we have opened from a reminder notification
     UILocalNotification *localNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (localNotification) {
@@ -199,6 +219,7 @@
 }
 */
 
+#pragma mark - Instance Methods
 - (void)saveContext
 {
     NSError *error = nil;
@@ -331,7 +352,7 @@
     
     NSError *error = nil;
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          

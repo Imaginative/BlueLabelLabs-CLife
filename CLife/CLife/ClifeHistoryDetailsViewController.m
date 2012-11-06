@@ -567,8 +567,8 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
     [self.tbl_historyDetails selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     
-    // disable nav bar buttons until text entry complete
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+//    // disable nav bar buttons until text entry complete
+//    self.navigationItem.rightBarButtonItem.enabled = NO;
     
     // create a done view + done button, attach to it a doneClicked action, and place it in a toolbar as an accessory input view.
     // Prepare done button
@@ -853,10 +853,10 @@
     else {
         // Exit editing and save changes
         
-        self.isEditing = NO;
-        
         // Hide the keyboard if it is shown
         [self hideInputView];
+        
+        self.isEditing = NO;
         
         // Show the back button
         [self.navigationItem setHidesBackButton:NO animated:YES];

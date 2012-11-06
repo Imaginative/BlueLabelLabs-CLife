@@ -18,6 +18,7 @@
 #import "CHCSV.h"
 #import "NSArray+CHCSVAdditions.h"
 #import "NSString+CHCSVAdditions.h"
+#import "MethodTypes.h"
 
 @implementation ExportManager
 @synthesize frc_prescriptions           = __frc_prescriptions;
@@ -219,6 +220,27 @@ static ExportManager *sharedManager;
     }
     
     return dateEndStr;
+}
+
+- (NSString *)getMethodStringForPrescription:(Prescription *)prescription {
+    // Method
+    NSArray *methodArray = [NSArray arrayWithObjects:
+                                            NSLocalizedString(@"PILL", nil),
+                                            NSLocalizedString(@"LIQUID", nil),
+                                            NSLocalizedString(@"CREAM", nil),
+                                            NSLocalizedString(@"INJECTION", nil),
+                                            nil];
+    
+    NSString *methodStr;
+    
+    if (prescription.methodconstant != nil) {
+        methodStr = [methodArray objectAtIndex:[prescription.methodconstant intValue]];
+    }
+    else {
+        methodStr = @" ";
+    }
+    
+    return methodStr;
 }
 
 - (NSString *)getDosageStringForPrescription:(Prescription *)prescription {
@@ -501,7 +523,7 @@ static ExportManager *sharedManager;
              @"",
              @"",
              @"",
-             prescription.method,
+             [self getMethodStringForPrescription:prescription],
              prescription.strength,
              prescription.unit,
              [self getDosageStringForPrescription:prescription],
@@ -532,7 +554,7 @@ static ExportManager *sharedManager;
          @"",
          @"",
          @"",
-         prescription.method,
+         [self getMethodStringForPrescription:prescription],
          prescription.strength,
          prescription.unit,
          [self getDosageStringForPrescription:prescription],
@@ -560,7 +582,7 @@ static ExportManager *sharedManager;
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     NSString* appName = [infoDict objectForKey:@"CFBundleDisplayName"];
     
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@.csv", appName, NSLocalizedString(@"EXPORT", nil)];
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@_%@.csv", appName, NSLocalizedString(@"EXPORT", nil), [self.dateAndTimeFormatter stringFromDate:[NSDate date]]];
     NSString *path = [documentsDirectory stringByAppendingPathComponent:fileName];
     
     // now write to file

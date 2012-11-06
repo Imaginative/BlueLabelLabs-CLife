@@ -16,6 +16,7 @@
 #import "Macros.h"
 #import "PrescriptionInstanceManager.h"
 #import "LocalNotificationManager.h"
+#import "MethodTypes.h"
 
 @implementation Prescription
 
@@ -28,6 +29,7 @@
 @dynamic datestart;
 @dynamic numberofdoses;
 @dynamic method;
+@dynamic methodconstant;
 @dynamic repeatmultiple;
 @dynamic repeatperiod;
 @dynamic occurmultiple;
@@ -158,9 +160,37 @@
 
 }
 
++ (void) updateMethodDataType {
+    // Get the all the presciption objects
+    ResourceContext *resourceContext = [ResourceContext instance];
+    NSArray* prescriptions = [resourceContext resourcesWithType:PRESCRIPTION];
+    
+    if ([prescriptions count] > 0) {
+        for (Prescription *prescription in prescriptions) {
+            if ([prescription.method isEqualToString:NSLocalizedString(@"PILL", nil)] == YES) {
+                prescription.methodconstant = [NSNumber numberWithInt:kPILL];
+            }
+            else if ([prescription.method isEqualToString:NSLocalizedString(@"LIQUID", nil)] == YES) {
+                prescription.methodconstant = [NSNumber numberWithInt:kLIQUID];
+            }
+            else if ([prescription.method isEqualToString:NSLocalizedString(@"CREAM", nil)] == YES) {
+                prescription.methodconstant = [NSNumber numberWithInt:kCREAM];
+            }
+            else if ([prescription.method isEqualToString:NSLocalizedString(@"SYRINGE", nil)] == YES) {
+                prescription.methodconstant = [NSNumber numberWithInt:kINJECTION];
+            }
+            else {
+                prescription.methodconstant = [NSNumber numberWithInt:kPILL];
+            }
+        }
+        
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+    }
+}
+
 #pragma mark - Static Initializers
 + (Prescription *) createPrescriptionWithName:(NSString *)name 
-                                   withMethod:(NSString *)method 
+                           withMethodConstant:(NSNumber *)methodConstant
                                  withStrength:(NSNumber *)strength 
                                      withUnit:(NSString *)unit
                                 withDateStart:(NSNumber *)dateStart
@@ -187,7 +217,8 @@
     prescription.userid = user.objectid;
     
     prescription.name = name;
-    prescription.method = method;
+    prescription.method = nil;  // depreciated, use methodconstant instead
+    prescription.methodconstant = methodConstant;
     
     prescription.strength = strength;
     prescription.unit = unit;

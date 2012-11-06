@@ -11,7 +11,7 @@
 #import "UIPromptAlertView.h"
 #import "ExportManager.h"
 
-@interface ClifePrescriptionDetailsViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate, UITextViewDelegate, ExportManagerDelegate > {
+@interface ClifePrescriptionDetailsViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate, UITextViewDelegate, ExportManagerDelegate, UIProgressHUDViewDelegate > {
     
     UITableView             *m_tbl_prescriptionDetails;
     
@@ -67,7 +67,7 @@
     BOOL                    m_occurancesRowIsShown;
     
     NSString                *m_medicationName;
-    NSString                *m_method;
+    NSNumber                *m_method;
     NSNumber                *m_dosageAmount;
     NSString                *m_dosageUnit;
     NSString                *m_reason;
@@ -135,7 +135,7 @@
 @property (nonatomic, assign)           BOOL                    occurancesRowIsShown;
 
 @property (nonatomic, retain)           NSString                *medicationName;
-@property (nonatomic, retain)           NSString                *method;
+@property (nonatomic, retain)           NSNumber                *method;
 @property (nonatomic, retain)           NSNumber                *dosageAmount;
 @property (nonatomic, retain)           NSString                *dosageUnit;
 @property (nonatomic, retain)           NSString                *reason;
