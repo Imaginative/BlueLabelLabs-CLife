@@ -89,7 +89,8 @@
 "DOSE" = "dose";
 "DOSES" = "doses";
 "ENDS" = "Ends";
-"ENTER ENDS" = "optional: date to stop";
+//"ENTER ENDS" = "optional: date to stop";
+"ENTER ENDS" = "date to stop";
 "NO END DATE" = "No end date";
 "REPEATS" = "Repeats";
 "ENTER REPEATS" = "ex. Every 4 hours";

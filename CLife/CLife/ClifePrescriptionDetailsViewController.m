@@ -1651,7 +1651,6 @@
             
             self.scheduleEndDate = [self processEndDateWithDate:self.pv_scheduleEndDate.date];
         }
-        
     }
     
     // disable nav bar buttons until text entry complete
@@ -1680,13 +1679,15 @@
     UIBarButtonItem *flexSpace = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
     
     if (textField == self.tf_scheduleEndDate) {
-        // Add a button for no end date
-        UIBarButtonItem* neverButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NO END DATE", nil)
-                                                                         style:UIBarButtonItemStyleBordered
-                                                                        target:self
-                                                                        action:@selector(onNoEndDateButtonPressed)] autorelease];
+//        // Add a button for no end date
+//        UIBarButtonItem* neverButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"NO END DATE", nil)
+//                                                                         style:UIBarButtonItemStyleBordered
+//                                                                        target:self
+//                                                                        action:@selector(onNoEndDateButtonPressed)] autorelease];
+//        
+//        [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:neverButton, flexSpace, doneButton, nil]];
         
-        [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:neverButton, flexSpace, doneButton, nil]];
+        [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:flexSpace, doneButton, nil]];
     }
     else if (textField == self.tf_scheduleRepeat) {
         // Add a button for does not repeat
@@ -1771,20 +1772,31 @@
         
         [self hideDisabledBackgroundView];
         
+        NSDate* startDate;
+        
         if ([self.dateAndTimeFormatter dateFromString:enteredText]) {
             self.pv_scheduleStartDate.date = [self.dateAndTimeFormatter dateFromString:enteredText];
             
-            NSDate* startDate = [self.dateAndTimeFormatter dateFromString:enteredText];
-            double doubleDate = [startDate timeIntervalSince1970];
-            self.scheduleStartDate = [NSNumber numberWithDouble:doubleDate];
+            startDate = [self.dateAndTimeFormatter dateFromString:enteredText];
         }
         else {
             self.tf_scheduleStartDate.text = [self.dateAndTimeFormatter stringFromDate:self.pv_scheduleStartDate.date];
             
-            NSDate* startDate = self.pv_scheduleStartDate.date;
-            double doubleDate = [startDate timeIntervalSince1970];
-            self.scheduleStartDate = [NSNumber numberWithDouble:doubleDate];
+            startDate = self.pv_scheduleStartDate.date;
         }
+        
+        double doubleDate = [startDate timeIntervalSince1970];
+        self.scheduleStartDate = [NSNumber numberWithDouble:doubleDate];
+        
+        // We need to rest the end date if it is earlier than the start date
+        NSDate *endDate = [DateTimeHelper parseWebServiceDateDouble:self.scheduleEndDate];
+        if ([endDate compare:startDate] == NSOrderedAscending || [endDate compare:startDate] == NSOrderedSame) {
+            self.tf_scheduleEndDate.text = nil;
+            self.scheduleEndDate = nil;
+        }
+        
+        // Make sure the end date cannot be set to a date before the start date
+        self.pv_scheduleEndDate.minimumDate = startDate;
     }
     else if (textField == self.tf_scheduleAmount) {
         
@@ -2074,6 +2086,7 @@
         self.scheduleAmount == nil ||
         self.scheduleRepeatNumber == nil ||
         self.scheduleRepeatPeriod == nil ||
+        self.scheduleEndDate == nil ||
         [self.medicationName isEqualToString:@""] ||
         [self.dosageUnit isEqualToString:@""])
     {
@@ -2307,6 +2320,7 @@
         self.scheduleAmount == nil ||
         self.scheduleRepeatNumber == nil ||
         self.scheduleRepeatPeriod == nil ||
+        self.scheduleEndDate == nil ||
         [self.medicationName isEqualToString:@""] ||
         [self.dosageUnit isEqualToString:@""])
     {
