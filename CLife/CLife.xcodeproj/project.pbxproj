@@ -243,9 +243,12 @@
 		523A6BD115F6815900D60461 /* SchedulePeriods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchedulePeriods.h; sourceTree = "<group>"; };
 		523A6BD615F6DC1400D60461 /* UIPromptAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPromptAlertView.h; sourceTree = "<group>"; };
 		523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPromptAlertView.m; sourceTree = "<group>"; };
+		525CF33D164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		525CF33E164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		525CF33F164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		526BA13D1649AB5700F3D157 /* PlatformDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		526BA13E1649AB5700F3D157 /* PlatformDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatformDataModel.xcdatamodel; sourceTree = "<group>"; };
-		526BA1401649ADCE00F3D157 /* PlatformDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlatformDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
+		526BA1401649ADCE00F3D157 /* PlatformDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		5277E7DC15DD4D48003A1DCF /* icon-profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile.png"; sourceTree = "<group>"; };
 		5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile@2x.png"; sourceTree = "<group>"; };
 		5277E7E015DD4F7E003A1DCF /* icon-medical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-medical.png"; sourceTree = "<group>"; };
@@ -1373,6 +1376,7 @@
 			knownRegions = (
 				en,
 				pt,
+				es,
 			);
 			mainGroup = C53DC68C15D4378300CC7D14;
 			productRefGroup = C53DC69815D4378300CC7D14 /* Products */;
@@ -1641,6 +1645,7 @@
 			children = (
 				5277E7F715DD62F1003A1DCF /* en */,
 				5277E7F915DD6304003A1DCF /* pt */,
+				525CF33D164C9FA3003B085F /* es */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1649,6 +1654,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C53DC6A515D4378300CC7D14 /* en */,
+				525CF33E164C9FA3003B085F /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1657,6 +1663,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C53DC6D115D4378300CC7D14 /* en */,
+				525CF33F164C9FA3003B085F /* es */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

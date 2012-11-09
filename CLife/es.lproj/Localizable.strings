@@ -1,0 +1,194 @@
+/* 
+  Localizable.strings
+  CLife
+  Spanish
+
+  Created by Jordan Gurrieri on 11/08/12.
+  Copyright (c) 2012 - Imaginative Design. All rights reserved.
+*/
+
+
+// General
+"ITEM" = "Elemento";
+"TODAY" = "Hoy";
+"YES" = "Sí";
+"NO" = "No";
+"DELETE" = "Eliminar";
+"CANCEL" = "Cancelar";
+"CONFIRM" = "Confirmar";
+"NONE" = "Ninguno";
+"OPTIONAL" = "opcional";
+"DELETE WITH DATA EXPORT" = "Exportar datos y eliminar";
+"DELETE WITHOUT DATA EXPORT" = "Eliminar";
+
+"INCOMPLETE" = "Incompleto";
+"INCOMPLETE MESSAGE" = "Rellena todos los campos antes de guardar.";
+
+"CONFIRM DELETE" = "Confirma Eliminar";
+"CONFIRM DELETE MESSAGE" = "Introduce tu nombre tal como aparece en tu perfil.";
+
+
+// Tab Bar
+"PROFILE" = "Perfil";
+"PRESCRIPTIONS" = "Recetas";
+"PRESCRIPTION" = "Receta";
+"REMINDERS" = "Recordatorios";
+"HISTORY" = "Historial";
+
+
+// Profile
+"NAME" = "Nombre";
+"ENTER FULL NAME" = "Introduce nombre y apellidos";
+
+"ENTER BIRTHDAY" = "Introduce fecha de nacimiento";
+"BIRTHDAY" = "Fecha de nacimiento";
+
+"GENDER" = "Sexo";
+"SELECT GENDER" = "Selecciona sexo";
+"MALE" = "Hombre";
+"FEMALE" = "Mujer";
+
+"BLOOD TYPE" = "Tipo de sangre";
+"SELECT BLOOD TYPE" = "Selecciona tipo de sangre";
+"A POSITIVE" = "A Positivo";
+"A NEGATIVE" = "A Negativo";
+"B POSITIVE" = "B Positivo";
+"B NEGATIVE" = "B Negativo";
+"AB POSITIVE" = "AB Positivo";
+"AB NEGATIVE" = "AB Negativo";
+"O POSITIVE" = "O Positivo";
+"O NEGATIVE" = "O Negativo";
+
+"EDIT PROFILE" = "Editar Perfil";
+"EDIT PROFILE MESSAGE" = "¿Deseas realizar una copia de seguridad de tu historial antes de editar tu perfil?";
+
+"COMPLETE PROFILE WARNING" = "Completa tu perfil antes de continuar";
+
+"DELETE PROFILE" = "Eliminar perfil";
+"DELETE PROFILE MESSAGE" = "Al eliminar tu perfil se borrarán todos tus datos e historial. ¿Deseas exportar tus datos e historial antes de eliminar tu perfil?";
+
+
+// Prescriptions
+"MEDICATION" = "Medicamento";
+"ENTER MEDICATION NAME" = "nombre del medicamento";
+
+"METHOD" = "Método";
+"SELECT METHOD" = "¿cómo se administra este medicamento?";
+
+"DOSAGE" = "Dosis";
+"STRENGTH" = "Concentración";
+"ENTER STRENGTH" = "p. ej. 100 mg";
+"UNIT" = "Unidad";
+"SELECT UNIT" = "p. ej. mg";
+
+"REMINDER SCHEDULE" = "Horario";
+"EX. TOMORROW 8:00 AM" = "p.ej. Mañana  8:00 a.m. ";
+"STARTS" = "Comienzo";
+"AMOUNT" = "Cantidad";
+"ENTER AMOUNT" = "p.ej. 2 dosis";
+"DOSE" = "dosis";
+"DOSES" = "dosis";
+"ENDS" = "Fin";
+"ENTER ENDS" = "fecha de finalización";
+"NO END DATE" = "Sin fecha de finalización";
+"REPEATS" = "Repetición";
+"ENTER REPEATS" = "p.ej. Cada 4 horas";
+"DOES NOT REPEAT" = "No se repite";
+"EVERY" = "Cada";
+"OCCURS" = "Ocurre";
+"ENTER OCCURS" = "opcional: veces ese día";
+"TIME THAT DAY" = "vez ese día";
+"TIMES THAT DAY" = "veces ese día";
+
+"MINUTE" = "minuto";
+"MINUTES" = "minutos";
+"HOUR" = "hora";
+"HOURS" = "horas";
+"DAY" = "día";
+"DAYS" = "días";
+"WEEK" = "semana";
+"WEEKS" = "semanas";
+"MONTH" = "mes";
+"MONTHS" = "meses";
+"YEAR" = "año";
+"YEARS" = "años";
+
+"REASON AND NOTES" = "Motivo y Notas (opcional)";
+"ENTER REASON" = "introduce el motivo de este medicamento y otras notas";
+
+"PILL" = "Pastilla";
+"LIQUID" = "Líquido";
+"CREAM" = "Crème";
+"SYRINGE" = "Jeringa";
+"INJECTION" = "Inyección/Inyectable";
+
+"UG" = "ug";
+"MG" = "mg";
+"G" = "g";
+"UL" = "ul";
+"ML" = "ml";
+"L" = "l";
+
+"EDIT PRESCRIPTION" = "Editar receta";
+"EDIT PRESCRIPTION MESSAGE" = "¿Deseas realizar una copia de seguridad de tu historial antes de editar esta receta?";
+
+"DELETE PRESCRIPTION" = "Eliminar receta";
+"DELETE PRESCRIPTION MESSAGE" = "¿Deseas exportar tus datos e historial antes de eliminar esta receta?";
+
+
+// History Details
+"CONFIRMATION" = "Confirmación";
+"DAY AND TIME" = "Día y Hora";
+"NOTES" = "Notas (opcional)";
+
+"WARNING" = "Confirma si esta receta se tomó y cuándo";
+"UNCONFIRMED" = "Sin confirmación";
+"NOT TAKEN" = "Sin tomar";
+"TAKEN" = "Tomada";
+"SCHEDULED" = "Programada";
+"ENTER DATE AND TIME" = "introducir fecha y hora";
+
+"EDIT HISTORY" = "Editar Historial";
+"EDIT HISTORY MESSAGE" = "¿Deseas realizar una copia de seguridad de tus datos e historial antes de editar?";
+
+
+// Notifications
+"PRESCRIPTION REMINDER" = "Recordatorio de recetas";
+"REMINDER ACTION" = "Confirmar";
+"REMINDER ACTION PART 1" = "Hora de tomar la próxima dosis de";
+"REMINDER ACTION PART 2" = "Abre CLife para confirmar.";
+"REMINDER ACTION PART 2 TYPE 2" = "Confirmar.";
+
+
+//Filter
+"CLEAR" = "Borrar";
+"FILTER" = "Filtrar";
+
+"PERIOD" = "Periodo";
+"CHOOSE PRESCRIPTIONS" = "Elegir recetas";
+"CHOOSE PERIOD" = "Elegir periodo";
+
+"CUSTOM RANGE" = "Rango personalizado";
+"START" = "Comienzo";
+"END" = "Fin";
+"ENTER START DATE" = "Fecha de comienzo";
+"ENTER END DATE" = "Fecha de finalización";
+"TO" = "para";
+
+"TODAY" = "Hoy";
+"YESTERDAY" = "Ayer";
+"LAST" = "Últimos";
+
+
+//Export
+"EXPORT" = "Exportar";
+"EXPORT TITLE" = "Exportar Historial";
+"EXPORT MESSAGE" = "Todos los elementos visibles en tu historial se exportarán. ¿Quieres aplicar filtros en tu historial antes de exportar?";
+"EXPORTED DATA" = "Datos exportados";
+"DATA EXPORTED ON" = "Datos exportados el";
+
+"ALL" = "Todas";
+"ID" = "ID";
+
+
+

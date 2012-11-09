@@ -426,7 +426,8 @@
                 cell.textLabel.text = NSLocalizedString(@"STRENGTH", nil);
                 [cell setSelectionStyle:UITableViewCellEditingStyleNone];
                 
-                self.tf_dosageAmount = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
+//                self.tf_dosageAmount = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
+                self.tf_dosageAmount = [[UITextField alloc] initWithFrame:CGRectMake(140, 0, 140, 21)];
                 self.tf_dosageAmount.adjustsFontSizeToFitWidth = YES;
                 self.tf_dosageAmount.textColor = [UIColor darkGrayColor];
                 self.tf_dosageAmount.placeholder = NSLocalizedString(@"ENTER STRENGTH", nil);
@@ -484,7 +485,8 @@
                     
                     self.pv_dosageUnit = pickerView;
                     
-                    self.tf_dosageUnit = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+//                    self.tf_dosageUnit = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                    self.tf_dosageUnit = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
                     self.tf_dosageUnit.adjustsFontSizeToFitWidth = YES;
                     self.tf_dosageUnit.textColor = [UIColor darkGrayColor];
                     self.tf_dosageUnit.placeholder = NSLocalizedString(@"SELECT UNIT", nil);
@@ -540,7 +542,8 @@
                     
                     self.pv_scheduleAmount = pickerView;
                     
-                    self.tf_scheduleAmount = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+//                    self.tf_scheduleAmount = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                    self.tf_scheduleAmount = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
                     self.tf_scheduleAmount.adjustsFontSizeToFitWidth = YES;
                     self.tf_scheduleAmount.placeholder = NSLocalizedString(@"ENTER AMOUNT", nil);
                     self.tf_scheduleAmount.textColor = [UIColor darkGrayColor];
@@ -605,7 +608,8 @@
                     
                     self.pv_scheduleStartDate = pickerView;
                     
-                    self.tf_scheduleStartDate = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+//                    self.tf_scheduleStartDate = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                    self.tf_scheduleStartDate = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
                     self.tf_scheduleStartDate.adjustsFontSizeToFitWidth = YES;
                     self.tf_scheduleStartDate.placeholder = NSLocalizedString(@"EX. TOMORROW 8:00 AM", nil);
                     self.tf_scheduleStartDate.textColor = [UIColor darkGrayColor];
@@ -668,7 +672,8 @@
                     
                     self.pv_scheduleRepeat = pickerView;
                     
-                    self.tf_scheduleRepeat = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+//                    self.tf_scheduleRepeat = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                    self.tf_scheduleRepeat = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
                     self.tf_scheduleRepeat.adjustsFontSizeToFitWidth = YES;
                     self.tf_scheduleRepeat.placeholder = NSLocalizedString(@"ENTER REPEATS", nil);
                     self.tf_scheduleRepeat.textColor = [UIColor darkGrayColor];
@@ -739,7 +744,8 @@
                         
                         self.pv_scheduleOccurences = pickerView;
                         
-                        self.tf_scheduleOccurences = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+//                        self.tf_scheduleOccurences = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                        self.tf_scheduleOccurences = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
                         self.tf_scheduleOccurences.adjustsFontSizeToFitWidth = YES;
                         self.tf_scheduleOccurences.placeholder = NSLocalizedString(@"ENTER OCCURS", nil);
                         self.tf_scheduleOccurences.textColor = [UIColor darkGrayColor];
@@ -800,7 +806,8 @@
                         
                         self.pv_scheduleEndDate = pickerView;
                         
-                        self.tf_scheduleEndDate = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+//                        self.tf_scheduleEndDate = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                        self.tf_scheduleEndDate = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
                         self.tf_scheduleEndDate.adjustsFontSizeToFitWidth = YES;
                         self.tf_scheduleEndDate.placeholder = NSLocalizedString(@"ENTER ENDS", nil);
                         self.tf_scheduleEndDate.textColor = [UIColor darkGrayColor];
@@ -857,7 +864,8 @@
                     
                     self.pv_scheduleEndDate = pickerView;
                     
-                    self.tf_scheduleEndDate = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+//                    self.tf_scheduleEndDate = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                    self.tf_scheduleEndDate = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
                     self.tf_scheduleEndDate.adjustsFontSizeToFitWidth = YES;
                     self.tf_scheduleEndDate.placeholder = NSLocalizedString(@"ENTER ENDS", nil);
                     self.tf_scheduleEndDate.textColor = [UIColor darkGrayColor];
