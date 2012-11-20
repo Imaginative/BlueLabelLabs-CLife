@@ -13,6 +13,7 @@
 
 + (NSString*) formatDateForWebService:(NSDate*)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
     [dateFormatter setDateStyle:NSDateFormatterLongStyle];
     [dateFormatter setTimeStyle:NSDateFormatterLongStyle];
     NSString *formattedDate = [dateFormatter stringFromDate:date];
@@ -37,6 +38,7 @@
 
 + (NSString*) formatShortDate:(NSDate*)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
     [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     NSString *formattedDate = [dateFormatter stringFromDate:date];
@@ -48,6 +50,7 @@
 
 + (NSString*) formatMediumDateWithTime:(NSDate*)date includeSeconds:(BOOL)seconds {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     
     if (seconds) {
@@ -68,6 +71,7 @@
 + (NSString*) formatMediumDate:(NSDate*)date {
     // Returns a string with format like "Dec 1, 2011"
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     NSString *formattedDate = [dateFormatter stringFromDate:date];
@@ -167,6 +171,7 @@
 #pragma mark - Get Date Components
 + (NSInteger) getYearComponentFromDate:(NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setLocale:[NSLocale currentLocale]];
     [formatter setDateFormat:@"yyyy"];
     NSString *yearString = [formatter stringFromDate:date];
     [formatter release];
@@ -177,7 +182,8 @@
 }
 
 + (NSString*) getMonthComponentFromDate:(NSDate*)date abbreviated:(BOOL)abbriviated {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; 
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
     [dateFormatter setTimeZone:[NSTimeZone localTimeZone]]; 
     
     if (abbriviated) {
@@ -194,7 +200,8 @@
 }
 
 + (NSString*) getWeekdayComponentFromDate:(NSDate*)date abbreviated:(BOOL)abbriviated {    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; 
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
     [dateFormatter setTimeZone:[NSTimeZone localTimeZone]]; 
     
     if (abbriviated) {
@@ -212,6 +219,7 @@
 
 + (NSInteger) getDayComponentFromDate:(NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setLocale:[NSLocale currentLocale]];
     [formatter setDateFormat:@"dd"];
     NSString *dayString = [formatter stringFromDate:date];
     [formatter release];
@@ -223,6 +231,7 @@
 
 + (NSString*) getTimeFromDate:(NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setLocale:[NSLocale currentLocale]];
     [formatter setDateFormat:@"hh:mm a"];
     NSString *hour = [formatter stringFromDate:date];
     [formatter release];
@@ -232,6 +241,7 @@
 
 + (NSInteger) getHourComponentFromDate:(NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setLocale:[NSLocale currentLocale]];
     [formatter setDateFormat:@"hh"];
     NSString *hourString = [formatter stringFromDate:date];
     [formatter release];
@@ -242,8 +252,9 @@
 }
 
 + (NSString*) getPeriodComponentFromDate:(NSDate*)date {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init]; 
-    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]]; 
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
     [dateFormatter setDateFormat:@"a"];
     NSString *period = [dateFormatter stringFromDate:date]; 
     [dateFormatter release];
@@ -253,6 +264,7 @@
 
 + (NSInteger) getMinuteComponentFromDate:(NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setLocale:[NSLocale currentLocale]];
     [formatter setDateFormat:@"mm"];
     NSString *minuteString = [formatter stringFromDate:date];
     [formatter release];
@@ -264,6 +276,7 @@
 
 + (NSInteger) getSecondComponentFromDate:(NSDate*)date {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setLocale:[NSLocale currentLocale]];
     [formatter setDateFormat:@"ss"];
     NSString *secondString = [formatter stringFromDate:date];
     [formatter release];

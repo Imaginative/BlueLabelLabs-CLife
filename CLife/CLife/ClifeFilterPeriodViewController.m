@@ -76,6 +76,7 @@
     
     // Setup date formatter
     self.dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [self.dateFormatter setLocale:[NSLocale currentLocale]];
     [self.dateFormatter setDateStyle:NSDateFormatterLongStyle];
     [self.dateFormatter setTimeStyle:NSDateFormatterNoStyle];
     

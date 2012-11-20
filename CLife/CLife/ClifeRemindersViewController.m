@@ -160,6 +160,7 @@
         
         // Setup date formatter
         NSDateFormatter *dateOnlyFormatter = [[[NSDateFormatter alloc] init] autorelease];
+        [dateOnlyFormatter setLocale:[NSLocale currentLocale]];
         [dateOnlyFormatter setDateStyle:NSDateFormatterLongStyle];
         [dateOnlyFormatter setTimeStyle:NSDateFormatterNoStyle];
         
@@ -213,6 +214,7 @@
         
         // Setup date formatter
         NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+        [dateAndTimeFormatter setLocale:[NSLocale currentLocale]];
         [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
         [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
         

@@ -92,6 +92,7 @@ static PrescriptionInstanceManager* sharedManager;
 //        for (UILocalNotification *notification in notifications) {
 //            /* NSLog */
 //            NSDateFormatter *dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+//            [dateAndTimeFormatter setLocale:[NSLocale currentLocale]];
 //            [dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
 //            [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
 //            NSLog([NSString stringWithFormat:@"Canceled Local Notification for PrescriptionInstanceID:%@, with FireDate:%@", [prescriptionInstance.objectid stringValue], [dateAndTimeFormatter stringFromDate:notification.fireDate]]);

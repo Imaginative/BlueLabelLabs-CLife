@@ -185,6 +185,7 @@ static ExportManager *sharedManager;
     
     if (self) {
         self.dateAndTimeFormatter = [[NSDateFormatter alloc] init];
+        [self.dateAndTimeFormatter setLocale:[NSLocale currentLocale]];
     }
     return self;
 }
@@ -402,6 +403,7 @@ static ExportManager *sharedManager;
     
     // Setup date formatter
     NSDateFormatter *dateAndTimeFormatter = [[NSDateFormatter alloc] init];
+    [dateAndTimeFormatter setLocale:[NSLocale currentLocale]];
     [dateAndTimeFormatter setDateStyle:NSDateFormatterLongStyle];
     [dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
     NSString *dateExported = [dateAndTimeFormatter stringFromDate:[NSDate date]];

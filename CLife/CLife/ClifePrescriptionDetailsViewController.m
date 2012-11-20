@@ -103,10 +103,12 @@
     
     // Setup date formatters for pickers
     self.dateOnlyFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [self.dateOnlyFormatter setLocale:[NSLocale currentLocale]];
     [self.dateOnlyFormatter setDateStyle:NSDateFormatterLongStyle];
     [self.dateOnlyFormatter setTimeStyle:NSDateFormatterNoStyle];
     
     self.dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [self.dateAndTimeFormatter setLocale:[NSLocale currentLocale]];
     [self.dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
     [self.dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
     
