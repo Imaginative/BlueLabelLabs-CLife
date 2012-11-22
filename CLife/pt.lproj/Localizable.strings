@@ -69,6 +69,8 @@
 
 
 // Prescriptions
+"ADD PRESCRIPTIONS MESSAGE" = "Press '+' to add a prescription";
+
 "MEDICATION" = "Medicação";
 "ENTER MEDICATION NAME" = "o nome dessa medicação";
 

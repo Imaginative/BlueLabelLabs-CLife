@@ -179,7 +179,7 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
-            cell.textLabel.text = @"Press '+' to add a prescription";
+            cell.textLabel.text = NSLocalizedString(@"ADD PRESCRIPTIONS MESSAGE", nil);
             
             cell.textLabel.textAlignment = UITextAlignmentCenter;
             cell.textLabel.shadowColor = [UIColor whiteColor];

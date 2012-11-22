@@ -297,9 +297,11 @@
         // Schedule section
         if ([self.scheduleRepeatPeriod intValue] == kHOUR) {
             // Hide the number of daily occurances row
+            self.occurancesRowIsShown = NO;
             return 3;
         }
         else {
+            self.occurancesRowIsShown = YES;
             return 4;
         }
     }

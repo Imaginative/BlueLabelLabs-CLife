@@ -72,11 +72,13 @@
 
 
 // Prescriptions
+"ADD PRESCRIPTIONS MESSAGE" = "Press '+' to add a prescription";
+
 "MEDICATION" = "Medicamento";
 "ENTER MEDICATION NAME" = "nombre del medicamento";
 
 "METHOD" = "Método";
-"SELECT METHOD" = "¿cómo se administra este medicamento?";
+"SELECT METHOD" = "modo de administración";
 
 "DOSAGE" = "Dosis";
 "STRENGTH" = "Concentración";
@@ -121,7 +123,7 @@
 
 "PILL" = "Pastilla";
 "LIQUID" = "Líquido";
-"CREAM" = "Crème";
+"CREAM" = "Crema";
 "SYRINGE" = "Jeringa";
 "INJECTION" = "Inyección/Inyectable";
 

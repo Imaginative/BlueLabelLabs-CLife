@@ -190,7 +190,8 @@
                     
                     self.pv_dateStart = pickerView;
                     
-                    self.tf_dateStart = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+//                    self.tf_dateStart = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 200, 21)];
+                    self.tf_dateStart = [[UITextField alloc] initWithFrame:CGRectMake(100, 0, 180, 21)];
                     self.tf_dateStart.adjustsFontSizeToFitWidth = YES;
                     self.tf_dateStart.placeholder = NSLocalizedString(@"ENTER START DATE", nil);
                     self.tf_dateStart.textColor = [UIColor darkGrayColor];
