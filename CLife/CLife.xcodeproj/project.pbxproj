@@ -246,6 +246,7 @@
 		525CF33D164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		525CF33E164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		525CF33F164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		526B5C8F165DBD99004998EB /* PlatformDataModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlatformDataModel 4.xcdatamodel"; sourceTree = "<group>"; };
 		526BA13D1649AB5700F3D157 /* PlatformDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		526BA13E1649AB5700F3D157 /* PlatformDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatformDataModel.xcdatamodel; sourceTree = "<group>"; };
 		526BA1401649ADCE00F3D157 /* PlatformDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
@@ -1835,11 +1836,12 @@
 		526BA13C1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				526B5C8F165DBD99004998EB /* PlatformDataModel 4.xcdatamodel */,
 				526BA1401649ADCE00F3D157 /* PlatformDataModel 3.xcdatamodel */,
 				526BA13D1649AB5700F3D157 /* PlatformDataModel 2.xcdatamodel */,
 				526BA13E1649AB5700F3D157 /* PlatformDataModel.xcdatamodel */,
 			);
-			currentVersion = 526BA1401649ADCE00F3D157 /* PlatformDataModel 3.xcdatamodel */;
+			currentVersion = 526B5C8F165DBD99004998EB /* PlatformDataModel 4.xcdatamodel */;
 			path = PlatformDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -40,6 +40,9 @@
 "NAME" = "Nombre";
 "ENTER FULL NAME" = "Introduce nombre y apellidos";
 
+"DOCTOR" = "Doctor";
+"PRESCRIBED BY" = "prescribed by";
+
 "ENTER BIRTHDAY" = "Introduce fecha de nacimiento";
 "BIRTHDAY" = "Fecha de nacimiento";
 

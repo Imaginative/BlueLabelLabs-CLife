@@ -23,6 +23,7 @@
 @dynamic userid;
 
 @dynamic name;
+@dynamic doctor;
 @dynamic strength;
 @dynamic unit;
 
@@ -189,7 +190,8 @@
 }
 
 #pragma mark - Static Initializers
-+ (Prescription *) createPrescriptionWithName:(NSString *)name 
++ (Prescription *) createPrescriptionWithName:(NSString *)name
+                               withDoctorName:(NSString *)doctor
                            withMethodConstant:(NSNumber *)methodConstant
                                  withStrength:(NSNumber *)strength 
                                      withUnit:(NSString *)unit
@@ -217,6 +219,7 @@
     prescription.userid = user.objectid;
     
     prescription.name = name;
+    prescription.doctor = doctor;
     prescription.method = nil;  // depreciated, use methodconstant instead
     prescription.methodconstant = methodConstant;
     

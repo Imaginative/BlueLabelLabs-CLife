@@ -32,6 +32,7 @@
 @synthesize prescriptionID          = m_prescriptionID;
 
 @synthesize tf_medicationName       = m_tf_medicationName;
+@synthesize tf_doctorName           = m_tf_doctorName;
 @synthesize tf_method               = m_tf_method;
 @synthesize pv_method               = m_pv_method;
 @synthesize methodArray             = m_methodArray;
@@ -73,6 +74,7 @@
 @synthesize occurancesRowIsShown    = m_occurancesRowIsShown;
 
 @synthesize medicationName          = m_medicationName;
+@synthesize doctorName              = m_doctorName;
 @synthesize method                  = m_method;
 @synthesize dosageAmount            = m_dosageAmount;
 @synthesize dosageUnit              = m_dosageUnit;
@@ -115,6 +117,7 @@
     // Setup array for section titles
     self.sectionsArray = [NSArray arrayWithObjects:
                           NSLocalizedString(@"MEDICATION", nil),
+                          NSLocalizedString(@"DOCTOR", nil),
                           NSLocalizedString(@"METHOD", nil),
                           NSLocalizedString(@"DOSAGE", nil),
                           NSLocalizedString(@"REMINDER SCHEDULE", nil),
@@ -175,6 +178,7 @@
         Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
         
         self.medicationName = prescription.name;
+        self.doctorName = prescription.doctor;
         self.method = prescription.methodconstant;
         
         self.dosageAmount = prescription.strength;
@@ -210,6 +214,7 @@
         [leftButton release];
         
         self.medicationName = nil;
+        self.doctorName = nil;
         self.method = nil;
         
         self.dosageAmount = nil;
@@ -237,6 +242,7 @@
     self.av_edit = nil;
     self.av_delete = nil;
     self.tf_medicationName = nil;
+    self.tf_doctorName = nil;
     self.gestureRecognizer = nil;
     self.tf_scheduleStartDate = nil;
     self.pv_scheduleStartDate = nil;
@@ -283,11 +289,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (section == 2) {
+    if (section == 3) {
         // Dosage section
         return 3;
     }
-    if (section == 3) {
+    if (section == 4) {
         // Schedule section
         if ([self.scheduleRepeatPeriod intValue] == kHOUR) {
             // Hide the number of daily occurances row
@@ -359,6 +365,52 @@
         }
     }
     else if (indexPath.section == 1) {
+        // Doctor Name section
+        
+        CellIdentifier = @"DoctorName";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            
+            [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+            
+            self.tf_doctorName = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
+            self.tf_doctorName.font = [UIFont systemFontOfSize:17.0];
+            self.tf_doctorName.adjustsFontSizeToFitWidth = YES;
+            self.tf_doctorName.textColor = [UIColor blackColor];
+            self.tf_doctorName.placeholder = NSLocalizedString(@"PRESCRIBED BY", nil);
+            self.tf_doctorName.keyboardType = UIKeyboardTypeDefault;
+            self.tf_doctorName.returnKeyType = UIReturnKeyDone;
+            self.tf_doctorName.backgroundColor = [UIColor clearColor];
+            self.tf_doctorName.autocorrectionType = UITextAutocorrectionTypeNo;
+            self.tf_doctorName.autocapitalizationType = UITextAutocapitalizationTypeWords;
+            self.tf_doctorName.textAlignment = UITextAlignmentLeft;
+            self.tf_doctorName.delegate = self;
+            [self.tf_doctorName setEnabled:YES];
+            
+            [cell.contentView addSubview:self.tf_doctorName];
+            
+        }
+        
+        if (self.doctorName != nil) {
+            self.tf_doctorName.text = self.doctorName;
+        }
+        else {
+            self.tf_doctorName.text = nil;
+        }
+        
+        // disable the cell until the "Edit" button is pressed
+        if (self.isEditing == YES) {
+            [cell setUserInteractionEnabled:YES];
+            [self.tf_doctorName setClearButtonMode:UITextFieldViewModeAlways];
+        }
+        else {
+            [cell setUserInteractionEnabled:NO];
+            [self.tf_doctorName setClearButtonMode:UITextFieldViewModeNever];
+        }
+    }
+    else if (indexPath.section == 2) {
         // Method section
         
         CellIdentifier = @"Method";
@@ -413,7 +465,7 @@
             [self.tf_method setClearButtonMode:UITextFieldViewModeNever];
         }
     }
-    else if (indexPath.section == 2) {
+    else if (indexPath.section == 3) {
         // Dosage section
         
         if (indexPath.row == 0) {
@@ -583,7 +635,7 @@
             }
         }
     }
-    else if (indexPath.section == 3) {
+    else if (indexPath.section == 4) {
         // Schedule section
         
         if (indexPath.row == 0) {
@@ -901,7 +953,7 @@
             }
         }
     }
-    else if (indexPath.section == 4) {
+    else if (indexPath.section == 5) {
         // Reason and Notes section
         
         CellIdentifier = @"ReasonAndNotes";
@@ -1007,11 +1059,11 @@
 
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 4) {
+    if (indexPath.section == 5) {
         return 115.0f;
     }
-    else if (indexPath.section == 2 ||
-             indexPath.section == 3)
+    else if (indexPath.section == 3 ||
+             indexPath.section == 4)
     {
         return 45.0f;
     }
@@ -1032,6 +1084,15 @@
         
     }
     else if (indexPath.section == 1) {
+        // Doctor Name selected
+        
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        // Set the doctor name text field as active
+        [self.tf_doctorName becomeFirstResponder];
+        
+    }
+    else if (indexPath.section == 2) {
         // Method selected
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -1040,7 +1101,7 @@
         [self.tf_method becomeFirstResponder];
         
     }
-    else if (indexPath.section == 2) {
+    else if (indexPath.section == 3) {
         // Dosage section
         
         if (indexPath.row == 0) {
@@ -1069,7 +1130,7 @@
             [self.tf_scheduleAmount becomeFirstResponder];
         }
     }
-    else if (indexPath.section == 3) {
+    else if (indexPath.section == 4) {
         // Schedule section
         
         if (indexPath.row == 0) {
@@ -1117,7 +1178,7 @@
             [self.tf_scheduleEndDate becomeFirstResponder];
         }
     }
-    else if (indexPath.section == 4) {
+    else if (indexPath.section == 5) {
         // Reason selected
         
         [self.tv_reason becomeFirstResponder];
@@ -1344,7 +1405,12 @@
     self.tv_reason = textView;
     
     // Scroll tableview to this row
-    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 600) animated:YES];
+    if (self.scheduleOccurenceNumber == nil) {
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 660) animated:YES];
+    }
+    else {
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 700) animated:YES];
+    }
     
     // Disable the table view scrolling
     [self.tbl_prescriptionDetails setScrollEnabled:NO];
@@ -1353,7 +1419,7 @@
     [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
     
     // Mark this row selected
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:5];
     [self.tbl_prescriptionDetails selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     
 //    // disable nav bar buttons until text entry complete
@@ -1402,7 +1468,7 @@
 //    [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 85) animated:YES];
     
     // Deselect this row
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:3];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:5];
     [self.tbl_prescriptionDetails deselectRowAtIndexPath:indexPath animated:NO];
     
     // Add default text back if reason was left empty
@@ -1452,6 +1518,17 @@
         [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
         
     }
+    else if (textField == self.tf_doctorName) {
+        // Disable the table view scrolling
+        [self.tbl_prescriptionDetails setScrollEnabled:NO];
+        
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
+        
+        // Scroll tableview to this row
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 40) animated:YES];
+        
+    }
     else if (textField == self.tf_method) {
         
         [self showDisabledBackgroundView];
@@ -1460,7 +1537,7 @@
         [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
         
         // Scroll tableview to this row
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 50) animated:YES];
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 140) animated:YES];
         
         if ([self.tf_method.text isEqualToString:@""] == NO &&
             [self.tf_method.text isEqualToString:@" "] == NO)
@@ -1484,7 +1561,7 @@
         // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
         [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
         
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 135) animated:YES];
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 230) animated:YES];
         
     }
     else if (textField == self.tf_dosageUnit) {
@@ -1495,7 +1572,7 @@
         [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
         
         // Scroll tableview to this row
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 175) animated:YES];
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 280) animated:YES];
         
         if ([self.tf_dosageUnit.text isEqualToString:@""] == NO &&
             [self.tf_dosageUnit.text isEqualToString:@" "] == NO)
@@ -1512,6 +1589,29 @@
         }
         
     }
+    else if (textField == self.tf_scheduleAmount) {
+        
+        [self showDisabledBackgroundView];
+        
+        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
+        [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
+        
+        // Scroll tableview to this row
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 330) animated:YES];
+        
+        if ([self.tf_scheduleAmount.text isEqualToString:@""] == NO &&
+            [self.tf_scheduleAmount.text isEqualToString:@" "] == NO)
+        {
+            int row = [self.scheduleAmount intValue] - 1;
+            [self.pv_scheduleAmount selectRow:row inComponent:0 animated:YES];
+        }
+        else {
+            self.tf_scheduleAmount.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"DOSE", nil)];
+            
+            self.scheduleAmount = [NSNumber numberWithInt:1];
+        }
+        
+    }
     else if (textField == self.tf_scheduleStartDate) {
         
         [self showDisabledBackgroundView];
@@ -1520,7 +1620,7 @@
         [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
         
         // Scroll tableview to this row
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 310) animated:YES];
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 425) animated:YES];
         
         if ([self.dateAndTimeFormatter dateFromString:self.tf_scheduleStartDate.text]) {
             self.pv_scheduleStartDate.date = [self.dateAndTimeFormatter dateFromString:self.tf_scheduleStartDate.text];
@@ -1549,29 +1649,6 @@
         }
         
     }
-    else if (textField == self.tf_scheduleAmount) {
-        
-        [self showDisabledBackgroundView];
-        
-        // Add the tap gesture recognizer to capture background touches which will dismiss the keyboard
-        [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
-        
-        // Scroll tableview to this row
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 215) animated:YES];
-        
-        if ([self.tf_scheduleAmount.text isEqualToString:@""] == NO &&
-            [self.tf_scheduleAmount.text isEqualToString:@" "] == NO)
-        {
-            int row = [self.scheduleAmount intValue] - 1;
-            [self.pv_scheduleAmount selectRow:row inComponent:0 animated:YES];
-        }
-        else {
-            self.tf_scheduleAmount.text = [NSString stringWithFormat:@"%d %@", 1, NSLocalizedString(@"DOSE", nil)];
-            
-            self.scheduleAmount = [NSNumber numberWithInt:1];
-        }
-        
-    }
     else if (textField == self.tf_scheduleRepeat) {
         
         [self showDisabledBackgroundView];
@@ -1580,7 +1657,7 @@
         [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
         
         // Scroll tableview to this row
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 360) animated:YES];
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 470) animated:YES];
         
         if ([self.tf_scheduleRepeat.text isEqualToString:@""] == NO &&
             [self.tf_scheduleRepeat.text isEqualToString:@" "] == NO)
@@ -1618,7 +1695,7 @@
         [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
         
         // Scroll tableview to this row
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 404) animated:YES];
+        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 515) animated:YES];
         
         if ([self.tf_scheduleOccurences.text isEqualToString:@""] == NO &&
             [self.tf_scheduleOccurences.text isEqualToString:@" "] == NO)
@@ -1641,7 +1718,12 @@
         [self.v_disabledBackground addGestureRecognizer:self.gestureRecognizer];
         
         // Scroll tableview to this row
-        [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 450) animated:YES];
+        if (self.scheduleOccurenceNumber == nil) {
+            [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 515) animated:YES];
+        }
+        else {
+            [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 560) animated:YES];
+        }
         
         if ([self.dateOnlyFormatter dateFromString:self.tf_scheduleEndDate.text]) {
             self.pv_scheduleEndDate.date = [self.dateOnlyFormatter dateFromString:self.tf_scheduleEndDate.text];
@@ -1736,6 +1818,22 @@
         }
         else {
             self.medicationName = enteredText;
+        }
+    }
+    else if (textField == self.tf_doctorName) {
+        // Enable the table view scrolling
+        [self.tbl_prescriptionDetails setScrollEnabled:YES];
+        
+        // remove the tap gesture recognizer so it does not interfere with other table view touches
+        [self.tbl_prescriptionDetails removeGestureRecognizer:self.gestureRecognizer];
+        
+        if ([enteredText isEqualToString:@""] == YES ||
+            [enteredText isEqualToString:@" "] == YES)
+        {
+            self.doctorName = nil;
+        }
+        else {
+            self.doctorName = enteredText;
         }
     }
     else if (textField == self.tf_method) {
@@ -1846,14 +1944,14 @@
             self.occurancesRowIsShown == NO)
         {
             // We need to add the occurances row
-            [self.tbl_prescriptionDetails insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:3]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tbl_prescriptionDetails insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:4]] withRowAnimation:UITableViewRowAnimationAutomatic];
             self.occurancesRowIsShown = YES;
         }
         else if ([self.scheduleRepeatPeriod intValue] == kHOUR && 
                  self.occurancesRowIsShown == YES)
         {
             // We need to remove the occurances row
-            [self.tbl_prescriptionDetails deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:3]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tbl_prescriptionDetails deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:2 inSection:4]] withRowAnimation:UITableViewRowAnimationAutomatic];
             self.occurancesRowIsShown = NO;
             self.scheduleOccurenceNumber = nil;
         }
@@ -2134,6 +2232,7 @@
         
         //we need to save the changes to the prescription object to the local database 
         NSString* newMedicationName = self.medicationName;
+        NSString* newDoctorName = self.doctorName;
         NSNumber* newMethod = self.method;
         NSNumber* newStrength = self.dosageAmount;
         NSString* newUnit = self.dosageUnit;
@@ -2157,6 +2256,13 @@
         {
             //the medication name changed
             prescription.name = newMedicationName;
+        }
+        
+        if (newDoctorName != nil &&
+            ![newDoctorName isEqualToString:prescription.doctor])
+        {
+            //the doctor name changed
+            prescription.doctor = newDoctorName;
         }
         
         if (newMethod != nil &&
@@ -2260,6 +2366,7 @@
     
     self.prescriptionID = nil;
     self.medicationName = nil;
+    self.doctorName = nil;
     self.method = nil;
     self.dosageAmount = nil;
     self.dosageUnit = nil;
@@ -2281,9 +2388,6 @@
                           otherButtonTitles:NSLocalizedString(@"NO", nil), nil];
     [self.av_edit show];
     [self.av_edit release];
-    
-    
-    
 }
 
 - (void)onDeletePrescriptionButtonPressed:(id)sender {
@@ -2297,25 +2401,6 @@
     [actionSheet showInView:self.parentViewController.tabBarController.view];
     [actionSheet release];
 }
-
-//- (void) createPrescriptionInstancesForPrescription:(Prescription *)prescription {
-//    //we need to then create an array of prescription objects corresponding to this
-//    //particular prescription
-//    NSArray* prescriptionInstances = [PrescriptionInstance createPrescriptionInstancesFor:prescription];
-//    //now we have an array of prescription instances corresponding to the prescription
-//    
-//    ResourceContext* resourceContext = [ResourceContext instance];
-//    [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
-//    
-//    //we pass this to the local notification manager which will schedule them for
-//    //notifications as appropriate
-//    LocalNotificationManager* localNotificationManager = [LocalNotificationManager instance];
-//    [localNotificationManager scheduleNotifications];
-//    
-//    self.prescriptionID = prescription.objectid;
-//    
-//    [self hideProgressBar];
-//}
 
 - (void)onDoneAddingPrescriptionButtonPressed:(id)sender {
     
@@ -2348,7 +2433,18 @@
         // Exit editing and save changes
         ResourceContext* resourceContext = [ResourceContext instance];
                
-        Prescription* prescription = [Prescription createPrescriptionWithName:self.medicationName withMethodConstant:self.method withStrength:self.dosageAmount withUnit:self.dosageUnit withDateStart:self.scheduleStartDate withNumberOfDoses:self.scheduleAmount withRepeatMultiple:self.scheduleRepeatNumber withRepeatPeriod:self.scheduleRepeatPeriod withOccurMultiple:self.scheduleOccurenceNumber withDateEnd:self.scheduleEndDate withNotes:self.reason];
+        Prescription* prescription = [Prescription createPrescriptionWithName:self.medicationName
+                                                               withDoctorName:self.doctorName
+                                                           withMethodConstant:self.method
+                                                                 withStrength:self.dosageAmount
+                                                                     withUnit:self.dosageUnit
+                                                                withDateStart:self.scheduleStartDate
+                                                            withNumberOfDoses:self.scheduleAmount
+                                                           withRepeatMultiple:self.scheduleRepeatNumber
+                                                             withRepeatPeriod:self.scheduleRepeatPeriod
+                                                            withOccurMultiple:self.scheduleOccurenceNumber
+                                                                  withDateEnd:self.scheduleEndDate
+                                                                    withNotes:self.reason];
         
 //        // We will show a HUD since it may take a long time to generate all prescription instances
 //        ClifeAppDelegate* appDelegate =(ClifeAppDelegate *)[[UIApplication sharedApplication] delegate];

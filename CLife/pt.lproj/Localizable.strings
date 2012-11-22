@@ -72,6 +72,9 @@
 "MEDICATION" = "Medicação";
 "ENTER MEDICATION NAME" = "o nome dessa medicação";
 
+"DOCTOR" = "Doctor";
+"PRESCRIBED BY" = "prescribed by";
+
 "METHOD" = "Método";
 "SELECT METHOD" = "como é administrada essa medicação?";
 

@@ -23,6 +23,7 @@
     NSNumber                *m_prescriptionID;
     
     UITextField             *m_tf_medicationName;
+    UITextField             *m_tf_doctorName;
     
     UITapGestureRecognizer  *m_gestureRecognizer;
     
@@ -67,6 +68,7 @@
     BOOL                    m_occurancesRowIsShown;
     
     NSString                *m_medicationName;
+    NSString                *m_doctorName;
     NSNumber                *m_method;
     NSNumber                *m_dosageAmount;
     NSString                *m_dosageUnit;
@@ -91,6 +93,7 @@
 @property (nonatomic, retain)           NSNumber                *prescriptionID;
 
 @property (nonatomic, retain)           UITextField             *tf_medicationName;
+@property (nonatomic, retain)           UITextField             *tf_doctorName;
 
 @property (nonatomic, retain)           UITapGestureRecognizer  *gestureRecognizer;
 
@@ -135,6 +138,7 @@
 @property (nonatomic, assign)           BOOL                    occurancesRowIsShown;
 
 @property (nonatomic, retain)           NSString                *medicationName;
+@property (nonatomic, retain)           NSString                *doctorName;
 @property (nonatomic, retain)           NSNumber                *method;
 @property (nonatomic, retain)           NSNumber                *dosageAmount;
 @property (nonatomic, retain)           NSString                *dosageUnit;

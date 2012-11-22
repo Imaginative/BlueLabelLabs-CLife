@@ -459,6 +459,7 @@ static ExportManager *sharedManager;
      NSLocalizedString(@"BIRTHDAY", nil),
      NSLocalizedString(@"GENDER", nil),
      NSLocalizedString(@"BLOOD TYPE", nil),
+     NSLocalizedString(@"DOCTOR", nil),
      NSLocalizedString(@"METHOD", nil),
      NSLocalizedString(@"STRENGTH", nil),
      NSLocalizedString(@"UNIT", nil),
@@ -503,6 +504,7 @@ static ExportManager *sharedManager;
      @"",
      @"",
      @"",
+     @"",
      nil];
     
     // Update the date time formatter to include time
@@ -525,6 +527,7 @@ static ExportManager *sharedManager;
              @"",
              @"",
              @"",
+             prescription.doctor,
              [self getMethodStringForPrescription:prescription],
              prescription.strength,
              prescription.unit,
@@ -556,6 +559,7 @@ static ExportManager *sharedManager;
          @"",
          @"",
          @"",
+         prescription.doctor,
          [self getMethodStringForPrescription:prescription],
          prescription.strength,
          prescription.unit,

@@ -16,6 +16,7 @@
 @property (nonatomic,retain) NSNumber* userid;
 
 @property (nonatomic,retain) NSString* name;
+@property (nonatomic,retain) NSString* doctor;
 @property (nonatomic,retain) NSString* method;
 @property (nonatomic,retain) NSNumber* methodconstant;
 
@@ -38,7 +39,8 @@
 + (void) deletePrescriptionWithID:(NSNumber *)prescriptionID;
 + (void) updateMethodDataType;
 
-+ (Prescription *) createPrescriptionWithName:(NSString *)name 
++ (Prescription *) createPrescriptionWithName:(NSString *)name
+                               withDoctorName:(NSString *)doctor
                            withMethodConstant:(NSNumber *)methodConstant
                                  withStrength:(NSNumber *)strength 
                                      withUnit:(NSString *)unit
