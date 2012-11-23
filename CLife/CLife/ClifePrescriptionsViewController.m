@@ -241,7 +241,7 @@
     
     Prescription *prescription = [[self.frc_prescriptions fetchedObjects] objectAtIndex:indexPath.row];
     
-    ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:prescription.objectid];
+    ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:prescription.objectid isEditable:YES];
     
     [prescriptionDetailsVC setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:prescriptionDetailsVC animated:YES];
@@ -249,7 +249,7 @@
 
 #pragma mark - UI Action Methods
 - (void)onAddPrescriptionButtonPressed:(id)sender {
-    ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:nil];
+    ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:nil isEditable:YES];
     
     UINavigationController *navigationcontroller = [[[UINavigationController alloc] initWithRootViewController:prescriptionDetailsVC] autorelease];
     [self.navigationController presentModalViewController:navigationcontroller animated:YES];

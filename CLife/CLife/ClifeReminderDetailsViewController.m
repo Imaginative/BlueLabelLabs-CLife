@@ -67,7 +67,7 @@
                                     target:self
                                     action:@selector(onEditReminderButtonPressed:)];
     
-    // Determine if we are in an editing state or not
+    // Get the current reminder date
     if (self.prescriptionInstanceID != nil) {
         // Get the prescription instance object
         ResourceContext *resourceContext = [ResourceContext instance];
@@ -282,7 +282,7 @@
         ResourceContext *resourceContext = [ResourceContext instance];
         PrescriptionInstance *prescriptionInstance = (PrescriptionInstance *)[resourceContext resourceWithType:PRESCRIPTIONINSTANCE withID:self.prescriptionInstanceID];
         
-        ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:prescriptionInstance.prescriptionid];
+        ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:prescriptionInstance.prescriptionid isEditable:NO];
         
         [prescriptionDetailsVC setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:prescriptionDetailsVC animated:YES];

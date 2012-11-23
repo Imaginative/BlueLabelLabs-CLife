@@ -66,6 +66,7 @@
     BOOL                    m_didRequestDelete;
     BOOL                    m_isEditing;
     BOOL                    m_occurancesRowIsShown;
+    BOOL                    m_isEditable;
     
     NSString                *m_medicationName;
     NSString                *m_doctorName;
@@ -136,6 +137,7 @@
 @property (nonatomic, assign)           BOOL                    didRequestDelete;
 @property (nonatomic, assign)           BOOL                    isEditing;
 @property (nonatomic, assign)           BOOL                    occurancesRowIsShown;
+@property (nonatomic, assign)           BOOL                    isEditable;
 
 @property (nonatomic, retain)           NSString                *medicationName;
 @property (nonatomic, retain)           NSString                *doctorName;
@@ -152,6 +154,6 @@
 @property (nonatomic, retain)           NSNumber                *scheduleEndDate;
 
 #pragma mark - Static Initializers
-+ (ClifePrescriptionDetailsViewController *)createInstanceForPrescriptionWithID:(NSNumber *)prescriptionID;
++ (ClifePrescriptionDetailsViewController *)createInstanceForPrescriptionWithID:(NSNumber *)prescriptionID isEditable:(BOOL)isEditable;
 
 @end

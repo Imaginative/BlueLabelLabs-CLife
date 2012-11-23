@@ -72,6 +72,7 @@
 @synthesize didRequestDelete        = m_didRequestDelete;
 @synthesize isEditing               = m_isEditing;
 @synthesize occurancesRowIsShown    = m_occurancesRowIsShown;
+@synthesize isEditable              = m_isEditable;
 
 @synthesize medicationName          = m_medicationName;
 @synthesize doctorName              = m_doctorName;
@@ -165,13 +166,15 @@
         // Existing prescription
         self.isEditing = NO;
         
-        // add the "Edit" button to the nav bar if openning an existing prescription
-        UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
-                                        initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                        target:self
-                                        action:@selector(onEditPrescriptionButtonPressed:)];
-        self.navigationItem.rightBarButtonItem = rightButton;
-        [rightButton release];
+        if (self.isEditable == YES) {
+            // add the "Edit" button to the nav bar if openning an existing prescription
+            UIBarButtonItem* rightButton = [[UIBarButtonItem alloc]
+                                            initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                            target:self
+                                            action:@selector(onEditPrescriptionButtonPressed:)];
+            self.navigationItem.rightBarButtonItem = rightButton;
+            [rightButton release];
+        }
         
         // Get the prescription object
         ResourceContext* resourceContext = [ResourceContext instance];
@@ -2602,11 +2605,12 @@
 }
 
 #pragma mark - Static Initializers
-+ (ClifePrescriptionDetailsViewController *)createInstanceForPrescriptionWithID:(NSNumber *)prescriptionID {
++ (ClifePrescriptionDetailsViewController *)createInstanceForPrescriptionWithID:(NSNumber *)prescriptionID isEditable:(BOOL)isEditable {
     ClifePrescriptionDetailsViewController *instance = [[ClifePrescriptionDetailsViewController alloc] initWithNibName:@"ClifePrescriptionDetailsViewController" bundle:nil];
     [instance autorelease];
     
     instance.prescriptionID = prescriptionID;
+    instance.isEditable = isEditable;
     
     return instance;
 }

@@ -526,7 +526,7 @@
         ResourceContext *resourceContext = [ResourceContext instance];
         PrescriptionInstance *prescriptionInstance = (PrescriptionInstance *)[resourceContext resourceWithType:PRESCRIPTIONINSTANCE withID:self.prescriptionInstanceID];
         
-        ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:prescriptionInstance.prescriptionid];
+        ClifePrescriptionDetailsViewController *prescriptionDetailsVC = [ClifePrescriptionDetailsViewController createInstanceForPrescriptionWithID:prescriptionInstance.prescriptionid isEditable:NO];
         
         [prescriptionDetailsVC setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:prescriptionDetailsVC animated:YES];
