@@ -29,6 +29,8 @@
 		522D89171602A83900B5C615 /* redX@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89131602A83900B5C615 /* redX@2x.png */; };
 		523A6BD815F6DC1400D60461 /* UIPromptAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */; };
 		526BA13F1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 526BA13C1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld */; };
+		5275B454165F76F80049ACFE /* ClifeReminderDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B452165F76F80049ACFE /* ClifeReminderDetailsViewController.m */; };
+		5275B455165F76F80049ACFE /* ClifeReminderDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5275B453165F76F80049ACFE /* ClifeReminderDetailsViewController.xib */; };
 		5277E7DE15DD4D48003A1DCF /* icon-profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DC15DD4D48003A1DCF /* icon-profile.png */; };
 		5277E7DF15DD4D48003A1DCF /* icon-profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */; };
 		5277E7E215DD4F7E003A1DCF /* icon-medical.png in Resources */ = {isa = PBXBuildFile; fileRef = 5277E7E015DD4F7E003A1DCF /* icon-medical.png */; };
@@ -246,10 +248,13 @@
 		525CF33D164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		525CF33E164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		525CF33F164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		526B5C8F165DBD99004998EB /* PlatformDataModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlatformDataModel 4.xcdatamodel"; sourceTree = "<group>"; };
+		526B5C8F165DBD99004998EB /* PlatformDataModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 4.xcdatamodel"; sourceTree = "<group>"; };
 		526BA13D1649AB5700F3D157 /* PlatformDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		526BA13E1649AB5700F3D157 /* PlatformDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatformDataModel.xcdatamodel; sourceTree = "<group>"; };
 		526BA1401649ADCE00F3D157 /* PlatformDataModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 3.xcdatamodel"; sourceTree = "<group>"; };
+		5275B451165F76F80049ACFE /* ClifeReminderDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClifeReminderDetailsViewController.h; sourceTree = "<group>"; };
+		5275B452165F76F80049ACFE /* ClifeReminderDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClifeReminderDetailsViewController.m; sourceTree = "<group>"; };
+		5275B453165F76F80049ACFE /* ClifeReminderDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClifeReminderDetailsViewController.xib; sourceTree = "<group>"; };
 		5277E7DC15DD4D48003A1DCF /* icon-profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile.png"; sourceTree = "<group>"; };
 		5277E7DD15DD4D48003A1DCF /* icon-profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-profile@2x.png"; sourceTree = "<group>"; };
 		5277E7E015DD4F7E003A1DCF /* icon-medical.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-medical.png"; sourceTree = "<group>"; };
@@ -663,6 +668,9 @@
 				522D88F11602460800B5C615 /* ClifeRemindersViewController.h */,
 				522D88F21602460800B5C615 /* ClifeRemindersViewController.m */,
 				522D88F31602460800B5C615 /* ClifeRemindersViewController.xib */,
+				5275B451165F76F80049ACFE /* ClifeReminderDetailsViewController.h */,
+				5275B452165F76F80049ACFE /* ClifeReminderDetailsViewController.m */,
+				5275B453165F76F80049ACFE /* ClifeReminderDetailsViewController.xib */,
 				5277E83015DFE25E003A1DCF /* ClifeHistoryViewController.h */,
 				5277E83115DFE25F003A1DCF /* ClifeHistoryViewController.m */,
 				5277E83215DFE260003A1DCF /* ClifeHistoryViewController.xib */,
@@ -1443,6 +1451,7 @@
 				5216039D1624897B00EB5266 /* icon-syringe@2x.png in Resources */,
 				521603B31624DABA00EB5266 /* icon-paste.png in Resources */,
 				521603B41624DABA00EB5266 /* icon-paste@2x.png in Resources */,
+				5275B455165F76F80049ACFE /* ClifeReminderDetailsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1619,6 +1628,7 @@
 				52808602160F7AAA00EB515A /* ClifeFilterPrescriptionsViewController.m in Sources */,
 				528086141610CDB000EB515A /* ClifeFilterPeriodViewController.m in Sources */,
 				526BA13F1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld in Sources */,
+				5275B454165F76F80049ACFE /* ClifeReminderDetailsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

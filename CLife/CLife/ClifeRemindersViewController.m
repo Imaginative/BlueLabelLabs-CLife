@@ -14,6 +14,7 @@
 #import "DateTimeHelper.h"
 #import "UIImage+UIImageCategory.h"
 #import "MethodTypes.h"
+#import "ClifeReminderDetailsViewController.h"
 
 #define kTABLEVIEWCELLHEIGHT 50.0
 
@@ -202,9 +203,11 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
             
-            cell.accessoryType = UITableViewCellAccessoryNone;
+//            cell.accessoryType = UITableViewCellAccessoryNone;
+//            
+//            [cell setSelectionStyle:UITableViewCellEditingStyleNone];
             
-            [cell setSelectionStyle:UITableViewCellEditingStyleNone];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
         }
         
@@ -221,26 +224,35 @@
         NSDate *scheduleDate = [DateTimeHelper parseWebServiceDateDouble:prescriptionInstance.datescheduled];
         cell.detailTextLabel.text = [dateAndTimeFormatter stringFromDate:scheduleDate];
         
-        switch ([prescriptionInstance.prescription.methodconstant intValue]) {
-            case kPILL:
-                cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-                break;
-                
-            case kLIQUID:
-                cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-                break;
-                
-            case kCREAM:
-                cell.imageView.image = [[UIImage imageNamed:@"icon-paste.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-                break;
-                
-            case kINJECTION:
-                cell.imageView.image = [[UIImage imageNamed:@"icon-syringe.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-                break;
-                
-            default:
-                cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
-                break;
+        // Get the prescription object
+        ResourceContext *resourceContext = [ResourceContext instance];
+        Prescription *prescription = (Prescription *)[resourceContext resourceWithType:PRESCRIPTION withID:prescriptionInstance.prescriptionid];
+        
+        if (prescription != nil) {
+            switch ([prescription.methodconstant intValue]) {
+                case kPILL:
+                    cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                    break;
+                    
+                case kLIQUID:
+                    cell.imageView.image = [[UIImage imageNamed:@"icon-liquid.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                    break;
+                    
+                case kCREAM:
+                    cell.imageView.image = [[UIImage imageNamed:@"icon-paste.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                    break;
+                    
+                case kINJECTION:
+                    cell.imageView.image = [[UIImage imageNamed:@"icon-syringe.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                    break;
+                    
+                default:
+                    cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
+                    break;
+            }
+        }
+        else {
+            cell.imageView.image = [[UIImage imageNamed:@"icon-pill.png"] imageScaledToSize:CGSizeMake(34.0f, 34.0f)];
         }
     }
     else {
@@ -313,12 +325,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    PrescriptionInstance *prescriptionInstance = [self.frc_prescriptionInstances objectAtIndexPath:indexPath];
-//    
-//    ClifeHistoryDetailsViewController *historyDetailsVC = [ClifeHistoryDetailsViewController createInstanceForPrescriptionInstanceWithID:prescriptionInstance.objectid];
-//    
-//    [historyDetailsVC setHidesBottomBarWhenPushed:YES];
-//    [self.navigationController pushViewController:historyDetailsVC animated:YES];
+    PrescriptionInstance *prescriptionInstance = [self.frc_prescriptionInstances objectAtIndexPath:indexPath];
+    
+    ClifeReminderDetailsViewController *reminderDetailsVC = [ClifeReminderDetailsViewController createInstanceForPrescriptionInstanceWithID:prescriptionInstance.objectid];
+    
+    [reminderDetailsVC setHidesBottomBarWhenPushed:YES];
+    [self.navigationController pushViewController:reminderDetailsVC animated:YES];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate methods

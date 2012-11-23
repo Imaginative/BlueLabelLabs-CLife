@@ -54,6 +54,7 @@
     // Do any additional setup after loading the view from its nib.
     
     self.dateAndTimeFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [self.dateAndTimeFormatter setLocale:[NSLocale currentLocale]];
     [self.dateAndTimeFormatter setDateStyle:NSDateFormatterMediumStyle];
     [self.dateAndTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
     
