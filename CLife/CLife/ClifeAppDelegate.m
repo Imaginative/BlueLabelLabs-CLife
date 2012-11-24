@@ -144,17 +144,6 @@
     
     AuthenticationManager* authenticationManager = [AuthenticationManager instance];
     
-    // Check to see if we need to update the Gender data type
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if ([userDefaults objectForKey:setting_DIDUPDATEGENDERDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEGENDERDATATYPE] == NO) {
-        [self updateGenderDataType];
-    }
-    
-    // Check to see if we need to update the Blood Type data type
-    if ([userDefaults objectForKey:setting_DIDUPDATEBLOODTYPEDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEBLOODTYPEDATATYPE] == NO) {
-        [self updateBloodTypeDataType];
-    }
-    
     //lets check if a user is currently logged in 
     if (![authenticationManager isUserAuthenticated])
     {   
@@ -176,6 +165,31 @@
         ResourceContext* resourceContext = [ResourceContext instance];
         User* loggedInUser = (User*)[resourceContext resourceWithType:USER withID:self.authenticationManager.m_LoggedInUserID];
         
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        
+        if ([loggedInUser.app_version compare:@"1.0.2"] == NSOrderedAscending) {
+            // Check to see if we need to update the Method data type
+            if ([userDefaults objectForKey:setting_DIDUPDATEMETHODDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEMETHODDATATYPE] == NO) {
+                [self updateMethodDataType];
+            }
+        }
+        
+        if ([loggedInUser.app_version compare:@"1.1.0"] == NSOrderedAscending) {
+            // Check to see if we need to update the Gender data type
+            if ([userDefaults objectForKey:setting_DIDUPDATEGENDERDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEGENDERDATATYPE] == NO) {
+                [self updateGenderDataType];
+            }
+            
+            // Check to see if we need to update the Blood Type data type
+            if ([userDefaults objectForKey:setting_DIDUPDATEBLOODTYPEDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEBLOODTYPEDATATYPE] == NO) {
+                [self updateBloodTypeDataType];
+            }
+        }
+        
+        // Ensure we have the latest app version recorded for this user
+        loggedInUser.app_version = [ApplicationSettingsManager getApplicationVersion];
+        
+        // Open the app to the appropriate tab
         if (loggedInUser.username != nil &&
             ![loggedInUser.displayname isEqualToString:@""])
         {
@@ -184,11 +198,6 @@
         else {
             [self.tabBarController setSelectedIndex:0];
         }
-    }
-    
-    // Check to see if we need to update the Method data type
-    if ([userDefaults objectForKey:setting_DIDUPDATEMETHODDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEMETHODDATATYPE] == NO) {
-        [self updateMethodDataType];
     }
     
     // Determine if we have opened from a reminder notification
