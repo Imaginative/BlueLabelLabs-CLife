@@ -27,12 +27,16 @@
 
 
 @property (nonatomic,retain) NSString* sex;
+@property (nonatomic,retain) NSNumber* sexconstant;
 @property (nonatomic,retain) NSNumber* dateborn;
 @property (nonatomic,retain) NSString* bloodtype;
+@property (nonatomic,retain) NSNumber* bloodtypeconstant;
+@property (nonatomic,retain) NSNumber* bloodrhconstant;
 
-
+// Static Methods
++ (void) updateGenderDataType;
++ (void) updateBloodTypeDataType;
 + (void) deleteUserWithID:(NSNumber *)userID;
-
 + (User*) createNewDefaultUser;
 
 @end

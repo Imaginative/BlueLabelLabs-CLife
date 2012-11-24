@@ -27,3 +27,5 @@ extern NSString* const setting_APPVERSION;
 
 // C-Life specific settings
 extern NSString* const setting_DIDUPDATEMETHODDATATYPE;
+extern NSString* const setting_DIDUPDATEGENDERDATATYPE;
+extern NSString* const setting_DIDUPDATEBLOODTYPEDATATYPE;

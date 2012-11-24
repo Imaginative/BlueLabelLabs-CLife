@@ -191,6 +191,54 @@ static ExportManager *sharedManager;
 }
 
 #pragma mark - Helper methods
+- (NSString *)getBloodTypeStringForUser:(User *)user {
+    // Blood Type
+    
+    NSArray *bloodTypeArray = [NSArray arrayWithObjects:
+                           NSLocalizedString(@"A", nil),
+                           NSLocalizedString(@"B", nil),
+                           NSLocalizedString(@"AB", nil),
+                           NSLocalizedString(@"O", nil),
+                           nil];
+    
+    NSArray *bloodRhArray = [NSArray arrayWithObjects:
+                         NSLocalizedString(@"POSITIVE", nil),
+                         NSLocalizedString(@"NEGATIVE", nil),
+                         nil];
+    
+    NSString *bloodTypeStr;
+    
+    if (user.bloodtypeconstant != nil && user.bloodrhconstant != nil) {
+        bloodTypeStr = [NSString stringWithFormat:@"%@ %@",
+                        [bloodTypeArray objectAtIndex:[user.bloodtypeconstant intValue]],
+                        [bloodRhArray objectAtIndex:[user.bloodrhconstant intValue]]];
+    }
+    else {
+        bloodTypeStr = @" ";
+    }
+    
+    return bloodTypeStr;
+}
+
+- (NSString *)getGenderStringForUser:(User *)user {
+    // Gender
+    NSArray *genderArray = [NSArray arrayWithObjects:
+                            NSLocalizedString(@"MALE", nil),
+                            NSLocalizedString(@"FEMALE", nil),
+                            nil];
+    
+    NSString *genderStr;
+    
+    if (user.sexconstant != nil) {
+        genderStr = [genderArray objectAtIndex:[user.sexconstant intValue]];
+    }
+    else {
+        genderStr = @" ";
+    }
+    
+    return genderStr;
+}
+
 - (NSString *)getStartDateStringForPrescription:(Prescription *)prescription {
     // Start Date
     NSDate *dateStart;
@@ -489,8 +537,8 @@ static ExportManager *sharedManager;
      [user.objectid stringValue],
      user.username,
      [self.dateAndTimeFormatter stringFromDate:dateBorn],
-     user.sex,
-     user.bloodtype,
+     [self getGenderStringForUser:user],
+     [self getBloodTypeStringForUser:user],
      @"",
      @"",
      @"",

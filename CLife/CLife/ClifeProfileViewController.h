@@ -30,6 +30,7 @@
     UIPickerView            *m_pv_bloodType;
     NSArray                 *m_genderArray;
     NSArray                 *m_bloodTypeArray;
+    NSArray                 *m_bloodRhArray;
     
     UIView                  *m_v_disabledBackground;
     UILabel                 *m_lbl_disableTabBar;
@@ -41,8 +42,9 @@
     
     NSString                *m_name;
     NSNumber                *m_birthday;
-    NSString                *m_gender;
-    NSString                *m_bloodType;
+    NSNumber                *m_gender;
+    NSNumber                *m_bloodType;
+    NSNumber                *m_bloodRh;
     
     UIAlertView             *m_av_edit;
     UIPromptAlertView       *m_av_delete;
@@ -66,6 +68,7 @@
 @property (nonatomic, retain)           UIPickerView            *pv_bloodType;
 @property (nonatomic, retain)           NSArray                 *genderArray;
 @property (nonatomic, retain)           NSArray                 *bloodTypeArray;
+@property (nonatomic, retain)           NSArray                 *bloodRhArray;
 
 @property (nonatomic, retain) IBOutlet  UIView                  *v_disabledBackground;
 @property (nonatomic, retain)           UILabel                 *lbl_disableTabBar;
@@ -77,8 +80,9 @@
 
 @property (nonatomic, retain)           NSString                *name;
 @property (nonatomic, retain)           NSNumber                *birthday;
-@property (nonatomic, retain)           NSString                *gender;
-@property (nonatomic, retain)           NSString                *bloodType;
+@property (nonatomic, retain)           NSNumber                *gender;
+@property (nonatomic, retain)           NSNumber                *bloodType;
+@property (nonatomic, retain)           NSNumber                *bloodRh;
 
 @property (nonatomic, retain)           UIAlertView             *av_edit;
 @property (nonatomic, retain)           UIPromptAlertView       *av_delete;

@@ -61,6 +61,12 @@
 "AB NEGATIVE" = "AB Negativo";
 "O POSITIVE" = "O Positivo";
 "O NEGATIVE" = "O Negativo";
+"POSITIVE" = "Positivo";
+"NEGATIVE" = "Negativo";
+"A" = "A";
+"B" = "B";
+"AB" = "AB";
+"O" = "O";
 
 "EDIT PROFILE" = "Editar Perfil";
 "EDIT PROFILE MESSAGE" = "¿Deseas realizar una copia de seguridad de tu historial antes de editar tu perfil?";

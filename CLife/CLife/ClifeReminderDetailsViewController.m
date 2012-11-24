@@ -10,6 +10,7 @@
 #import "PrescriptionInstance.h"
 #import "DateTimeHelper.h"
 #import "ClifePrescriptionDetailsViewController.h"
+#import "LocalNotificationManager.h"
 
 @interface ClifeReminderDetailsViewController ()
 
@@ -384,8 +385,8 @@
         }
     }
     
-    // Scroll tableview back to the top
-    [self.tbl_reminderDetails setContentOffset:CGPointMake(0, 0) animated:YES];
+//    // Scroll tableview back to the top
+//    [self.tbl_reminderDetails setContentOffset:CGPointMake(0, 0) animated:YES];
     
     // Re-enable nav bar buttons
    self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -488,19 +489,23 @@
         // add the "Edit" button back to the nav bar
         self.navigationItem.rightBarButtonItem = self.editButton;
         
-//        // Update the prescription instance properties and save
-//        ResourceContext *resourceContext = [ResourceContext instance];
-//        PrescriptionInstance *prescriptionInstance = (PrescriptionInstance *)[resourceContext resourceWithType:PRESCRIPTIONINSTANCE withID:self.prescriptionInstanceID];
-//        
-//        prescriptionInstance.datescheduled = self.dateScheduled;
-//        
-//        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        // Update the prescription instance properties and save
+        ResourceContext *resourceContext = [ResourceContext instance];
+        PrescriptionInstance *prescriptionInstance = (PrescriptionInstance *)[resourceContext resourceWithType:PRESCRIPTIONINSTANCE withID:self.prescriptionInstanceID];
+        
+        prescriptionInstance.datescheduled = self.dateScheduled;
+        
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+        
+        // Now we update call the notification manager to reschedule all the local notifications to account for this change.
+        LocalNotificationManager* lim = [LocalNotificationManager instance];
+        [lim scheduleNotifications];
         
         // Reload the table view to disable user interaction and accessory views on the tableview cells
         [self.tbl_reminderDetails reloadData];
         
-        // Scroll tableview back to the top
-        [self.tbl_reminderDetails setContentOffset:CGPointMake(0, 0) animated:YES];
+//        // Scroll tableview back to the top
+//        [self.tbl_reminderDetails setContentOffset:CGPointMake(0, 0) animated:YES];
     }
 }
 

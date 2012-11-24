@@ -300,6 +300,9 @@
 		52A27120161E137300A2763B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		52A27124161E15A300A2763B /* C-Life-icon-29x29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "C-Life-icon-29x29.png"; sourceTree = "<group>"; };
 		52A27125161E15A300A2763B /* C-Life-icon-58x58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "C-Life-icon-58x58.png"; sourceTree = "<group>"; };
+		52A28DE8166019E100601B67 /* GenderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenderTypes.h; sourceTree = "<group>"; };
+		52A28DEA1660273B00601B67 /* BloodTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodTypes.h; sourceTree = "<group>"; };
+		52A28DEB166040E800601B67 /* BloodRhTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloodRhTypes.h; sourceTree = "<group>"; };
 		52F007B0160CF6A90003CF2C /* CHCSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSV.h; sourceTree = "<group>"; };
 		52F007B1160CF6A90003CF2C /* CHCSVParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHCSVParser.h; sourceTree = "<group>"; };
 		52F007B2160CF6A90003CF2C /* CHCSVParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHCSVParser.m; sourceTree = "<group>"; };
@@ -648,6 +651,9 @@
 				523A6BD115F6815900D60461 /* SchedulePeriods.h */,
 				528D628415FA746B006BD80A /* PrescriptionInstanceState.h */,
 				5203DD3716497B03002C26BF /* MethodTypes.h */,
+				52A28DE8166019E100601B67 /* GenderTypes.h */,
+				52A28DEA1660273B00601B67 /* BloodTypes.h */,
+				52A28DEB166040E800601B67 /* BloodRhTypes.h */,
 			);
 			name = Constants;
 			sourceTree = "<group>";

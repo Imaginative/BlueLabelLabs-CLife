@@ -58,6 +58,12 @@
 "AB NEGATIVE" = "AB Negative";
 "O POSITIVE" = "O Positive";
 "O NEGATIVE" = "O Negative";
+"POSITIVE" = "Positive";
+"NEGATIVE" = "Negative";
+"A" = "A";
+"B" = "B";
+"AB" = "AB";
+"O" = "O";
 
 "EDIT PROFILE" = "Edit Profile";
 "EDIT PROFILE MESSAGE" = "Would you like to backup your history before editing your profile?";
@@ -69,8 +75,6 @@
 
 
 // Prescriptions
-"ADD PRESCRIPTIONS MESSAGE" = "Press '+' to add a prescription";
-
 "MEDICATION" = "Medication";
 "ENTER MEDICATION NAME" = "the name of this medication";
 
@@ -195,6 +199,7 @@
 
 
 // Update 1.1.0 - November 2012
+"ADD PRESCRIPTIONS MESSAGE" = "Press '+' to add a prescription";
 "DOCTOR" = "Doctor (optional)";
 "PRESCRIBED BY" = "prescribed by";
 "REMINDER" = "Reminder";

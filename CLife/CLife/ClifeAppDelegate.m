@@ -75,12 +75,32 @@
 
 #pragma mark - Helper Methods
 - (void)updateMethodDataType {
-    // Update the Mehtod data type
+    // Update the Method data type
     [Prescription updateMethodDataType];
     
     // Now update the user default since we only need to do this once
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:[NSNumber numberWithBool:YES] forKey:setting_DIDUPDATEMETHODDATATYPE];
+    [userDefaults synchronize];
+}
+
+- (void)updateGenderDataType {
+    // Update the Gender data type
+    [User updateGenderDataType];
+    
+    // Now update the user default since we only need to do this once
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[NSNumber numberWithBool:YES] forKey:setting_DIDUPDATEGENDERDATATYPE];
+    [userDefaults synchronize];
+}
+
+- (void)updateBloodTypeDataType {
+    // Update the Blood Type data type
+    [User updateBloodTypeDataType];
+    
+    // Now update the user default since we only need to do this once
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[NSNumber numberWithBool:YES] forKey:setting_DIDUPDATEBLOODTYPEDATATYPE];
     [userDefaults synchronize];
 }
 
@@ -124,6 +144,17 @@
     
     AuthenticationManager* authenticationManager = [AuthenticationManager instance];
     
+    // Check to see if we need to update the Gender data type
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults objectForKey:setting_DIDUPDATEGENDERDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEGENDERDATATYPE] == NO) {
+        [self updateGenderDataType];
+    }
+    
+    // Check to see if we need to update the Blood Type data type
+    if ([userDefaults objectForKey:setting_DIDUPDATEBLOODTYPEDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEBLOODTYPEDATATYPE] == NO) {
+        [self updateBloodTypeDataType];
+    }
+    
     //lets check if a user is currently logged in 
     if (![authenticationManager isUserAuthenticated])
     {   
@@ -156,7 +187,6 @@
     }
     
     // Check to see if we need to update the Method data type
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if ([userDefaults objectForKey:setting_DIDUPDATEMETHODDATATYPE] == nil || [userDefaults boolForKey:setting_DIDUPDATEMETHODDATATYPE] == NO) {
         [self updateMethodDataType];
     }

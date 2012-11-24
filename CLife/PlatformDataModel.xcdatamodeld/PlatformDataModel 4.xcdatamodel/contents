@@ -228,7 +228,9 @@
     </entity>
     <entity name="user" representedClassName="User" parentEntity="resource">
         <attribute name="app_version" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bloodrhconstant" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="bloodtype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bloodtypeconstant" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="dateborn" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="devicetoken" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="displayname" optional="YES" attributeType="String">
@@ -238,6 +240,7 @@
         <attribute name="fb_user_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="imageurl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sexconstant" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="thumbnailurl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="twitter_user_Id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
@@ -254,6 +257,6 @@
         <element name="request" positionX="340" positionY="90" width="128" height="165"/>
         <element name="resource" positionX="160" positionY="414" width="128" height="135"/>
         <element name="TypeInstanceData" positionX="90" positionY="-342" width="128" height="105"/>
-        <element name="user" positionX="252" positionY="852" width="128" height="225"/>
+        <element name="user" positionX="252" positionY="852" width="128" height="270"/>
     </elements>
 </model>

@@ -26,3 +26,5 @@ NSString* const setting_APPVERSION = @"appversion";
 
 // C-Life specific settings
 NSString* const setting_DIDUPDATEMETHODDATATYPE = @"didupdatemethoddatatype";
+NSString* const setting_DIDUPDATEGENDERDATATYPE = @"didupdategenderdatatype";
+NSString* const setting_DIDUPDATEBLOODTYPEDATATYPE = @"didupdatebloodtypedatatype";

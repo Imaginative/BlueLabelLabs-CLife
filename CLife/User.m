@@ -15,6 +15,9 @@
 #import "IDGenerator.h"
 #import "ApplicationSettingsManager.h"
 #import "Prescription.h"
+#import "GenderTypes.h"
+#import "BloodTypes.h"
+#import "BloodRhTypes.h"
 
 @implementation User
 
@@ -32,7 +35,10 @@
 
 @dynamic dateborn;
 @dynamic sex;
+@dynamic sexconstant;
 @dynamic bloodtype;
+@dynamic bloodtypeconstant;
+@dynamic bloodrhconstant;
 
 - (id) initFromJSONDictionary:(NSDictionary *)jsonDictionary {
     ResourceContext* resourceContext = [ResourceContext instance];
@@ -42,6 +48,79 @@
 }
 
 #pragma mark - Static Methods
++ (void) updateGenderDataType {
+    // Get the all the user objects
+    ResourceContext *resourceContext = [ResourceContext instance];
+    NSArray* users = [resourceContext resourcesWithType:USER];
+    
+    if ([users count] > 0) {
+        for (User *user in users) {
+            if ([user.sex isEqualToString:NSLocalizedString(@"MALE", nil)] == YES) {
+                user.sexconstant = [NSNumber numberWithInt:kMALE];
+            }
+            else if ([user.sex isEqualToString:NSLocalizedString(@"FEMALE", nil)] == YES) {
+                user.sexconstant = [NSNumber numberWithInt:kFEMALE];
+            }
+            else {
+                // Default value
+                user.sexconstant = [NSNumber numberWithInt:kMALE];
+            }
+        }
+        
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+    }
+}
+
++ (void) updateBloodTypeDataType {
+    // Get the all the user objects
+    ResourceContext *resourceContext = [ResourceContext instance];
+    NSArray* users = [resourceContext resourcesWithType:USER];
+    
+    if ([users count] > 0) {
+        for (User *user in users) {
+            if ([user.bloodtype isEqualToString:NSLocalizedString(@"A POSITIVE", nil)] == YES) {
+                user.bloodtypeconstant = [NSNumber numberWithInt:kA];
+                user.bloodrhconstant = [NSNumber numberWithInt:kPOSITIVE];
+            }
+            else if ([user.sex isEqualToString:NSLocalizedString(@"A NEGATIVE", nil)] == YES) {
+                user.sexconstant = [NSNumber numberWithInt:kA];
+                user.bloodrhconstant = [NSNumber numberWithInt:kNEGATIVE];
+            }
+            else if ([user.bloodtype isEqualToString:NSLocalizedString(@"B POSITIVE", nil)] == YES) {
+                user.bloodtypeconstant = [NSNumber numberWithInt:kB];
+                user.bloodrhconstant = [NSNumber numberWithInt:kPOSITIVE];
+            }
+            else if ([user.sex isEqualToString:NSLocalizedString(@"B NEGATIVE", nil)] == YES) {
+                user.sexconstant = [NSNumber numberWithInt:kB];
+                user.bloodrhconstant = [NSNumber numberWithInt:kNEGATIVE];
+            }
+            else if ([user.bloodtype isEqualToString:NSLocalizedString(@"AB POSITIVE", nil)] == YES) {
+                user.bloodtypeconstant = [NSNumber numberWithInt:kAB];
+                user.bloodrhconstant = [NSNumber numberWithInt:kPOSITIVE];
+            }
+            else if ([user.sex isEqualToString:NSLocalizedString(@"AB NEGATIVE", nil)] == YES) {
+                user.sexconstant = [NSNumber numberWithInt:kAB];
+                user.bloodrhconstant = [NSNumber numberWithInt:kNEGATIVE];
+            }
+            else if ([user.bloodtype isEqualToString:NSLocalizedString(@"O POSITIVE", nil)] == YES) {
+                user.bloodtypeconstant = [NSNumber numberWithInt:kO];
+                user.bloodrhconstant = [NSNumber numberWithInt:kPOSITIVE];
+            }
+            else if ([user.sex isEqualToString:NSLocalizedString(@"O NEGATIVE", nil)] == YES) {
+                user.sexconstant = [NSNumber numberWithInt:kO];
+                user.bloodrhconstant = [NSNumber numberWithInt:kNEGATIVE];
+            }
+            else {
+                // Default value
+                user.bloodtypeconstant = [NSNumber numberWithInt:kA];
+                user.bloodrhconstant = [NSNumber numberWithInt:kPOSITIVE];
+            }
+        }
+        
+        [resourceContext save:NO onFinishCallback:nil trackProgressWith:nil];
+    }
+}
+
 + (void) deleteUserWithID:(NSNumber *)userID {
 //    NSString* activityName = @"User.deleteUserWithID:";
     

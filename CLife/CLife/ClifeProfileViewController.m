@@ -28,6 +28,7 @@
 @synthesize pv_bloodType        = m_pv_bloodType;
 @synthesize genderArray         = m_genderArray;
 @synthesize bloodTypeArray      = m_bloodTypeArray;
+@synthesize bloodRhArray        = m_bloodRhArray;
 @synthesize v_disabledBackground = m_v_disabledBackground;
 @synthesize lbl_disableTabBar   = m_lbl_disableTabBar;
 @synthesize didRequestEdit      = m_didRequestEdit;
@@ -38,6 +39,7 @@
 @synthesize birthday            = m_birthday;
 @synthesize gender              = m_gender;
 @synthesize bloodType           = m_bloodType;
+@synthesize bloodRh             = m_bloodRh;
 @synthesize av_edit             = m_av_edit;
 @synthesize av_delete           = m_av_delete;
 
@@ -80,14 +82,15 @@
                         nil];
     
     self.bloodTypeArray = [NSArray arrayWithObjects:
-                           NSLocalizedString(@"A POSITIVE", nil), 
-                           NSLocalizedString(@"A NEGATIVE", nil), 
-                           NSLocalizedString(@"B POSITIVE", nil), 
-                           NSLocalizedString(@"B NEGATIVE", nil),
-                           NSLocalizedString(@"AB POSITIVE", nil),
-                           NSLocalizedString(@"AB NEGATIVE", nil),
-                           NSLocalizedString(@"O POSITIVE", nil),
-                           NSLocalizedString(@"O NEGATIVE", nil),
+                           NSLocalizedString(@"A", nil),
+                           NSLocalizedString(@"B", nil),
+                           NSLocalizedString(@"AB", nil),
+                           NSLocalizedString(@"O", nil),
+                           nil];
+    
+    self.bloodRhArray = [NSArray arrayWithObjects:
+                           NSLocalizedString(@"POSITIVE", nil),
+                           NSLocalizedString(@"NEGATIVE", nil),
                            nil];
     
     // Setup tap gesture recognizer to capture touches on the tableview when the keyboard is visible
@@ -104,7 +107,6 @@
         ![self.loggedInUser.displayname isEqualToString:@""])
     {
         // Existing user
-//        self.isEditing = NO;
         self.isNewUser = NO;
         
         // add the "Edit" button to the nav bar
@@ -118,8 +120,9 @@
         // Set profile values to that of the logged in user
         self.name = self.loggedInUser.username;
         self.birthday = self.loggedInUser.dateborn;
-        self.gender = self.loggedInUser.sex;
-        self.bloodType = self.loggedInUser.bloodtype;
+        self.gender = self.loggedInUser.sexconstant;
+        self.bloodType = self.loggedInUser.bloodtypeconstant;
+        self.bloodRh = self.loggedInUser.bloodrhconstant;
     }
     else {
         // We are adding a new user
@@ -131,6 +134,7 @@
         self.birthday = nil;
         self.gender = nil;
         self.bloodType = nil;
+        self.bloodRh = nil;
 
     }
     
@@ -349,7 +353,7 @@
         }
         
         if (self.gender != nil) {
-            self.tf_gender.text = self.gender;
+            self.tf_gender.text = [self.genderArray objectAtIndex:[self.gender intValue]];
         }
         else {
             self.tf_gender.text = nil;
@@ -404,8 +408,12 @@
             }
         }
         
-        if (self.bloodType != nil) {
-            self.tf_bloodType.text = self.bloodType;
+        if (self.bloodType != nil && self.bloodRh != nil) {
+            NSString *bloodTypeStr = [NSString stringWithFormat:@"%@ %@",
+                                      [self.bloodTypeArray objectAtIndex:[self.bloodType intValue]],
+                                      [self.bloodRhArray objectAtIndex:[self.bloodRh intValue]]];
+            
+            self.tf_bloodType.text = bloodTypeStr;
         }
         else {
             self.tf_bloodType.text = nil;
@@ -535,7 +543,13 @@
 
 #pragma mark UIPickerView Data Source
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
+    if (pickerView == self.pv_bloodType) {
+        return 2;
+    }
+    else {
+        // Gender PickerView
+        return 1;
+    }
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
@@ -543,7 +557,12 @@
         return [self.genderArray count];
     }
     else if (pickerView == self.pv_bloodType) {
-        return [self.bloodTypeArray count];
+        if (component == 0) {
+            return [self.bloodTypeArray count];
+        }
+        else {
+            return [self.bloodRhArray count];
+        }
     }
     else {
         return 0;
@@ -556,7 +575,12 @@
         return [self.genderArray objectAtIndex:row];
     }
     else if (pickerView == self.pv_bloodType) {
-        return [self.bloodTypeArray objectAtIndex:row];
+        if (component == 0) {
+            return [self.bloodTypeArray objectAtIndex:row];
+        }
+        else {
+            return [self.bloodRhArray objectAtIndex:row];
+        }
     }
     else {
         return nil;
@@ -567,12 +591,27 @@
     if (pickerView == self.pv_gender) {
         self.tf_gender.text = [self.genderArray objectAtIndex:row];
         
-        self.gender = [self.genderArray objectAtIndex:row];
+        self.gender = [NSNumber numberWithInt:row];
     }
     else if (pickerView == self.pv_bloodType) {
-        self.tf_bloodType.text = [self.bloodTypeArray objectAtIndex:row];
-        
-        self.bloodType = [self.bloodTypeArray objectAtIndex:row];
+        if (component == 0) {
+            NSString *bloodTypeStr = [NSString stringWithFormat:@"%@ %@",
+                                      [self.bloodTypeArray objectAtIndex:row],
+                                      [self.bloodRhArray objectAtIndex:[self.bloodRh intValue]]];
+            
+            self.tf_bloodType.text = bloodTypeStr;
+            
+            self.bloodType = [NSNumber numberWithInt:row];
+        }
+        else {
+            NSString *bloodTypeStr = [NSString stringWithFormat:@"%@ %@",
+                                      [self.bloodTypeArray objectAtIndex:[self.bloodType intValue]],
+                                      [self.bloodRhArray objectAtIndex:row]];
+            
+            self.tf_bloodType.text = bloodTypeStr;
+            
+            self.bloodRh = [NSNumber numberWithInt:row];
+        }
     }
 }
 
@@ -629,15 +668,15 @@
         if ([self.tf_gender.text isEqualToString:@""] == NO &&
             [self.tf_gender.text isEqualToString:@" "] == NO)
         {
-            int row = [self.genderArray indexOfObject:self.tf_gender.text];
+            int row = [self.gender intValue];
             [self.pv_gender selectRow:row inComponent:0 animated:YES];
             
-            self.gender = [self.genderArray objectAtIndex:row];
+            self.gender = [NSNumber numberWithInt:row];
         }
         else {
             self.tf_gender.text = [self.genderArray objectAtIndex:0];
             
-            self.gender = [self.genderArray objectAtIndex:0];
+            self.gender = [NSNumber numberWithInt:0];
         }
         
     }
@@ -654,15 +693,32 @@
         if ([self.tf_bloodType.text isEqualToString:@""] == NO &&
             [self.tf_bloodType.text isEqualToString:@" "] == NO)
         {
-            int row = [self.bloodTypeArray indexOfObject:self.tf_bloodType.text];
-            [self.pv_bloodType selectRow:row inComponent:0 animated:YES];
+            // We need to split the blood type string into its two components
+            NSUInteger loc = [self.tf_bloodType.text rangeOfString:@" "].location;
+            NSUInteger len = [self.tf_bloodType.text length];
             
-            self.bloodType = [self.bloodTypeArray objectAtIndex:row];
+            NSString *bloodTypeStr = [self.tf_bloodType.text substringWithRange:NSMakeRange(0, loc)];
+            NSString *bloodRhStr = [self.tf_bloodType.text substringWithRange:NSMakeRange(loc + 1, len - loc - 1)];
+            
+            int bloodTypeRow = [self.bloodTypeArray indexOfObject:bloodTypeStr];
+            int bloodRhRow = [self.bloodRhArray indexOfObject:bloodRhStr];
+            
+            [self.pv_bloodType selectRow:bloodTypeRow inComponent:0 animated:YES];
+            [self.pv_bloodType selectRow:bloodRhRow inComponent:1 animated:YES];
+            
+            self.bloodType = [self.bloodTypeArray objectAtIndex:bloodTypeRow];
+            self.bloodRh = [self.bloodRhArray objectAtIndex:bloodRhRow];
+            
         }
         else {
-            self.tf_bloodType.text = [self.bloodTypeArray objectAtIndex:0];
+            NSString *bloodTypeStr = [NSString stringWithFormat:@"%@ %@",
+                                      [self.bloodTypeArray objectAtIndex:0],
+                                      [self.bloodRhArray objectAtIndex:0]];
             
-            self.bloodType = [self.bloodTypeArray objectAtIndex:0];
+            self.tf_bloodType.text = bloodTypeStr;
+            
+            self.bloodType = [NSNumber numberWithInt:0];
+            self.bloodRh = [NSNumber numberWithInt:0];
         }
         
     }
@@ -743,7 +799,7 @@
             self.gender = nil;
         }
         else {
-            self.gender = enteredText;
+            self.gender = [NSNumber numberWithInt:[self.genderArray indexOfObject:enteredText]];
         }
     }
     else if (textField == self.tf_bloodType) {
@@ -754,9 +810,21 @@
             [enteredText isEqualToString:@" "] == YES)
         {
             self.bloodType = nil;
+            self.bloodRh = nil;
         }
         else {
-            self.bloodType = enteredText;
+            // We need to split the blood type string into its two components
+            NSUInteger loc = [enteredText rangeOfString:@" "].location;
+            NSUInteger len = [enteredText length];
+            
+            NSString *bloodTypeStr = [enteredText substringWithRange:NSMakeRange(0, loc)];
+            NSString *bloodRhStr = [enteredText substringWithRange:NSMakeRange(loc + 1, len - loc - 1)];
+            
+            int bloodTypeRow = [self.bloodTypeArray indexOfObject:bloodTypeStr];
+            int bloodRhRow = [self.bloodRhArray indexOfObject:bloodRhStr];
+            
+            self.bloodType = [NSNumber numberWithInt:bloodTypeRow];
+            self.bloodRh = [NSNumber numberWithInt:bloodRhRow];
         }
     }
     
@@ -924,9 +992,8 @@
         self.birthday == nil ||
         self.gender == nil ||
         self.bloodType == nil ||
-        [self.name isEqualToString:@""] ||
-        [self.gender isEqualToString:@""] ||
-        [self.bloodType isEqualToString:@""])
+        self.bloodRh == nil ||
+        [self.name isEqualToString:@""])
     {
         // Promt user to complete all fields
         UIAlertView* alert = [[UIAlertView alloc]
@@ -978,11 +1045,12 @@
             }
         }
         
-        //now we update the user object iwth the changed properties
+        //now we update the user object with the changed properties
         self.loggedInUser.username = self.name;
         self.loggedInUser.dateborn = self.birthday;
-        self.loggedInUser.sex = self.gender;
-        self.loggedInUser.bloodtype = self.bloodType;
+        self.loggedInUser.sexconstant = self.gender;
+        self.loggedInUser.bloodtypeconstant = self.bloodType;
+        self.loggedInUser.bloodrhconstant = self.bloodRh;
         
         //now we save the changes
         ResourceContext* resourceContext = [ResourceContext instance];
@@ -1002,8 +1070,6 @@
     [authenticationManager logoff];
     
     // Delete the profile object
-//    ResourceContext *resourceContext = [ResourceContext instance];
-//    [resourceContext delete:self.loggedInUser.objectid withType:USER];
     [User deleteUserWithID:self.loggedInUser.objectid];
     
     self.loggedInUser.objectid = nil;
