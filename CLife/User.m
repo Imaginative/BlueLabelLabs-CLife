@@ -82,32 +82,32 @@
                 user.bloodtypeconstant = [NSNumber numberWithInt:kA];
                 user.bloodrhconstant = [NSNumber numberWithInt:kPOSITIVE];
             }
-            else if ([user.sex isEqualToString:NSLocalizedString(@"A NEGATIVE", nil)] == YES) {
-                user.sexconstant = [NSNumber numberWithInt:kA];
+            else if ([user.bloodtype isEqualToString:NSLocalizedString(@"A NEGATIVE", nil)] == YES) {
+                user.bloodtypeconstant = [NSNumber numberWithInt:kA];
                 user.bloodrhconstant = [NSNumber numberWithInt:kNEGATIVE];
             }
             else if ([user.bloodtype isEqualToString:NSLocalizedString(@"B POSITIVE", nil)] == YES) {
                 user.bloodtypeconstant = [NSNumber numberWithInt:kB];
                 user.bloodrhconstant = [NSNumber numberWithInt:kPOSITIVE];
             }
-            else if ([user.sex isEqualToString:NSLocalizedString(@"B NEGATIVE", nil)] == YES) {
-                user.sexconstant = [NSNumber numberWithInt:kB];
+            else if ([user.bloodtype isEqualToString:NSLocalizedString(@"B NEGATIVE", nil)] == YES) {
+                user.bloodtypeconstant = [NSNumber numberWithInt:kB];
                 user.bloodrhconstant = [NSNumber numberWithInt:kNEGATIVE];
             }
             else if ([user.bloodtype isEqualToString:NSLocalizedString(@"AB POSITIVE", nil)] == YES) {
                 user.bloodtypeconstant = [NSNumber numberWithInt:kAB];
                 user.bloodrhconstant = [NSNumber numberWithInt:kPOSITIVE];
             }
-            else if ([user.sex isEqualToString:NSLocalizedString(@"AB NEGATIVE", nil)] == YES) {
-                user.sexconstant = [NSNumber numberWithInt:kAB];
+            else if ([user.bloodtype isEqualToString:NSLocalizedString(@"AB NEGATIVE", nil)] == YES) {
+                user.bloodtypeconstant = [NSNumber numberWithInt:kAB];
                 user.bloodrhconstant = [NSNumber numberWithInt:kNEGATIVE];
             }
             else if ([user.bloodtype isEqualToString:NSLocalizedString(@"O POSITIVE", nil)] == YES) {
                 user.bloodtypeconstant = [NSNumber numberWithInt:kO];
                 user.bloodrhconstant = [NSNumber numberWithInt:kPOSITIVE];
             }
-            else if ([user.sex isEqualToString:NSLocalizedString(@"O NEGATIVE", nil)] == YES) {
-                user.sexconstant = [NSNumber numberWithInt:kO];
+            else if ([user.bloodtype isEqualToString:NSLocalizedString(@"O NEGATIVE", nil)] == YES) {
+                user.bloodtypeconstant = [NSNumber numberWithInt:kO];
                 user.bloodrhconstant = [NSNumber numberWithInt:kNEGATIVE];
             }
             else {
