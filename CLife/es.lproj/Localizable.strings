@@ -202,4 +202,12 @@
 "ID" = "ID";
 
 
+// Update 1.1.0 - November 2012
+"ADD PRESCRIPTIONS MESSAGE" = "Press '+' to add a prescription";
+"DOCTOR" = "Doctor (optional)";
+"PRESCRIBED BY" = "prescribed by";
+"REMINDER" = "Reminder";
+"INVALID DATE" = "Invalid date!";
+"INVALID DATE MESSAGE" = "The reminder date must be set to a date and time in the future.";
+"OK" = "OK";
 
