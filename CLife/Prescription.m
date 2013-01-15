@@ -180,6 +180,9 @@
             else if ([prescription.method isEqualToString:NSLocalizedString(@"SYRINGE", nil)] == YES) {
                 prescription.methodconstant = [NSNumber numberWithInt:kINJECTION];
             }
+//            else if ([prescription.method isEqualToString:NSLocalizedString(@"INJECTION", nil)] == YES) {
+//                prescription.methodconstant = [NSNumber numberWithInt:kINJECTION];
+//            }
             else {
                 prescription.methodconstant = [NSNumber numberWithInt:kPILL];
             }

@@ -181,8 +181,14 @@
         Prescription* prescription = (Prescription*)[resourceContext resourceWithType:PRESCRIPTION withID:self.prescriptionID];
         
         self.medicationName = prescription.name;
-        self.doctorName = prescription.doctor;
         self.method = prescription.methodconstant;
+        
+        if (!prescription.doctor) {
+            self.doctorName = nil;
+        }
+        else {
+            self.doctorName = prescription.doctor;
+        }
         
         self.dosageAmount = prescription.strength;
         self.dosageUnit = prescription.unit;
