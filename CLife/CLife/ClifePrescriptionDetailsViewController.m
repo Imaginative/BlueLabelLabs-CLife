@@ -88,6 +88,9 @@
 @synthesize scheduleOccurenceNumber = m_scheduleOccurenceNumber;
 @synthesize scheduleEndDate         = m_scheduleEndDate;
 
+@synthesize as_deletePrescription   = m_as_deletePrescription;
+@synthesize as_doctorName           = m_as_doctorName;
+
 #pragma mark - Initialization
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -272,6 +275,8 @@
     self.pv_dosageUnit = nil;
     self.tv_reason = nil;
     self.v_disabledBackground = nil;
+    self.as_deletePrescription = nil;
+    self.as_doctorName = nil;
     
 }
 
@@ -384,8 +389,6 @@
         if (cell == nil) {
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
             
-            [cell setSelectionStyle:UITableViewCellEditingStyleNone];
-            
             self.tf_doctorName = [[UITextField alloc] initWithFrame:CGRectMake(8, 11, 282, 21)];
             self.tf_doctorName.font = [UIFont systemFontOfSize:17.0];
             self.tf_doctorName.adjustsFontSizeToFitWidth = YES;
@@ -398,7 +401,9 @@
             self.tf_doctorName.autocapitalizationType = UITextAutocapitalizationTypeWords;
             self.tf_doctorName.textAlignment = UITextAlignmentLeft;
             self.tf_doctorName.delegate = self;
-            [self.tf_doctorName setEnabled:YES];
+            
+            // Disable the textfield until the user selects manual entry of the name
+            [self.tf_doctorName setEnabled:NO];
             
             [cell.contentView addSubview:self.tf_doctorName];
             
@@ -413,11 +418,19 @@
         
         // disable the cell until the "Edit" button is pressed
         if (self.isEditing == YES) {
+            [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+            
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            
             [cell setUserInteractionEnabled:YES];
             [self.tf_doctorName setClearButtonMode:UITextFieldViewModeAlways];
         }
         else {
-            [cell setUserInteractionEnabled:NO];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+            
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+            
+            [cell setUserInteractionEnabled:YES];
             [self.tf_doctorName setClearButtonMode:UITextFieldViewModeNever];
         }
     }
@@ -1099,9 +1112,58 @@
         
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        // Set the doctor name text field as active
-        [self.tf_doctorName becomeFirstResponder];
-        
+        if (self.isEditing == NO) {
+            ABAddressBookRef addressBook = ABAddressBookCreate();
+            CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+            CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+            
+            ABRecordRef doctor = nil;
+            
+            for (int i = 0 ; i < nPeople ; i++)
+            {
+                ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
+                NSString *name = (NSString *)ABRecordCopyCompositeName(person);
+                
+                if ([name isEqualToString:self.doctorName]) {
+                    doctor = person;
+                    break;
+                }
+            }
+            
+            if (doctor != nil) {
+                ABPersonViewController *personViewController = [[ABPersonViewController alloc] init];
+                [personViewController setDisplayedPerson:doctor];
+                [personViewController setPersonViewDelegate:self];
+                [personViewController setAllowsEditing:NO];
+                
+                [self.navigationController pushViewController:personViewController animated:YES];
+            }
+            else {
+                // No contact availalbe in address book
+                UIAlertView* alert = [[UIAlertView alloc]
+                                      initWithTitle:NSLocalizedString(@"NO CONTACT", nil)
+                                      message:NSLocalizedString(@"NO CONTACT MESSAGE", nil)
+                                      delegate:self
+                                      cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                      otherButtonTitles:nil];
+                [alert show];
+                [alert release];
+            }
+        }
+        else {
+            // Set the doctor name text field as active
+            [self.tf_doctorName becomeFirstResponder];
+            
+            // Promt user to select from address book or enter name manually
+            self.as_doctorName = [[UIActionSheet alloc]
+                                  initWithTitle:nil
+                                  delegate:self
+                                  cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                                  destructiveButtonTitle:NSLocalizedString(@"FROM CONTACTS", nil)
+                                  otherButtonTitles:NSLocalizedString(@"ENTER NAME", nil), nil];
+            [self.as_doctorName showInView:self.tbl_prescriptionDetails];
+            [self.as_doctorName release];
+        }
     }
     else if (indexPath.section == 2) {
         // Method selected
@@ -1529,7 +1591,7 @@
         [self.tbl_prescriptionDetails addGestureRecognizer:self.gestureRecognizer];
         
     }
-    else if (textField == self.tf_doctorName) {
+    else if (textField == self.tf_doctorName) {        
         // Disable the table view scrolling
         [self.tbl_prescriptionDetails setScrollEnabled:NO];
         
@@ -1538,7 +1600,6 @@
         
         // Scroll tableview to this row
         [self.tbl_prescriptionDetails setContentOffset:CGPointMake(0, 40) animated:YES];
-        
     }
     else if (textField == self.tf_method) {
         
@@ -1846,6 +1907,9 @@
         else {
             self.doctorName = enteredText;
         }
+        
+        // Disable the text field until the user selects again to manually enter the name
+        [self.tf_doctorName setEnabled:NO];
     }
     else if (textField == self.tf_method) {
         [self hideDisabledBackgroundView];
@@ -2403,14 +2467,15 @@
 
 - (void)onDeletePrescriptionButtonPressed:(id)sender {
     // Promt user to backup data before editing profile information
-    UIActionSheet* actionSheet = [[UIActionSheet alloc]
+    self.as_deletePrescription = [[UIActionSheet alloc]
                                   initWithTitle:NSLocalizedString(@"DELETE PRESCRIPTION MESSAGE", nil)
                                   delegate:self
                                   cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
                                   destructiveButtonTitle:NSLocalizedString(@"DELETE WITHOUT DATA EXPORT", nil)
                                   otherButtonTitles:NSLocalizedString(@"DELETE WITH DATA EXPORT", nil), nil];
-    [actionSheet showInView:self.parentViewController.tabBarController.view];
-    [actionSheet release];
+//    [self.as_deletePrescription showInView:self.parentViewController.tabBarController.view];
+    [self.as_deletePrescription showInView:self.tbl_prescriptionDetails];
+    [self.as_deletePrescription release];
 }
 
 - (void)onDoneAddingPrescriptionButtonPressed:(id)sender {
@@ -2569,45 +2634,108 @@
 
 #pragma mark - UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        // Process delete WITHOUT data export
-        self.didRequestDelete = YES;
-        
-        // Prompt user to enter their full name as verification before continuing
-        self.av_delete = [[UIPromptAlertView alloc]
-                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
-                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
-                          delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
-        self.av_delete.verificationText = self.loggedInUser.username;
-        [self.av_delete show];
-        [self.av_delete release];
+    if (actionSheet == self.as_deletePrescription) {
+        if (buttonIndex == 0) {
+            // Process delete WITHOUT data export
+            self.didRequestDelete = YES;
+            
+            // Prompt user to enter their full name as verification before continuing
+            self.av_delete = [[UIPromptAlertView alloc]
+                              initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
+                              message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
+                              delegate:self
+                              cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+                              otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+            self.av_delete.verificationText = self.loggedInUser.username;
+            [self.av_delete show];
+            [self.av_delete release];
+        }
+        else if (buttonIndex == 1) {
+            // Process delete WITH data export
+            self.didRequestDelete = YES;
+            
+            // Export data
+            ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:nil withStartDate:nil withEndDate:nil];
+            exportManager.delegate = self;
+            [exportManager exportData];
+            
+            //        // Prompt user to enter their full name as verification before continuing
+            //        self.av_delete = [[UIPromptAlertView alloc]
+            //                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
+            //                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
+            //                          delegate:self
+            //                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
+            //                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
+            //        self.av_delete.verificationText = self.loggedInUser.username;
+            //        [self.av_delete show];
+            //        [self.av_delete release];
+        }
+        else {
+            // Cancel
+            
+        }
     }
-    else if (buttonIndex == 1) {
-        // Process delete WITH data export
-        self.didRequestDelete = YES;
-        
-        // Export data
-        ExportManager *exportManager = [ExportManager instanceWithDelegate:self forPrescriptions:nil withStartDate:nil withEndDate:nil];
-        exportManager.delegate = self;
-        [exportManager exportData];
-        
-//        // Prompt user to enter their full name as verification before continuing
-//        self.av_delete = [[UIPromptAlertView alloc]
-//                          initWithTitle:NSLocalizedString(@"CONFIRM DELETE", nil)
-//                          message:[NSString stringWithFormat:@"\n\n%@", NSLocalizedString(@"CONFIRM DELETE MESSAGE", nil)]
-//                          delegate:self
-//                          cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-//                          otherButtonTitles:NSLocalizedString(@"CONFIRM", nil), nil];
-//        self.av_delete.verificationText = self.loggedInUser.username;
-//        [self.av_delete show];
-//        [self.av_delete release];
+    else if (actionSheet == self.as_doctorName) {
+        if (buttonIndex == 0) {
+            // User selected Phone Contacts, show contact list picker
+            ABPeoplePickerNavigationController *peoplePickerController = [[ABPeoplePickerNavigationController alloc] init];
+            peoplePickerController.peoplePickerDelegate = self;
+            
+            [self presentModalViewController:peoplePickerController animated:YES];
+            
+            [peoplePickerController release];
+            
+        }
+        else if (buttonIndex == 1) {
+            // User selected manual entry of doctor name, enable text field
+            
+            // Disable the textfield until the user selects manual entry of the name
+            [self.tf_doctorName setEnabled:YES];
+            
+            [self.tf_doctorName becomeFirstResponder];
+        }
+        else {
+            // Cancel
+            
+        }
+    }
+}
+
+#pragma mark - ABPeoplePickerNavigationController Delegate Methods
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
+{
+    NSString *name = (NSString *)ABRecordCopyCompositeName(person);
+    
+    if ([name isEqualToString:@""] == YES ||
+        [name isEqualToString:@" "] == YES)
+    {
+        self.tf_doctorName.text = nil;
+        self.doctorName = nil;
     }
     else {
-        // Cancel
-        
+        self.tf_doctorName.text = name;
+        self.doctorName = name;
     }
+    
+    [self dismissModalViewControllerAnimated:YES];
+    
+    return NO;
+}
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
+{
+    return NO;
+}
+
+#pragma mark - ABPersonViewController Delegate Methods
+- (BOOL)personViewController:(ABPersonViewController *)personViewController shouldPerformDefaultActionForPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier {
+    
+    return YES;
 }
 
 #pragma mark - Static Initializers

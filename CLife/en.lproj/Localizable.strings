@@ -208,5 +208,12 @@
 "OK" = "OK";
 
 
+// Update 1.1.1 - January 2013
+"FROM CONTACTS" = "From Contacts";
+"ENTER NAME" = "Enter Name";
+"NO CONTACT" = "Contact Not Found";
+"NO CONTACT MESSAGE" = "This doctor was not found in your contacts.";
+
+
 
 

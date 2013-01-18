@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 #import "BaseViewController.h"
 #import "UIPromptAlertView.h"
 #import "ExportManager.h"
 
-@interface ClifePrescriptionDetailsViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate, UITextViewDelegate, ExportManagerDelegate, UIProgressHUDViewDelegate > {
+@interface ClifePrescriptionDetailsViewController : BaseViewController < UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UIActionSheetDelegate, UITextViewDelegate, ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate, ExportManagerDelegate, UIProgressHUDViewDelegate > {
     
     UITableView             *m_tbl_prescriptionDetails;
     
@@ -81,6 +83,10 @@
     NSNumber                *m_scheduleRepeatPeriod;
     NSNumber                *m_scheduleOccurenceNumber;
     NSNumber                *m_scheduleEndDate;
+    
+    UIActionSheet           *m_as_deletePrescription;
+    UIActionSheet           *m_as_doctorName;
+    UIButton                *m_btn_doctorName;
     
 }
 
@@ -152,6 +158,9 @@
 @property (nonatomic, retain)           NSNumber                *scheduleRepeatPeriod;
 @property (nonatomic, retain)           NSNumber                *scheduleOccurenceNumber;
 @property (nonatomic, retain)           NSNumber                *scheduleEndDate;
+
+@property (nonatomic, retain)           UIActionSheet           *as_deletePrescription;
+@property (nonatomic, retain)           UIActionSheet           *as_doctorName;
 
 #pragma mark - Static Initializers
 + (ClifePrescriptionDetailsViewController *)createInstanceForPrescriptionWithID:(NSNumber *)prescriptionID isEditable:(BOOL)isEditable;

@@ -28,6 +28,8 @@
 		522D89161602A83900B5C615 /* redX.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89121602A83900B5C615 /* redX.png */; };
 		522D89171602A83900B5C615 /* redX@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522D89131602A83900B5C615 /* redX@2x.png */; };
 		523A6BD815F6DC1400D60461 /* UIPromptAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523A6BD715F6DC1400D60461 /* UIPromptAlertView.m */; };
+		5260691616A9FFE6004A2A45 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5260691516A9FFE6004A2A45 /* AddressBook.framework */; };
+		5260691916A9FFEA004A2A45 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5260691816A9FFEA004A2A45 /* AddressBookUI.framework */; };
 		526BA13F1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 526BA13C1649AB5700F3D157 /* PlatformDataModel.xcdatamodeld */; };
 		5275B454165F76F80049ACFE /* ClifeReminderDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5275B452165F76F80049ACFE /* ClifeReminderDetailsViewController.m */; };
 		5275B455165F76F80049ACFE /* ClifeReminderDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5275B453165F76F80049ACFE /* ClifeReminderDetailsViewController.xib */; };
@@ -248,6 +250,8 @@
 		525CF33D164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		525CF33E164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		525CF33F164C9FA3003B085F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5260691516A9FFE6004A2A45 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		5260691816A9FFEA004A2A45 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		526B5C8F165DBD99004998EB /* PlatformDataModel 4.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 4.xcdatamodel"; sourceTree = "<group>"; };
 		526BA13D1649AB5700F3D157 /* PlatformDataModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PlatformDataModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		526BA13E1649AB5700F3D157 /* PlatformDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PlatformDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -613,6 +617,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5260691916A9FFEA004A2A45 /* AddressBookUI.framework in Frameworks */,
+				5260691616A9FFE6004A2A45 /* AddressBook.framework in Frameworks */,
 				528085F9160E4B8D00EB515A /* MessageUI.framework in Frameworks */,
 				C53DC87E15D441AE00CC7D14 /* QuartzCore.framework in Frameworks */,
 				C53DC87C15D4417D00CC7D14 /* CoreData.framework in Frameworks */,
@@ -766,6 +772,8 @@
 		C53DC68C15D4378300CC7D14 = {
 			isa = PBXGroup;
 			children = (
+				5260691816A9FFEA004A2A45 /* AddressBookUI.framework */,
+				5260691516A9FFE6004A2A45 /* AddressBook.framework */,
 				52A27120161E137300A2763B /* Default@2x.png */,
 				52A2711E161E136F00A2763B /* Default.png */,
 				52A2711C161E135800A2763B /* c-life-icon-114x114.png */,
