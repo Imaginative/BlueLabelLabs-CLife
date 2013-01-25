@@ -204,17 +204,17 @@
 
 
 // Update 1.1.0 - November 2012
-"ADD PRESCRIPTIONS MESSAGE" = "Press '+' to add a prescription";
-"DOCTOR" = "Doctor (optional)";
-"PRESCRIBED BY" = "prescribed by";
-"REMINDER" = "Reminder";
-"INVALID DATE" = "Invalid date!";
-"INVALID DATE MESSAGE" = "The reminder date must be set to a date and time in the future.";
+"ADD PRESCRIPTIONS MESSAGE" = "Tocar '+' para adicionar prescrições";
+"DOCTOR" = "Médico (opcional)";
+"PRESCRIBED BY" = "Medicado por";
+"REMINDER" = "Lembrete";
+"INVALID DATE" = "Data inválida!";
+"INVALID DATE MESSAGE" = "A data do lembrete deve ser uma data no futuro.";
 "OK" = "OK";
 
 
 // Update 1.1.1 - January 2013
-"FROM CONTACTS" = "From Contacts";
-"ENTER NAME" = "Enter Name";
-"NO CONTACT" = "Contact Not Found";
-"NO CONTACT MESSAGE" = "This doctor was not found in your contacts.";
+"FROM CONTACTS" = "Dos contatos";
+"ENTER NAME" = "Digite o nome";
+"NO CONTACT" = "Contato não existe";
+"NO CONTACT MESSAGE" = "Este médico não foi encontrado nos seus contatos.";
