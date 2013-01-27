@@ -1,11 +1,11 @@
-/* 
-  Localizable.strings
-  CLife
-  Spanish
-
-  Created by Jordan Gurrieri on 11/08/12.
-  Copyright (c) 2012 - Imaginative Design. All rights reserved.
-*/
+/*
+ Localizable.strings
+ CLife
+ Spanish
+ 
+ Created by Jordan Gurrieri on 11/08/12.
+ Copyright (c) 2012 - Imaginative Design. All rights reserved.
+ */
 
 
 // General
@@ -78,7 +78,7 @@
 
 
 // Prescriptions
-"ADD PRESCRIPTIONS MESSAGE" = "Press '+' to add a prescription";
+"ADD PRESCRIPTIONS MESSAGE" = "Pulse '+' para añadir una receta";
 
 "MEDICATION" = "Medicamento";
 "ENTER MEDICATION NAME" = "nombre del medicamento";
@@ -157,7 +157,7 @@
 "NOT TAKEN" = "Sin tomar";
 "TAKEN" = "Tomada";
 "SCHEDULED" = "Programada";
-"ENTER DATE AND TIME" = "introducir fecha y hora";
+"ENTER DATE AND TIME" = "Introducir fecha y hora";
 
 "EDIT HISTORY" = "Editar Historial";
 "EDIT HISTORY MESSAGE" = "¿Deseas realizar una copia de seguridad de tus datos e historial antes de editar?";
@@ -167,7 +167,7 @@
 "PRESCRIPTION REMINDER" = "Recordatorio de recetas";
 "REMINDER ACTION" = "Confirmar";
 "REMINDER ACTION PART 1" = "Hora de tomar la próxima dosis de";
-"REMINDER ACTION PART 2" = "Abre CLife para confirmar.";
+"REMINDER ACTION PART 2" = "Abre C-Life para confirmar.";
 "REMINDER ACTION PART 2 TYPE 2" = "Confirmar.";
 
 
@@ -203,17 +203,17 @@
 
 
 // Update 1.1.0 - November 2012
-"ADD PRESCRIPTIONS MESSAGE" = "Press '+' to add a prescription";
-"DOCTOR" = "Doctor (optional)";
-"PRESCRIBED BY" = "prescribed by";
-"REMINDER" = "Reminder";
-"INVALID DATE" = "Invalid date!";
-"INVALID DATE MESSAGE" = "The reminder date must be set to a date and time in the future.";
+"ADD PRESCRIPTIONS MESSAGE" = "Pulse '+' para añadir una receta";
+"DOCTOR" = "Médico (opcional)";
+"PRESCRIBED BY" = "Prescrito por";
+"REMINDER" = "Recordatorio";
+"INVALID DATE" = "fecha inválida!";
+"INVALID DATE MESSAGE" = "La fecha del recordatorio deve ser una fecha en futuro.";
 "OK" = "OK";
 
 
 // Update 1.1.1 - January 2013
-"FROM CONTACTS" = "From Contacts";
-"ENTER NAME" = "Enter Name";
-"NO CONTACT" = "Contact Not Found";
-"NO CONTACT MESSAGE" = "This doctor was not found in your contacts.";
+"FROM CONTACTS" = "De conctatos";
+"ENTER NAME" = "Introducir nombre";
+"NO CONTACT" = "Contacto no existe";
+"NO CONTACT MESSAGE" = "Este médico no existe en sus contactos.";
