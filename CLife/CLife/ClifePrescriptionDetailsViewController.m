@@ -1159,8 +1159,8 @@
                                   initWithTitle:nil
                                   delegate:self
                                   cancelButtonTitle:NSLocalizedString(@"CANCEL", nil)
-                                  destructiveButtonTitle:NSLocalizedString(@"FROM CONTACTS", nil)
-                                  otherButtonTitles:NSLocalizedString(@"ENTER NAME", nil), nil];
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:NSLocalizedString(@"FROM CONTACTS", nil), NSLocalizedString(@"ENTER NAME", nil), nil];
             [self.as_doctorName showInView:self.tbl_prescriptionDetails];
             [self.as_doctorName release];
         }
